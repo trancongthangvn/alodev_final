@@ -72,24 +72,16 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* SEO long-tail keyword cluster */}
-        <div className="mt-10 pt-6 border-t border-slate-800/60">
-          <div className="text-[11px] text-slate-500 leading-loose">
-            <span className="text-slate-400 font-semibold">Alodev nhận:</span>{' '}
-            <Link href="/dich-vu/thiet-ke-website" className="hover:text-slate-300">thiết kế website doanh nghiệp</Link> ·{' '}
-            <Link href="/dich-vu/thiet-ke-website" className="hover:text-slate-300">làm website bán hàng</Link> ·{' '}
-            <Link href="/dich-vu/thiet-ke-website" className="hover:text-slate-300">landing page chuyên nghiệp</Link> ·{' '}
-            <Link href="/dich-vu/lap-trinh-app-mobile" className="hover:text-slate-300">lập trình app iOS</Link> ·{' '}
-            <Link href="/dich-vu/lap-trinh-app-mobile" className="hover:text-slate-300">app Android theo yêu cầu</Link> ·{' '}
-            <Link href="/dich-vu/lap-trinh-app-mobile" className="hover:text-slate-300">app đặt lịch / giao hàng</Link> ·{' '}
-            <Link href="/dich-vu/he-thong-quan-tri" className="hover:text-slate-300">phần mềm CRM khách hàng</Link> ·{' '}
-            <Link href="/dich-vu/he-thong-quan-tri" className="hover:text-slate-300">hệ thống ERP doanh nghiệp</Link> ·{' '}
-            <Link href="/dich-vu/he-thong-quan-tri" className="hover:text-slate-300">SaaS multi-tenant</Link> ·{' '}
-            <Link href="/dich-vu#automation" className="hover:text-slate-300">tích hợp AI ChatGPT/Claude</Link> ·{' '}
-            <Link href="/dich-vu#automation" className="hover:text-slate-300">bot Zalo Telegram tự động</Link> ·{' '}
-            <Link href="/dich-vu#maintenance" className="hover:text-slate-300">bảo trì website wordpress</Link> ·{' '}
-            <Link href="/du-an" className="hover:text-slate-300">studio web app Hà Nội</Link>
-          </div>
+        {/* SEO inline links — natural prose, not keyword stuffing */}
+        <div className="mt-10 pt-6 border-t border-slate-800/60 max-w-3xl">
+          <p className="text-xs text-slate-500 leading-relaxed">
+            Alodev nhận{' '}
+            <Link href="/dich-vu/thiet-ke-website" className="text-slate-400 hover:text-slate-200 underline decoration-slate-700 underline-offset-2 hover:decoration-slate-400">thiết kế website doanh nghiệp</Link>,{' '}
+            <Link href="/dich-vu/lap-trinh-app-mobile" className="text-slate-400 hover:text-slate-200 underline decoration-slate-700 underline-offset-2 hover:decoration-slate-400">lập trình app mobile iOS/Android</Link>{' '}
+            và xây dựng{' '}
+            <Link href="/dich-vu/he-thong-quan-tri" className="text-slate-400 hover:text-slate-200 underline decoration-slate-700 underline-offset-2 hover:decoration-slate-400">hệ thống quản trị CRM/ERP</Link>{' '}
+            cho doanh nghiệp tại Hà Nội và toàn quốc. Studio founder-led — bạn chat trực tiếp với người code, không qua sales.
+          </p>
         </div>
 
         <div className="border-t border-slate-800 mt-8 pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">

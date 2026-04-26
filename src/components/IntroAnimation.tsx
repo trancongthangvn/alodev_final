@@ -4,8 +4,8 @@ import { useEffect, useState, useCallback } from 'react'
 
 const KEY = 'alodev-intro-last-shown'
 const COOLDOWN_MS = 12 * 60 * 60 * 1000   // show once per 12h
-const DURATION = 1700                      // total intro time
-const FADE_DELAY = 1350                    // when fade-out starts
+const DURATION = 1200                      // total intro time (tightened)
+const FADE_DELAY = 880                     // when fade-out starts
 
 /**
  * Cinematic brand-reveal intro. Plays once per ~12 hours per browser.
@@ -128,24 +128,13 @@ export default function IntroAnimation() {
 
       {/* Center stack */}
       <div className="relative text-center px-6">
-        {/* Loading dots — show first, fade out */}
-        <div className="intro-dots flex justify-center gap-1.5 mb-6 h-1.5">
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="w-1.5 h-1.5 rounded-full bg-ink-400 dark:bg-ink-500"
-              style={{ animation: `introDot 1.2s ease-in-out ${i * 120}ms infinite` }}
-            />
-          ))}
-        </div>
-
-        {/* Logo with letter cascade */}
+        {/* Logo with letter cascade — starts immediately */}
         <div className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight leading-none flex justify-center" aria-label="alodev">
           {logoChars.map((c, i) => (
             <span
               key={i}
               className={`intro-letter ${c.class}`}
-              style={{ animationDelay: `${300 + i * 60}ms` }}
+              style={{ animationDelay: `${80 + i * 50}ms` }}
             >
               {c.ch}
             </span>
@@ -165,7 +154,7 @@ export default function IntroAnimation() {
               key={i}
               className="intro-tag-char inline-block"
               style={{
-                animationDelay: `${900 + i * 28}ms`,
+                animationDelay: `${550 + i * 20}ms`,
                 whiteSpace: ch === ' ' ? 'pre' : 'normal',
                 width: ch === ' ' ? '0.4em' : 'auto',
               }}
@@ -212,25 +201,13 @@ export default function IntroAnimation() {
 
         /* ── Saffron orb pulse ── */
         .intro-orb {
-          animation: introOrb 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+          animation: introOrb 1.0s cubic-bezier(0.22, 1, 0.36, 1) 0s forwards;
           will-change: opacity, transform;
         }
         @keyframes introOrb {
-          0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-          50%  { opacity: 0.55; }
+          0%   { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+          60%  { opacity: 0.55; }
           100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-        }
-
-        /* ── Loading dots fade in/out ── */
-        .intro-dots {
-          opacity: 0;
-          animation: introDotsIn 0.25s ease-out 0.1s forwards, introDotsOut 0.25s ease-out 0.65s forwards;
-        }
-        @keyframes introDotsIn  { to { opacity: 1; } }
-        @keyframes introDotsOut { to { opacity: 0; transform: translateY(-2px); } }
-        @keyframes introDot {
-          0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
-          30% { opacity: 1; transform: translateY(-2px); }
         }
 
         /* ── Logo letter cascade — fade-up + blur clearing ── */
@@ -239,7 +216,7 @@ export default function IntroAnimation() {
           opacity: 0;
           transform: translateY(14px);
           filter: blur(6px);
-          animation: introLetter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: introLetter 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
           will-change: opacity, transform, filter;
         }
         @keyframes introLetter {
@@ -249,20 +226,20 @@ export default function IntroAnimation() {
         /* ── Underline draw + shimmer sweep ── */
         .intro-line-wrap {
           opacity: 0;
-          animation: introLineWrap 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards;
+          animation: introLineWrap 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
         }
         @keyframes introLineWrap { to { opacity: 1; } }
         .intro-line {
           background: linear-gradient(90deg, var(--accent), var(--accent-soft), var(--accent));
           transform: scaleX(0);
           transform-origin: center;
-          animation: introLine 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.7s forwards;
+          animation: introLine 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
         }
         @keyframes introLine { to { transform: scaleX(1); } }
         .intro-shimmer {
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
           transform: translateX(-100%);
-          animation: introShimmer 1.2s ease-out 1s forwards;
+          animation: introShimmer 0.9s ease-out 0.7s forwards;
           mix-blend-mode: overlay;
         }
         @keyframes introShimmer { to { transform: translateX(400%); } }
@@ -272,7 +249,7 @@ export default function IntroAnimation() {
           opacity: 0;
           transform: translateY(6px);
           filter: blur(3px);
-          animation: introTagChar 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: introTagChar 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
           will-change: opacity, transform, filter;
         }
         @keyframes introTagChar {
@@ -282,23 +259,23 @@ export default function IntroAnimation() {
         /* ── Corner chips: fade-in late ── */
         .intro-corner {
           opacity: 0;
-          animation: introCorner 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: introCorner 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
-        .intro-corner-tl { animation-delay: 1.05s; }
-        .intro-corner-tr { animation-delay: 1.05s; }
-        .intro-corner-bl { animation-delay: 1.15s; }
-        .intro-corner-br { animation-delay: 1.2s; }
+        .intro-corner-tl { animation-delay: 0.65s; }
+        .intro-corner-tr { animation-delay: 0.65s; }
+        .intro-corner-bl { animation-delay: 0.7s; }
+        .intro-corner-br { animation-delay: 0.75s; }
         @keyframes introCorner { to { opacity: 1; } }
 
         /* ── Loading bar 0 → 100% ── */
         .intro-bar {
           width: 0%;
-          animation: introBar 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.6s forwards;
+          animation: introBar 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
         }
         @keyframes introBar { to { width: 100%; } }
 
         @media (prefers-reduced-motion: reduce) {
-          .intro-enter, .intro-exit, .intro-grid, .intro-orb, .intro-dots,
+          .intro-enter, .intro-exit, .intro-grid, .intro-orb,
           .intro-letter, .intro-line-wrap, .intro-line, .intro-shimmer,
           .intro-tag-char, .intro-corner, .intro-bar {
             animation: none !important;

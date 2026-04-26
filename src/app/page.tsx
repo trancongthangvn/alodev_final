@@ -76,14 +76,16 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Display headline — keyword-targeted */}
+          {/* Display headline — keyword + brand voice hybrid */}
           <h1 className="h-display mt-8 text-center text-ink-900 dark:text-white max-w-5xl mx-auto">
-            Thiết kế website &amp; <span className="relative inline-block">
-              <span>lập trình app chuyên nghiệp</span>
+            Thiết kế website &amp; lập trình app —<br />
+            <span className="relative inline-block">
+              <span>biến ý tưởng thành sản phẩm thật</span>
               <svg aria-hidden="true" className="absolute left-0 right-0 bottom-[-0.18em] w-full text-brand-500 dark:text-brand-400" viewBox="0 0 600 14" fill="none" preserveAspectRatio="none">
                 <path d="M2 9 Q 150 2 300 7 T 598 5" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
               </svg>
             </span>
+            <span className="text-ink-900 dark:text-white">.</span>
           </h1>
 
           <p className="mt-7 text-center text-lg sm:text-xl text-ink-500 dark:text-ink-300 max-w-2xl mx-auto leading-relaxed">
