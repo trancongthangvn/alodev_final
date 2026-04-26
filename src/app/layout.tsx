@@ -76,7 +76,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="vi" className={`${sansFont.variable} h-full antialiased`} suppressHydrationWarning>
+    // No className on <html> — when React's expected className differs from
+    // what the inline theme script wrote (e.g. 'dark' added by script vs
+    // empty in JSX), React hydration RESETS html.classList, stripping our
+    // 'dark' class. suppressHydrationWarning only silences the warning,
+    // not the reconciliation. Moving the font variable + base utilities
+    // to <body> (which IS rendered with className from JSX) keeps React
+    // happy AND lets the inline script own html.classList for theme.
+    <html lang="vi" suppressHydrationWarning>
       <head>
         {/* Apply theme before paint to prevent FOUC.
 
@@ -101,7 +108,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors">
+      <body className={`${sansFont.variable} h-full antialiased min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors`}>
         <LayoutShell>{children}</LayoutShell>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Analytics />
