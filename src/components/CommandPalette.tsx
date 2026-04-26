@@ -55,8 +55,13 @@ export default function CommandPalette() {
     { id: 'zalo',  group: 'Liên hệ nhanh', icon: 'message-circle', label: 'Mở Zalo 0364 234 936',     keywords: 'zalo phone goi', action: () => window.open('https://zalo.me/0364234936', '_blank') },
     { id: 'mail',  group: 'Liên hệ nhanh', icon: 'mail',           label: 'Email hello@alodev.vn',     keywords: 'email mail',     action: () => window.open('mailto:hello@alodev.vn') },
     { id: 'theme', group: 'Tuỳ chỉnh',     icon: 'moon',           label: 'Đảo chế độ sáng / tối',     keywords: 'theme dark light mode', action: () => {
-      const isDark = document.documentElement.classList.toggle('dark')
-      try { localStorage.setItem('alodev-theme', isDark ? 'dark' : 'light') } catch {}
+      const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
+      const next = cur === 'dark' ? 'light' : 'dark'
+      document.documentElement.setAttribute('data-theme', next)
+      try {
+        localStorage.setItem('alodev-theme-v2', next)
+        localStorage.setItem('alodev-theme-explicit', '1')
+      } catch {}
     } },
   ], [router])
 

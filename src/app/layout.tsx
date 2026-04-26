@@ -104,7 +104,7 @@ export default function RootLayout({
             persist forever. Bumping THEME_VER again resets everyone. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var V='3';if(localStorage.getItem('alodev-theme-ver')!==V){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');localStorage.removeItem('alodev-theme-v2');localStorage.removeItem('alodev-theme-explicit');localStorage.setItem('alodev-theme-ver',V);}var t=localStorage.getItem('alodev-theme-v2');var x=localStorage.getItem('alodev-theme-explicit');var d;if((t==='dark'||t==='light')&&x==='1'){d=(t==='dark');}else{if(t!==null)localStorage.removeItem('alodev-theme-v2');if(x!==null)localStorage.removeItem('alodev-theme-explicit');var h=new Date().getHours();d=(h>=18||h<6);}if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+            __html: `(function(){try{var V='3';if(localStorage.getItem('alodev-theme-ver')!==V){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');localStorage.removeItem('alodev-theme-v2');localStorage.removeItem('alodev-theme-explicit');localStorage.setItem('alodev-theme-ver',V);}var t=localStorage.getItem('alodev-theme-v2');var x=localStorage.getItem('alodev-theme-explicit');var d;if((t==='dark'||t==='light')&&x==='1'){d=(t==='dark');}else{if(t!==null)localStorage.removeItem('alodev-theme-v2');if(x!==null)localStorage.removeItem('alodev-theme-explicit');var h=new Date().getHours();d=(h>=18||h<6);}document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`,
           }}
         />
       </head>

@@ -4,17 +4,19 @@ import { useSyncExternalStore } from 'react'
 
 type Theme = 'light' | 'dark'
 
-// Subscribe to changes on the <html> dark class so we re-render on toggle.
+// Subscribe to changes on the <html> data-theme attribute so we re-render on toggle.
+// Uses data attribute instead of class because React 19 hydration strips
+// className from <html> even with suppressHydrationWarning.
 function subscribe(cb: () => void) {
   const obs = new MutationObserver(cb)
-  obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+  obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
   return () => obs.disconnect()
 }
 function getSnapshot(): Theme {
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
 }
 function getServerSnapshot(): Theme {
-  return 'light' // SSR default; the inline <head> script applies the right class before paint
+  return 'light' // SSR default; the inline <head> script applies the right attribute before paint
 }
 
 export default function ThemeToggle({ className = '' }: { className?: string }) {
@@ -22,7 +24,7 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
 
   function toggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
-    document.documentElement.classList.toggle('dark', next === 'dark')
+    document.documentElement.setAttribute('data-theme', next)
     // Atomic two-key write — both required for the inline script to honor
     // this preference. The 'explicit' flag is the authoritative signal that
     // this value came from a real UI click (not DevTools, not testing, not
