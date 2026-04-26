@@ -15,8 +15,14 @@ export default function PaletteHint() {
     // Don't show on touch-primary devices (no keyboard)
     if (window.matchMedia('(pointer: coarse)').matches) return
 
-    const t = setTimeout(() => setShow(true), 4000)
-    return () => clearTimeout(t)
+    // Show later (8s vs 4s) so the user has time to read the hero before
+    // we show a peripheral tip, then auto-dismiss after 10s if ignored.
+    const showT = setTimeout(() => setShow(true), 8000)
+    const hideT = setTimeout(() => {
+      setShow(false)
+      try { localStorage.setItem(STORAGE_KEY, '1') } catch {}
+    }, 18000)
+    return () => { clearTimeout(showT); clearTimeout(hideT) }
   }, [])
 
   function dismiss() {

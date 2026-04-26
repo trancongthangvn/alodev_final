@@ -62,7 +62,7 @@ export default function Home() {
         <div className="hero-resend-glow absolute inset-x-0 -top-48 h-[600px]" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-24 lg:pb-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 lg:items-start">
             {/* LEFT: copy + CTAs */}
             <div className="hero-rise lg:col-span-7">
               {/* Eyebrow — left-aligned, theme-adaptive */}
@@ -119,7 +119,7 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="mt-7 text-base sm:text-lg text-gray-600 dark:text-zinc-400 max-w-xl leading-relaxed">
+              <p className="mt-7 text-base sm:text-lg text-gray-700 dark:text-zinc-400 max-w-xl leading-relaxed">
                 Alodev là <b className="text-gray-900 dark:text-zinc-100">founder-led studio tại Hà Nội</b> chuyên thiết kế website doanh nghiệp,
                 lập trình app mobile và xây dựng hệ thống quản trị theo yêu cầu. Bạn làm việc trực tiếp với founder — không sales,
                 không middleman. Source code thuộc về bạn.
@@ -163,7 +163,7 @@ export default function Home() {
                   href={`https://${p.domain}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 inline-flex items-center gap-2 text-lg sm:text-xl font-bold text-gray-400 dark:text-ink-600 hover:text-gray-700 dark:hover:text-zinc-300 transition tracking-tight"
+                  className="shrink-0 inline-flex items-center gap-2 text-lg sm:text-xl font-bold text-gray-500 dark:text-ink-600 hover:text-gray-800 dark:hover:text-zinc-300 transition tracking-tight"
                 >
                   <svg className="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth={2} /><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" strokeWidth={1.5} /></svg>
                   {p.name}
