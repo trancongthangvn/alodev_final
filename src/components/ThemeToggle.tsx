@@ -23,9 +23,15 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
   function toggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
     document.documentElement.classList.toggle('dark', next === 'dark')
-    // Persistent forever — user's explicit toggle always wins on subsequent
-    // visits. Time-based default only kicks in when this key is absent.
-    try { localStorage.setItem('alodev-theme-v2', next) } catch {}
+    // Atomic two-key write — both required for the inline script to honor
+    // this preference. The 'explicit' flag is the authoritative signal that
+    // this value came from a real UI click (not DevTools, not testing, not
+    // a browser extension), so the preference persists forever. Without
+    // this flag, any orphan v2 value gets auto-cleaned on next page load.
+    try {
+      localStorage.setItem('alodev-theme-v2', next)
+      localStorage.setItem('alodev-theme-explicit', '1')
+    } catch {}
   }
 
   return (

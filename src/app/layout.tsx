@@ -79,17 +79,20 @@ export default function RootLayout({
     <html lang="vi" className={`${sansFont.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Apply theme before paint to prevent FOUC.
+            Two-key system:
+              alodev-theme-v2       → 'dark' | 'light'
+              alodev-theme-explicit → '1' iff written by ThemeToggle UI click
             Logic:
-            - If user explicitly toggled (alodev-theme-v2 set) → ALWAYS respect
-              that choice, persistently across sessions, no expiry.
-            - Otherwise → time-based default: dark 18:00–06:00 local, else light.
-            We migrated to a new key (-v2) to wipe stale 'alodev-theme' values
-            written during early testing — those were never user choices, so
-            clearing them is correct. After migration, fresh visitors get the
-            time-based default; toggling sticks forever. */}
+              1. Both keys set + explicit='1' → real user toggle, respect forever
+              2. Otherwise → time-based default (dark 18:00–06:00 local, else light)
+                 AND auto-clean any orphan v2 value (could be from DevTools,
+                 stale testing, browser extension, prior session before this
+                 contract). This is what makes the fix "triệt để" — we no
+                 longer trust v2 alone as proof of user intent.
+            Also migrate old 'alodev-theme' (v1) keys for backward compat. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(localStorage.getItem('alodev-theme')!==null){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');}var t=localStorage.getItem('alodev-theme-v2');var d;if(t==='dark'||t==='light'){d=(t==='dark');}else{var h=new Date().getHours();d=(h>=18||h<6);}if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+            __html: `(function(){try{if(localStorage.getItem('alodev-theme')!==null){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');}var t=localStorage.getItem('alodev-theme-v2');var x=localStorage.getItem('alodev-theme-explicit');var d;if((t==='dark'||t==='light')&&x==='1'){d=(t==='dark');}else{if(t!==null)localStorage.removeItem('alodev-theme-v2');if(x!==null)localStorage.removeItem('alodev-theme-explicit');var h=new Date().getHours();d=(h>=18||h<6);}if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
           }}
         />
       </head>
