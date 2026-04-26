@@ -79,7 +79,7 @@ export default function IntroAnimation() {
 
   if (!visible) return null
 
-  // Letter cascade for logo + tagline
+  // Letter cascade for logo + tagline — theme-adaptive (saffron + black/white)
   const logoChars = [
     { ch: 'a', class: 'text-brand-600 dark:text-brand-400' },
     { ch: 'l', class: 'text-brand-600 dark:text-brand-400' },
@@ -93,11 +93,13 @@ export default function IntroAnimation() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[200] flex items-center justify-center bg-cream-50 dark:bg-ink-950 ${exiting ? 'intro-exit' : 'intro-enter'}`}
+      // Theme-adaptive — bg matches the hero behind it (light cream in day,
+      // Resend-style #07080c at night) so intro→hero transition is seamless.
+      className={`intro-overlay fixed inset-0 z-[200] flex items-center justify-center text-ink-900 dark:text-white ${exiting ? 'intro-exit' : 'intro-enter'}`}
     >
-      {/* Subtle animated grid background */}
+      {/* Subtle animated grid background — theme-adaptive grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="intro-grid absolute inset-0 grid-bg opacity-50" />
+        <div className="intro-grid absolute inset-0 opacity-50 grid-bg" />
       </div>
 
       {/* Saffron orb behind logo for depth */}
@@ -105,7 +107,7 @@ export default function IntroAnimation() {
         <div
           className="intro-orb absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] max-w-[640px] aspect-square rounded-full"
           style={{
-            background: 'radial-gradient(circle, var(--accent-soft) 0%, transparent 65%)',
+            background: 'radial-gradient(circle, #ed9219 0%, transparent 65%)',
             filter: 'blur(90px)',
             opacity: 0,
           }}
@@ -113,7 +115,7 @@ export default function IntroAnimation() {
       </div>
 
       {/* Top-left tiny tag */}
-      <div className="intro-corner intro-corner-tl absolute top-5 left-5 sm:top-7 sm:left-7 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-500 dark:text-ink-400">
+      <div className="intro-corner intro-corner-tl absolute top-5 left-5 sm:top-7 sm:left-7 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 dark:text-zinc-400">
         <span className="relative flex h-1.5 w-1.5">
           <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
           <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
@@ -122,7 +124,7 @@ export default function IntroAnimation() {
       </div>
 
       {/* Top-right version */}
-      <div className="intro-corner intro-corner-tr absolute top-5 right-5 sm:top-7 sm:right-7 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-500 dark:text-ink-400">
+      <div className="intro-corner intro-corner-tr absolute top-5 right-5 sm:top-7 sm:right-7 text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 dark:text-zinc-400">
         v2026.04
       </div>
 
@@ -148,7 +150,7 @@ export default function IntroAnimation() {
         </div>
 
         {/* Tagline letter cascade */}
-        <div className="mt-5 text-[11px] sm:text-xs font-bold uppercase tracking-[0.4em] text-ink-500 dark:text-ink-400 flex justify-center" aria-label={tagline}>
+        <div className="mt-5 text-[11px] sm:text-xs font-bold uppercase tracking-[0.4em] text-gray-500 dark:text-zinc-400 flex justify-center" aria-label={tagline}>
           {tagline.split('').map((ch, i) => (
             <span
               key={i}
@@ -166,15 +168,15 @@ export default function IntroAnimation() {
       </div>
 
       {/* Bottom-left progress bar */}
-      <div className="intro-corner intro-corner-bl absolute bottom-5 left-5 sm:bottom-7 sm:left-7 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-500 dark:text-ink-400">
+      <div className="intro-corner intro-corner-bl absolute bottom-5 left-5 sm:bottom-7 sm:left-7 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 dark:text-zinc-400">
         <span>Loading</span>
-        <span className="relative w-16 h-[2px] rounded-full bg-ink-200 dark:bg-ink-800 overflow-hidden">
+        <span className="relative w-16 h-[2px] rounded-full bg-gray-200 dark:bg-zinc-800 overflow-hidden">
           <span className="intro-bar absolute inset-y-0 left-0 bg-brand-500 dark:bg-brand-400 rounded-full" />
         </span>
       </div>
 
       {/* Bottom-right hint */}
-      <div className="intro-corner intro-corner-br absolute bottom-5 right-5 sm:bottom-7 sm:right-7 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500">
+      <div className="intro-corner intro-corner-br absolute bottom-5 right-5 sm:bottom-7 sm:right-7 text-[10px] font-mono uppercase tracking-[0.2em] text-gray-400 dark:text-zinc-500">
         <span className="hidden sm:inline">Click hoặc bấm phím để bỏ qua</span>
         <span className="sm:hidden">Tap để bỏ qua</span>
       </div>
@@ -220,7 +222,8 @@ export default function IntroAnimation() {
           will-change: opacity, transform, filter;
         }
         @keyframes introLetter {
-          to { opacity: 1; transform: translateY(0); filter: blur(0); }
+          /* filter: none — Lightning CSS strips blur(0) and blur(0px) to invalid blur() */
+          to { opacity: 1; transform: translateY(0); filter: none; }
         }
 
         /* ── Underline draw + shimmer sweep ── */
@@ -253,7 +256,8 @@ export default function IntroAnimation() {
           will-change: opacity, transform, filter;
         }
         @keyframes introTagChar {
-          to { opacity: 1; transform: translateY(0); filter: blur(0); }
+          /* filter: none — Lightning CSS strips blur(0) and blur(0px) to invalid blur() */
+          to { opacity: 1; transform: translateY(0); filter: none; }
         }
 
         /* ── Corner chips: fade-in late ── */

@@ -78,10 +78,18 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${sansFont.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        {/* Apply theme before paint to prevent FOUC */}
+        {/* Apply theme before paint to prevent FOUC.
+            Logic:
+            - If user explicitly toggled (alodev-theme-v2 set) → ALWAYS respect
+              that choice, persistently across sessions, no expiry.
+            - Otherwise → time-based default: dark 18:00–06:00 local, else light.
+            We migrated to a new key (-v2) to wipe stale 'alodev-theme' values
+            written during early testing — those were never user choices, so
+            clearing them is correct. After migration, fresh visitors get the
+            time-based default; toggling sticks forever. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('alodev-theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+            __html: `(function(){try{if(localStorage.getItem('alodev-theme')!==null){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');}var t=localStorage.getItem('alodev-theme-v2');var d;if(t==='dark'||t==='light'){d=(t==='dark');}else{var h=new Date().getHours();d=(h>=18||h<6);}if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
           }}
         />
       </head>

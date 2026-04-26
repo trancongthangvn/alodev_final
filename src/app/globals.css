@@ -499,7 +499,11 @@ img, iframe { color-scheme: light; }
   will-change: opacity, transform, filter;
 }
 @keyframes wordCascade {
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  /* `filter: none` — Lightning CSS strips both blur(0) and blur(0px) to the
+     invalid blur(), so we use `none` instead. CSS spec interpolates between
+     blur(8px) and none by treating none as blur(0), so the animation still
+     smoothly clears the blur. */
+  to { opacity: 1; transform: translateY(0); filter: none; }
 }
 
 /* ─── Process step scroll-fill connector ─── */
@@ -528,13 +532,12 @@ img, iframe { color-scheme: light; }
 }
 
 /* ─── Magnetic primary CTA ─── */
+/* Wrapper translates; child inherits its existing transitions (including the
+   global a/button transform 200ms rule), so scale() reads in smoothly. */
 .magnetic {
   display: inline-flex;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
-}
-.magnetic > * {
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ─── Tabbed showcase: fade between panels ─── */
@@ -559,10 +562,154 @@ img, iframe { color-scheme: light; }
   box-shadow: 0 0 0 1px rgba(237, 146, 25, 0.18);
 }
 
+/* ─── IntroAnimation overlay (theme-adaptive bg matches hero behind) ─── */
+.intro-overlay {
+  background: #f6f7f9;
+}
+.dark .intro-overlay {
+  background: #07080c;
+}
+
+/* ─── Hero + StackStrip surface (theme-adaptive) ─── */
+/* Default = light (cream-50 / slate-50). Dark theme switches to the
+   Resend-style #07080c. Time-of-day script picks the default theme,
+   user toggle in Navbar overrides. The rest of the homepage already
+   theme-adapts via Tailwind dark: variants. */
+.hero-resend,
+.dark-strip {
+  background: #f6f7f9;
+}
+.dark .hero-resend,
+.dark .dark-strip {
+  background: #07080c;
+}
+
+/* Subtle grid bg with radial mask — Resend's signature backdrop.
+   Grid lines flip to dark-on-light in light theme. */
+.hero-resend-grid,
+.dark-strip-grid {
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 35%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 35%, transparent 80%);
+  pointer-events: none;
+}
+.dark .hero-resend-grid,
+.dark .dark-strip-grid {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+}
+
+/* Saffron-tinted glow blob keeps the Alodev brand DNA. */
+.hero-resend-glow {
+  background: radial-gradient(ellipse at center,
+    rgba(237, 146, 25, 0.18) 0%,
+    rgba(150, 80, 220, 0.06) 35%,
+    transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+.dark .hero-resend-glow {
+  background: radial-gradient(ellipse at center,
+    rgba(237, 146, 25, 0.12) 0%,
+    rgba(150, 80, 220, 0.05) 35%,
+    transparent 70%);
+  filter: blur(60px);
+}
+
+/* Headline color — solid black on light, solid white on dark.
+   We tried Resend's gradient-text trick (background-clip:text) but our
+   word-cascade child spans use transform + filter which create new
+   compositing layers, breaking the gradient inheritance. */
+.hero-h {
+  color: #0a0a0c;
+}
+.dark .hero-h {
+  color: #ffffff;
+}
+
+/* Cube canvas viewport: tall enough on desktop to feel like the hero
+   centerpiece, modest on mobile (mobile gets SVG fallback anyway). */
+.hero-cube-wrap {
+  height: 520px;
+  position: relative;
+}
+@media (max-width: 1023px) {
+  .hero-cube-wrap { height: 380px; }
+}
+
+/* Cube vignette so the canvas blends into the surrounding bg seamlessly.
+   Light mode: vignette toward light bg. Dark mode: toward #07080c. */
+.hero-cube-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(246,247,249,0.55) 100%);
+  z-index: 1;
+}
+.dark .hero-cube-wrap::after {
+  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(7,8,12,0.55) 100%);
+}
+
+/* Floating mono tag chips around cube — gentle bob */
+.hero-cube-tag {
+  animation: cube-float 6s ease-in-out infinite;
+  z-index: 2;
+}
+@keyframes cube-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* Generic theme-adaptive card (used by StackStrip) */
+.dark-card {
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  border-color: rgba(0,0,0,0.10);
+  background-color: rgba(255,255,255,0.6);
+}
+.dark-card:hover {
+  border-color: rgba(0,0,0,0.18);
+  background-color: rgba(255,255,255,0.85);
+}
+.dark .dark-card {
+  border-color: rgba(255,255,255,0.10);
+  background-color: rgba(255,255,255,0.03);
+}
+.dark .dark-card:hover {
+  border-color: rgba(255,255,255,0.18);
+  background-color: rgba(255,255,255,0.05);
+}
+
+/* Theme-adaptive ghost CTA inside the hero */
+.hero-resend .ghost-dark {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.10);
+  color: #404040;
+}
+.hero-resend .ghost-dark:hover {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.20);
+  color: #0a0a0c;
+}
+.dark .hero-resend .ghost-dark {
+  border-color: rgba(255,255,255,0.10);
+  color: #d4d4d8;
+}
+.dark .hero-resend .ghost-dark:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.18);
+  color: #ffffff;
+}
+
 /* ─── Reduced motion overrides for new bits ─── */
 @media (prefers-reduced-motion: reduce) {
   .word-cascade > span { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
   .process-track::after { transition: none !important; }
   .section-frame .ind { transition: none !important; }
   .magnetic, .magnetic > * { transition: none !important; transform: none !important; }
+  .hero-cube-tag { animation: none !important; }
 }
