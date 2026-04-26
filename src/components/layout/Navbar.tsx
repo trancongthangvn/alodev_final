@@ -111,7 +111,7 @@ export default function Navbar() {
                 <svg className="w-4 h-4 text-brand-700 dark:text-brand-400" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z" /></svg>
                 Zalo
               </a>
-              <a href="mailto:hello@alodev.vn" className="flex items-center gap-2 px-4 py-3 rounded-xl border border-ink-100 dark:border-ink-800 text-ink-700 dark:text-ink-200 hover:bg-cream-50 dark:hover:bg-ink-900 transition">
+              <a href={'mailto:' + 'hello' + '@' + 'alodev.vn'} className="flex items-center gap-2 px-4 py-3 rounded-xl border border-ink-100 dark:border-ink-800 text-ink-700 dark:text-ink-200 hover:bg-cream-50 dark:hover:bg-ink-900 transition">
                 <svg className="w-4 h-4 text-brand-700 dark:text-brand-400" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
                 Email
               </a>

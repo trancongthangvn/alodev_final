@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Icon, { type IconName } from '@/components/Icon'
+import EmailLink from '@/components/EmailLink'
 
 const services = [
   'Website doanh nghiệp',
@@ -142,7 +143,7 @@ export default function LienHeClient() {
 
           <aside className="space-y-4">
             <ContactCard icon="message-circle" title="Zalo / Hotline" lines={[<a key="z" href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="text-brand-700 dark:text-brand-400 hover:underline">0364 234 936</a>, 'Online 8h–22h hằng ngày']} />
-            <ContactCard icon="mail"           title="Email"          lines={[<a key="e" href="mailto:hello@alodev.vn" className="text-brand-700 dark:text-brand-400 hover:underline">hello@alodev.vn</a>, 'Phản hồi trong 24h']} />
+            <ContactCard icon="mail"           title="Email"          lines={[<EmailLink key="e" user="hello" domain="alodev.vn" className="text-brand-700 dark:text-brand-400 hover:underline" />, 'Phản hồi trong 24h']} />
             <ContactCard icon="map-pin"        title="Văn phòng"      lines={['Hà Nội, Việt Nam', 'Hỗ trợ remote toàn quốc']} />
             <ContactCard icon="clock"          title="Cam kết"        lines={['Phản hồi báo giá: 24h', 'Bảo hành: 6–12 tháng', 'Source code thuộc về bạn']} />
           </aside>

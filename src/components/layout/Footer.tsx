@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Icon from '@/components/Icon'
+import EmailLink from '@/components/EmailLink'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -59,9 +60,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@alodev.vn" className="hover:text-white transition inline-flex items-center gap-1.5">
-                  <Icon name="mail" className="w-3.5 h-3.5 opacity-60" /> hello@alodev.vn
-                </a>
+                <EmailLink
+                  user="hello"
+                  domain="alodev.vn"
+                  className="hover:text-white transition inline-flex items-center gap-1.5"
+                  prefixIcon={<Icon name="mail" className="w-3.5 h-3.5 opacity-60" />}
+                />
               </li>
               <li>
                 <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="hover:text-white transition inline-flex items-center gap-1.5">
@@ -87,7 +91,7 @@ export default function Footer() {
         <div className="border-t border-slate-800 mt-8 pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
           <div>© {year} alodev.vn — Founder-led studio Hà Nội. All rights reserved.</div>
           <div className="flex items-center gap-4">
-            <a href="mailto:hello@alodev.vn" className="hover:text-slate-300 transition">hello@alodev.vn</a>
+            <EmailLink user="hello" domain="alodev.vn" className="hover:text-slate-300 transition" />
             <span className="text-slate-700">·</span>
             <a href="tel:0364234936" className="hover:text-slate-300 transition">0364 234 936</a>
           </div>
