@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# No bot traps, no admin paths after pivot
+Disallow: /api/
+
+Sitemap: https://alodev.vn/sitemap.xml

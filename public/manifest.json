@@ -1,0 +1,13 @@
+{
+  "name": "Alodev — Studio Web/App",
+  "short_name": "Alodev",
+  "description": "Founder-led studio thiết kế & phát triển website, app mobile, hệ thống quản trị.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.svg", "sizes": "180x180", "type": "image/svg+xml" }
+  ]
+}

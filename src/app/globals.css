@@ -1,0 +1,407 @@
+@import "tailwindcss";
+
+/* class-based dark mode (Tailwind v4 syntax) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --default-font-family: var(--font-sans);
+
+  /* ── Tech-vibe palette — cool slate base + warm saffron accent ── */
+  /* Ink — cool slate scale (was warm ink). Tech UIs use cool tones. */
+  --color-ink-50:  #f8fafc;
+  --color-ink-100: #eef1f5;
+  --color-ink-200: #dde2ea;
+  --color-ink-300: #b8c0cc;
+  --color-ink-400: #8590a1;
+  --color-ink-500: #64748b;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1e293b;
+  --color-ink-900: #111827;
+  --color-ink-950: #0b0e14;
+
+  /* Cream — soft cool surface (was warm). Renders as subtle off-white. */
+  --color-cream-50:  #f6f7f9;
+  --color-cream-100: #eef1f5;
+  --color-cream-200: #e2e6ec;
+
+  /* Saffron — single brand accent. Slightly cooler than pure amber for balance. */
+  --color-brand-50:  #fef7ec;
+  --color-brand-100: #fceac9;
+  --color-brand-200: #f9d28e;
+  --color-brand-300: #f5b652;
+  --color-brand-400: #ed9219;
+  --color-brand-500: #d27a08;
+  --color-brand-600: #ad5e07;
+  --color-brand-700: #8a4a09;
+  --color-brand-800: #703c0e;
+  --color-brand-900: #451a03;
+}
+
+:root {
+  --background: #f8fafc;       /* cool slate-50, less harsh than pure cream */
+  --foreground: #1e293b;       /* slate-800 — softer than pure black, easier on eyes */
+  --surface: #ffffff;
+  --surface-2: #eef1f5;
+  --border: #e4e7ec;
+  --muted: #64748b;
+  --accent: #ad5e07;           /* desaturated saffron */
+  --accent-soft: #d27a08;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0b0e14;       /* elevated charcoal w/ subtle blue tint — like GitHub Dark */
+  --foreground: #e6e9ee;       /* slate-200 — softer than pure white */
+  --surface: #13171f;          /* lifted surface */
+  --surface-2: #1a1f2c;        /* nested surface */
+  --border: #1f2330;
+  --muted: #8590a1;
+  --accent: #ed9219;
+  --accent-soft: #f5b652;
+  color-scheme: dark;
+}
+
+html {
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--background);
+  /* Prevent horizontal scroll from any rogue overflow */
+  overflow-x: hidden;
+  /* Better text rendering on mobile */
+  -webkit-text-size-adjust: 100%;
+  /* iOS Safari supports this for tap-highlight color */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hide root Navbar and Footer on admin pages */
+body.admin-page header,
+body.admin-page footer {
+  display: none !important;
+}
+
+body.admin-page {
+  background: #0F0F23;
+}
+
+/* Custom scrollbar in dark mode — match new ink palette */
+.dark ::-webkit-scrollbar { width: 10px; height: 10px; }
+.dark ::-webkit-scrollbar-track { background: #0b0e14; }
+.dark ::-webkit-scrollbar-thumb { background: #1f2330; border-radius: 5px; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #334155; }
+.dark ::selection { background: rgba(237, 146, 25, 0.25); color: inherit; }
+
+/* ─── Motion / decoration utilities (Linear/Vercel/Stripe vibe) ─── */
+
+/* Massive responsive headline — clamp scales between mobile and ultra-wide */
+.h-display {
+  font-size: clamp(2.125rem, 6.5vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+.h-section {
+  font-size: clamp(1.625rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* Touch-friendly tap targets (≥44×44 per Apple HIG / 48×48 Google MD3) */
+@media (pointer: coarse) {
+  button, a[role="button"], a[href]:not(.nav-link):not(:where(.kbd, [data-no-touch-pad])):where(.btn, .quote-cta, [data-touch]) {
+    min-height: 44px;
+  }
+  /* Form inputs MUST be ≥16px on mobile to prevent iOS auto-zoom on focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Safe-area insets for iOS notch / home indicator on sticky bottoms */
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+}
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 0px);
+}
+
+/* Hairline border like Linear */
+.hairline { border-color: rgba(0, 0, 0, 0.08); }
+.dark .hairline { border-color: rgba(255, 255, 255, 0.08); }
+
+/* Single-tone wash behind hero — replaces multi-stop AI-vibe aurora */
+.aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.aurora::before {
+  content: "";
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: min(700px, 110vw);
+  height: min(700px, 110vw);
+  border-radius: 50%;
+  filter: blur(min(110px, 18vw));
+  opacity: 0.18;
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 65%);
+  animation: orb-float 18s ease-in-out infinite;
+}
+.dark .aurora::before { opacity: 0.12; }
+
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-30px, 20px) scale(0.95); }
+}
+
+/* Marquee for logo cloud / testimonials */
+.marquee {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 32s linear infinite;
+  width: max-content;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+/* Card hover glow — Linear style */
+.glow-card {
+  position: relative;
+  isolation: isolate;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  /* Warm saffron sweep — single-tone, no rainbow */
+  background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(217, 119, 6, 0.35) 90deg, transparent 180deg, rgba(241, 153, 42, 0.25) 270deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+.glow-card:hover::before { opacity: 1; }
+
+/* Mono number proof points */
+.tabular { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+/* kbd-style chips (Raycast feel) */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.4rem;
+  border-radius: 0.375rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  box-shadow: 0 1px 0 0 #e5e7eb;
+}
+.dark .kbd {
+  background: #18181b;
+  border-color: #27272a;
+  color: #d4d4d8;
+  box-shadow: 0 1px 0 0 #18181b;
+}
+
+/* Smooth scroll for anchor links */
+html { scroll-behavior: smooth; }
+
+/* ─── Tasteful motion layer (Linear/Stripe/Vercel) ─── */
+
+/* Custom focus ring — tighter, brand-tinted */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.dark :focus-visible {
+  outline-color: #60a5fa;
+}
+
+/* Buttons / links: smooth color transitions everywhere */
+a, button, [role="button"] {
+  transition-property: color, background-color, border-color, opacity, transform, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reveal-on-scroll: starts hidden, fades + slides up when [data-revealed] */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal[data-revealed] {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Stagger children of a `.reveal-stagger` once parent is revealed */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-stagger[data-revealed] > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger[data-revealed] > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger[data-revealed] > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger[data-revealed] > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger[data-revealed] > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger[data-revealed] > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger[data-revealed] > *:nth-child(6) { transition-delay: 300ms; }
+.reveal-stagger[data-revealed] > *:nth-child(7) { transition-delay: 360ms; }
+.reveal-stagger[data-revealed] > *:nth-child(8) { transition-delay: 420ms; }
+.reveal-stagger[data-revealed] > *:nth-child(n+9) { transition-delay: 480ms; }
+
+/* Hero entry: page load sequential cascade */
+@keyframes hero-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-rise > * {
+  opacity: 0;
+  animation: hero-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-rise > *:nth-child(1) { animation-delay: 50ms; }
+.hero-rise > *:nth-child(2) { animation-delay: 150ms; }
+.hero-rise > *:nth-child(3) { animation-delay: 280ms; }
+.hero-rise > *:nth-child(4) { animation-delay: 410ms; }
+.hero-rise > *:nth-child(5) { animation-delay: 540ms; }
+
+/* Hover lift — subtle, 1.5px only (Linear style) */
+.lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-1.5px);
+}
+
+/* Spotlight — cursor-aware soft radial highlight on cards */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    480px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(217, 119, 6, 0.06),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+.dark .spotlight::after {
+  background: radial-gradient(
+    480px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(241, 153, 42, 0.10),
+    transparent 40%
+  );
+}
+.spotlight:hover::after,
+.spotlight-grid:hover .spotlight::after { opacity: 1; }
+.spotlight > * { position: relative; z-index: 1; }
+
+/* Scroll progress bar — Stripe doc style */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 60;
+  width: 0;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* Subtle nav link underline on hover (Vercel style) */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.4rem;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.5;
+}
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* Press-down on click — tactile (Raycast feel) */
+button:active, [role="button"]:active, a.lift:active {
+  transform: translateY(0);
+}
+
+/* Smooth image / iframe loading */
+img, iframe { color-scheme: light; }
+
+/* Reduced-motion overrides — kill all keyframe + transitions */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .aurora::before, .aurora::after, .marquee { animation: none !important; }
+  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
+  .hero-rise > * { opacity: 1 !important; animation: none !important; }
+}
+
+/* Grid background pattern (Vercel-style) */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.dark .grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+}
+.grid-bg-fade {
+  mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+}

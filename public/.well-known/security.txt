@@ -1,0 +1,5 @@
+Contact: mailto:hello@alodev.vn
+Contact: https://zalo.me/0364234936
+Expires: 2027-12-31T23:59:59Z
+Preferred-Languages: vi, en
+Canonical: https://alodev.vn/.well-known/security.txt
