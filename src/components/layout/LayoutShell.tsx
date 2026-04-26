@@ -8,6 +8,7 @@ import MotionLayer from '@/components/MotionLayer'
 import PaletteHint from '@/components/PaletteHint'
 import QuoteChoice from '@/components/QuoteChoice'
 import IntroAnimation from '@/components/IntroAnimation'
+import SectionFrame from '@/components/SectionFrame'
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <PaletteHint />
       <QuoteChoice />
       <MotionLayer />
+      <SectionFrame />
       <IntroAnimation />
     </>
   )

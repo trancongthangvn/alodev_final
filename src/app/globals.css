@@ -405,3 +405,164 @@ img, iframe { color-scheme: light; }
   mask-image: radial-gradient(ellipse at center, black, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 75%);
 }
+
+/* ─── rauno-style section frame (crosshair + indicator) ─── */
+.section-frame {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  mix-blend-mode: normal;
+}
+.section-frame .ch {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  color: var(--ink-300, #b8c0cc);
+  opacity: 0.55;
+  transition: opacity 0.35s ease;
+}
+.dark .section-frame .ch { color: #334155; opacity: 0.7; }
+.section-frame .ch::before,
+.section-frame .ch::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+.section-frame .ch::before { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+.section-frame .ch::after  { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+.section-frame .ch-tl { top: 12px; left: 12px; }
+.section-frame .ch-tr { top: 12px; right: 12px; }
+.section-frame .ch-bl { bottom: 12px; left: 12px; }
+.section-frame .ch-br { bottom: 12px; right: 12px; }
+
+.section-frame .ind {
+  position: absolute;
+  top: 14px;
+  right: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.55rem 0.25rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #334155;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.section-frame .ind[data-on] { opacity: 1; transform: translateY(0); }
+.dark .section-frame .ind {
+  background: rgba(11, 14, 20, 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+.section-frame .ind .ind-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(237, 146, 25, 0.18);
+}
+.section-frame .ind-num {
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  color: #94a3b8;
+}
+.section-frame .ind-name {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
+
+/* hide frame on small screens — too cramped */
+@media (max-width: 768px) {
+  .section-frame .ch { display: none; }
+  .section-frame .ind { top: 8px; right: 8px; padding: 0.2rem 0.5rem; font-size: 9px; }
+}
+
+/* ─── Hero word cascade — replaces hero-rise on the headline ─── */
+.word-cascade > span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  filter: blur(8px);
+  animation: wordCascade 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform, filter;
+}
+@keyframes wordCascade {
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ─── Process step scroll-fill connector ─── */
+.process-track {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+.dark .process-track { background: rgba(255, 255, 255, 0.08); }
+.process-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: calc(var(--fill, 0) * 100%);
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  transition: width 0.15s linear;
+  box-shadow: 0 0 12px rgba(237, 146, 25, 0.35);
+}
+.process-dot {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Magnetic primary CTA ─── */
+.magnetic {
+  display: inline-flex;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.magnetic > * {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── Tabbed showcase: fade between panels ─── */
+.tab-panel {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tab-panel[data-active] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.tab-trigger[data-active] {
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: 0 1px 0 0 rgba(0,0,0,0.04), 0 4px 16px -8px rgba(0,0,0,0.18);
+}
+.dark .tab-trigger[data-active] {
+  background: #1a1f2c;
+  box-shadow: 0 0 0 1px rgba(237, 146, 25, 0.18);
+}
+
+/* ─── Reduced motion overrides for new bits ─── */
+@media (prefers-reduced-motion: reduce) {
+  .word-cascade > span { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .process-track::after { transition: none !important; }
+  .section-frame .ind { transition: none !important; }
+  .magnetic, .magnetic > * { transition: none !important; transform: none !important; }
+}
