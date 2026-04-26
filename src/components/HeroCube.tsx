@@ -448,15 +448,27 @@ function setupCube(
   const insetMatte  = makeBaseInsetMap(512, '#1a1a20', '#040407')
   const insetSemi   = makeBaseInsetMap(512, '#1f1f26', '#040408')
 
+  // Material PBR params extracted from Resend's actual chunk:
+  //   roughness: 0.2, metalness: 0.2, reflectivity: 0.2
+  // We keep the texture/normal maps for visible per-tile variation
+  // (granite/mesh/dots) — Resend layers maps on top of uniform PBR base.
   const tileVariants = [
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSmooth, roughness: 0.42, metalness: 0.45, clearcoat: 0.35, clearcoatRoughness: 0.22, envMapIntensity: 0.85 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 1.0,  metalness: 0.0,  envMapIntensity: 0.07 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.4, 1.4), roughness: 0.65, metalness: 0.35, envMapIntensity: 0.7 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainSubtle.map, normalMap: grainSubtle.nor, normalScale: new THREE.Vector2(0.7, 0.7), roughness: 0.55, metalness: 0.35, envMapIntensity: 0.75 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texDots,    roughness: 0.45, metalness: 0.4, envMapIntensity: 0.85 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.5,  metalness: 0.4, envMapIntensity: 0.8 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.4,  metalness: 0.5, envMapIntensity: 0.9 }),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSemi,  roughness: 0.55, metalness: 0.32, envMapIntensity: 0.7 }),
+    // smooth glossy onyx — slight clearcoat for premium product feel
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSmooth, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.18, envMapIntensity: 1.0 }),
+    // matte void — slightly higher roughness, no clearcoat
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 0.4, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
+    // granite/sparkle — full Resend params + heavy normal scale for noise pop
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    // micro-grain — subtle noise
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainSubtle.map, normalMap: grainSubtle.nor, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    // perforated dots
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texDots,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    // mesh grille
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    // vertical stripes
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    // semi-gloss filler
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSemi,  roughness: 0.3, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.85 }),
   ]
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -499,7 +511,7 @@ function setupCube(
   }
 
   const SIZE = 0.97
-  const GAP  = 0.05
+  const GAP  = 0.08    // bumped from 0.05 — Resend's cubelets show wider spacing
   const STEP = SIZE + GAP
   const TILE_SIZE = 0.84
   const TILE_RADIUS = 0.08
