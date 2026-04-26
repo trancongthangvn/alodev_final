@@ -79,20 +79,25 @@ export default function RootLayout({
     <html lang="vi" className={`${sansFont.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Apply theme before paint to prevent FOUC.
-            Two-key system:
-              alodev-theme-v2       → 'dark' | 'light'
-              alodev-theme-explicit → '1' iff written by ThemeToggle UI click
-            Logic:
-              1. Both keys set + explicit='1' → real user toggle, respect forever
-              2. Otherwise → time-based default (dark 18:00–06:00 local, else light)
-                 AND auto-clean any orphan v2 value (could be from DevTools,
-                 stale testing, browser extension, prior session before this
-                 contract). This is what makes the fix "triệt để" — we no
-                 longer trust v2 alone as proof of user intent.
-            Also migrate old 'alodev-theme' (v1) keys for backward compat. */}
+
+            Three-layer system:
+            1. Version-based migration (alodev-theme-ver). Bumping THEME_VER
+               forces a one-time wipe of ALL theme keys for every user on
+               next visit. Used here to clear values left over from earlier
+               testing where ThemeToggle was triggered programmatically —
+               those values look identical to real user toggles, so the only
+               way to clear them is a forced migration.
+            2. Two-key contract: alodev-theme-v2 + alodev-theme-explicit.
+               The explicit flag is set ONLY by a real ThemeToggle UI click.
+               Without it, any v2 value is treated as stale and cleaned.
+            3. Time-based default: dark 18:00–06:00, else light.
+
+            Future-proof: any DevTools / extension / scripting that writes
+            v2 alone (no explicit) gets auto-cleaned. Real user toggles
+            persist forever. Bumping THEME_VER again resets everyone. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(localStorage.getItem('alodev-theme')!==null){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');}var t=localStorage.getItem('alodev-theme-v2');var x=localStorage.getItem('alodev-theme-explicit');var d;if((t==='dark'||t==='light')&&x==='1'){d=(t==='dark');}else{if(t!==null)localStorage.removeItem('alodev-theme-v2');if(x!==null)localStorage.removeItem('alodev-theme-explicit');var h=new Date().getHours();d=(h>=18||h<6);}if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+            __html: `(function(){try{var V='3';if(localStorage.getItem('alodev-theme-ver')!==V){localStorage.removeItem('alodev-theme');localStorage.removeItem('alodev-theme-day');localStorage.removeItem('alodev-theme-v2');localStorage.removeItem('alodev-theme-explicit');localStorage.setItem('alodev-theme-ver',V);}var t=localStorage.getItem('alodev-theme-v2');var x=localStorage.getItem('alodev-theme-explicit');var d;if((t==='dark'||t==='light')&&x==='1'){d=(t==='dark');}else{if(t!==null)localStorage.removeItem('alodev-theme-v2');if(x!==null)localStorage.removeItem('alodev-theme-explicit');var h=new Date().getHours();d=(h>=18||h<6);}if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
           }}
         />
       </head>
