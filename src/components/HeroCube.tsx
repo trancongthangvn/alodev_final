@@ -681,11 +681,13 @@ function setupCube(
         z: new THREE.Vector3(0,0,1)
       })[axis]
       const t0 = performance.now()
-      // Sinusoidal ease-in-out — gentler acceleration/deceleration than the
-      // previous quartic curve. The quartic punched in/out hard which
-      // showed as a "stop" when the next twist started. Sinusoidal blends
-      // smoothly into the next twist when the gap between them is short.
-      const ease = (t: number) => 0.5 * (1 - Math.cos(Math.PI * t))
+      // easeInOutQuart — same as Resend's reference implementation. The
+      // quartic curve has a "premium settle" feel at both ends: quick
+      // through the middle of the rotation, gentle deceleration into the
+      // final position. Combined with the 350-850ms pause between twists,
+      // this reads as "deliberate, considered" — the user's eye has time
+      // to register each new orientation before the next twist starts.
+      const ease = (t: number) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
 
       function frame(now: number) {
         const t = Math.min((now - t0) / duration, 1)
@@ -734,31 +736,35 @@ function setupCube(
   let timer1: ReturnType<typeof setTimeout> | null = null
   let timer2: ReturnType<typeof setTimeout> | null = null
   async function choreograph() {
-    // Initial hold lets the entrance scale-up settle before the first twist.
+    // Match Resend's exact choreograph cadence — researched from the
+    // reference implementation. The 350-850ms pause between twists is
+    // load-bearing: it gives the eye time to register each new orientation
+    // before the next twist starts, which is what reads as "many angles"
+    // and "deliberate" rather than frantic.
     const initialHold = opts.reducedMotion ? 2400 : 1500
     await new Promise((r) => { timer1 = setTimeout(r, initialHold) })
     while (!stopped) {
       const m = moveBank[moveIndex % moveBank.length]
       moveIndex++
-      const turns = Math.random() < 0.06 ? 2 : 1
-      // Slightly longer per-twist (820-1020ms single, 1400ms double) — with
-      // sinusoidal easing and near-zero gap, longer durations read as
-      // smoother continuous motion rather than rushing through each turn.
-      const baseDur = opts.reducedMotion ? 1200 : 820
-      const duration = turns === 2 ? baseDur + 580 : baseDur + Math.random() * 200
+      // 10% double-twist probability matches Resend exactly.
+      const turns = Math.random() < 0.10 ? 2 : 1
+      // Resend per-twist: 600-820ms single, 1000ms double. Reduced-motion
+      // users get noticeably slower turns for a gentler effect.
+      const baseDur = opts.reducedMotion ? 1100 : 600
+      const duration = turns === 2 ? (opts.reducedMotion ? 1500 : 1000) : baseDur + Math.random() * 220
       await performTwist({ ...m, turns, duration })
       if (stopped) break
-      // Near-zero gap between twists for continuous motion. The cube
-      // basically never stops moving — one face finishes, another starts.
-      // Reduced-motion users get a small pause so it does not feel frantic.
-      const basePause = opts.reducedMotion ? 800 : 80
-      const jitter = opts.reducedMotion ? 800 : 180
+      // Resend pause: 350-850ms. Gives the cube a moment to "land" before
+      // the next move — that breathing space is the difference between
+      // continuous motion and a frantic blur.
+      const basePause = opts.reducedMotion ? 1400 : 350
+      const jitter = opts.reducedMotion ? 1200 : 500
       await new Promise((r) => { timer2 = setTimeout(r, basePause + Math.random() * jitter) })
     }
   }
   // Always run choreograph — the cube twist is the brand identity for this
-  // hero, same as on resend.com. For reduced-motion users we use longer
-  // pauses + slower turns above so the motion is gentler but still present.
+  // hero, same as on resend.com. Reduced-motion users get longer pauses +
+  // slower turns above so the motion is gentler but still present.
   choreograph()
 
   const targetRot = { x: -0.32, y: 0.55 }
@@ -769,12 +775,12 @@ function setupCube(
     const rect = wrap.getBoundingClientRect()
     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1
     const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1
-    // Halved sensitivity (0.30/0.16 → 0.18/0.10). The previous range
-    // produced a "wobbly" parallax that drew attention; Resend's cube
-    // barely budges with cursor — the effect should feel like the cube
-    // is gently aware of you, not theatrical.
-    targetRot.y = 0.55 + nx * 0.18
-    targetRot.x = -0.32 - ny * 0.10
+    // Mouse parallax matches Resend's intensity (0.30/0.16). Stronger than
+    // we previously tuned — when the user moves the cursor over the cube
+    // they see noticeably more angles, which is part of what makes the
+    // hero feel "alive" instead of just an idle rotation loop.
+    targetRot.y = 0.55 + nx * 0.30
+    targetRot.x = -0.32 - ny * 0.16
   }
   function onLeave() {
     targetRot.x = -0.32
@@ -829,11 +835,12 @@ function setupCube(
     }
     void now
 
-    // Auto-spin bumped 0.00085 → 0.0016 rad/frame. With near-continuous
-    // face twists running, a faster background rotation reads as constant
-    // motion: the whole cube slowly rotating while individual layers
-    // twist on top. Full Y rotation in ~65 seconds at 60fps.
-    autoSpin += 0.0016
+    // Auto-spin matches Resend's reference (0.0014 rad/frame). Full Y
+    // rotation in ~75 seconds at 60fps — slow enough that you barely
+    // register it on a casual glance, but a user lingering on the hero
+    // sees the whole cube gradually expose every side. Combined with
+    // discrete face twists, the cube cycles through many configurations.
+    autoSpin += 0.0014
     currentRot.x += (targetRot.x - currentRot.x) * 0.06
     currentRot.y += (targetRot.y - currentRot.y) * 0.06
     cubeGroup.rotation.x = currentRot.x
