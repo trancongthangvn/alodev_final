@@ -42,10 +42,40 @@ function hasWebGL(): boolean {
   }
 }
 
+/**
+ * Three states drive the visual layer:
+ *
+ *   'loading'     — initial. Canvas not visible yet, SVG hidden too. Only a
+ *                   minimal CSS skeleton (saffron breath + sheen) shows so
+ *                   the user sees "something premium is materializing"
+ *                   instead of the literal SVG illustration.
+ *   'interactive' — three.js loaded + setupCube ran. Canvas fades in
+ *                   (700ms), skeleton fades out.
+ *   'fallback'    — three.js failed to load OR took longer than 1.8s
+ *                   (slow connection / underpowered device) OR no WebGL
+ *                   context. SVG fades in.
+ *
+ * The SVG illustration is INTENTIONALLY hidden by default for JS-enabled
+ * users (almost everyone) — Resend does the same. The brief "flash of SVG"
+ * the previous design caused is replaced by a clean skeleton-to-WebGL
+ * transition that reads as polished loading rather than as a fallback
+ * being swapped out.
+ *
+ * For users with JS disabled, a <noscript> override in the CSS file shows
+ * the SVG (graceful degradation + SEO).
+ */
+type CubeState = 'loading' | 'interactive' | 'fallback'
+
+// Phones on slow networks may still need a few seconds to download three.js.
+// 1.8s strikes a balance: most modern devices on 4G+ load three.js well
+// under 1s, so they never hit this. Slow-3G phones see SVG kick in instead
+// of staring at the skeleton forever.
+const FALLBACK_TIMEOUT_MS = 1800
+
 export default function HeroCube() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const wrapRef = useRef<HTMLDivElement | null>(null)
-  const [interactive, setInteractive] = useState(false)
+  const [state, setState] = useState<CubeState>('loading')
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -53,54 +83,74 @@ export default function HeroCube() {
     const wrap = wrapRef.current
     if (!canvas || !wrap) return
 
-    // Skip WebGL only when there is genuinely no GL context available.
-    // The previous `(max-width: 768px)` skip was too aggressive — it left
-    // every phone with a frozen SVG that read as a broken/dead cube.
-    // Modern phones (iPhone 11+ / mid-range Android) handle three.js fine
-    // at the reduced-quality settings applied below.
-    if (!hasWebGL()) return
+    // No WebGL context available -> straight to SVG fallback.
+    if (!hasWebGL()) {
+      setState('fallback')
+      return
+    }
     const small = window.matchMedia('(max-width: 768px)').matches
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     // Guard against React Strict Mode double-mount: if cleanup runs before
-    // `import('three')` resolves, we must NOT call setupCube. Otherwise we
-    // end up with two renderers on the same canvas (one from each mount),
-    // both running animation loops and stomping on each other — that was
-    // why the cube appeared frozen / not rotating.
+    // `import('three')` resolves, we must NOT call setupCube — otherwise
+    // two renderers stomp on the same canvas.
     let cancelled = false
     let cleanup: (() => void) | null = null
 
-    // The hero is always above-the-fold, so we don't need to gate on
-    // IntersectionObserver — boot three.js immediately. Removing the
-    // observer eliminates a class of race conditions and starts the cube
-    // animation ~50ms sooner.
+    // Slow-load fallback timer: if three.js + setupCube haven't finished in
+    // FALLBACK_TIMEOUT_MS, switch to the SVG so the user gets a real cube
+    // instead of an indefinite skeleton. We only flip to fallback if the
+    // state is still 'loading' (won't override 'interactive').
+    const slowTimer = window.setTimeout(() => {
+      setState((prev) => (prev === 'loading' ? 'fallback' : prev))
+    }, FALLBACK_TIMEOUT_MS)
+
     import('three').then((THREE) => {
       if (cancelled) return
-      cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced, mobile: small })
-      setInteractive(true)
+      try {
+        cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced, mobile: small })
+        window.clearTimeout(slowTimer)
+        setState('interactive')
+      } catch (err) {
+        console.warn('[HeroCube] setupCube threw:', err)
+        window.clearTimeout(slowTimer)
+        setState('fallback')
+      }
     }).catch((err) => {
       console.warn('[HeroCube] three.js failed to load:', err)
+      window.clearTimeout(slowTimer)
+      setState('fallback')
     })
 
     return () => {
       cancelled = true
+      window.clearTimeout(slowTimer)
       cleanup?.()
     }
   }, [])
 
   return (
-    <div ref={wrapRef} className="hero-cube-wrap relative w-full">
-      {/* Static SVG fallback — visible until the WebGL canvas takes over. */}
+    <div ref={wrapRef} className="hero-cube-wrap relative w-full" data-cube-state={state}>
+      {/* Skeleton — visible only during the 'loading' state. Pure CSS
+          (saffron breath + sheen sweep), no cube outline drawn. Reads as
+          "premium content materializing" instead of "fallback illustration." */}
       <div
         aria-hidden="true"
-        className={`hero-cube-fallback absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700 ${interactive ? 'opacity-0' : 'opacity-100'}`}
+        className={`hero-cube-skeleton absolute inset-0 pointer-events-none transition-opacity duration-500 ${state === 'loading' ? 'opacity-100' : 'opacity-0'}`}
+      />
+
+      {/* Static SVG fallback — only fades in if WebGL fails or times out.
+          For no-JS users the CSS noscript rule keeps it visible. */}
+      <div
+        aria-hidden="true"
+        className={`hero-cube-fallback absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700 ${state === 'fallback' ? 'opacity-100' : 'opacity-0'}`}
       >
         <StaticCube />
       </div>
 
       <canvas
         ref={canvasRef}
-        className={`hero-cube-canvas relative w-full h-full transition-opacity duration-700 ${interactive ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-canvas relative w-full h-full transition-opacity duration-700 ${state === 'interactive' ? 'opacity-100' : 'opacity-0'}`}
         aria-label="3D Rubik visualization"
       />
     </div>
