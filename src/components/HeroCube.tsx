@@ -115,40 +115,81 @@ export default function HeroCube() {
 /**
  * Tiny isometric cube SVG — used as the static fallback on mobile, reduced-
  * motion, and during the brief gap before three.js loads on desktop.
+ *
+ * Per-face shade arrays + face sheen gradients fake the WebGL lighting:
+ * top face is brightest (key-lit), right face medium-warm, left face
+ * cool-dark (rim-lit). Without this, the cube reads as a black blob
+ * during the boot delay.
  */
 function StaticCube() {
+  // Mid-grey range chosen to match the WebGL inset colors (#5e5e6a etc.)
+  // so the SVG → WebGL handoff is visually continuous.
+  const TOP   = ['#5a5a64', '#52525c', '#48484f', '#4e4e58']
+  const RIGHT = ['#3e3e48', '#42424d', '#37373f', '#3a3a44']
+  const LEFT  = ['#2f2f39', '#353540', '#2b2b33', '#37373f']
+
   const tile = (x: number, y: number, fill: string) => (
     <rect x={x} y={y} width="36" height="36" rx="4" fill={fill} stroke="#0a0a0c" strokeWidth="1" />
   )
-  const shades = ['#1a1a1f', '#222227', '#16161a', '#1f1f24']
-  // % has higher precedence than >>>, so we need explicit parens around the shift
-  const pick = (i: number) => shades[((i * 2654435761) >>> 28) % shades.length] || shades[0]
+  const pick = (arr: string[], i: number) =>
+    arr[((i * 2654435761) >>> 28) % arr.length] || arr[0]
 
   return (
     <svg viewBox="0 0 280 280" className="w-[80%] max-w-[420px]" aria-hidden="true">
       <defs>
         <radialGradient id="cubeGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(170,180,210,0.18)" />
-          <stop offset="60%" stopColor="rgba(80,80,120,0.04)" />
+          <stop offset="0%" stopColor="rgba(170,180,210,0.22)" />
+          <stop offset="60%" stopColor="rgba(80,80,120,0.05)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+        </radialGradient>
+
+        {/* Per-face sheen overlays — fake the directional lighting. */}
+        <linearGradient id="topSheen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,250,235,0.10)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.10)" />
+        </linearGradient>
+        <linearGradient id="rightSheen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,215,170,0.05)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.18)" />
+        </linearGradient>
+        <linearGradient id="leftSheen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(170,200,255,0.05)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0.22)" />
+        </linearGradient>
+
+        {/* Soft contact shadow grounding the cube. */}
+        <radialGradient id="contactShadow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="rgba(0,0,0,0.45)" />
+          <stop offset="70%" stopColor="rgba(0,0,0,0.10)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0)" />
         </radialGradient>
       </defs>
-      <rect x="0" y="0" width="280" height="280" fill="url(#cubeGlow)" />
 
+      <rect x="0" y="0" width="280" height="280" fill="url(#cubeGlow)" />
+      <ellipse cx="140" cy="248" rx="92" ry="12" fill="url(#contactShadow)" />
+
+      {/* Top face — brightest, key-lit. */}
       <g transform="translate(80 60) skewX(-30) scale(0.95 0.6)">
         {[0,1,2].map((r) => [0,1,2].map((c) => (
-          <g key={`t-${r}-${c}`}>{tile(c * 40, r * 40, pick(r * 3 + c))}</g>
+          <g key={`t-${r}-${c}`}>{tile(c * 40, r * 40, pick(TOP, r * 3 + c))}</g>
         )))}
+        <rect x="-2" y="-2" width="124" height="124" fill="url(#topSheen)" pointerEvents="none" />
       </g>
+
+      {/* Right face — warm rim, medium brightness. */}
       <g transform="translate(140 130) skewY(-30)">
         {[0,1,2].map((r) => [0,1,2].map((c) => (
-          <g key={`r-${r}-${c}`}>{tile(c * 40, r * 40, pick(9 + r * 3 + c))}</g>
+          <g key={`r-${r}-${c}`}>{tile(c * 40, r * 40, pick(RIGHT, r * 3 + c))}</g>
         )))}
+        <rect x="-2" y="-2" width="124" height="124" fill="url(#rightSheen)" pointerEvents="none" />
       </g>
+
+      {/* Left face — cool rim, darkest. */}
       <g transform="translate(20 130) skewY(30)">
         {[0,1,2].map((r) => [0,1,2].map((c) => (
-          <g key={`l-${r}-${c}`}>{tile(c * 40, r * 40, pick(18 + r * 3 + c))}</g>
+          <g key={`l-${r}-${c}`}>{tile(c * 40, r * 40, pick(LEFT, r * 3 + c))}</g>
         )))}
+        <rect x="-2" y="-2" width="124" height="124" fill="url(#leftSheen)" pointerEvents="none" />
       </g>
     </svg>
   )
