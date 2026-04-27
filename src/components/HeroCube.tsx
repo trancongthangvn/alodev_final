@@ -294,13 +294,14 @@ function setupCube(
   fill.position.set(2, 1.5, 9)
   scene.add(fill)
 
-  // Cursor spotlight — a hover-tracking PointLight that follows the mouse
-  // and acts like a flashlight, revealing the texture detail on whatever
-  // tile is under the cursor. Off by default; ramps up when the cursor
-  // enters the wrap, fades back to 0 on leave.
-  // distance=3.5 + decay=2 keeps the illumination tight to a small area
-  // so it reads as a focused beam, not a diffuse glow.
-  const cursorLight = new THREE.PointLight(0xfff8ee, 0, 3.5, 2)
+  // Cursor spotlight — a hover-tracking PointLight that gently lifts the
+  // illumination on whatever tile is under the cursor so its texture
+  // (carbon weave / granite / hex / stripes) becomes readable.
+  // distance=2.6 keeps the lit zone close to a single tile; target
+  // intensity is capped low (1.6) so PointLight's specular response on
+  // low-roughness materials does NOT saturate tiles into bright round
+  // discs — the goal is to *reveal* the material, not flash a hotspot.
+  const cursorLight = new THREE.PointLight(0xfff4e4, 0, 2.6, 2)
   cursorLight.position.set(0, 0, 3)
   scene.add(cursorLight)
 
@@ -910,7 +911,7 @@ function setupCube(
     // cursor without the light leaving the cube's reach.
     cursorTarget.x = nx * 2.6
     cursorTarget.y = -ny * 2.6
-    cursorTarget.intensity = 4.0
+    cursorTarget.intensity = 1.6
   }
   function onLeave() {
     parallaxTarget.x = 0
