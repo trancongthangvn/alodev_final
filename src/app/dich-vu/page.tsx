@@ -104,7 +104,7 @@ export default function DichVuPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white dark:bg-ink-950">
+      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
           {packages.map((pkg) => (
             <div key={pkg.id} id={pkg.id} className="scroll-mt-20">

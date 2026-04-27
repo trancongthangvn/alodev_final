@@ -83,7 +83,7 @@ export default function VeChungToiPage() {
       </section>
 
       {/* Principles */}
-      <section className="py-14 lg:py-24 bg-white dark:bg-ink-950">
+      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Nguyên tắc</Eyebrow>
@@ -107,7 +107,7 @@ export default function VeChungToiPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-14 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800">
+      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-xl mx-auto text-center">
             <Eyebrow>Hành trình</Eyebrow>
@@ -129,7 +129,7 @@ export default function VeChungToiPage() {
       </section>
 
       {/* Team transparency */}
-      <section className="py-14 lg:py-24 bg-white dark:bg-ink-950">
+      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal rounded-3xl border border-ink-100 dark:border-ink-800 bg-cream-50 dark:bg-ink-900 p-8 lg:p-10">
             <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400">

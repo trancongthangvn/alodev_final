@@ -73,7 +73,7 @@ function CaseStudy({ project }: { project: Project }) {
       </section>
 
       {/* Three capability sections */}
-      <section className="py-16 bg-white dark:bg-ink-950">
+      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <CapabilitySection
             icon="code"
@@ -140,7 +140,7 @@ function CaseStudy({ project }: { project: Project }) {
       )}
 
       {/* Related */}
-      <section className="py-16 bg-white dark:bg-ink-950">
+      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Dự án khác</h2>

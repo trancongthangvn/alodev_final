@@ -89,7 +89,7 @@ export default function DuAnPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-14 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
+      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="h-section text-gray-900 dark:text-white">Bạn cũng muốn xuất hiện ở đây?</h2>
           <p className="mt-4 text-lg text-gray-600 dark:text-ink-400">Gửi yêu cầu — Alodev biến ý tưởng của bạn thành sản phẩm thật.</p>
