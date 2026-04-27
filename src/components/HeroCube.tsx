@@ -53,14 +53,13 @@ export default function HeroCube() {
     const wrap = wrapRef.current
     if (!canvas || !wrap) return
 
-    // Skip 3D ONLY for mobile (battery/GPU) or no-WebGL (impossible).
-    // Reduced-motion is honored INSIDE setupCube by skipping the abrupt face
-    // twists — but the gentle auto-spin + cursor parallax stay on, matching
-    // Resend's actual behavior. Showing a static SVG when the user just has
-    // OS-level reduce-motion enabled (a very common default on macOS) was
-    // hiding the cube for far too many people.
+    // Skip WebGL only when there is genuinely no GL context available.
+    // The previous `(max-width: 768px)` skip was too aggressive — it left
+    // every phone with a frozen SVG that read as a broken/dead cube.
+    // Modern phones (iPhone 11+ / mid-range Android) handle three.js fine
+    // at the reduced-quality settings applied below.
+    if (!hasWebGL()) return
     const small = window.matchMedia('(max-width: 768px)').matches
-    if (small || !hasWebGL()) return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     // Guard against React Strict Mode double-mount: if cleanup runs before
@@ -77,7 +76,7 @@ export default function HeroCube() {
     // animation ~50ms sooner.
     import('three').then((THREE) => {
       if (cancelled) return
-      cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced })
+      cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced, mobile: small })
       setInteractive(true)
     }).catch((err) => {
       console.warn('[HeroCube] three.js failed to load:', err)
@@ -191,15 +190,23 @@ function setupCube(
   wrap: HTMLDivElement,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   THREE: any,
-  opts: { reducedMotion?: boolean } = {}
+  opts: { reducedMotion?: boolean; mobile?: boolean } = {}
 ): () => void {
+  const isMobile = !!opts.mobile
   const renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    // Antialias OFF on mobile — fragment-shader cost on high-DPR phones is
+    // significant (4x pixels at DPR 2-3). The lower pixel ratio cap below
+    // already gives crisp-enough edges on the small cube footprint.
+    antialias: !isMobile,
     alpha: true,
     powerPreference: 'high-performance',
   })
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio * 1.25, 2.5))
+  renderer.setPixelRatio(
+    isMobile
+      ? Math.min(window.devicePixelRatio, 2)
+      : Math.min(window.devicePixelRatio * 1.25, 2.5),
+  )
   renderer.setClearColor(0x000000, 0)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   // ACES with a high exposure to push the cube into the readable mid-grey
@@ -219,7 +226,9 @@ function setupCube(
   camera.lookAt(0, -0.05, 0)
 
   function makeEnvMap() {
-    const w = 1024, h = 512
+    // 512×256 on mobile (1/4 the texels) keeps env reflections sharp enough
+    // for the cube's ~280px footprint while saving ~1.5MB of texture upload.
+    const w = isMobile ? 512 : 1024, h = isMobile ? 256 : 512
     const c = document.createElement('canvas')
     c.width = w; c.height = h
     const ctx = c.getContext('2d')!
@@ -269,7 +278,12 @@ function setupCube(
   key.position.set(4.5, 8, 7)
   key.castShadow = true
   // 4096 to match the rubik_resend repo for crisp shadow edges (~16MB GPU).
-  key.shadow.mapSize.set(4096, 4096)
+  // Shadow map: 4096² (~16MB GPU) on desktop, 1024² (~1MB) on mobile.
+  // The cube's shadow lands on a single flat plane and reads softly even
+  // at 1024² thanks to the shadow.radius blur below, so dropping to 1/4
+  // is invisible to the eye but reclaims ~12MB of GPU memory + cuts the
+  // shadow-pass fill rate cost on phones.
+  key.shadow.mapSize.set(isMobile ? 1024 : 4096, isMobile ? 1024 : 4096)
   key.shadow.camera.near = 0.5
   key.shadow.camera.far = 30
   key.shadow.camera.left = -5
