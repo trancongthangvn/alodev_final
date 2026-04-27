@@ -789,6 +789,103 @@ img, iframe { color-scheme: light; }
   :where(.hero-cube-fallback) { opacity: 1 !important; }
 }
 
+/* ─────── Cinematic canvas reveal ───────
+   When state flips loading→interactive the canvas runs a single
+   "materializing" animation: it starts rotated -90° on the Y axis +
+   tilted forward, scaled to 55%, heavily blurred and dim, then settles
+   into the idle 3/4 view with a back-ease overshoot. The Three.js
+   tumble underneath is already running, so the user sees the cube
+   "emerging from a tumbled-back state" rather than a flat opacity fade.
+   Three layered transforms compose:
+
+     • opacity   0 → 1 (with brightness 0.45 → 1, saturate 0.7 → 1)
+     • blur      18px → 0
+     • rotateY   -90° → 7° → 0° (1/4-turn entrance + slight overshoot)
+     • rotateX   12° → -1.5° → 0° (forward tilt then settle)
+     • scale     0.55 → 1.045 → 1 (bounces past target, settles)
+
+   Selector targets data-cube-state on the wrap so the animation only
+   fires at the moment of transition — never re-runs once interactive. */
+@keyframes hero-cube-canvas-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.55) rotateY(-90deg) rotateX(12deg);
+    filter: blur(18px) brightness(0.45) saturate(0.7);
+  }
+  40% {
+    opacity: 1;
+    filter: blur(3px) brightness(0.85) saturate(0.92);
+  }
+  70% {
+    transform: scale(1.045) rotateY(7deg) rotateX(-1.5deg);
+    filter: blur(0) brightness(1) saturate(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg) rotateX(0deg);
+    filter: blur(0) brightness(1) saturate(1);
+  }
+}
+[data-cube-state="interactive"] > .hero-cube-canvas {
+  transform-origin: 50% 55%;
+  animation: hero-cube-canvas-reveal 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ─────── Saffron flash burst ───────
+   A single brief expanding glow at the loading→interactive moment.
+   Reads as the "click" / "snap" of materialization — the cube didn't
+   just fade in, it ARRIVED. ::before runs once because the animation
+   has 'both' so the final keyframe (opacity 0, scale 2.2) is held;
+   re-running would require state to flip away from interactive and
+   back, which doesn't happen in normal flow. */
+[data-cube-state="interactive"]::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(237, 146, 25, 0.55) 0%,
+    rgba(237, 146, 25, 0.18) 35%,
+    rgba(237, 146, 25, 0.04) 60%,
+    transparent 75%
+  );
+  filter: blur(10px);
+  transform: translate(-50%, -50%) scale(0.3);
+  animation: hero-cube-flash 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 4;
+}
+[data-theme=light] [data-cube-state="interactive"]::before {
+  background: radial-gradient(
+    circle at center,
+    rgba(237, 146, 25, 0.40) 0%,
+    rgba(237, 146, 25, 0.12) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: multiply;
+}
+@keyframes hero-cube-flash {
+  0%   { opacity: 0;   transform: translate(-50%, -50%) scale(0.3); }
+  20%  { opacity: 1; }
+  100% { opacity: 0;   transform: translate(-50%, -50%) scale(2.2); }
+}
+
+/* Skeleton exit — synchronized with the canvas reveal start. Instead of
+   the basic opacity fade, the skeleton scales outward and blurs as the
+   cube emerges, like a placeholder dissolving into the real artifact. */
+[data-cube-state="interactive"] .hero-cube-skeleton {
+  animation: hero-cube-skeleton-exit 700ms cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+@keyframes hero-cube-skeleton-exit {
+  0%   { opacity: 1; transform: scale(1);    filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.25); filter: blur(8px); }
+}
+
 @keyframes hero-cube-scale-in-fade {
   from {
     opacity: 0;
