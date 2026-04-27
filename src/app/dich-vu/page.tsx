@@ -117,9 +117,9 @@ export default function DichVuPage() {
                   <p className="text-sm text-ink-500 dark:text-ink-400">{pkg.tagline}</p>
                 </div>
               </div>
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                 {pkg.tiers.map((tier, i) => (
-                  <div key={tier.name} className={`rounded-2xl border p-6 transition ${i === 1 ? 'border-brand-300 bg-brand-50/30 shadow-md dark:border-brand-500/40 dark:bg-brand-500/5' : 'border-gray-200 bg-white hover:border-gray-300 dark:border-ink-800 dark:bg-ink-900 dark:hover:border-ink-700'}`}>
+                  <div key={tier.name} className={`rounded-2xl border p-5 md:p-6 transition ${i === 1 ? 'border-brand-300 bg-brand-50/30 shadow-md dark:border-brand-500/40 dark:bg-brand-500/5' : 'border-gray-200 bg-white hover:border-gray-300 dark:border-ink-800 dark:bg-ink-900 dark:hover:border-ink-700'}`}>
                     <div className="text-sm font-semibold text-gray-500 dark:text-ink-400">{tier.name}</div>
                     <div className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{tier.price}</div>
                     <ul className="mt-5 space-y-2.5">

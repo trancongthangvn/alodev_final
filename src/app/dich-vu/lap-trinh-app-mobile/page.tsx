@@ -60,7 +60,7 @@ export default function LapTrinhAppMobilePage() {
 
       <section className="relative overflow-hidden bg-cream-50 dark:bg-ink-950 border-b border-ink-100 dark:border-ink-800">
         <div className="aurora opacity-50" />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10 lg:pt-20 lg:pb-16">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 lg:pt-20 lg:pb-16">
           <Breadcrumbs items={[
             { name: 'Trang chủ', href: '/' },
             { name: 'Dịch vụ', href: '/dich-vu' },
@@ -80,7 +80,7 @@ export default function LapTrinhAppMobilePage() {
               Dùng <b className="text-ink-700 dark:text-ink-200">Swift/Kotlin native</b> cho hiệu năng tối đa hoặc <b className="text-ink-700 dark:text-ink-200">React Native/Flutter</b> cho tốc độ ship cả 2 nền tảng cùng lúc.
               Alodev xử lý toàn bộ publish lên App Store + Google Play.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <QuoteCTA size="lg">Yêu cầu báo giá app</QuoteCTA>
               <Link href="/du-an" className="inline-flex items-center gap-2 rounded-xl bg-white dark:bg-ink-900 border border-ink-200 dark:border-ink-800 px-6 py-3.5 text-ink-900 dark:text-white font-semibold hover:border-ink-300 dark:hover:border-ink-700 transition">
                 Xem app đã làm
@@ -99,9 +99,9 @@ export default function LapTrinhAppMobilePage() {
             </div>
             <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">6 thứ Alodev xử lý trọn gói</h2>
           </div>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="mt-6 lg:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
-              <div key={f.title} className="rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-6">
+              <div key={f.title} className="rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 md:p-6">
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400">
                   <Icon name={f.icon as 'phone'} className="w-5 h-5" />
                 </div>
@@ -124,7 +124,7 @@ export default function LapTrinhAppMobilePage() {
           </div>
           <div className="mt-10 space-y-3">
             {types.map((t) => (
-              <div key={t.name} className="rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 flex items-start justify-between gap-4 flex-wrap">
+              <div key={t.name} className="rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-4 md:p-5 flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base font-bold text-ink-900 dark:text-white">{t.name}</h3>
                   <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">{t.desc}</p>
@@ -150,7 +150,7 @@ export default function LapTrinhAppMobilePage() {
           </div>
           <div className="space-y-2">
             {faq.map((f, i) => (
-              <details key={i} className="group rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 px-6 py-4 open:shadow-md transition" {...(i === 0 ? { open: true } : {})}>
+              <details key={i} className="group rounded-xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 px-4 md:px-6 py-3 md:py-4 open:shadow-md transition" >
                 <summary className="cursor-pointer list-none flex items-center justify-between font-semibold text-ink-900 dark:text-white">
                   <span>{f.q}</span>
                   <Icon name="chevron-down" className="w-5 h-5 text-ink-400 transition group-open:rotate-180 shrink-0" />
