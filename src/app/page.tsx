@@ -183,7 +183,7 @@ export default function Home() {
       </section>
 
       {/* ─── 3 CAPABILITIES (the portfolio promise) ─── */}
-      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Năng lực">
+      <section id="nang-luc" className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Năng lực">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Năng lực cốt lõi</Eyebrow>
@@ -246,7 +246,7 @@ export default function Home() {
       <FeaturedTabs />
 
       {/* ─── SERVICES GRID ─── */}
-      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Dịch vụ">
+      <section id="dich-vu" className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Dịch vụ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Dịch vụ</Eyebrow>
@@ -271,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* ─── PROCESS — scroll-fill connector (Cal.com 01→04 narrative) ─── */}
-      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Quy trình">
+      <section id="quy-trinh" className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Quy trình">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl mx-auto text-center">
             <Eyebrow>Quy trình</Eyebrow>
@@ -299,7 +299,7 @@ export default function Home() {
       </section>
 
       {/* ─── PORTFOLIO GRID ─── */}
-      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Portfolio">
+      <section id="du-an" className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Portfolio">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-8 lg:mb-12">
             <div className="max-w-2xl">
@@ -345,7 +345,7 @@ export default function Home() {
       <StackStrip />
 
       {/* ─── WHY ALODEV (honest comparison) ─── */}
-      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Khác biệt">
+      <section id="khac-biet" className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Khác biệt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Khác biệt</Eyebrow>
@@ -386,7 +386,7 @@ export default function Home() {
       </section>
 
       {/* ─── FAQ ─── */}
-      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800" data-section-name="FAQ">
+      <section id="faq" className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800" data-section-name="FAQ">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal text-center max-w-2xl mx-auto mb-8 lg:mb-12">
             <Eyebrow>FAQ</Eyebrow>

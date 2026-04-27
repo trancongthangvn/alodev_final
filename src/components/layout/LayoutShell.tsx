@@ -3,6 +3,7 @@
 // Client interactivity (palette, motion) is opt-in via inner client components.
 import Navbar from './Navbar'
 import Footer from './Footer'
+import BackToTop from '@/components/BackToTop'
 import CommandPalette from '@/components/CommandPalette'
 import MotionLayer from '@/components/MotionLayer'
 import MobileStickyCTA from '@/components/MobileStickyCTA'
@@ -27,6 +28,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <SectionFrame />
       <IntroAnimation />
       <MobileStickyCTA />
+      <BackToTop />
     </>
   )
 }
