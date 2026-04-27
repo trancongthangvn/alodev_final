@@ -681,7 +681,11 @@ function setupCube(
         z: new THREE.Vector3(0,0,1)
       })[axis]
       const t0 = performance.now()
-      const ease = (t: number) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
+      // Sinusoidal ease-in-out — gentler acceleration/deceleration than the
+      // previous quartic curve. The quartic punched in/out hard which
+      // showed as a "stop" when the next twist started. Sinusoidal blends
+      // smoothly into the next twist when the gap between them is short.
+      const ease = (t: number) => 0.5 * (1 - Math.cos(Math.PI * t))
 
       function frame(now: number) {
         const t = Math.min((now - t0) / duration, 1)
@@ -731,27 +735,24 @@ function setupCube(
   let timer2: ReturnType<typeof setTimeout> | null = null
   async function choreograph() {
     // Initial hold lets the entrance scale-up settle before the first twist.
-    // Reduced from 3.2s — most users glance at the hero for ~2s before
-    // scrolling, so a long pre-twist hold meant most visitors never saw
-    // the choreography play at all.
     const initialHold = opts.reducedMotion ? 2400 : 1500
     await new Promise((r) => { timer1 = setTimeout(r, initialHold) })
     while (!stopped) {
       const m = moveBank[moveIndex % moveBank.length]
       moveIndex++
       const turns = Math.random() < 0.06 ? 2 : 1
-      // Snappier: 600-820ms per single turn (was 900-1150). Resend's twists
-      // land in ~700ms — a slower turn was making our cube feel sluggish
-      // compared to the reference, and the "tinh tế" framing came at the
-      // cost of the actual brand effect we were trying to match.
-      const baseDur = opts.reducedMotion ? 1100 : 700
-      const duration = turns === 2 ? baseDur + 500 : baseDur + Math.random() * 220
+      // Slightly longer per-twist (820-1020ms single, 1400ms double) — with
+      // sinusoidal easing and near-zero gap, longer durations read as
+      // smoother continuous motion rather than rushing through each turn.
+      const baseDur = opts.reducedMotion ? 1200 : 820
+      const duration = turns === 2 ? baseDur + 580 : baseDur + Math.random() * 200
       await performTwist({ ...m, turns, duration })
       if (stopped) break
-      // Pause between twists: 600-1100ms (was 1100-2000). Faster cadence
-      // matches the visual rhythm of resend.com's hero cube.
-      const basePause = opts.reducedMotion ? 1800 : 600
-      const jitter = opts.reducedMotion ? 1400 : 500
+      // Near-zero gap between twists for continuous motion. The cube
+      // basically never stops moving — one face finishes, another starts.
+      // Reduced-motion users get a small pause so it does not feel frantic.
+      const basePause = opts.reducedMotion ? 800 : 80
+      const jitter = opts.reducedMotion ? 800 : 180
       await new Promise((r) => { timer2 = setTimeout(r, basePause + Math.random() * jitter) })
     }
   }
@@ -828,11 +829,11 @@ function setupCube(
     }
     void now
 
-    // Auto-spin slowed from 0.0014 → 0.00085 rad/frame. At 60fps the cube
-    // now completes a full Y rotation every ~123 seconds (was ~75s) — slow
-    // enough that you barely register movement on a casual glance, yet a
-    // user lingering on the hero will feel the cube subtly breathe.
-    autoSpin += 0.00085
+    // Auto-spin bumped 0.00085 → 0.0016 rad/frame. With near-continuous
+    // face twists running, a faster background rotation reads as constant
+    // motion: the whole cube slowly rotating while individual layers
+    // twist on top. Full Y rotation in ~65 seconds at 60fps.
+    autoSpin += 0.0016
     currentRot.x += (targetRot.x - currentRot.x) * 0.06
     currentRot.y += (targetRot.y - currentRot.y) * 0.06
     cubeGroup.rotation.x = currentRot.x
