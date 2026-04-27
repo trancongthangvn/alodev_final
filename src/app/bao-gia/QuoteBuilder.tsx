@@ -181,12 +181,12 @@ export default function QuoteBuilder() {
                     key={t.id}
                     type="button"
                     onClick={() => pickType(t.id)}
-                    className="group text-left rounded-2xl border-2 border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-6 hover:border-brand-400 dark:hover:border-brand-500/50 hover:shadow-lg transition"
+                    className="group text-left rounded-2xl border-2 border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-4 sm:p-6 hover:border-brand-400 dark:hover:border-brand-500/50 hover:shadow-lg transition"
                   >
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 mb-4">
-                      <Icon name={t.icon} className="w-6 h-6" />
+                    <div className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 mb-3 sm:mb-4">
+                      <Icon name={t.icon} className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
-                    <h3 className="text-lg font-bold text-ink-900 dark:text-white">{t.name}</h3>
+                    <h3 className="text-base sm:text-lg font-bold text-ink-900 dark:text-white">{t.name}</h3>
                     <p className="mt-1 text-sm text-ink-500 dark:text-ink-300">{t.tagline}</p>
                     <p className="mt-3 text-xs text-ink-400 dark:text-ink-500 italic">{t.example}</p>
                     <div className="mt-4 flex items-center gap-1 text-sm font-semibold text-brand-700 dark:text-brand-400">
@@ -211,7 +211,7 @@ export default function QuoteBuilder() {
                     key={p.id}
                     type="button"
                     onClick={() => pickPreset(p)}
-                    className="group text-left rounded-2xl border-2 border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 hover:border-brand-400 dark:hover:border-brand-500/50 hover:shadow-lg transition"
+                    className="group text-left rounded-2xl border-2 border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-4 sm:p-5 hover:border-brand-400 dark:hover:border-brand-500/50 hover:shadow-lg transition"
                   >
                     <div className="flex items-start gap-3">
                       <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 shrink-0">
@@ -260,10 +260,10 @@ export default function QuoteBuilder() {
               </div>
 
               {/* Feature groups as visual cards */}
-              <div className="space-y-7">
+              <div className="space-y-5 sm:space-y-7">
                 {type.groups.map((g) => (
                   <div key={g.id}>
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-ink-500 dark:text-ink-400 mb-3">{g.title}</h3>
+                    <h3 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-ink-500 dark:text-ink-400 mb-2 sm:mb-3">{g.title}</h3>
                     <div className="space-y-2">
                       {g.features.map((f) => {
                         const checked = selected.has(f.id) || f.required

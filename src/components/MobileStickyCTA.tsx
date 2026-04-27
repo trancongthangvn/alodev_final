@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Icon from '@/components/Icon'
 
 /**
@@ -10,21 +11,32 @@ import Icon from '@/components/Icon'
  * deep-link.
  *
  * Hides itself when:
+ *   - the route is itself a conversion flow (/bao-gia, /lien-he) — those
+ *     pages have their own primary CTA buttons; a duplicate sticky bar
+ *     would compete for attention and cover form fields
  *   - the IntroAnimation overlay is still on screen (the bar would float
  *     above the intro and look broken)
- *   - the user has scrolled to the final-CTA section (where there are
- *     already two large buttons — duplicating them would be noise)
- *   - the mobile menu drawer is open (Navbar dispatches a class on body)
+ *   - the user has scrolled to the final-CTA section or the footer
+ *     (already-CTA-rich content + white-bar / dark-footer contrast clash)
+ *   - the mobile menu drawer is open (detected via aria-expanded)
  *
  * Uses iOS safe-area-inset-bottom so the bar clears the home indicator.
  */
 export default function MobileStickyCTA() {
   const [visible, setVisible] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     if (typeof window === 'undefined') return
 
     function recompute() {
+      // 0. Hide on routes where the page itself is a conversion flow with
+      //    its own primary CTA (báo giá builder, contact form). Stacking
+      //    a second sticky CTA over those buttons just confuses the user.
+      if (pathname === '/bao-gia' || pathname === '/lien-he') {
+        setVisible(false)
+        return
+      }
       // 1. Hide while intro is still on screen.
       const intro = document.querySelector('[data-intro-overlay]') as HTMLElement | null
       if (intro && getComputedStyle(intro).opacity !== '0' && intro.offsetHeight > 0) {
@@ -75,7 +87,8 @@ export default function MobileStickyCTA() {
       window.removeEventListener('resize', recompute)
       mo?.disconnect()
     }
-  }, [])
+    // Re-run on pathname change so route-based hides fire on Link nav.
+  }, [pathname])
 
   function openQuote() {
     window.dispatchEvent(new CustomEvent('alodev:open-quote'))
