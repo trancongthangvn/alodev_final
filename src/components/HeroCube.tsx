@@ -170,14 +170,12 @@ function setupCube(
   renderer.setPixelRatio(Math.min(window.devicePixelRatio * 1.25, 2.5))
   renderer.setClearColor(0x000000, 0)
   renderer.outputColorSpace = THREE.SRGBColorSpace
-  // ACES tone mapping with a substantial exposure boost. Resend renders
-  // against a pure black bg where ACES + 0.88 reads beautifully via
-  // simultaneous contrast. Alodev's hero uses a near-white bg in light
-  // theme, which fights perception — the same cube reads as flat black
-  // silhouette unless we push exposure significantly. 1.30 lifts the
-  // mid-tones into a readable grey while keeping ACES's filmic contrast.
+  // ACES with a high exposure to push the cube into the readable mid-grey
+  // range against both alodev themes (light cream-50 and dark #0b0e14).
+  // Resend uses 0.88 against pure black where the cube reads via
+  // simultaneous contrast; we need ~2x exposure to compensate.
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 1.30
+  renderer.toneMappingExposure = 1.85
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
@@ -441,14 +439,11 @@ function setupCube(
   const texDots     = makeDotGridTexture(1024, 9)
   const texMesh     = makeMeshGrilleTexture(1024, 38)
   const texStripes  = makeVerticalStripesTexture(1024, 30)
-  // Tile center colors lifted above Resend's reference (which was tuned
-  // for a pure black bg) so the cube reads against alodev's light hero.
-  // Each variant keeps a noticeable contrast delta with the cubelet body
-  // (#1a1a1f) so individual tiles still pop on each face. Edges stay
-  // near-black to give bevels a bright rim to catch against.
-  const insetSmooth = makeBaseInsetMap(512, '#3a3a44', '#08080c')
-  const insetMatte  = makeBaseInsetMap(512, '#2a2a32', '#08080c')
-  const insetSemi   = makeBaseInsetMap(512, '#33333c', '#08080c')
+  // Tile center colors at mid-grey range — readable as distinct surfaces
+  // on either bg. Edges still dark for the bevel rim contrast.
+  const insetSmooth = makeBaseInsetMap(512, '#5a5a64', '#0a0a0e')
+  const insetMatte  = makeBaseInsetMap(512, '#46464e', '#0a0a0e')
+  const insetSemi   = makeBaseInsetMap(512, '#52525a', '#0a0a0e')
 
   // Material PBR params extracted from Resend's actual chunk:
   //   roughness: 0.2, metalness: 0.2, reflectivity: 0.2
@@ -553,14 +548,12 @@ function setupCube(
     tileGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
   })()
 
-  // Cubelet body lifted to dark grey (#1a1a1f) so the rounded cubelet
-  // shape catches enough light to read as 3D against alodev's light hero
-  // bg. Resend uses #030305 (near pure black), but that disappears as
-  // silhouette on a light background. Body still stays clearly darker
-  // than the lifted tile centers (#2a-#3a range) so tile/body contrast
-  // remains the primary "nine separate cubelets" cue per face.
+  // Cubelet body at #2e2e36 — mid-dark grey that frames each tile and
+  // reads as visible 3D shape against either theme bg, while staying
+  // distinctly darker than the tile centers (#46-#5a) so the per-face
+  // 3x3 grid still reads unambiguously.
   const bodyMat = new THREE.MeshPhysicalMaterial({
-    color: 0x1a1a1f, roughness: 0.72, metalness: 0.2, envMapIntensity: 0.5,
+    color: 0x2e2e36, roughness: 0.7, metalness: 0.2, envMapIntensity: 0.55,
   })
 
   function pickVariant(x: number, y: number, z: number, faceIndex: number) {
@@ -737,34 +730,35 @@ function setupCube(
   let timer1: ReturnType<typeof setTimeout> | null = null
   let timer2: ReturnType<typeof setTimeout> | null = null
   async function choreograph() {
-    // Hold longer before the first twist — the entrance scale-up plays for
-    // 1.5s, and pouncing on a face mid-entrance feels frantic. 3.2s also
-    // gives initial-impression viewers a clean look at the scrambled cube
-    // before motion kicks in, matching the way Resend lets you "read" the
-    // cube before it starts choreographing.
-    await new Promise((r) => { timer1 = setTimeout(r, 3200) })
+    // Initial hold lets the entrance scale-up settle before the first twist.
+    // Reduced from 3.2s — most users glance at the hero for ~2s before
+    // scrolling, so a long pre-twist hold meant most visitors never saw
+    // the choreography play at all.
+    const initialHold = opts.reducedMotion ? 2400 : 1500
+    await new Promise((r) => { timer1 = setTimeout(r, initialHold) })
     while (!stopped) {
       const m = moveBank[moveIndex % moveBank.length]
       moveIndex++
-      // Reduced double-twist probability (0.10 → 0.06) — Resend's hero
-      // almost exclusively uses single 90° turns. Double-turns read as
-      // showy on a corporate-tasteful brand site.
       const turns = Math.random() < 0.06 ? 2 : 1
-      // Gentler timings: 900-1150ms per turn (was 600-820), 1100-2000ms
-      // pause between turns (was 350-850). The cube now reads as composed
-      // and deliberate rather than hyperactive — matches the "tinh tế" /
-      // refined design tone the rest of the site goes for.
-      const duration = turns === 2 ? 1300 : (900 + Math.random() * 250)
+      // Snappier: 600-820ms per single turn (was 900-1150). Resend's twists
+      // land in ~700ms — a slower turn was making our cube feel sluggish
+      // compared to the reference, and the "tinh tế" framing came at the
+      // cost of the actual brand effect we were trying to match.
+      const baseDur = opts.reducedMotion ? 1100 : 700
+      const duration = turns === 2 ? baseDur + 500 : baseDur + Math.random() * 220
       await performTwist({ ...m, turns, duration })
       if (stopped) break
-      await new Promise((r) => { timer2 = setTimeout(r, 1100 + Math.random() * 900) })
+      // Pause between twists: 600-1100ms (was 1100-2000). Faster cadence
+      // matches the visual rhythm of resend.com's hero cube.
+      const basePause = opts.reducedMotion ? 1800 : 600
+      const jitter = opts.reducedMotion ? 1400 : 500
+      await new Promise((r) => { timer2 = setTimeout(r, basePause + Math.random() * jitter) })
     }
   }
-  // Skip choreographed face twists on reduced-motion. Auto-spin + parallax
-  // still run because they're gentle and don't trigger vestibular issues.
-  if (!opts.reducedMotion) {
-    choreograph()
-  }
+  // Always run choreograph — the cube twist is the brand identity for this
+  // hero, same as on resend.com. For reduced-motion users we use longer
+  // pauses + slower turns above so the motion is gentler but still present.
+  choreograph()
 
   const targetRot = { x: -0.32, y: 0.55 }
   const currentRot = { x: -0.32, y: 0.55 }

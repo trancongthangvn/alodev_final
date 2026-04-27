@@ -647,17 +647,13 @@ img, iframe { color-scheme: light; }
   width: 100%;
   max-width: 700px;
   margin-left: auto;       /* nudge right like Resend's md:ml-10 offset */
-  /* Lighter grayscale (0.55 → 0.30) so warm rim light bleeding off bevels
-     stays visible. Pure grayscale was killing the warmth that gives the
-     cube its dimensional feel — same reason black-and-white photography
-     uses high-contrast paper, not flat grey. Contrast lift keeps the
-     differentiated tile textures (granite, mesh, stripes) readable. */
-  filter: grayscale(0.30) contrast(1.05);
-  /* CSS-driven entrance: matches Resend's `open-scale-up-fade 1.5s
-     ease-in-out`. Replaces the earlier JS scale tween in setupCube — only
-     one curve, no double-tween stutter at the end. */
+  /* Filter dropped — grayscale was desaturating the warm rim highlights
+     that give the cube its three-dimensional feel, and contrast(1.05) was
+     crushing the lifted tile mids back into the body color. Three.js does
+     all colour work in linear space already; CSS post-processing fights
+     the PBR result. */
   animation: hero-cube-scale-in-fade 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 /* Stage backdrop — a generous dark pool behind the cube. Without this,
@@ -685,14 +681,15 @@ img, iframe { color-scheme: light; }
   pointer-events: none;
 }
 [data-theme=dark] .hero-cube-wrap::before {
-  /* Dark theme: the page bg is already #07080c. The stage just adds a
-     subtle elevated shadow pool — depth without being heavy. */
+  /* Dark theme: skip the dark stage pool entirely — the page bg is
+     already #07080c and adding a darker pool behind the cube made it
+     blend into shadow instead of standing out. A faint warm halo
+     instead, matching the brand glow on the bottom bevels. */
   background: radial-gradient(
-    ellipse 65% 58% at 50% 50%,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.28) 45%,
-    rgba(0, 0, 0, 0.08) 70%,
-    transparent 88%
+    ellipse 60% 55% at 55% 45%,
+    rgba(255, 200, 140, 0.06) 0%,
+    rgba(120, 130, 170, 0.04) 30%,
+    transparent 70%
   );
 }
 /* Direct children sit above the ::before stage backdrop. Don't reset
@@ -712,16 +709,16 @@ img, iframe { color-scheme: light; }
   from {
     opacity: 0;
     transform: scale(0.85) translateY(8px);
-    filter: grayscale(0.30) contrast(1.05) blur(6px);
+    filter: blur(6px);
   }
   60% {
     opacity: 1;
-    filter: grayscale(0.30) contrast(1.05) blur(0);
+    filter: blur(0);
   }
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
-    filter: grayscale(0.30) contrast(1.05);
+    filter: none;
   }
 }
 
@@ -792,5 +789,5 @@ img, iframe { color-scheme: light; }
      but keep the cube visible (opacity 1) — the JS-side cube also honors
      reduced-motion by skipping abrupt face twists while keeping the slow
      auto-spin and gentle parallax (matching Resend's actual behavior). */
-  .hero-cube-wrap { animation: none !important; opacity: 1 !important; transform: none !important; filter: grayscale(0.30) contrast(1.05) !important; }
+  .hero-cube-wrap { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
 }
