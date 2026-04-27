@@ -60,8 +60,8 @@ export default function Home() {
       <section className="hero-resend relative text-ink-900 dark:text-white overflow-hidden" data-section-name="Trang chủ">
         <div className="hero-resend-grid absolute inset-0" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-24 lg:pb-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 lg:items-start">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 lg:pt-24 lg:pb-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-start">
             {/* LEFT: copy + CTAs */}
             <div className="hero-rise lg:col-span-7">
               {/* Eyebrow — left-aligned, theme-adaptive */}
@@ -85,7 +85,7 @@ export default function Home() {
                   target). Spaces live as TEXT NODES between spans, not
                   inside, because trailing whitespace inside an inline-block
                   collapses — that's why words fused together earlier. */}
-              <h1 className="hero-h h-display mt-7 text-left max-w-3xl">
+              <h1 className="hero-h h-display mt-5 sm:mt-7 text-left max-w-3xl">
                 <span className="word-cascade block">
                   {['Thiết', 'kế', 'website', '&', 'lập', 'trình', 'app', '—'].map((w, i, a) => (
                     <Fragment key={i}>
@@ -118,21 +118,29 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="mt-7 text-base sm:text-lg text-gray-700 dark:text-zinc-400 max-w-xl leading-relaxed">
-                Alodev là <b className="text-gray-900 dark:text-zinc-100">founder-led studio tại Hà Nội</b> chuyên thiết kế website doanh nghiệp,
-                lập trình app mobile và xây dựng hệ thống quản trị theo yêu cầu. Bạn làm việc trực tiếp với founder — không sales,
-                không middleman. Source code thuộc về bạn.
+              <p className="mt-5 sm:mt-7 text-base sm:text-lg text-gray-700 dark:text-zinc-400 max-w-xl leading-relaxed">
+                {/* Mobile: short tagline only — preserves above-the-fold real estate.
+                    Desktop sm+: full positioning paragraph. */}
+                <span className="sm:hidden">
+                  Studio <b className="text-gray-900 dark:text-zinc-100">founder-led tại Hà Nội</b> — code trực tiếp,
+                  source code thuộc về bạn.
+                </span>
+                <span className="hidden sm:inline">
+                  Alodev là <b className="text-gray-900 dark:text-zinc-100">founder-led studio tại Hà Nội</b> chuyên thiết kế website doanh nghiệp,
+                  lập trình app mobile và xây dựng hệ thống quản trị theo yêu cầu. Bạn làm việc trực tiếp với founder — không sales,
+                  không middleman. Source code thuộc về bạn.
+                </span>
               </p>
 
-              {/* CTAs — primary inverts, ghost adapts. Stat tiles dropped per Resend pattern. */}
-              <div className="mt-9 flex flex-wrap gap-3">
-                <span className="magnetic">
-                  {/* solid in light → black bg/white text; in dark inverts to white bg/black text */}
-                  <QuoteCTA size="lg" variant="solid">Yêu cầu báo giá</QuoteCTA>
+              {/* CTAs — primary full-width on mobile so the touch target is wide and obvious;
+                  inline at sm+ where two buttons fit on one row. */}
+              <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+                <span className="magnetic w-full sm:w-auto">
+                  <QuoteCTA size="lg" variant="solid" className="w-full sm:w-auto justify-center">Yêu cầu báo giá</QuoteCTA>
                 </span>
                 <Link
                   href="/du-an"
-                  className="ghost-dark inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition"
+                  className="ghost-dark inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition w-full sm:w-auto"
                 >
                   Xem portfolio
                 </Link>
@@ -150,7 +158,7 @@ export default function Home() {
 
       {/* ─── LOGO CLOUD MARQUEE ─── */}
       <section className="border-y border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
           <div className="text-center text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-ink-500 mb-6">
             Đang vận hành cho
           </div>
@@ -174,7 +182,7 @@ export default function Home() {
       </section>
 
       {/* ─── 3 CAPABILITIES (the portfolio promise) ─── */}
-      <section className="py-14 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Năng lực">
+      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Năng lực">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Năng lực cốt lõi</Eyebrow>
@@ -186,7 +194,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="reveal-stagger mt-14 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="reveal-stagger mt-8 lg:mt-14 grid grid-cols-1 lg:grid-cols-3 gap-6">
             {([
               {
                 icon: 'code' as IconName,
@@ -237,7 +245,7 @@ export default function Home() {
       <FeaturedTabs />
 
       {/* ─── SERVICES GRID ─── */}
-      <section className="py-14 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Dịch vụ">
+      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Dịch vụ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Dịch vụ</Eyebrow>
@@ -246,7 +254,7 @@ export default function Home() {
               Từ landing page nhỏ đến hệ thống đa nền tảng — đội Alodev đủ chuyên môn để xử lý trọn gói.
             </p>
           </div>
-          <div className="reveal mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
+          <div className="reveal mt-8 lg:mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
             {services.map((s) => (
               <Link key={s.title} href={s.href} className="group bg-white dark:bg-ink-950 p-7 hover:bg-cream-50 dark:hover:bg-zinc-900/60 transition">
                 <div className="flex items-center justify-between">
@@ -262,13 +270,13 @@ export default function Home() {
       </section>
 
       {/* ─── PROCESS — scroll-fill connector (Cal.com 01→04 narrative) ─── */}
-      <section className="py-14 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Quy trình">
+      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Quy trình">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl mx-auto text-center">
             <Eyebrow>Quy trình</Eyebrow>
             <h2 className="h-section mt-3 text-gray-900 dark:text-white">4 bước — minh bạch từ đầu đến cuối</h2>
           </div>
-          <div data-process-section className="relative mt-14">
+          <div data-process-section className="relative mt-8 lg:mt-14">
             {/* Track sits at the vertical center of the step-number row inside each card */}
             <div className="hidden lg:block absolute left-12 right-12 top-[3.25rem] process-track" />
             <div className="reveal-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -290,9 +298,9 @@ export default function Home() {
       </section>
 
       {/* ─── PORTFOLIO GRID ─── */}
-      <section className="py-14 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Portfolio">
+      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Portfolio">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-12">
+          <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-8 lg:mb-12">
             <div className="max-w-2xl">
               <Eyebrow>Portfolio</Eyebrow>
               <h2 className="h-section mt-3 text-gray-900 dark:text-white">Một vài sản phẩm Alodev đã xây.</h2>
@@ -336,7 +344,7 @@ export default function Home() {
       <StackStrip />
 
       {/* ─── WHY ALODEV (honest comparison) ─── */}
-      <section className="py-14 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Khác biệt">
+      <section className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Khác biệt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal max-w-2xl">
             <Eyebrow>Khác biệt</Eyebrow>
@@ -348,7 +356,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="reveal-stagger mt-14 grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="reveal-stagger mt-8 lg:mt-14 grid grid-cols-1 md:grid-cols-3 gap-5">
             {([
               { icon: 'handshake' as IconName,    title: 'Founder trực tiếp',          desc: 'Không sales, không middleman. Chat trực tiếp với người sẽ code dự án của bạn — tiết kiệm 70% thời gian briefing.' },
               { icon: 'package' as IconName,      title: 'Source code thuộc về bạn',   desc: 'Repo Git, database, domain, hosting — tất cả đứng tên bạn. Alodev không khoá kỹ thuật, không charge phí license sử dụng.' },
@@ -370,9 +378,9 @@ export default function Home() {
       </section>
 
       {/* ─── FAQ ─── */}
-      <section className="py-14 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800" data-section-name="FAQ">
+      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800" data-section-name="FAQ">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="reveal text-center max-w-2xl mx-auto mb-12">
+          <div className="reveal text-center max-w-2xl mx-auto mb-8 lg:mb-12">
             <Eyebrow>FAQ</Eyebrow>
             <h2 className="h-section mt-3 text-gray-900 dark:text-white">Câu hỏi thường gặp.</h2>
           </div>
@@ -391,7 +399,7 @@ export default function Home() {
       </section>
 
       {/* ─── FINAL CTA ─── */}
-      <section className="relative py-16 lg:py-28 bg-white dark:bg-ink-950 overflow-hidden" data-section-name="Liên hệ">
+      <section className="relative py-12 lg:py-28 bg-white dark:bg-ink-950 overflow-hidden" data-section-name="Liên hệ">
         <div className="aurora opacity-50" />
         <div className="reveal relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="h-display text-gray-900 dark:text-white">
