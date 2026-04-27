@@ -261,7 +261,9 @@ function setupCube(
   // tuned so the cube reads against alodev's light hero background as
   // well as the dark theme. Resend's exact values worked on their pure
   // black bg; on a light bg we need ~30% more ambient and key.
-  scene.add(new THREE.HemisphereLight(0xb8c0e0, 0x02020a, 0.32))
+  // Hemisphere captured as a variable so we can boost it in light theme.
+  const hemi = new THREE.HemisphereLight(0xb8c0e0, 0x02020a, 0.32)
+  scene.add(hemi)
 
   const key = new THREE.DirectionalLight(0xffffff, 1.10)
   key.position.set(4.5, 8, 7)
@@ -293,6 +295,29 @@ function setupCube(
   const fill = new THREE.DirectionalLight(0xfff2dc, 0.35)
   fill.position.set(2, 1.5, 9)
   scene.add(fill)
+
+  // Theme-aware lighting boost. Dark theme keeps the Resend-tuned values
+  // (Resend's reference is a pitch-black bg where dim lights still read
+  // via simultaneous contrast). Light theme bumps key + hemi + exposure
+  // ~40% so the cube does not silhouette to "đen kịt" against the cream
+  // page bg. The dark/light values are stored so we can interpolate
+  // when the user toggles the theme.
+  const lightingForTheme = (theme: string) => {
+    const isDark = theme === 'dark'
+    hemi.intensity   = isDark ? 0.32 : 0.55
+    key.intensity    = isDark ? 1.10 : 1.60
+    rimL.intensity   = isDark ? 0.50 : 0.65
+    rimR.intensity   = isDark ? 0.25 : 0.40
+    fill.intensity   = isDark ? 0.35 : 0.55
+    renderer.toneMappingExposure = isDark ? 1.85 : 2.20
+  }
+  const initialTheme = document.documentElement.getAttribute('data-theme') || 'light'
+  lightingForTheme(initialTheme)
+  const themeObs = new MutationObserver(() => {
+    const t = document.documentElement.getAttribute('data-theme') || 'light'
+    lightingForTheme(t)
+  })
+  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
 
   // Cursor spotlight — a hover-tracking PointLight that gently lifts the
   // illumination on whatever tile is under the cursor so its texture
@@ -334,7 +359,11 @@ function setupCube(
     blending: THREE.AdditiveBlending,
   })
   const halo = new THREE.Sprite(haloMat)
-  halo.scale.set(7, 7, 1)
+  // Scale 4 (was 7) so the soft glow fits comfortably inside the canvas
+  // viewport. At 7, the sprite plane projected larger than the canvas
+  // and got clipped at the canvas right edge, leaving a visible
+  // rectangular cutoff in the upper-right of the cube wrap.
+  halo.scale.set(4, 4, 1)
   halo.position.set(0, 0.2, -2.5)
   scene.add(halo)
 
@@ -1002,6 +1031,7 @@ function setupCube(
     if (timer1) clearTimeout(timer1)
     if (timer2) clearTimeout(timer2)
     visObs.disconnect()
+    themeObs.disconnect()
     ro.disconnect()
     wrap.removeEventListener('mousemove', onMove)
     wrap.removeEventListener('mouseleave', onLeave)
