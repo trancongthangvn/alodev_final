@@ -25,9 +25,13 @@ const VARIANT_CLASS: Record<Variant, string> = {
 }
 
 const SIZE_CLASS: Record<Size, string> = {
-  sm: 'px-4 py-2 text-sm',
-  md: 'px-5 py-3 text-sm',
-  lg: 'px-6 py-3.5 text-base',
+  // All sizes enforce a 44px (WCAG/Apple HIG floor) touch target on mobile.
+  // `sm` is desktop-dense (used only in the navbar at md+ where it shrinks
+  // back to 36px), but the floor still applies because touch laptops do tap
+  // navbar buttons.
+  sm: 'min-h-11 md:min-h-9 px-4 py-2 text-sm',
+  md: 'min-h-11 px-5 py-3 text-sm',
+  lg: 'min-h-12 px-6 py-3.5 text-base',
 }
 
 export default function QuoteCTA({

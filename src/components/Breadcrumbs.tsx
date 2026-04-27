@@ -16,7 +16,7 @@ export default function Breadcrumbs({ items }: { items: Array<{ name: string; hr
               {isLast ? (
                 <span className="text-gray-900 dark:text-ink-200 font-medium" aria-current="page">{it.name}</span>
               ) : (
-                <Link href={it.href} className="hover:text-brand-600 dark:hover:text-brand-400 transition">{it.name}</Link>
+                <Link href={it.href} className="inline-flex items-center min-h-9 py-1 hover:text-brand-600 dark:hover:text-brand-400 transition">{it.name}</Link>
               )}
             </li>
           )

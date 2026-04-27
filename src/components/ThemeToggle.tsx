@@ -42,7 +42,7 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
       onClick={toggle}
       aria-label={theme === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
       title={theme === 'dark' ? 'Chế độ sáng' : 'Chế độ tối'}
-      className={`relative inline-flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-zinc-800 dark:hover:text-white transition ${className}`}
+      className={`relative inline-flex h-11 w-11 md:h-9 md:w-9 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-zinc-800 dark:hover:text-white transition ${className}`}
     >
       {/* Sun (visible in dark mode → click to go light) */}
       <svg className="h-5 w-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
