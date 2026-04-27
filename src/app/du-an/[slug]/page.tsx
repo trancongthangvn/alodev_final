@@ -54,7 +54,7 @@ function CaseStudy({ project }: { project: Project }) {
 
       {/* Hero */}
       <section className={`relative overflow-hidden bg-gradient-to-br ${project.colorClass} border-b border-gray-100 dark:border-ink-800`}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
           <Breadcrumbs items={[
             { name: 'Trang chủ', href: '/' },
             { name: 'Dự án', href: '/du-an' },
@@ -102,7 +102,7 @@ function CaseStudy({ project }: { project: Project }) {
 
       {/* Case study body */}
       {hasCaseStudy ? (
-        <section className="py-12 lg:py-16 bg-cream-50 dark:bg-ink-950">
+        <section className="py-8 lg:py-16 bg-cream-50 dark:bg-ink-950">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             {project.caseStudy!.summary && (
               <p className="text-lg text-gray-700 dark:text-ink-300 leading-relaxed mb-10 italic border-l-4 border-brand-500 pl-5">
@@ -120,7 +120,7 @@ function CaseStudy({ project }: { project: Project }) {
           </div>
         </section>
       ) : (
-        <section className="py-12 lg:py-16 bg-cream-50 dark:bg-ink-950">
+        <section className="py-8 lg:py-16 bg-cream-50 dark:bg-ink-950">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="rounded-2xl border-2 border-dashed border-ink-200 dark:border-ink-700 p-10 lg:p-14 bg-white/50 dark:bg-ink-900/40">
               <Icon name="file-text" className="w-9 h-9 mb-3 text-ink-400 dark:text-ink-500 mx-auto" />

@@ -90,7 +90,7 @@ export default function LapTrinhAppMobilePage() {
         </div>
       </section>
 
-      <section className="py-12 lg:py-20 bg-white dark:bg-ink-950">
+      <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2">
@@ -113,7 +113,7 @@ export default function LapTrinhAppMobilePage() {
         </div>
       </section>
 
-      <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-950 border-y border-ink-100 dark:border-ink-800">
+      <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-y border-ink-100 dark:border-ink-800">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2">
@@ -139,7 +139,7 @@ export default function LapTrinhAppMobilePage() {
         </div>
       </section>
 
-      <section className="py-12 lg:py-20 bg-white dark:bg-ink-950">
+      <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2">
@@ -162,7 +162,7 @@ export default function LapTrinhAppMobilePage() {
         </div>
       </section>
 
-      <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-ink-100 dark:border-ink-800">
+      <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-ink-100 dark:border-ink-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Sẵn sàng phát triển app?</h2>
           <p className="mt-3 text-ink-500 dark:text-ink-300">Gửi yêu cầu — Alodev báo giá chi tiết trong 24h kèm scope of work.</p>

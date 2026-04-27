@@ -80,7 +80,7 @@ export default function DuAnPage() {
       </section>
 
       {/* Projects list */}
-      <section className="py-12 lg:py-20 bg-white dark:bg-ink-950">
+      <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
         <div className="reveal-stagger max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           {projects.map((p, i) => (
             <ProjectCard key={p.slug} project={p} index={i + 1} />

@@ -138,7 +138,7 @@ export default function DichVuPage() {
         </div>
       </section>
 
-      <section className="py-12 lg:py-16 bg-cream-50 dark:bg-ink-950">
+      <section className="py-8 lg:py-16 bg-cream-50 dark:bg-ink-950">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Cần báo giá chính xác?</h2>
           <p className="mt-3 text-gray-600 dark:text-ink-400">Mỗi dự án mỗi khác. Bạn có thể tự cấu hình để xem giá ngay, hoặc gửi yêu cầu để Alodev tư vấn từ đầu.</p>
