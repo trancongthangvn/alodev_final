@@ -74,7 +74,8 @@ export default function Home() {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-brand-500 dark:bg-brand-400 opacity-75 animate-ping" />
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand-500 dark:bg-brand-400" />
                   </span>
-                  <span>Đang nhận dự án Q2/2026 — còn slot</span>
+                  <span className="sm:hidden">Q2/2026 — còn slot</span>
+                  <span className="hidden sm:inline">Đang nhận dự án Q2/2026 — còn slot</span>
                   <Icon name="arrow-right" className="w-3.5 h-3.5 opacity-50 group-hover:translate-x-0.5 transition" />
                 </Link>
               </div>
@@ -356,21 +357,28 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="reveal-stagger mt-8 lg:mt-14 grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="reveal-stagger mt-8 lg:mt-14 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
+            {/* Each card has a long-form `desc` for desktop and a `short` blurb for
+                mobile. 6 cards in a single column would create ~2000px of scroll;
+                grid-cols-2 mobile + truncated copy keeps the section scannable
+                without losing any of the differentiation points. */}
             {([
-              { icon: 'handshake' as IconName,    title: 'Founder trực tiếp',          desc: 'Không sales, không middleman. Chat trực tiếp với người sẽ code dự án của bạn — tiết kiệm 70% thời gian briefing.' },
-              { icon: 'package' as IconName,      title: 'Source code thuộc về bạn',   desc: 'Repo Git, database, domain, hosting — tất cả đứng tên bạn. Alodev không khoá kỹ thuật, không charge phí license sử dụng.' },
-              { icon: 'zap' as IconName,          title: 'Bàn giao đúng hợp đồng',     desc: 'Ngày bàn giao ghi rõ trong hợp đồng. Trễ → giảm 5%/tuần. Track record 5 năm, 11+ sản phẩm vận hành thật.' },
-              { icon: 'cpu' as IconName,          title: 'Stack hiện đại, có lý do',   desc: 'Next.js / Node / Postgres / Cloudflare — không chạy theo trend. Mỗi quyết định stack đều giải thích được vì sao.' },
-              { icon: 'target' as IconName,       title: 'Đo lường bằng metric',       desc: 'Cam kết PageSpeed 90+, P95 < 200ms, uptime > 99.9%. Báo cáo hằng tháng, không che giấu số liệu.' },
-              { icon: 'life-buoy' as IconName,    title: 'Bảo hành thật',              desc: 'Lỗi sau bàn giao: sửa miễn phí 6–12 tháng. Hỗ trợ kỹ thuật theo gói tháng từ 1tr — không bắt buộc renew.' },
+              { icon: 'handshake' as IconName,    title: 'Founder trực tiếp',          short: 'Không sales, không middleman.', desc: 'Không sales, không middleman. Chat trực tiếp với người sẽ code dự án của bạn — tiết kiệm 70% thời gian briefing.' },
+              { icon: 'package' as IconName,      title: 'Source code thuộc về bạn',   short: 'Repo + DB + domain đứng tên bạn.', desc: 'Repo Git, database, domain, hosting — tất cả đứng tên bạn. Alodev không khoá kỹ thuật, không charge phí license sử dụng.' },
+              { icon: 'zap' as IconName,          title: 'Bàn giao đúng hợp đồng',     short: 'Trễ → giảm 5%/tuần. 11+ sản phẩm.', desc: 'Ngày bàn giao ghi rõ trong hợp đồng. Trễ → giảm 5%/tuần. Track record 5 năm, 11+ sản phẩm vận hành thật.' },
+              { icon: 'cpu' as IconName,          title: 'Stack hiện đại, có lý do',   short: 'Next.js / Node / Postgres / Cloudflare.', desc: 'Next.js / Node / Postgres / Cloudflare — không chạy theo trend. Mỗi quyết định stack đều giải thích được vì sao.' },
+              { icon: 'target' as IconName,       title: 'Đo lường bằng metric',       short: 'PageSpeed 90+, uptime > 99.9%.', desc: 'Cam kết PageSpeed 90+, P95 < 200ms, uptime > 99.9%. Báo cáo hằng tháng, không che giấu số liệu.' },
+              { icon: 'life-buoy' as IconName,    title: 'Bảo hành thật',              short: 'Sửa miễn phí 6–12 tháng.', desc: 'Lỗi sau bàn giao: sửa miễn phí 6–12 tháng. Hỗ trợ kỹ thuật theo gói tháng từ 1tr — không bắt buộc renew.' },
             ]).map((c) => (
-              <div key={c.title} className="lift spotlight rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 md:p-6 hover:border-ink-200 dark:hover:border-ink-700">
-                <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-cream-100 dark:bg-ink-800 text-ink-700 dark:text-ink-100">
-                  <Icon name={c.icon} className="w-5 h-5" />
+              <div key={c.title} className="lift spotlight rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-4 sm:p-5 md:p-6 hover:border-ink-200 dark:hover:border-ink-700">
+                <div className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-cream-100 dark:bg-ink-800 text-ink-700 dark:text-ink-100">
+                  <Icon name={c.icon} className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <h3 className="mt-4 text-base font-bold text-ink-900 dark:text-white">{c.title}</h3>
-                <p className="mt-2 text-sm text-ink-500 dark:text-ink-300 leading-relaxed">{c.desc}</p>
+                <h3 className="mt-3 sm:mt-4 text-sm sm:text-base font-bold text-ink-900 dark:text-white">{c.title}</h3>
+                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-ink-500 dark:text-ink-300 leading-relaxed">
+                  <span className="sm:hidden">{c.short}</span>
+                  <span className="hidden sm:inline">{c.desc}</span>
+                </p>
               </div>
             ))}
           </div>
@@ -385,15 +393,24 @@ export default function Home() {
             <h2 className="h-section mt-3 text-gray-900 dark:text-white">Câu hỏi thường gặp.</h2>
           </div>
           <div className="reveal-stagger space-y-2">
-            {faq.map((f, i) => (
-              <details key={f.q} className="group rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 px-4 md:px-6 py-3 md:py-4 open:shadow-md dark:open:shadow-zinc-950/50 transition" {...(i === 0 ? { 'data-default-open': true } : {})}>
-                <summary className="cursor-pointer list-none flex items-center justify-between font-semibold text-gray-900 dark:text-white">
-                  <span>{f.q}</span>
-                  <svg className="w-5 h-5 text-gray-400 dark:text-ink-500 transition group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </summary>
-                <p className="mt-3 text-gray-600 dark:text-ink-400 leading-relaxed">{f.a}</p>
-              </details>
-            ))}
+            {faq.map((f) => {
+              // Preview: first 90 chars of the answer with ellipsis. Visible only
+              // when the <details> is closed — gives users a "scent" of the
+              // answer's value so they actually tap the relevant question
+              // instead of giving up on a wall of bare titles.
+              const preview = f.a.length > 90 ? f.a.slice(0, 90).trimEnd() + '…' : f.a
+              return (
+                <details key={f.q} className="group rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 px-4 md:px-6 py-3 md:py-4 open:shadow-md dark:open:shadow-zinc-950/50 transition">
+                  <summary className="cursor-pointer list-none flex items-start justify-between gap-3 font-semibold text-gray-900 dark:text-white">
+                    <span>{f.q}</span>
+                    <svg className="w-5 h-5 mt-0.5 text-gray-400 dark:text-ink-500 transition group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </summary>
+                  {/* Preview hidden when open; full answer takes over. */}
+                  <p className="mt-1.5 text-sm text-gray-500 dark:text-ink-500 leading-relaxed line-clamp-2 group-open:hidden">{preview}</p>
+                  <p className="mt-3 text-gray-600 dark:text-ink-400 leading-relaxed hidden group-open:block">{f.a}</p>
+                </details>
+              )
+            })}
           </div>
         </div>
       </section>
