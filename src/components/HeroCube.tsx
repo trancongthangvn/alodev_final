@@ -657,8 +657,20 @@ function setupCube(
   ]
   scrambleSeq.forEach(([a, l, d]) => instantTwist(a, l, d))
 
-  function performTwist({ axis, layer, dir, turns = 1, duration = 750 }: {
-    axis: 'x' | 'y' | 'z'; layer: number; dir: number; turns?: number; duration?: number
+  // easeInOutQuart — Resend's "premium settle" curve. Used for short
+  // 90/180 twists where the symmetrical curve feels deliberate.
+  const easeInOutQuart = (t: number) =>
+    t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
+
+  // easeOutQuint — snappy launch, gentle settle. Used for long 360/720
+  // spins so the cube "fires" into the rotation immediately (visible
+  // motion within the first frame) and decelerates gracefully. With
+  // easeInOutQuart the start of a 720 was so slow the spin felt invisible.
+  const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5)
+
+  function performTwist({ axis, layer, dir, turns = 1, duration = 750, easeFn = easeInOutQuart }: {
+    axis: 'x' | 'y' | 'z'; layer: number; dir: number; turns?: number; duration?: number;
+    easeFn?: (t: number) => number;
   }) {
     return new Promise<void>((resolve) => {
       const pivot = new THREE.Group()
@@ -681,17 +693,10 @@ function setupCube(
         z: new THREE.Vector3(0,0,1)
       })[axis]
       const t0 = performance.now()
-      // easeInOutQuart — same as Resend's reference implementation. The
-      // quartic curve has a "premium settle" feel at both ends: quick
-      // through the middle of the rotation, gentle deceleration into the
-      // final position. Combined with the 350-850ms pause between twists,
-      // this reads as "deliberate, considered" — the user's eye has time
-      // to register each new orientation before the next twist starts.
-      const ease = (t: number) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
 
       function frame(now: number) {
         const t = Math.min((now - t0) / duration, 1)
-        pivot.setRotationFromAxisAngle(axisVec, target * ease(t))
+        pivot.setRotationFromAxisAngle(axisVec, target * easeFn(t))
         if (t < 1) {
           rafTwist = requestAnimationFrame(frame)
         } else {
@@ -732,65 +737,92 @@ function setupCube(
     { axis: 'z', layer: -1, dir: -1 },
   ]
 
-  let moveIndex = 0
   let timer1: ReturnType<typeof setTimeout> | null = null
   let timer2: ReturnType<typeof setTimeout> | null = null
-  // Distribution of turn counts per move. 1 turn = 90 degrees, 2 = 180,
-  // 4 = full 360 spin (face returns to original orientation but spins
-  // visibly through), 8 = 720 dramatic double rotation. The 4-turn and
-  // 8-turn moves are what the user perceives as "spinning" — without
-  // them the cube just snaps between discrete face configurations.
+
+  // Pick a random move from the bank, with random direction flip — gives
+  // genuinely different sessions instead of cycling the same sequence.
+  function pickMove(): { axis: 'x' | 'y' | 'z'; layer: number; dir: number } {
+    const m = moveBank[Math.floor(Math.random() * moveBank.length)]
+    // 50% flip the direction so the same axis/layer can go either way.
+    const flip = Math.random() < 0.5 ? -1 : 1
+    return { ...m, dir: m.dir * flip }
+  }
+
+  // Turn-count distribution. The 4/8-turn full revolutions are what makes
+  // the cube feel like it has dynamic range — without them, every twist
+  // ends at a discrete 90/180 snap which reads as mechanical/finite.
   function pickTurns(): number {
     const r = Math.random()
-    if (r < 0.05) return 8       // 5%  — dramatic 720 double-revolution
-    if (r < 0.15) return 4       // 10% — full 360 spin
-    if (r < 0.35) return 2       // 20% — 180 half-flip
-    return 1                     // 65% — standard 90 quarter-turn
+    if (r < 0.06) return 8   // 6%  — 720 dramatic double-revolution
+    if (r < 0.18) return 4   // 12% — 360 full spin
+    if (r < 0.40) return 2   // 22% — 180 half-flip
+    return 1                 // 60% — 90 quarter-turn
   }
+
+  // Compute duration + ease for a turn count. Long spins use easeOutQuint
+  // (snappy launch, gentle settle) so they actually READ as motion rather
+  // than starting too slow under quartic.
+  function planTwist(turns: number) {
+    if (opts.reducedMotion) {
+      const dur = turns === 2 ? 1500 : 1100
+      return { duration: dur, easeFn: easeInOutQuart }
+    }
+    if (turns >= 4) {
+      // 360 = 1.4-1.7s, 720 = 2.0-2.4s — sub-linear so angular speed
+      // increases with turn count → the 720 reads as a fast "whoosh".
+      const baseDur = turns === 8 ? 2000 : 1400
+      return { duration: baseDur + Math.random() * 400, easeFn: easeOutQuint }
+    }
+    if (turns === 2) return { duration: 950 + Math.random() * 100, easeFn: easeInOutQuart }
+    return { duration: 600 + Math.random() * 220, easeFn: easeInOutQuart }
+  }
+
   async function choreograph() {
-    // Match Resend's exact choreograph cadence — researched from the
-    // reference implementation. The 350-850ms pause between twists is
-    // load-bearing: it gives the eye time to register each new orientation
-    // before the next twist starts, which is what reads as "many angles"
-    // and "deliberate" rather than frantic.
     const initialHold = opts.reducedMotion ? 2400 : 1500
     await new Promise((r) => { timer1 = setTimeout(r, initialHold) })
+
     while (!stopped) {
-      const m = moveBank[moveIndex % moveBank.length]
-      moveIndex++
-      const turns = opts.reducedMotion
-        ? (Math.random() < 0.10 ? 2 : 1)   // reduced-motion: max 180
-        : pickTurns()
-      // Duration scales sub-linearly with turns so longer spins read as
-      // "fast through the middle, gentle settle" rather than slow plodding.
-      // 1=600-820, 2=1000, 4=1600, 8=2600 — angular speed actually
-      // INCREASES for larger turn counts, which is what makes the 720
-      // feel like a satisfying "whoosh" instead of a tedious crawl.
-      let duration: number
-      if (opts.reducedMotion) {
-        duration = turns === 2 ? 1500 : 1100
-      } else if (turns === 8) {
-        duration = 2400 + Math.random() * 400   // 2.4-2.8s for 720
-      } else if (turns === 4) {
-        duration = 1500 + Math.random() * 250   // 1.5-1.75s for 360
-      } else if (turns === 2) {
-        duration = 1000                          // 1s for 180
-      } else {
-        duration = 600 + Math.random() * 220     // 0.6-0.82s for 90
+      // Decide whether this iteration is a single twist or a "burst" of
+      // 2-3 quick chained twists. Bursts (12% probability) are what give
+      // the cube its flexible, scramble-like character — short snappy
+      // moves with minimal pauses, like a Rubik solver mid-sequence.
+      const isBurst = !opts.reducedMotion && Math.random() < 0.12
+
+      if (isBurst) {
+        const burstLen = 2 + Math.floor(Math.random() * 2)   // 2 or 3 moves
+        for (let i = 0; i < burstLen && !stopped; i++) {
+          // Burst moves are always single 90 turns at snappy speeds.
+          const m = pickMove()
+          const duration = 380 + Math.random() * 140        // 380-520ms each
+          await performTwist({ ...m, turns: 1, duration, easeFn: easeOutQuint })
+          if (stopped) break
+          if (i < burstLen - 1) {
+            await new Promise((r) => { timer2 = setTimeout(r, 60 + Math.random() * 80) })
+          }
+        }
+        // Longer pause AFTER a burst so the cube has time to "land".
+        if (!stopped) {
+          await new Promise((r) => { timer2 = setTimeout(r, 700 + Math.random() * 600) })
+        }
+        continue
       }
-      await performTwist({ ...m, turns, duration })
+
+      const m = pickMove()
+      const turns = opts.reducedMotion ? (Math.random() < 0.10 ? 2 : 1) : pickTurns()
+      const { duration, easeFn } = planTwist(turns)
+
+      await performTwist({ ...m, turns, duration, easeFn })
       if (stopped) break
-      // Resend pause: 350-850ms after standard twists. Longer multi-turn
-      // moves get a slightly bigger pause (550-1100ms) so the dramatic
-      // moment can land before the next twist starts.
-      const basePause = opts.reducedMotion ? 1400 : (turns >= 4 ? 550 : 350)
-      const jitter = opts.reducedMotion ? 1200 : (turns >= 4 ? 550 : 500)
+
+      // Pause between twists. Standard 90/180: 350-850ms (Resend exact).
+      // Longer 360/720: a touch more breathing room (450-900ms) so the
+      // dramatic move lands before the next one starts.
+      const basePause = opts.reducedMotion ? 1400 : (turns >= 4 ? 450 : 350)
+      const jitter = opts.reducedMotion ? 1200 : (turns >= 4 ? 450 : 500)
       await new Promise((r) => { timer2 = setTimeout(r, basePause + Math.random() * jitter) })
     }
   }
-  // Always run choreograph — the cube twist is the brand identity for this
-  // hero, same as on resend.com. Reduced-motion users get longer pauses +
-  // slower turns above so the motion is gentler but still present.
   choreograph()
 
   const targetRot = { x: -0.32, y: 0.55 }
@@ -859,18 +891,25 @@ function setupCube(
       rafAnimate = requestAnimationFrame(animate)
       return
     }
-    void now
 
-    // Auto-spin matches Resend's reference (0.0014 rad/frame). Full Y
-    // rotation in ~75 seconds at 60fps — slow enough that you barely
-    // register it on a casual glance, but a user lingering on the hero
-    // sees the whole cube gradually expose every side. Combined with
-    // discrete face twists, the cube cycles through many configurations.
+    // Auto-spin matches Resend's reference (0.0014 rad/frame), ~75s per
+    // full Y rotation — slow ambient drift so the cube exposes every side.
     autoSpin += 0.0014
+
+    // Subtle multi-axis breathing — two slow sinusoids on X and Z apply
+    // a tiny extra offset to the cube's resting orientation. Periods are
+    // 23s and 31s (coprime → no obvious loop), amplitudes ~3.4 deg and
+    // ~2.3 deg. The whole cube gently nods and tilts in addition to the
+    // Y-axis spin, giving the "alive in 3D space" feel that pure Y-spin
+    // lacks. Reduced-motion users skip this — they get only the spin.
+    const wobbleX = opts.reducedMotion ? 0 : Math.sin(now * 0.000273) * 0.060
+    const wobbleZ = opts.reducedMotion ? 0 : Math.sin(now * 0.000203) * 0.040
+
     currentRot.x += (targetRot.x - currentRot.x) * 0.06
     currentRot.y += (targetRot.y - currentRot.y) * 0.06
-    cubeGroup.rotation.x = currentRot.x
+    cubeGroup.rotation.x = currentRot.x + wobbleX
     cubeGroup.rotation.y = currentRot.y + autoSpin
+    cubeGroup.rotation.z = wobbleZ
 
     renderer.render(scene, camera)
     rafAnimate = requestAnimationFrame(animate)
