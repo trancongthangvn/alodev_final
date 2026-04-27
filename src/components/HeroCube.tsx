@@ -231,15 +231,23 @@ function setupCube(
     ctx.fillStyle = grad
     ctx.fillRect(0, 0, w, h)
 
-    const sb1 = ctx.createRadialGradient(w * 0.5, h * 0.18, 30, w * 0.5, h * 0.18, w * 0.30)
-    sb1.addColorStop(0, 'rgba(220,225,240,0.45)')
-    sb1.addColorStop(1, 'rgba(220,225,240,0)')
-    ctx.fillStyle = sb1; ctx.fillRect(0, 0, w, h)
+    // Horizontal soft band instead of a radial spot. A radial bright spot
+    // reflects on flat tiles as a circular disc which reads as a literal
+    // "dot". A horizontal band reflects as a streak across the tile's top
+    // edge — that's the highlight shape Resend's reference cube shows.
+    const band = ctx.createLinearGradient(0, h * 0.05, 0, h * 0.42)
+    band.addColorStop(0.00, 'rgba(220,225,240,0)')
+    band.addColorStop(0.45, 'rgba(220,225,240,0.32)')
+    band.addColorStop(1.00, 'rgba(220,225,240,0)')
+    ctx.fillStyle = band; ctx.fillRect(0, 0, w, h)
 
-    const sb2 = ctx.createRadialGradient(w * 0.12, h * 0.40, 10, w * 0.12, h * 0.40, w * 0.18)
-    sb2.addColorStop(0, 'rgba(150,170,210,0.22)')
-    sb2.addColorStop(1, 'rgba(150,170,210,0)')
-    ctx.fillStyle = sb2; ctx.fillRect(0, 0, w, h)
+    // Tiny cool accent on the left horizon — a small streak, not a circle,
+    // for variety in side-face highlights.
+    const accent = ctx.createLinearGradient(w * 0.05, h * 0.38, w * 0.30, h * 0.46)
+    accent.addColorStop(0.0, 'rgba(150,170,210,0)')
+    accent.addColorStop(0.5, 'rgba(150,170,210,0.18)')
+    accent.addColorStop(1.0, 'rgba(150,170,210,0)')
+    ctx.fillStyle = accent; ctx.fillRect(0, h * 0.32, w * 0.45, h * 0.18)
 
     const tex = new THREE.CanvasTexture(c)
     tex.mapping = THREE.EquirectangularReflectionMapping
@@ -255,7 +263,7 @@ function setupCube(
   // black bg; on a light bg we need ~30% more ambient and key.
   scene.add(new THREE.HemisphereLight(0xb8c0e0, 0x02020a, 0.32))
 
-  const key = new THREE.DirectionalLight(0xffffff, 1.45)
+  const key = new THREE.DirectionalLight(0xffffff, 1.10)
   key.position.set(4.5, 8, 7)
   key.castShadow = true
   // 4096 to match the rubik_resend repo for crisp shadow edges (~16MB GPU).
@@ -443,6 +451,54 @@ function setupCube(
     return tex
   }
 
+  // Carbon fiber twill weave — replaces the smooth-onyx variant. The
+  // smooth tile was reflecting the env map's circular bright spot as a
+  // visible round disc that read as "dot" against the dark vibe. Carbon
+  // fiber gives the premium dark-luxury surface without the literal
+  // circular reflection.
+  function makeCarbonWeaveTexture(size = 512, cellsPerSide = 8) {
+    const c = document.createElement('canvas')
+    c.width = c.height = size
+    const ctx = c.getContext('2d')!
+    ctx.fillStyle = '#13131a'; ctx.fillRect(0, 0, size, size)
+
+    const step = size / cellsPerSide
+    for (let i = 0; i < cellsPerSide; i++) {
+      for (let j = 0; j < cellsPerSide; j++) {
+        const x0 = i * step
+        const y0 = j * step
+        const horizontal = (i + j) % 2 === 0
+
+        // Slight base-tone variation per cell for the alternating-weave look.
+        ctx.fillStyle = horizontal ? '#1d1d24' : '#101016'
+        ctx.fillRect(x0, y0, step, step)
+
+        // 3 fine threads per cell, perpendicular to the cell's "warp"
+        // direction. Highlight color picks up env subtly without dominating.
+        ctx.strokeStyle = horizontal ? 'rgba(90,90,108,0.42)' : 'rgba(50,50,62,0.32)'
+        ctx.lineWidth = step * 0.04
+        ctx.beginPath()
+        for (let k = 1; k <= 3; k++) {
+          if (horizontal) {
+            const y = y0 + step * (k / 4)
+            ctx.moveTo(x0 + 1, y)
+            ctx.lineTo(x0 + step - 1, y)
+          } else {
+            const x = x0 + step * (k / 4)
+            ctx.moveTo(x, y0 + 1)
+            ctx.lineTo(x, y0 + step - 1)
+          }
+        }
+        ctx.stroke()
+      }
+    }
+    applyAOVignette(ctx, size, 0.08)
+    const tex = new THREE.CanvasTexture(c)
+    tex.colorSpace = THREE.SRGBColorSpace
+    tex.anisotropy = MAX_ANISO
+    return tex
+  }
+
   function makeMeshGrilleTexture(size = 512, dotsPerSide = 36) {
     const c = document.createElement('canvas')
     c.width = c.height = size
@@ -488,14 +544,13 @@ function setupCube(
   // the cube faces. 512² (used previously) made them look mushy.
   const grainHeavy  = makeNoiseAndNormal(1024, 0.038, 200, 6)
   const grainSubtle = makeNoiseAndNormal(1024, 0.014, 120, 5)
+  const texCarbon   = makeCarbonWeaveTexture(1024, 8)
   const texHex      = makeHexMeshTexture(1024, 22)
   const texMesh     = makeMeshGrilleTexture(1024, 38)
   const texStripes  = makeVerticalStripesTexture(1024, 30)
   // Tile center colors at mid-grey range — readable as distinct surfaces
   // on either bg. Edges still dark for the bevel rim contrast.
-  const insetSmooth = makeBaseInsetMap(512, '#5a5a64', '#0a0a0e')
   const insetMatte  = makeBaseInsetMap(512, '#46464e', '#0a0a0e')
-  const insetSemi   = makeBaseInsetMap(512, '#52525a', '#0a0a0e')
 
   // Material PBR params extracted from Resend's actual chunk:
   //   roughness: 0.2, metalness: 0.2, reflectivity: 0.2
@@ -503,8 +558,12 @@ function setupCube(
   // make the bevel rim catch env reflection as a bright line. Going
   // higher (we tried 1.4 globally) reads as washed-out, not punchier.
   const tileVariants = [
-    // smooth glossy onyx — slight clearcoat for premium product feel
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSmooth, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.18, envMapIntensity: 0.85 }),
+    // carbon fiber weave (lacquered) — premium dark-luxury surface.
+    // No clearcoat: a glossy clearcoat layer reflects the env map's
+    // circular spot as a visible disc on top of the weave, defeating
+    // the whole point of replacing smooth-onyx. The texture itself
+    // gives the lacquer feel via subtle thread highlights.
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texCarbon,  roughness: 0.30, metalness: 0.20, reflectivity: 0.20, envMapIntensity: 0.55 }),
     // matte void — low envMap so it stays as the contrast anchor
     new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 0.4, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.07 }),
     // granite/sparkle — heavy normal scale for noise pop
@@ -514,13 +573,17 @@ function setupCube(
     // hex honeycomb — fine machined-alloy perforation (matches Resend's
     // reference). Replaces the original round-dot grid that read as
     // literal speaker holes against alodev's vibe.
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texHex,     roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.85 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texHex,     roughness: 0.34, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.65 }),
     // mesh grille
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.8 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.34, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.60 }),
     // vertical stripes
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.9 }),
-    // semi-gloss filler
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSemi,  roughness: 0.3, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.30, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.65 }),
+    // matte carbon weave — pairs with v0 (lacquered carbon). Same texture
+    // for cohesion, but rougher + lower envMap so it reads as the dry/matte
+    // counterpart vs v0's lacquered finish. Replacing the old semi-gloss
+    // bevel keeps any inset-style tile from reflecting the env spot as a
+    // disc.
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texCarbon,  roughness: 0.42, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.30 }),
   ]
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -616,7 +679,7 @@ function setupCube(
     // 72% matte/smooth tiles, leaving visible textures rare. New distribution
     // bumps granite/hex/mesh/stripes to ~50% of tiles, matching Resend's
     // visible material variety per face.
-    //              [smooth, matte, granite, micro, hex, mesh, stripes, semi]
+    //              [carbonLacq, matte, granite, micro, hex, mesh, stripes, carbonMatte]
     const weights = [    2,     2,       3,     3,    2,    2,       2,    2]
     const total = weights.reduce((a, b) => a + b, 0)
     let r = (h * 2654435761 >>> 0) % total
@@ -933,9 +996,8 @@ function setupCube(
       if (m.normalMap) m.normalMap.dispose()
       m.dispose()
     })
-    insetSmooth.dispose()
+    texCarbon.dispose()
     insetMatte.dispose()
-    insetSemi.dispose()
     grainHeavy.map.dispose()
     grainHeavy.nor.dispose()
     grainSubtle.map.dispose()
