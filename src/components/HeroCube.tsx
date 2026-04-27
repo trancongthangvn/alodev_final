@@ -735,6 +735,18 @@ function setupCube(
   let moveIndex = 0
   let timer1: ReturnType<typeof setTimeout> | null = null
   let timer2: ReturnType<typeof setTimeout> | null = null
+  // Distribution of turn counts per move. 1 turn = 90 degrees, 2 = 180,
+  // 4 = full 360 spin (face returns to original orientation but spins
+  // visibly through), 8 = 720 dramatic double rotation. The 4-turn and
+  // 8-turn moves are what the user perceives as "spinning" — without
+  // them the cube just snaps between discrete face configurations.
+  function pickTurns(): number {
+    const r = Math.random()
+    if (r < 0.05) return 8       // 5%  — dramatic 720 double-revolution
+    if (r < 0.15) return 4       // 10% — full 360 spin
+    if (r < 0.35) return 2       // 20% — 180 half-flip
+    return 1                     // 65% — standard 90 quarter-turn
+  }
   async function choreograph() {
     // Match Resend's exact choreograph cadence — researched from the
     // reference implementation. The 350-850ms pause between twists is
@@ -746,19 +758,33 @@ function setupCube(
     while (!stopped) {
       const m = moveBank[moveIndex % moveBank.length]
       moveIndex++
-      // 10% double-twist probability matches Resend exactly.
-      const turns = Math.random() < 0.10 ? 2 : 1
-      // Resend per-twist: 600-820ms single, 1000ms double. Reduced-motion
-      // users get noticeably slower turns for a gentler effect.
-      const baseDur = opts.reducedMotion ? 1100 : 600
-      const duration = turns === 2 ? (opts.reducedMotion ? 1500 : 1000) : baseDur + Math.random() * 220
+      const turns = opts.reducedMotion
+        ? (Math.random() < 0.10 ? 2 : 1)   // reduced-motion: max 180
+        : pickTurns()
+      // Duration scales sub-linearly with turns so longer spins read as
+      // "fast through the middle, gentle settle" rather than slow plodding.
+      // 1=600-820, 2=1000, 4=1600, 8=2600 — angular speed actually
+      // INCREASES for larger turn counts, which is what makes the 720
+      // feel like a satisfying "whoosh" instead of a tedious crawl.
+      let duration: number
+      if (opts.reducedMotion) {
+        duration = turns === 2 ? 1500 : 1100
+      } else if (turns === 8) {
+        duration = 2400 + Math.random() * 400   // 2.4-2.8s for 720
+      } else if (turns === 4) {
+        duration = 1500 + Math.random() * 250   // 1.5-1.75s for 360
+      } else if (turns === 2) {
+        duration = 1000                          // 1s for 180
+      } else {
+        duration = 600 + Math.random() * 220     // 0.6-0.82s for 90
+      }
       await performTwist({ ...m, turns, duration })
       if (stopped) break
-      // Resend pause: 350-850ms. Gives the cube a moment to "land" before
-      // the next move — that breathing space is the difference between
-      // continuous motion and a frantic blur.
-      const basePause = opts.reducedMotion ? 1400 : 350
-      const jitter = opts.reducedMotion ? 1200 : 500
+      // Resend pause: 350-850ms after standard twists. Longer multi-turn
+      // moves get a slightly bigger pause (550-1100ms) so the dramatic
+      // moment can land before the next twist starts.
+      const basePause = opts.reducedMotion ? 1400 : (turns >= 4 ? 550 : 350)
+      const jitter = opts.reducedMotion ? 1200 : (turns >= 4 ? 550 : 500)
       await new Promise((r) => { timer2 = setTimeout(r, basePause + Math.random() * jitter) })
     }
   }
