@@ -606,23 +606,6 @@ img, iframe { color-scheme: light; }
     linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
 }
 
-/* Saffron-tinted glow blob keeps the Alodev brand DNA. */
-.hero-resend-glow {
-  background: radial-gradient(ellipse at center,
-    rgba(237, 146, 25, 0.18) 0%,
-    rgba(150, 80, 220, 0.06) 35%,
-    transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
-}
-[data-theme=dark] .hero-resend-glow {
-  background: radial-gradient(ellipse at center,
-    rgba(237, 146, 25, 0.12) 0%,
-    rgba(150, 80, 220, 0.05) 35%,
-    transparent 70%);
-  filter: blur(60px);
-}
-
 /* Headline color — solid black on light, solid white on dark.
    We tried Resend's gradient-text trick (background-clip:text) but our
    word-cascade child spans use transform + filter which create new

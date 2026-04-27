@@ -59,7 +59,6 @@ export default function Home() {
       {/* ─── HERO — Resend-style, 2-col, cube right; theme-adaptive ─── */}
       <section className="hero-resend relative text-ink-900 dark:text-white overflow-hidden" data-section-name="Trang chủ">
         <div className="hero-resend-grid absolute inset-0" />
-        <div className="hero-resend-glow absolute inset-x-0 -top-48 h-[600px]" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-24 lg:pb-28">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 lg:items-start">
