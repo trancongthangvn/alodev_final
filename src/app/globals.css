@@ -634,38 +634,112 @@ img, iframe { color-scheme: light; }
   color: #ffffff;
 }
 
-/* Cube canvas viewport: tall enough on desktop to feel like the hero
-   centerpiece, modest on mobile (mobile gets SVG fallback anyway). */
+/* Cube canvas viewport — modeled on Resend's 700×550 (1.27:1) container.
+   We use aspect-ratio + max-width instead of a fixed pixel height because
+   the hero column width changes with viewport, and a fixed height creates
+   a stretched canvas at narrower widths. The grandparent column is
+   col-span-5 of a max-w-7xl grid, so the cube settles around 480×380 at
+   typical desktop and 700×550 at full ultrawide — both faithful to the
+   reference frame. */
 .hero-cube-wrap {
-  height: 520px;
   position: relative;
+  aspect-ratio: 700 / 550;
+  width: 100%;
+  max-width: 700px;
+  margin-left: auto;       /* nudge right like Resend's md:ml-10 offset */
+  /* Lighter grayscale (0.55 → 0.30) so warm rim light bleeding off bevels
+     stays visible. Pure grayscale was killing the warmth that gives the
+     cube its dimensional feel — same reason black-and-white photography
+     uses high-contrast paper, not flat grey. Contrast lift keeps the
+     differentiated tile textures (granite, mesh, stripes) readable. */
+  filter: grayscale(0.30) contrast(1.05);
+  /* CSS-driven entrance: matches Resend's `open-scale-up-fade 1.5s
+     ease-in-out`. Replaces the earlier JS scale tween in setupCube — only
+     one curve, no double-tween stutter at the end. */
+  animation: hero-cube-scale-in-fade 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity, filter;
 }
+
+/* Stage backdrop — a generous dark pool behind the cube. Without this,
+   the cube reads as a flat silhouette in light theme because the cubelet
+   body color (~#0c0c10) is too close to value-black against the cream-50
+   page bg. The pool is heavily blurred so its edges feather seamlessly
+   into the surrounding hero bg — you don't perceive a "panel," you just
+   perceive that the cube has its own atmospheric pocket. Inspired by
+   museum plinth lighting: the artifact gets its own controlled context. */
+.hero-cube-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 65% 58% at 50% 50%,
+    rgba(7, 8, 12, 0.92) 0%,
+    rgba(7, 8, 12, 0.78) 22%,
+    rgba(7, 8, 12, 0.42) 50%,
+    rgba(7, 8, 12, 0.10) 75%,
+    transparent 90%
+  );
+  filter: blur(38px);
+  z-index: 0;
+  pointer-events: none;
+}
+[data-theme=dark] .hero-cube-wrap::before {
+  /* Dark theme: the page bg is already #07080c. The stage just adds a
+     subtle elevated shadow pool — depth without being heavy. */
+  background: radial-gradient(
+    ellipse 65% 58% at 50% 50%,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.28) 45%,
+    rgba(0, 0, 0, 0.08) 70%,
+    transparent 88%
+  );
+}
+/* Direct children sit above the ::before stage backdrop. Don't reset
+   `position` here — the SVG fallback is `absolute inset-0` and we need
+   to preserve that. */
+.hero-cube-wrap > * { z-index: 1; }
 @media (max-width: 1023px) {
-  .hero-cube-wrap { height: 380px; }
+  .hero-cube-wrap {
+    /* On stacked mobile/tablet, give it a touch of breathing room above
+       the next section without dominating the fold. */
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+@keyframes hero-cube-scale-in-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+    filter: grayscale(0.30) contrast(1.05) blur(6px);
+  }
+  60% {
+    opacity: 1;
+    filter: grayscale(0.30) contrast(1.05) blur(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: grayscale(0.30) contrast(1.05);
+  }
 }
 
 /* Cube vignette so the canvas blends into the surrounding bg seamlessly.
-   Light mode: vignette toward light bg. Dark mode: toward #07080c. */
+   Light mode: vignette toward light bg. Dark mode: toward #07080c.
+   Lower opacity than before (0.55 → 0.32) — the previous wash was muting
+   the bottom row of cubelets; Resend's hero lets the cube reach further
+   down into the dark before fading. */
 .hero-cube-wrap::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(246,247,249,0.55) 100%);
+  background: radial-gradient(ellipse 75% 65% at 50% 45%, transparent 50%, rgba(246,247,249,0.32) 100%);
   z-index: 1;
 }
 [data-theme=dark] .hero-cube-wrap::after {
-  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(7,8,12,0.55) 100%);
-}
-
-/* Floating mono tag chips around cube — gentle bob */
-.hero-cube-tag {
-  animation: cube-float 6s ease-in-out infinite;
-  z-index: 2;
-}
-@keyframes cube-float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
+  background: radial-gradient(ellipse 75% 65% at 50% 45%, transparent 50%, rgba(7,8,12,0.32) 100%);
 }
 
 /* Generic theme-adaptive card (used by StackStrip) */
@@ -714,5 +788,9 @@ img, iframe { color-scheme: light; }
   .process-track::after { transition: none !important; }
   .section-frame .ind { transition: none !important; }
   .magnetic, .magnetic > * { transition: none !important; transform: none !important; }
-  .hero-cube-tag { animation: none !important; }
+  /* Cube wrapper: skip the dramatic scale-in-fade for vestibular comfort,
+     but keep the cube visible (opacity 1) — the JS-side cube also honors
+     reduced-motion by skipping abrupt face twists while keeping the slow
+     auto-spin and gentle parallax (matching Resend's actual behavior). */
+  .hero-cube-wrap { animation: none !important; opacity: 1 !important; transform: none !important; filter: grayscale(0.30) contrast(1.05) !important; }
 }

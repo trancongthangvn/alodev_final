@@ -24,13 +24,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-// Floating tag chips around the cube — pick stack names that read as
-// "we use industrial-grade tools", short enough to fit in a tiny pill.
-const floatTags = [
-  { text: 'Next.js 16',  pos: 'top-[10%] right-[4%]'   },
-  { text: 'PostgreSQL',  pos: 'top-[42%] right-[-2%]'  },
-  { text: 'Cloudflare',  pos: 'bottom-[14%] right-[8%]' },
-]
+// Floating tag chips were removed in the Resend-fidelity pass — Resend's
+// hero has nothing around its cube, and the chips were stealing focus from
+// the cube itself. The brand stack still gets airtime in <StackStrip />
+// further down the page, so we lose nothing.
 
 function hasWebGL(): boolean {
   if (typeof window === 'undefined') return false
@@ -107,17 +104,6 @@ export default function HeroCube() {
         className={`hero-cube-canvas relative w-full h-full transition-opacity duration-700 ${interactive ? 'opacity-100' : 'opacity-0'}`}
         aria-label="3D Rubik visualization"
       />
-
-      {/* Floating mono-font tag chips — theme-adaptive */}
-      {floatTags.map((t, i) => (
-        <span
-          key={t.text}
-          className={`hero-cube-tag hidden lg:inline-flex absolute ${t.pos} px-2.5 py-1 rounded-md border border-gray-300 dark:border-zinc-800/90 bg-white/80 dark:bg-zinc-950/70 backdrop-blur text-[11px] font-mono text-gray-600 dark:text-zinc-400`}
-          style={{ animationDelay: `${i * 1.5}s` }}
-        >
-          {t.text}
-        </span>
-      ))}
     </div>
   )
 }
@@ -184,11 +170,14 @@ function setupCube(
   renderer.setPixelRatio(Math.min(window.devicePixelRatio * 1.25, 2.5))
   renderer.setClearColor(0x000000, 0)
   renderer.outputColorSpace = THREE.SRGBColorSpace
+  // ACES tone mapping with a substantial exposure boost. Resend renders
+  // against a pure black bg where ACES + 0.88 reads beautifully via
+  // simultaneous contrast. Alodev's hero uses a near-white bg in light
+  // theme, which fights perception — the same cube reads as flat black
+  // silhouette unless we push exposure significantly. 1.30 lifts the
+  // mid-tones into a readable grey while keeping ACES's filmic contrast.
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  // Bumped from 0.88 to 1.05 — r184 ACES tone mapping renders darker than
-  // r128 (the version in the rubik_resend repo) at the same exposure value.
-  // 1.05 brings tile texture variation back to repo-equivalent visibility.
-  renderer.toneMappingExposure = 1.05
+  renderer.toneMappingExposure = 1.30
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
@@ -230,12 +219,14 @@ function setupCube(
   }
   scene.environment = makeEnvMap()
 
-  // Slightly stronger ambient + key light to compensate for r184 darkening
-  // and make the granite / dot / mesh / stripe textures POP across tiles.
-  scene.add(new THREE.HemisphereLight(0xb8c0e0, 0x02020a, 0.28))
+  // Lighting follows Resend's three-point shape but with stronger fill,
+  // tuned so the cube reads against alodev's light hero background as
+  // well as the dark theme. Resend's exact values worked on their pure
+  // black bg; on a light bg we need ~30% more ambient and key.
+  scene.add(new THREE.HemisphereLight(0xb8c0e0, 0x02020a, 0.32))
 
-  const key = new THREE.DirectionalLight(0xffffff, 1.25)
-  key.position.set(5, 9, 6)
+  const key = new THREE.DirectionalLight(0xffffff, 1.45)
+  key.position.set(4.5, 8, 7)
   key.castShadow = true
   // 4096 to match the rubik_resend repo for crisp shadow edges (~16MB GPU).
   key.shadow.mapSize.set(4096, 4096)
@@ -249,13 +240,21 @@ function setupCube(
   key.shadow.radius = 7
   scene.add(key)
 
-  const rimL = new THREE.DirectionalLight(0xa8b4d8, 0.40)
+  // Cool back-rim — defines the cube silhouette against light bg.
+  const rimL = new THREE.DirectionalLight(0xa8b4d8, 0.50)
   rimL.position.set(-7, 2, -4)
   scene.add(rimL)
 
-  const rimR = new THREE.DirectionalLight(0xddc8b0, 0.18)
+  // Warm side-rim — three-point lit feel.
+  const rimR = new THREE.DirectionalLight(0xddc8b0, 0.25)
   rimR.position.set(7, -2, -2)
   scene.add(rimR)
+
+  // Frontal fill — alodev-specific. Soft camera-side wash so the
+  // bottom-front cubelets aren't featureless silhouette mid-twist.
+  const fill = new THREE.DirectionalLight(0xfff2dc, 0.35)
+  fill.position.set(2, 1.5, 9)
+  scene.add(fill)
 
   const shadowMat = new THREE.ShadowMaterial({ opacity: 0.5 })
   const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), shadowMat)
@@ -442,33 +441,37 @@ function setupCube(
   const texDots     = makeDotGridTexture(1024, 9)
   const texMesh     = makeMeshGrilleTexture(1024, 38)
   const texStripes  = makeVerticalStripesTexture(1024, 30)
-  const insetSmooth = makeBaseInsetMap(512, '#26262e', '#040408')
-  // Lifted matte center from #0a0a0d (near-black) to #1a1a20 — was rendering
-  // as pure void on most matte tiles, killing the texture variation feel.
-  const insetMatte  = makeBaseInsetMap(512, '#1a1a20', '#040407')
-  const insetSemi   = makeBaseInsetMap(512, '#1f1f26', '#040408')
+  // Tile center colors lifted above Resend's reference (which was tuned
+  // for a pure black bg) so the cube reads against alodev's light hero.
+  // Each variant keeps a noticeable contrast delta with the cubelet body
+  // (#1a1a1f) so individual tiles still pop on each face. Edges stay
+  // near-black to give bevels a bright rim to catch against.
+  const insetSmooth = makeBaseInsetMap(512, '#3a3a44', '#08080c')
+  const insetMatte  = makeBaseInsetMap(512, '#2a2a32', '#08080c')
+  const insetSemi   = makeBaseInsetMap(512, '#33333c', '#08080c')
 
   // Material PBR params extracted from Resend's actual chunk:
   //   roughness: 0.2, metalness: 0.2, reflectivity: 0.2
-  // We keep the texture/normal maps for visible per-tile variation
-  // (granite/mesh/dots) — Resend layers maps on top of uniform PBR base.
+  // envMapIntensity values per-variant match Resend's tuning — they
+  // make the bevel rim catch env reflection as a bright line. Going
+  // higher (we tried 1.4 globally) reads as washed-out, not punchier.
   const tileVariants = [
     // smooth glossy onyx — slight clearcoat for premium product feel
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSmooth, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.18, envMapIntensity: 1.0 }),
-    // matte void — slightly higher roughness, no clearcoat
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 0.4, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
-    // granite/sparkle — full Resend params + heavy normal scale for noise pop
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSmooth, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.18, envMapIntensity: 0.85 }),
+    // matte void — low envMap so it stays as the contrast anchor
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 0.4, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.07 }),
+    // granite/sparkle — heavy normal scale for noise pop
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
     // micro-grain — subtle noise
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainSubtle.map, normalMap: grainSubtle.nor, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainSubtle.map, normalMap: grainSubtle.nor, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.75 }),
     // perforated dots
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texDots,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texDots,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.85 }),
     // mesh grille
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.8 }),
     // vertical stripes
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 1.0 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.9 }),
     // semi-gloss filler
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSemi,  roughness: 0.3, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.85 }),
+    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSemi,  roughness: 0.3, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
   ]
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -511,12 +514,17 @@ function setupCube(
   }
 
   const SIZE = 0.97
-  const GAP  = 0.08    // bumped from 0.05 — Resend's cubelets show wider spacing
+  // Re-measured against Resend's reference on a clearer mid-rotation frame:
+  // their cubelets are MORE tightly packed than the 0.08 we'd previously
+  // dialed. 0.055 lands closer — visible gap, but tiles still feel like one
+  // cube rather than disconnected blocks.
+  const GAP  = 0.055
   const STEP = SIZE + GAP
   const TILE_SIZE = 0.84
   const TILE_RADIUS = 0.08
-  const TILE_DEPTH = 0.012        // bumped from 0.005 — thicker tile catches edge light
-  const TILE_BEVEL = 0.014        // bumped from 0.004 — wider bevel = visible white rim
+  const TILE_DEPTH = 0.018        // 0.012 → 0.018: thicker tile = more side area for rim light to graze
+  const TILE_BEVEL = 0.022        // 0.014 → 0.022: wider bevel = visible white rim around each tile,
+                                  //                the single most important visual cue for "tiles on a cube"
   const TILE_OFFSET = SIZE / 2 + TILE_BEVEL
 
   const cubeletGeo = roundedBox(SIZE, 0.11, 6)
@@ -545,8 +553,14 @@ function setupCube(
     tileGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
   })()
 
+  // Cubelet body lifted to dark grey (#1a1a1f) so the rounded cubelet
+  // shape catches enough light to read as 3D against alodev's light hero
+  // bg. Resend uses #030305 (near pure black), but that disappears as
+  // silhouette on a light background. Body still stays clearly darker
+  // than the lifted tile centers (#2a-#3a range) so tile/body contrast
+  // remains the primary "nine separate cubelets" cue per face.
   const bodyMat = new THREE.MeshPhysicalMaterial({
-    color: 0x030305, roughness: 0.78, metalness: 0.18, envMapIntensity: 0.4,
+    color: 0x1a1a1f, roughness: 0.72, metalness: 0.2, envMapIntensity: 0.5,
   })
 
   function pickVariant(x: number, y: number, z: number, faceIndex: number) {
@@ -723,15 +737,27 @@ function setupCube(
   let timer1: ReturnType<typeof setTimeout> | null = null
   let timer2: ReturnType<typeof setTimeout> | null = null
   async function choreograph() {
-    await new Promise((r) => { timer1 = setTimeout(r, 1500) })
+    // Hold longer before the first twist — the entrance scale-up plays for
+    // 1.5s, and pouncing on a face mid-entrance feels frantic. 3.2s also
+    // gives initial-impression viewers a clean look at the scrambled cube
+    // before motion kicks in, matching the way Resend lets you "read" the
+    // cube before it starts choreographing.
+    await new Promise((r) => { timer1 = setTimeout(r, 3200) })
     while (!stopped) {
       const m = moveBank[moveIndex % moveBank.length]
       moveIndex++
-      const turns = Math.random() < 0.10 ? 2 : 1
-      const duration = turns === 2 ? 1000 : (600 + Math.random() * 220)
+      // Reduced double-twist probability (0.10 → 0.06) — Resend's hero
+      // almost exclusively uses single 90° turns. Double-turns read as
+      // showy on a corporate-tasteful brand site.
+      const turns = Math.random() < 0.06 ? 2 : 1
+      // Gentler timings: 900-1150ms per turn (was 600-820), 1100-2000ms
+      // pause between turns (was 350-850). The cube now reads as composed
+      // and deliberate rather than hyperactive — matches the "tinh tế" /
+      // refined design tone the rest of the site goes for.
+      const duration = turns === 2 ? 1300 : (900 + Math.random() * 250)
       await performTwist({ ...m, turns, duration })
       if (stopped) break
-      await new Promise((r) => { timer2 = setTimeout(r, 350 + Math.random() * 500) })
+      await new Promise((r) => { timer2 = setTimeout(r, 1100 + Math.random() * 900) })
     }
   }
   // Skip choreographed face twists on reduced-motion. Auto-spin + parallax
@@ -748,8 +774,12 @@ function setupCube(
     const rect = wrap.getBoundingClientRect()
     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1
     const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1
-    targetRot.y = 0.55 + nx * 0.30
-    targetRot.x = -0.32 - ny * 0.16
+    // Halved sensitivity (0.30/0.16 → 0.18/0.10). The previous range
+    // produced a "wobbly" parallax that drew attention; Resend's cube
+    // barely budges with cursor — the effect should feel like the cube
+    // is gently aware of you, not theatrical.
+    targetRot.y = 0.55 + nx * 0.18
+    targetRot.x = -0.32 - ny * 0.10
   }
   function onLeave() {
     targetRot.x = -0.32
@@ -789,9 +819,12 @@ function setupCube(
   )
   visObs.observe(wrap)
 
-  cubeGroup.scale.setScalar(0.001)
-  const entranceStart = performance.now()
-  const ENTRANCE_MS = 1200
+  // Entrance handled by CSS on the wrapper (scale-up-fade keyframe in
+  // globals.css) — start the cube at full scale here. The wrapper opacity
+  // animation already gives the dramatic intro; double-tweening (CSS scale
+  // + JS scale) was producing a slight stutter at ~1.0 because the eased
+  // curves disagreed on the final frame.
+  cubeGroup.scale.setScalar(1)
 
   function animate(now: number) {
     if (stopped) return
@@ -799,11 +832,13 @@ function setupCube(
       rafAnimate = requestAnimationFrame(animate)
       return
     }
-    const et = Math.min((now - entranceStart) / ENTRANCE_MS, 1)
-    const eased = 1 - Math.pow(1 - et, 3)
-    cubeGroup.scale.setScalar(0.001 + eased * 0.999)
+    void now
 
-    autoSpin += 0.0014
+    // Auto-spin slowed from 0.0014 → 0.00085 rad/frame. At 60fps the cube
+    // now completes a full Y rotation every ~123 seconds (was ~75s) — slow
+    // enough that you barely register movement on a casual glance, yet a
+    // user lingering on the hero will feel the cube subtly breathe.
+    autoSpin += 0.00085
     currentRot.x += (targetRot.x - currentRot.x) * 0.06
     currentRot.y += (targetRot.y - currentRot.y) * 0.06
     cubeGroup.rotation.x = currentRot.x
