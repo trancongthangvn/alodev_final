@@ -877,6 +877,10 @@ function setupCube(
   // landing so the wave reads as flowing rather than punchy.
   const easeInOutCubic = (t: number) =>
     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+  // Quintic ease-out for human-feel quarter turns — fast initial flick
+  // then slows into the seat (like a finger snapping a layer over and
+  // letting it settle into its detent).
+  const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5)
 
   function performTwist({ axis, layer, dir, turns = 1, duration = 750, easeFn = easeInOutCubic }: {
     axis: 'x' | 'y' | 'z'; layer: number; dir: number; turns?: number; duration?: number;
@@ -946,31 +950,75 @@ function setupCube(
     else                     wrapper.rotation.z += dir * Math.PI / 2
   }
 
-  // Layer flip loop — Hệ 2 of the audit. Pick random axis (x/y/z),
-  // random layer (-1/0/1), random direction; rotate that layer 180°
-  // over ~2s with cubic ease. Pause 0–1000ms between flips. Before
-  // each flip, 70% probability of a wrapper snap to permute axes.
+  // Human-solver flip loop. Replaces the previous metronomic
+  // "180° turn every 2s" with the cadence of an actual person solving
+  // a Rubik's cube:
+  //
+  //   • 92% of moves are quarter turns (90°), 8% are double turns (180°)
+  //     — real solvers do mostly U/R/L/F/B/D, occasionally U2/R2/etc.
+  //   • Burst of 3-6 fast moves (220-340ms each, 60-130ms gap) — the
+  //     "I see the next sequence" flow state.
+  //   • Then a longer 600-1500ms thinking pause — the "now what?" beat.
+  //   • Inside a burst, repeat-axis is biased AGAINST so consecutive
+  //     moves rotate different faces (R,U,R',U' rather than R,R,R,R).
+  //   • A wrapper-snap (cube reorient) only happens BETWEEN bursts,
+  //     not mid-flow, and only ~25% of the time — like a solver
+  //     occasionally tilting the cube to look at another face.
+  //
+  // The result reads as someone actually working through the puzzle,
+  // not a programmatic "every-N-seconds-rotate-180°" loop.
   async function flipLoop() {
-    const initialHold = opts.reducedMotion ? 2400 : 1200
+    const initialHold = opts.reducedMotion ? 2400 : 1500
     await new Promise((r) => { timer1 = setTimeout(r, initialHold) })
 
+    let lastAxis: 'x' | 'y' | 'z' | null = null
+
     while (!stopped) {
-      if (!opts.reducedMotion && Math.random() < 0.7) wrapperSnap()
+      // Burst length: 3-6 moves
+      const burstLen = 3 + Math.floor(Math.random() * 4)
 
-      const axis = (['x', 'y', 'z'] as const)[Math.floor(Math.random() * 3)]
-      const layer = [-1, 0, 1][Math.floor(Math.random() * 3)]
-      const dir = Math.random() < 0.5 ? 1 : -1
-      const duration = opts.reducedMotion
-        ? 2400
-        : 1700 + Math.random() * 700  // 1.7–2.4s per audit's "~2 giây"
+      for (let i = 0; i < burstLen && !stopped; i++) {
+        // Pick axis with bias against repeating the previous one
+        let axis: 'x' | 'y' | 'z'
+        do {
+          axis = (['x', 'y', 'z'] as const)[Math.floor(Math.random() * 3)]
+        } while (axis === lastAxis && Math.random() < 0.7)
+        lastAxis = axis
 
-      await performTwist({ axis, layer, dir, turns: 2, duration })
+        const layer = [-1, 0, 1][Math.floor(Math.random() * 3)]
+        const dir = Math.random() < 0.5 ? 1 : -1
+        // 8% double turns, 92% single quarter turns
+        const turns = Math.random() < 0.08 ? 2 : 1
+
+        // Quarter: 220-340ms (finger flick + settle). Double: 360-500ms.
+        const duration = opts.reducedMotion
+          ? 800 + Math.random() * 300
+          : turns === 1
+            ? 220 + Math.random() * 120
+            : 360 + Math.random() * 140
+
+        // Quarter turns use ease-out-quint (snappy flick + settle);
+        // double turns use ease-in-out-cubic (smoother on the longer arc).
+        await performTwist({
+          axis, layer, dir, turns, duration,
+          easeFn: turns === 1 ? easeOutQuint : easeInOutCubic,
+        })
+        if (stopped) break
+
+        // Inter-move gap inside a burst: 60-130ms (breath between moves)
+        const innerGap = opts.reducedMotion ? 700 : 60 + Math.random() * 70
+        await new Promise((r) => { timer2 = setTimeout(r, innerGap) })
+      }
+
       if (stopped) break
 
-      const pause = opts.reducedMotion
-        ? 1800 + Math.random() * 1200
-        : Math.random() * 1000        // 0–1000ms per audit randomization
-      await new Promise((r) => { timer2 = setTimeout(r, pause) })
+      // Between-burst "thinking" pause: 600-1500ms
+      // 25% chance of a cube reorient during the pause (not mid-burst!)
+      if (!opts.reducedMotion && Math.random() < 0.25) wrapperSnap()
+      const thinkPause = opts.reducedMotion
+        ? 2200 + Math.random() * 1000
+        : 600 + Math.random() * 900
+      await new Promise((r) => { timer1 = setTimeout(r, thinkPause) })
     }
   }
   flipLoop()
