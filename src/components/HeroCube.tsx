@@ -88,6 +88,20 @@ export default function HeroCube() {
       setState('fallback')
       return
     }
+
+    // Network-aware skip. The full WebGL path costs ~192KB gzipped + GPU
+    // work; skipping it on slow connections / data-save mode shows the
+    // (now polished) SVG fallback instead. Users on 2G or save-data
+    // mostly have low-end devices anyway, so they'd struggle to render
+    // the cube even if it loaded. Network Information API is shipped on
+    // Chromium-based browsers — Safari falls through to the WebGL path.
+    type Conn = { effectiveType?: string; saveData?: boolean }
+    const conn = (navigator as unknown as { connection?: Conn }).connection
+    if (conn && (conn.saveData === true || conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g')) {
+      setState('fallback')
+      return
+    }
+
     const small = window.matchMedia('(max-width: 768px)').matches
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -96,34 +110,79 @@ export default function HeroCube() {
     // two renderers stomp on the same canvas.
     let cancelled = false
     let cleanup: (() => void) | null = null
+    let slowTimer = 0
+    let booted = false
 
-    // Slow-load fallback timer: if three.js + setupCube haven't finished in
-    // FALLBACK_TIMEOUT_MS, switch to the SVG so the user gets a real cube
-    // instead of an indefinite skeleton. We only flip to fallback if the
-    // state is still 'loading' (won't override 'interactive').
-    const slowTimer = window.setTimeout(() => {
-      setState((prev) => (prev === 'loading' ? 'fallback' : prev))
-    }, FALLBACK_TIMEOUT_MS)
+    function bootCube() {
+      if (cancelled || booted) return
+      booted = true
 
-    import('three').then((THREE) => {
-      if (cancelled) return
-      try {
-        cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced, mobile: small })
-        window.clearTimeout(slowTimer)
-        setState('interactive')
-      } catch (err) {
-        console.warn('[HeroCube] setupCube threw:', err)
+      // Slow-load fallback timer: if three.js + setupCube haven't finished
+      // in FALLBACK_TIMEOUT_MS, switch to the SVG. Won't override
+      // 'interactive' — only flips if still 'loading'.
+      slowTimer = window.setTimeout(() => {
+        setState((prev) => (prev === 'loading' ? 'fallback' : prev))
+      }, FALLBACK_TIMEOUT_MS)
+
+      import('three').then((THREE) => {
+        if (cancelled) return
+        try {
+          cleanup = setupCube(canvas!, wrap!, THREE, { reducedMotion: reduced, mobile: small })
+          window.clearTimeout(slowTimer)
+          setState('interactive')
+        } catch (err) {
+          console.warn('[HeroCube] setupCube threw:', err)
+          window.clearTimeout(slowTimer)
+          setState('fallback')
+        }
+      }).catch((err) => {
+        console.warn('[HeroCube] three.js failed to load:', err)
         window.clearTimeout(slowTimer)
         setState('fallback')
-      }
-    }).catch((err) => {
-      console.warn('[HeroCube] three.js failed to load:', err)
-      window.clearTimeout(slowTimer)
-      setState('fallback')
-    })
+      })
+    }
+
+    // Lazy-load: only fetch three.js when the cube wrap is in (or near)
+    // the viewport. For users who land on /lien-he or /bao-gia and never
+    // see home, three.js is never fetched (~192KB saved).
+    //
+    // Initial check is synchronous via getBoundingClientRect() — important
+    // because IntersectionObserver callbacks are throttled in hidden tabs
+    // (no paint = no IO fire). If the cube is already on-screen at mount
+    // we boot immediately; otherwise we wait for the user to scroll.
+    let observer: IntersectionObserver | null = null
+
+    function isWrapNearViewport() {
+      const r = wrap!.getBoundingClientRect()
+      return r.bottom > -200 && r.top < window.innerHeight + 200
+    }
+
+    if (isWrapNearViewport()) {
+      bootCube()
+    } else if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              observer?.disconnect()
+              observer = null
+              bootCube()
+              break
+            }
+          }
+        },
+        { rootMargin: '200px 0px' },
+      )
+      observer.observe(wrap)
+    } else {
+      // No IntersectionObserver and not currently visible — boot anyway
+      // rather than risk never loading.
+      bootCube()
+    }
 
     return () => {
       cancelled = true
+      observer?.disconnect()
       window.clearTimeout(slowTimer)
       cleanup?.()
     }
