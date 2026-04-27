@@ -664,10 +664,38 @@ img, iframe { color-scheme: light; }
    the WebGL halo sprite handle atmosphere now. */
 @media (max-width: 1023px) {
   .hero-cube-wrap {
-    /* On stacked mobile/tablet, give it a touch of breathing room above
-       the next section without dominating the fold. */
+    /* On stacked tablet, breathing room above the next section. */
     max-width: 480px;
     margin: 0 auto;
+  }
+}
+@media (max-width: 640px) {
+  .hero-cube-wrap {
+    /* Phone: cube was eating 70%+ of the fold under the hero copy, with
+       no animation (mobile deliberately skips the WebGL canvas — see
+       HeroCube.tsx). Shrink to 280px so the eye reads it as a hero
+       *icon* rather than the page's main visual. */
+    max-width: 280px;
+  }
+}
+
+/* Static SVG cube — mobile-only on phones (WebGL is skipped at <=768px in
+   HeroCube.tsx for battery / GPU reasons). The SVG is otherwise dead;
+   give it a slow synthetic 3D tumble via CSS so it has a heartbeat.
+   Wraps in `prefers-reduced-motion` exemption below. */
+@keyframes hero-cube-svg-tumble {
+  0%, 100% { transform: perspective(700px) rotateY(0deg) rotateX(0deg); }
+  25%      { transform: perspective(700px) rotateY(8deg)  rotateX(2deg); }
+  50%      { transform: perspective(700px) rotateY(0deg)  rotateX(-3deg); }
+  75%      { transform: perspective(700px) rotateY(-8deg) rotateX(2deg); }
+}
+.hero-cube-fallback svg {
+  transform-origin: 50% 55%;
+  will-change: transform;
+}
+@media (max-width: 768px) {
+  .hero-cube-fallback svg {
+    animation: hero-cube-svg-tumble 9s ease-in-out infinite;
   }
 }
 
