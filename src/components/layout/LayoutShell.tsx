@@ -5,6 +5,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import CommandPalette from '@/components/CommandPalette'
 import MotionLayer from '@/components/MotionLayer'
+import MobileStickyCTA from '@/components/MobileStickyCTA'
 import PaletteHint from '@/components/PaletteHint'
 import QuoteChoice from '@/components/QuoteChoice'
 import IntroAnimation from '@/components/IntroAnimation'
@@ -22,6 +23,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <MotionLayer />
       <SectionFrame />
       <IntroAnimation />
+      <MobileStickyCTA />
     </>
   )
 }
