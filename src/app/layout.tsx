@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
 import LayoutShell from "@/components/layout/LayoutShell"
@@ -58,6 +58,9 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
+  // theme-color is now in the dedicated `viewport` export below — Next 16
+  // moved it out of metadata for proper Lighthouse PWA detection.
+  // (verification stays below — themeColor handled in viewport export)
   verification: {
     // Đặt giá trị thật khi nhận được từ GSC / Bing Webmaster.
     // Lý tưởng nhất là verify qua DNS TXT (đã set trong Cloudflare) thay vì meta tag.
@@ -68,6 +71,24 @@ export const metadata: Metadata = {
       ...(process.env.NEXT_PUBLIC_YANDEX_VERIFICATION ? { 'yandex-verification': process.env.NEXT_PUBLIC_YANDEX_VERIFICATION } : {}),
     },
   },
+}
+
+/**
+ * Mobile-first viewport + theme color.
+ * The two themeColor entries match the body bg of each scheme so the iOS
+ * Safari status bar (and Android Chrome top bar) blends seamlessly with
+ * the page instead of showing the default white/grey strip on dark theme.
+ */
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f6f7f9' }, // cream-50 hero bg
+    { media: '(prefers-color-scheme: dark)',  color: '#07080c' }, // hero-resend bg dark
+  ],
+  width: 'device-width',
+  initialScale: 1,
+  // iOS notch / home-indicator: the safe-area inset variables below in
+  // globals.css depend on this being declared.
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -109,6 +130,15 @@ export default function RootLayout({
         />
       </head>
       <body className={`${sansFont.variable} h-full antialiased min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors`}>
+        {/* Skip-to-content for keyboard users — visually hidden until focus
+            lands on it. Lets screen readers / keyboard navigators jump past
+            the navbar in a single tab. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-ink-900 focus:text-white focus:dark:bg-white focus:dark:text-ink-900 focus:font-semibold focus:shadow-lg focus:outline-none"
+        >
+          Bỏ qua đến nội dung chính
+        </a>
         <LayoutShell>{children}</LayoutShell>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Analytics />

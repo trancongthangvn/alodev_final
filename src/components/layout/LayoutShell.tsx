@@ -15,7 +15,10 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
   return (
     <>
       <Navbar />
-      <main className="flex-1">{children}</main>
+      {/* id="main" is the skip-link target (declared in app/layout.tsx).
+          Wraps the route content so a single Tab+Enter from the top of the
+          page lands the user past the global navbar. */}
+      <main id="main" className="flex-1">{children}</main>
       <Footer />
       <CommandPalette />
       <PaletteHint />

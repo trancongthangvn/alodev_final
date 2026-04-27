@@ -235,6 +235,29 @@ body.admin-page {
 /* Smooth scroll for anchor links */
 html { scroll-behavior: smooth; }
 
+/* Anchor target offset — when a hash link scrolls a section into view,
+   the sticky navbar (h-14 + safe-area on iOS) would otherwise eat the
+   first 56px of the section. scroll-margin-top pushes the anchor target
+   down by the navbar height + small padding so the section heading is
+   what the user sees first. */
+section[id], [data-section-name], [id^="cap-"], [id^="proc-"], [id^="why-"] {
+  scroll-margin-top: 5rem;
+}
+
+/* Skip-link visible state (when focused). Tailwind utilities handle most
+   of the layout; this rule ensures the link still renders even if a child
+   element is in the way (z-index 100, fixed). */
+.sr-only.focus\:not-sr-only:focus {
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: fixed;
+  white-space: normal;
+  width: auto;
+}
+
 /* ─── Tasteful motion layer (Linear/Stripe/Vercel) ─── */
 
 /* Custom focus ring — tighter, brand-tinted */
