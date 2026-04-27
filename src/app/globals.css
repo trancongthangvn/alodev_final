@@ -679,10 +679,15 @@ img, iframe { color-scheme: light; }
   }
 }
 
-/* Static SVG cube — mobile-only on phones (WebGL is skipped at <=768px in
-   HeroCube.tsx for battery / GPU reasons). The SVG is otherwise dead;
-   give it a slow synthetic 3D tumble via CSS so it has a heartbeat.
-   Wraps in `prefers-reduced-motion` exemption below. */
+/* ─────── Cube fallback "premium loading" state ───────
+   The static SVG renders before three.js loads. On slow devices that
+   can be 1–3 seconds — long enough for the user to read the cube as
+   "broken" / "not actually a 3D thing." Three layered effects compose
+   into a polished loading state: tumble (3D depth), sheen (light
+   passing across), and saffron breath (heartbeat under the cube). All
+   three are auto-paused by `prefers-reduced-motion: reduce` (line 383). */
+
+/* 1. Slow 3D tumble — gives the cube depth + life. */
 @keyframes hero-cube-svg-tumble {
   0%, 100% { transform: perspective(700px) rotateY(0deg) rotateX(0deg); }
   25%      { transform: perspective(700px) rotateY(8deg)  rotateX(2deg); }
@@ -692,11 +697,88 @@ img, iframe { color-scheme: light; }
 .hero-cube-fallback svg {
   transform-origin: 50% 55%;
   will-change: transform;
+  animation: hero-cube-svg-tumble 9s ease-in-out infinite;
 }
-@media (max-width: 768px) {
-  .hero-cube-fallback svg {
-    animation: hero-cube-svg-tumble 9s ease-in-out infinite;
-  }
+
+/* 2. Diagonal sheen sweep — like light scanning a polished surface every
+      4s. Layered ABOVE the SVG via z-index 2; mix-blend-mode adapts to
+      theme so the sweep brightens the dark cube without nuking the light
+      page's mid-tones. */
+.hero-cube-fallback {
+  position: absolute;
+  isolation: isolate;
+}
+.hero-cube-fallback::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.06) 48%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.06) 52%,
+    transparent 65%
+  );
+  background-size: 220% 100%;
+  background-position: -120% 0;
+  animation: hero-cube-sheen 4s ease-in-out infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 2;
+}
+[data-theme=light] .hero-cube-fallback::before {
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(0, 0, 0, 0.04) 48%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 52%,
+    transparent 65%
+  );
+  mix-blend-mode: multiply;
+}
+@keyframes hero-cube-sheen {
+  0%   { background-position: -120% 0; }
+  60%  { background-position: 220% 0; }
+  100% { background-position: 220% 0; }
+}
+
+/* 3. Saffron contact-glow breath — soft brand-tinted halo beneath the
+      cube that breathes 2.4s. Reads as a subtle "life sign" while the
+      WebGL renderer is still loading; once interactive, the WebGL
+      shadow plane takes over and this is hidden by the canvas opacity
+      transition (700ms). */
+.hero-cube-fallback::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 65%;
+  height: 9%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(237, 146, 25, 0.30) 0%,
+    rgba(237, 146, 25, 0.10) 40%,
+    transparent 75%
+  );
+  filter: blur(14px);
+  animation: hero-cube-breath 2.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+[data-theme=light] .hero-cube-fallback::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(237, 146, 25, 0.18) 0%,
+    rgba(237, 146, 25, 0.06) 40%,
+    transparent 75%
+  );
+}
+@keyframes hero-cube-breath {
+  0%, 100% { opacity: 0.55; transform: translateX(-50%) scale(0.94); }
+  50%      { opacity: 1.00; transform: translateX(-50%) scale(1.06); }
 }
 
 @keyframes hero-cube-scale-in-fade {
