@@ -68,9 +68,9 @@ export default function FeaturedTabs() {
   const t = tabs[active]
 
   return (
-    <section className="py-14 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Featured">
+    <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Featured">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="reveal flex flex-wrap items-end justify-between gap-4 mb-10">
+        <div className="reveal flex flex-wrap items-end justify-between gap-4 mb-6 lg:mb-10">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2">
               <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
@@ -82,26 +82,31 @@ export default function FeaturedTabs() {
             <p className="mt-5 text-lg text-gray-600 dark:text-ink-400 leading-relaxed">{t.pitch}</p>
           </div>
 
-          {/* Tab selector — pill row */}
-          <div role="tablist" aria-label="Featured projects" className="inline-flex p-1 rounded-xl border border-gray-200 dark:border-ink-800 bg-white/60 dark:bg-ink-900/60 backdrop-blur">
-            {tabs.map((tab, i) => (
-              <button
-                key={tab.slug}
-                role="tab"
-                aria-selected={i === active}
-                type="button"
-                onClick={() => setActive(i)}
-                className={`tab-trigger px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg transition text-ink-500 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white`}
-                {...(i === active ? { 'data-active': '' } : {})}
-              >
-                <span className="tabular text-[10px] mr-1.5 opacity-50">0{i + 1}</span>
-                {tab.name}
-              </button>
-            ))}
+          {/* Tab selector — pill row. Horizontally scrollable on mobile so the
+              6 project names don't overflow the 390px viewport edge with no
+              way to reach hidden tabs. -mx- pulls the scroll edges out to the
+              page edge so swipes still feel natural near the screen border. */}
+          <div className="w-full lg:w-auto -mx-4 sm:-mx-6 lg:mx-0 overflow-x-auto scrollbar-none [&::-webkit-scrollbar]:hidden">
+            <div role="tablist" aria-label="Featured projects" className="inline-flex p-1 rounded-xl border border-gray-200 dark:border-ink-800 bg-white/60 dark:bg-ink-900/60 backdrop-blur mx-4 sm:mx-6 lg:mx-0">
+              {tabs.map((tab, i) => (
+                <button
+                  key={tab.slug}
+                  role="tab"
+                  aria-selected={i === active}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  className={`tab-trigger shrink-0 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition text-ink-500 dark:text-ink-400 hover:text-ink-900 dark:hover:text-white`}
+                  {...(i === active ? { 'data-active': '' } : {})}
+                >
+                  <span className="tabular text-[10px] mr-1.5 opacity-50">0{i + 1}</span>
+                  {tab.name}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Left column: metrics + CTAs (fade-cycle on tab switch) */}
           <div className="lg:col-span-5 relative min-h-[260px]">
             {tabs.map((tab, i) => (
@@ -115,20 +120,20 @@ export default function FeaturedTabs() {
                   {tab.tag}
                 </div>
                 <p className="mt-3 text-base text-ink-700 dark:text-ink-200 font-medium">{tab.blurb}</p>
-                <div className="mt-7 grid grid-cols-3 gap-3">
+                <div className="mt-5 sm:mt-7 grid grid-cols-3 gap-2 sm:gap-3">
                   {tab.metrics.map((m) => (
-                    <div key={m.l} className="rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-4">
-                      <Counter value={m.v} className="tabular text-xl sm:text-2xl font-bold text-gray-900 dark:text-white block" />
-                      <div className="text-xs text-gray-500 dark:text-ink-500 mt-1">{m.l}</div>
+                    <div key={m.l} className="rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-3 sm:p-4">
+                      <Counter value={m.v} className="tabular text-lg sm:text-2xl font-bold text-gray-900 dark:text-white block" />
+                      <div className="text-[11px] sm:text-xs text-gray-500 dark:text-ink-500 mt-1 leading-tight">{m.l}</div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Link href={`/du-an/${tab.slug}`} className="inline-flex items-center gap-2 rounded-xl bg-gray-900 dark:bg-white px-5 py-2.5 text-white dark:text-gray-900 text-sm font-semibold hover:opacity-90 transition">
+                <div className="mt-5 sm:mt-7 flex flex-wrap gap-3">
+                  <Link href={`/du-an/${tab.slug}`} className="inline-flex items-center gap-2 min-h-11 rounded-xl bg-gray-900 dark:bg-white px-5 py-3 text-white dark:text-gray-900 text-sm font-semibold hover:opacity-90 transition">
                     {tab.ctaLabel}
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
                   </Link>
-                  <a href={`https://${tab.domain}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-ink-800 px-5 py-2.5 text-gray-900 dark:text-white text-sm font-semibold hover:border-gray-300 dark:hover:border-ink-700 transition">
+                  <a href={`https://${tab.domain}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 min-h-11 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-ink-800 px-5 py-3 text-gray-900 dark:text-white text-sm font-semibold hover:border-gray-300 dark:hover:border-ink-700 transition">
                     Mở trang live
                   </a>
                 </div>
