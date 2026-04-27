@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Counter from '@/components/Counter'
 
 type Tab = {
@@ -67,9 +67,30 @@ export default function FeaturedTabs() {
   const [active, setActive] = useState(0)
   const t = tabs[active]
 
+  // Touch swipe handlers — swipe-left advances to next tab, swipe-right
+  // goes back. 50px minimum delta filters out scroll/tap noise.
+  const touchStartX = useRef<number | null>(null)
+  const touchStartY = useRef<number | null>(null)
+  function onTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+  }
+  function onTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null || touchStartY.current === null) return
+    const dx = e.changedTouches[0].clientX - touchStartX.current
+    const dy = e.changedTouches[0].clientY - touchStartY.current
+    touchStartX.current = null
+    touchStartY.current = null
+    // Reject diagonal / vertical swipes — only horizontal counts. dy <
+    // |dx|/2 keeps the page-scroll gesture intact.
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) / 2) return
+    if (dx < 0)      setActive((i) => Math.min(tabs.length - 1, i + 1))
+    else             setActive((i) => Math.max(0, i - 1))
+  }
+
   return (
     <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800" data-section-name="Featured">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <div className="reveal flex flex-wrap items-end justify-between gap-4 mb-6 lg:mb-10">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2">
@@ -104,6 +125,26 @@ export default function FeaturedTabs() {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Mobile-only tab indicator — small dots below the pill row so the
+            user has a clear count of tabs + which one is active. Lets them
+            know there's more content even when the pill row is partially
+            hidden by horizontal scroll. */}
+        <div className="lg:hidden flex justify-center gap-1.5 mb-6 mt-2">
+          {tabs.map((tab, i) => (
+            <button
+              key={tab.slug}
+              type="button"
+              aria-label={`Tab ${i + 1}: ${tab.name}`}
+              onClick={() => setActive(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === active
+                  ? 'w-6 bg-brand-600 dark:bg-brand-400'
+                  : 'w-1.5 bg-gray-300 dark:bg-ink-700 hover:bg-gray-400 dark:hover:bg-ink-600'
+              }`}
+            />
+          ))}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
