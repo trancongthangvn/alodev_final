@@ -294,6 +294,16 @@ function setupCube(
   fill.position.set(2, 1.5, 9)
   scene.add(fill)
 
+  // Cursor spotlight — a hover-tracking PointLight that follows the mouse
+  // and acts like a flashlight, revealing the texture detail on whatever
+  // tile is under the cursor. Off by default; ramps up when the cursor
+  // enters the wrap, fades back to 0 on leave.
+  // distance=3.5 + decay=2 keeps the illumination tight to a small area
+  // so it reads as a focused beam, not a diffuse glow.
+  const cursorLight = new THREE.PointLight(0xfff8ee, 0, 3.5, 2)
+  cursorLight.position.set(0, 0, 3)
+  scene.add(cursorLight)
+
   const shadowMat = new THREE.ShadowMaterial({ opacity: 0.5 })
   const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), shadowMat)
   shadowPlane.rotation.x = -Math.PI / 2
@@ -337,23 +347,6 @@ function setupCube(
     ctx.fillStyle = grad
     ctx.fillRect(0, 0, size, size)
     ctx.restore()
-  }
-
-  function makeBaseInsetMap(size = 512, centerHex = '#1d1d22', edgeHex = '#020205') {
-    const c = document.createElement('canvas')
-    c.width = c.height = size
-    const ctx = c.getContext('2d')!
-    ctx.fillStyle = edgeHex; ctx.fillRect(0, 0, size, size)
-    const grad = ctx.createRadialGradient(size/2, size/2, size * 0.05, size/2, size/2, size * 0.55)
-    grad.addColorStop(0, centerHex)
-    grad.addColorStop(0.65, centerHex)
-    grad.addColorStop(1, edgeHex)
-    ctx.fillStyle = grad
-    ctx.fillRect(0, 0, size, size)
-    const tex = new THREE.CanvasTexture(c)
-    tex.colorSpace = THREE.SRGBColorSpace
-    tex.anisotropy = MAX_ANISO
-    return tex
   }
 
   function makeNoiseAndNormal(size = 512, sparkleProb = 0.05, sparkleMax = 240, baseLevel = 12) {
@@ -550,7 +543,6 @@ function setupCube(
   const texStripes  = makeVerticalStripesTexture(1024, 30)
   // Tile center colors at mid-grey range — readable as distinct surfaces
   // on either bg. Edges still dark for the bevel rim contrast.
-  const insetMatte  = makeBaseInsetMap(512, '#46464e', '#0a0a0e')
 
   // Material PBR params extracted from Resend's actual chunk:
   //   roughness: 0.2, metalness: 0.2, reflectivity: 0.2
@@ -564,8 +556,12 @@ function setupCube(
     // the whole point of replacing smooth-onyx. The texture itself
     // gives the lacquer feel via subtle thread highlights.
     new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texCarbon,  roughness: 0.30, metalness: 0.20, reflectivity: 0.20, envMapIntensity: 0.55 }),
-    // matte void — low envMap so it stays as the contrast anchor
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 0.4, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.07 }),
+    // matte void — flat dark color, no texture map. The previous insetMatte
+    // bevel had a center-bright radial gradient that read as a soft round
+    // disc on the tile (the last "circle" tile). The cubelet body groove
+    // already gives the tile geometric definition, so the texture itself
+    // can be uniform without losing the inset look.
+    new THREE.MeshPhysicalMaterial({ color: 0x10101a, roughness: 0.45, metalness: 0.18, reflectivity: 0.2, envMapIntensity: 0.07 }),
     // granite/sparkle — heavy normal scale for noise pop
     new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
     // micro-grain — subtle noise
@@ -896,16 +892,30 @@ function setupCube(
   const parallaxTarget = { x: 0, y: 0 }
   const parallaxCurrent = { x: 0, y: 0 }
 
+  // Cursor spotlight position + intensity, both lerped each frame for a
+  // smooth flashlight feel rather than a snapping point.
+  const cursorTarget = { x: 0, y: 0, intensity: 0 }
+  const cursorCurrent = { x: 0, y: 0, intensity: 0 }
+
   function onMove(e: MouseEvent) {
     const rect = wrap.getBoundingClientRect()
     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1
     const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1
     parallaxTarget.y =  nx * 0.30
     parallaxTarget.x = -ny * 0.16
+
+    // Spotlight target — NDC mapped to a plane in front of the cube.
+    // The 2.6 scale puts the light just outside the cube's silhouette
+    // at the screen edges, so the highlight tracks visibly with the
+    // cursor without the light leaving the cube's reach.
+    cursorTarget.x = nx * 2.6
+    cursorTarget.y = -ny * 2.6
+    cursorTarget.intensity = 4.0
   }
   function onLeave() {
     parallaxTarget.x = 0
     parallaxTarget.y = 0
+    cursorTarget.intensity = 0
   }
   wrap.addEventListener('mousemove', onMove)
   wrap.addEventListener('mouseleave', onLeave)
@@ -965,6 +975,15 @@ function setupCube(
     parallaxCurrent.x += (parallaxTarget.x - parallaxCurrent.x) * 0.06
     parallaxCurrent.y += (parallaxTarget.y - parallaxCurrent.y) * 0.06
 
+    // Spotlight: snappier on position (0.18) so the highlight tracks the
+    // cursor; gentler on intensity (0.08) so the on/off ramp reads as a
+    // soft fade rather than a hard flicker.
+    cursorCurrent.x += (cursorTarget.x - cursorCurrent.x) * 0.18
+    cursorCurrent.y += (cursorTarget.y - cursorCurrent.y) * 0.18
+    cursorCurrent.intensity += (cursorTarget.intensity - cursorCurrent.intensity) * 0.08
+    cursorLight.position.set(cursorCurrent.x, cursorCurrent.y, 3)
+    cursorLight.intensity = cursorCurrent.intensity
+
     cubeGroup.rotation.x = tumble.x + parallaxCurrent.x
     cubeGroup.rotation.y = tumble.y + parallaxCurrent.y
     cubeGroup.rotation.z = tumble.z
@@ -997,7 +1016,6 @@ function setupCube(
       m.dispose()
     })
     texCarbon.dispose()
-    insetMatte.dispose()
     grainHeavy.map.dispose()
     grainHeavy.nor.dispose()
     grainSubtle.map.dispose()
