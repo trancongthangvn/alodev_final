@@ -77,8 +77,12 @@ export default function HeroCube() {
     // animation ~50ms sooner.
     import('three').then((THREE) => {
       if (cancelled) return
-      cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced })
-      setInteractive(true)
+      try {
+        cleanup = setupCube(canvas, wrap, THREE, { reducedMotion: reduced })
+        setInteractive(true)
+      } catch (err) {
+        console.warn('[HeroCube] setupCube threw:', err)
+      }
     }).catch((err) => {
       console.warn('[HeroCube] three.js failed to load:', err)
     })
@@ -186,28 +190,53 @@ function setupCube(
   camera.position.set(8.6, 6.4, 10.0)
   camera.lookAt(0, -0.05, 0)
 
+  // HDR-like environment: 5 light spots baked in for richer reflections
+  // than a single soft sky. Each spot becomes a visible specular highlight
+  // sweeping across the cube as it tumbles. Cool top, warm side, accent
+  // colors give the polished metal a "studio shoot" character vs Resend's
+  // single-spotlight feel.
   function makeEnvMap() {
-    const w = 1024, h = 512
+    const w = 2048, h = 1024
     const c = document.createElement('canvas')
     c.width = w; c.height = h
     const ctx = c.getContext('2d')!
+
+    // Base gradient: deep navy top → near-black bottom for crisp contrast
+    // when reflections sweep across.
     const grad = ctx.createLinearGradient(0, 0, 0, h)
-    grad.addColorStop(0.00, '#272a36')
-    grad.addColorStop(0.40, '#10121a')
-    grad.addColorStop(0.55, '#06070b')
+    grad.addColorStop(0.00, '#1d2032')
+    grad.addColorStop(0.30, '#0c0e16')
+    grad.addColorStop(0.55, '#040508')
     grad.addColorStop(1.00, '#000000')
     ctx.fillStyle = grad
     ctx.fillRect(0, 0, w, h)
 
-    const sb1 = ctx.createRadialGradient(w * 0.5, h * 0.18, 30, w * 0.5, h * 0.18, w * 0.30)
-    sb1.addColorStop(0, 'rgba(220,225,240,0.45)')
-    sb1.addColorStop(1, 'rgba(220,225,240,0)')
-    ctx.fillStyle = sb1; ctx.fillRect(0, 0, w, h)
-
-    const sb2 = ctx.createRadialGradient(w * 0.12, h * 0.40, 10, w * 0.12, h * 0.40, w * 0.18)
-    sb2.addColorStop(0, 'rgba(150,170,210,0.22)')
-    sb2.addColorStop(1, 'rgba(150,170,210,0)')
-    ctx.fillStyle = sb2; ctx.fillRect(0, 0, w, h)
+    // 5 light spots — positions chosen so as the cube tumbles, sweeping
+    // across each highlight gives a continuous "rolling shimmer" effect.
+    type Spot = { cx: number; cy: number; r: number; color: string; alpha: number }
+    const spots: Spot[] = [
+      // Cool studio key — top center, large soft
+      { cx: 0.50, cy: 0.18, r: 0.32, color: '255,250,240', alpha: 0.55 },
+      // Warm rim — left, smaller crisp
+      { cx: 0.14, cy: 0.34, r: 0.18, color: '255,220,170', alpha: 0.42 },
+      // Cool accent — right
+      { cx: 0.82, cy: 0.30, r: 0.20, color: '170,200,255', alpha: 0.38 },
+      // Soft horizon glow — wide, low intensity
+      { cx: 0.50, cy: 0.50, r: 0.45, color: '180,190,220', alpha: 0.16 },
+      // Subtle violet kick — back-left, for chromatic interest
+      { cx: 0.30, cy: 0.62, r: 0.16, color: '210,180,255', alpha: 0.22 },
+    ]
+    for (const s of spots) {
+      const grd = ctx.createRadialGradient(
+        w * s.cx, h * s.cy, 4,
+        w * s.cx, h * s.cy, w * s.r
+      )
+      grd.addColorStop(0,    `rgba(${s.color},${s.alpha})`)
+      grd.addColorStop(0.45, `rgba(${s.color},${s.alpha * 0.30})`)
+      grd.addColorStop(1,    `rgba(${s.color},0)`)
+      ctx.fillStyle = grd
+      ctx.fillRect(0, 0, w, h)
+    }
 
     const tex = new THREE.CanvasTexture(c)
     tex.mapping = THREE.EquirectangularReflectionMapping
@@ -217,16 +246,16 @@ function setupCube(
   }
   scene.environment = makeEnvMap()
 
-  // Lighting follows Resend's three-point shape but with stronger fill,
-  // tuned so the cube reads against alodev's light hero background as
-  // well as the dark theme. Resend's exact values worked on their pure
-  // black bg; on a light bg we need ~30% more ambient and key.
-  scene.add(new THREE.HemisphereLight(0xb8c0e0, 0x02020a, 0.32))
+  // 5-light cinematic setup — studio product photography rig.
+  // The env map provides the base reflection palette; these directional
+  // lights add structured shadows + per-face contrast that env alone
+  // cannot. Total intensity tuned so the cube reads premium-bright on
+  // alodev's cream hero, still rich on dark theme.
+  scene.add(new THREE.HemisphereLight(0xb8c0e0, 0x040408, 0.30))
 
-  const key = new THREE.DirectionalLight(0xffffff, 1.45)
+  const key = new THREE.DirectionalLight(0xfff5e8, 2.20)         // warm key
   key.position.set(4.5, 8, 7)
   key.castShadow = true
-  // 4096 to match the rubik_resend repo for crisp shadow edges (~16MB GPU).
   key.shadow.mapSize.set(4096, 4096)
   key.shadow.camera.near = 0.5
   key.shadow.camera.far = 30
@@ -238,26 +267,36 @@ function setupCube(
   key.shadow.radius = 7
   scene.add(key)
 
-  // Cool back-rim — defines the cube silhouette against light bg.
-  const rimL = new THREE.DirectionalLight(0xa8b4d8, 0.50)
+  // Cool back-rim — silhouettes the cube against the bg.
+  const rimL = new THREE.DirectionalLight(0xa8b4ff, 0.85)
   rimL.position.set(-7, 2, -4)
   scene.add(rimL)
 
-  // Warm side-rim — three-point lit feel.
-  const rimR = new THREE.DirectionalLight(0xddc8b0, 0.25)
+  // Warm side-rim — three-point completion.
+  const rimR = new THREE.DirectionalLight(0xffd4a3, 0.55)
   rimR.position.set(7, -2, -2)
   scene.add(rimR)
 
-  // Frontal fill — alodev-specific. Soft camera-side wash so the
-  // bottom-front cubelets aren't featureless silhouette mid-twist.
-  const fill = new THREE.DirectionalLight(0xfff2dc, 0.35)
+  // Frontal fill — soft camera-side wash for tile fronts.
+  const fill = new THREE.DirectionalLight(0xfff2dc, 0.55)
   fill.position.set(2, 1.5, 9)
   scene.add(fill)
 
-  const shadowMat = new THREE.ShadowMaterial({ opacity: 0.5 })
+  // Bottom bounce — fakes ground reflection light so the underside of
+  // the cube isn't dead shadow when it tumbles. Subtle warm tint matches
+  // the brand glow's saffron undertone.
+  const bounce = new THREE.DirectionalLight(0xffe4c4, 0.30)
+  bounce.position.set(0, -6, 3)
+  scene.add(bounce)
+
+  // Contact shadow — softer (opacity 0.62), brought slightly closer
+  // (-2.15 from -2.30) so the cube reads as "grounded" rather than
+  // floating in space. The shadow radius on the key light gives the
+  // soft penumbra look of a studio softbox.
+  const shadowMat = new THREE.ShadowMaterial({ opacity: 0.62 })
   const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), shadowMat)
   shadowPlane.rotation.x = -Math.PI / 2
-  shadowPlane.position.y = -2.3
+  shadowPlane.position.y = -2.15
   shadowPlane.receiveShadow = true
   scene.add(shadowPlane)
 
@@ -439,34 +478,89 @@ function setupCube(
   const texDots     = makeDotGridTexture(1024, 9)
   const texMesh     = makeMeshGrilleTexture(1024, 38)
   const texStripes  = makeVerticalStripesTexture(1024, 30)
-  // Tile center colors at mid-grey range — readable as distinct surfaces
-  // on either bg. Edges still dark for the bevel rim contrast.
-  const insetSmooth = makeBaseInsetMap(512, '#5a5a64', '#0a0a0e')
-  const insetMatte  = makeBaseInsetMap(512, '#46464e', '#0a0a0e')
-  const insetSemi   = makeBaseInsetMap(512, '#52525a', '#0a0a0e')
+  // Tile center colors — slight warm tint on insets so reflections from
+  // the env map's warm key spot pick up as a subtle gold sheen rather
+  // than reading as flat grey.
+  const insetSmooth = makeBaseInsetMap(512, '#5e5e6a', '#0a0a0e')
+  const insetMatte  = makeBaseInsetMap(512, '#48484f', '#0a0a0e')
+  const insetSemi   = makeBaseInsetMap(512, '#56565e', '#0a0a0e')
 
-  // Material PBR params extracted from Resend's actual chunk:
-  //   roughness: 0.2, metalness: 0.2, reflectivity: 0.2
-  // envMapIntensity values per-variant match Resend's tuning — they
-  // make the bevel rim catch env reflection as a bright line. Going
-  // higher (we tried 1.4 globally) reads as washed-out, not punchier.
+  // Material upgrade — premium PBR per variant. Each tile type now has
+  // its own physical character (mirror gloss, matte velvet, sparkle,
+  // etc.) so the cube reads as 8 distinct materials rather than tinted
+  // copies of one. Iridescence on a couple variants gives the cube a
+  // subtle rainbow shimmer when it sweeps past env-map highlights — the
+  // single biggest "premium" cue beyond what Resend currently does.
   const tileVariants = [
-    // smooth glossy onyx — slight clearcoat for premium product feel
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSmooth, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, clearcoat: 0.4, clearcoatRoughness: 0.18, envMapIntensity: 0.85 }),
-    // matte void — low envMap so it stays as the contrast anchor
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetMatte,  roughness: 0.4, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.07 }),
-    // granite/sparkle — heavy normal scale for noise pop
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
-    // micro-grain — subtle noise
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainSubtle.map, normalMap: grainSubtle.nor, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.75 }),
-    // perforated dots
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texDots,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.85 }),
-    // mesh grille
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texMesh,    roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.8 }),
-    // vertical stripes
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: texStripes, roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.9 }),
-    // semi-gloss filler
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: insetSemi,  roughness: 0.3, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
+    // 0: Mirror onyx — high clearcoat, near-mirror finish. The "showpiece"
+    // tile that flashes specular highlights as the cube tumbles.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: insetSmooth,
+      roughness: 0.12, metalness: 0.35, reflectivity: 0.55,
+      clearcoat: 0.85, clearcoatRoughness: 0.05,
+      envMapIntensity: 1.10,
+    }),
+    // 1: Matte velvet — low everything; the dark anchor that gives the
+    // cube its tonal contrast against the gloss tiles.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: insetMatte,
+      roughness: 0.55, metalness: 0.10, reflectivity: 0.10,
+      envMapIntensity: 0.18,
+    }),
+    // 2: Granite/sparkle with iridescence — the "wow" tile. Heavy
+    // normal map for visible grain + clearcoat for sparkle pop +
+    // iridescence so the highlights shift hue as you watch it move.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: grainHeavy.map, normalMap: grainHeavy.nor,
+      normalScale: new THREE.Vector2(1.8, 1.8),
+      roughness: 0.18, metalness: 0.40, reflectivity: 0.50,
+      clearcoat: 0.55, clearcoatRoughness: 0.10,
+      iridescence: 0.30, iridescenceIOR: 1.30,
+      iridescenceThicknessRange: [100, 460],
+      envMapIntensity: 1.05,
+    }),
+    // 3: Micro-grain anodized — subtle noise + slight metallic feel.
+    // The "everyday" filler tile that doesn't draw attention but reads
+    // as a real material rather than blank grey.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: grainSubtle.map, normalMap: grainSubtle.nor,
+      normalScale: new THREE.Vector2(0.9, 0.9),
+      roughness: 0.32, metalness: 0.35, reflectivity: 0.30,
+      envMapIntensity: 0.75,
+    }),
+    // 4: Perforated dots — speaker-grille industrial. Higher metalness
+    // + lower roughness so the dots cast micro-highlights from env.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: texDots,
+      roughness: 0.20, metalness: 0.55, reflectivity: 0.40,
+      envMapIntensity: 0.95,
+    }),
+    // 5: Mesh grille — the "vent" tile. Slight clearcoat for that
+    // freshly-machined sheen.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: texMesh,
+      roughness: 0.22, metalness: 0.45, reflectivity: 0.35,
+      clearcoat: 0.30, clearcoatRoughness: 0.18,
+      envMapIntensity: 0.90,
+    }),
+    // 6: Vertical stripes with slight iridescence — anisotropic-feeling
+    // brushed metal effect. The iridescence is subtle (0.18) so it just
+    // adds a hint of warmth/coolness shift across the stripes.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: texStripes,
+      roughness: 0.20, metalness: 0.50, reflectivity: 0.45,
+      iridescence: 0.18, iridescenceIOR: 1.25,
+      iridescenceThicknessRange: [120, 380],
+      envMapIntensity: 1.00,
+    }),
+    // 7: Semi-gloss filler — bridges between matte and full gloss. Mild
+    // clearcoat so it has SOME spec response without competing with #0.
+    new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, map: insetSemi,
+      roughness: 0.28, metalness: 0.25, reflectivity: 0.25,
+      clearcoat: 0.20, clearcoatRoughness: 0.20,
+      envMapIntensity: 0.70,
+    }),
   ]
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -548,12 +642,14 @@ function setupCube(
     tileGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
   })()
 
-  // Cubelet body at #2e2e36 — mid-dark grey that frames each tile and
-  // reads as visible 3D shape against either theme bg, while staying
-  // distinctly darker than the tile centers (#46-#5a) so the per-face
-  // 3x3 grid still reads unambiguously.
+  // Cubelet body — anodized dark steel. Slight clearcoat so the curved
+  // body geometry catches a subtle highlight as the cube tumbles, giving
+  // each cubelet readable 3D shape rather than reading as flat silhouette
+  // between the tiles.
   const bodyMat = new THREE.MeshPhysicalMaterial({
-    color: 0x2e2e36, roughness: 0.7, metalness: 0.2, envMapIntensity: 0.55,
+    color: 0x32323a, roughness: 0.55, metalness: 0.42, reflectivity: 0.35,
+    clearcoat: 0.25, clearcoatRoughness: 0.32,
+    envMapIntensity: 0.78,
   })
 
   function pickVariant(x: number, y: number, z: number, faceIndex: number) {
@@ -666,12 +762,14 @@ function setupCube(
   ]
   scrambleSeq.forEach(([a, l, d]) => instantTwist(a, l, d))
 
-  // Cubic ease-in-out for the 180° layer flip — smooth start AND smooth
-  // landing so the wave reads as flowing rather than punchy.
-  const easeInOutCubic = (t: number) =>
-    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+  // easeInOutQuint — smoother than cubic at both ends. The 180° flip
+  // accelerates very gently from 0, peaks fast in the middle (the eye
+  // sees the "sweep"), then settles smoothly. This is what makes the
+  // motion read as "elegant" rather than "mechanical".
+  const easeInOutQuint = (t: number) =>
+    t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2
 
-  function performTwist({ axis, layer, dir, turns = 1, duration = 750, easeFn = easeInOutCubic }: {
+  function performTwist({ axis, layer, dir, turns = 1, duration = 750, easeFn = easeInOutQuint }: {
     axis: 'x' | 'y' | 'z'; layer: number; dir: number; turns?: number; duration?: number;
     easeFn?: (t: number) => number;
   }) {
@@ -753,9 +851,12 @@ function setupCube(
       const axis = (['x', 'y', 'z'] as const)[Math.floor(Math.random() * 3)]
       const layer = [-1, 0, 1][Math.floor(Math.random() * 3)]
       const dir = Math.random() < 0.5 ? 1 : -1
+      // Slightly slower flips (2.0-2.7s vs prev 1.7-2.4s) — with the
+      // smoother quintic ease and richer materials, longer flips give
+      // the eye time to track each highlight sweeping across the cube.
       const duration = opts.reducedMotion
-        ? 2400
-        : 1700 + Math.random() * 700  // 1.7–2.4s per audit's "~2 giây"
+        ? 2600
+        : 2000 + Math.random() * 700
 
       await performTwist({ axis, layer, dir, turns: 2, duration })
       if (stopped) break
