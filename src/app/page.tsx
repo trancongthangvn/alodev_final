@@ -218,7 +218,7 @@ export default function Home() {
                 points: ['Schema.org đầy đủ', 'PageSpeed 90+', 'Sitemap + Search Console ready'],
               },
             ]).map((c) => (
-              <div key={c.title} className="lift spotlight glow-card group rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-7 hover:border-ink-200 dark:hover:border-ink-700">
+              <div key={c.title} className="lift spotlight glow-card group rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 md:p-7 hover:border-ink-200 dark:hover:border-ink-700">
                 <div className="flex items-start justify-between">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400">
                     <Icon name={c.icon} className="w-6 h-6" />
@@ -256,7 +256,7 @@ export default function Home() {
           </div>
           <div className="reveal mt-8 lg:mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
             {services.map((s) => (
-              <Link key={s.title} href={s.href} className="group bg-white dark:bg-ink-950 p-7 hover:bg-cream-50 dark:hover:bg-zinc-900/60 transition">
+              <Link key={s.title} href={s.href} className="group bg-white dark:bg-ink-950 p-5 md:p-7 hover:bg-cream-50 dark:hover:bg-zinc-900/60 transition">
                 <div className="flex items-center justify-between">
                   <Icon name={s.icon} className="w-6 h-6 text-ink-700 dark:text-ink-100" strokeWidth={1.6} />
                   <Icon name="arrow-up-right" className="w-4 h-4 text-ink-300 dark:text-ink-700 group-hover:text-brand-600 dark:group-hover:text-brand-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
@@ -282,7 +282,7 @@ export default function Home() {
             <div className="reveal-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {process.map((p) => (
                 <div key={p.step} className="relative process-dot">
-                  <div className="rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-6 h-full">
+                  <div className="rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 md:p-6 h-full">
                     <div className="flex items-center justify-between">
                       <div className="tabular text-3xl font-bold text-gray-300 dark:text-ink-700">{p.step}</div>
                       <span className="kbd">{p.kbd}</span>
@@ -365,7 +365,7 @@ export default function Home() {
               { icon: 'target' as IconName,       title: 'Đo lường bằng metric',       desc: 'Cam kết PageSpeed 90+, P95 < 200ms, uptime > 99.9%. Báo cáo hằng tháng, không che giấu số liệu.' },
               { icon: 'life-buoy' as IconName,    title: 'Bảo hành thật',              desc: 'Lỗi sau bàn giao: sửa miễn phí 6–12 tháng. Hỗ trợ kỹ thuật theo gói tháng từ 1tr — không bắt buộc renew.' },
             ]).map((c) => (
-              <div key={c.title} className="lift spotlight rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-6 hover:border-ink-200 dark:hover:border-ink-700">
+              <div key={c.title} className="lift spotlight rounded-2xl border border-ink-100 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 md:p-6 hover:border-ink-200 dark:hover:border-ink-700">
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-cream-100 dark:bg-ink-800 text-ink-700 dark:text-ink-100">
                   <Icon name={c.icon} className="w-5 h-5" />
                 </div>
@@ -386,7 +386,7 @@ export default function Home() {
           </div>
           <div className="reveal-stagger space-y-2">
             {faq.map((f, i) => (
-              <details key={f.q} className="group rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 px-6 py-4 open:shadow-md dark:open:shadow-zinc-950/50 transition" {...(i === 0 ? { open: true } : {})}>
+              <details key={f.q} className="group rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 px-4 md:px-6 py-3 md:py-4 open:shadow-md dark:open:shadow-zinc-950/50 transition" {...(i === 0 ? { 'data-default-open': true } : {})}>
                 <summary className="cursor-pointer list-none flex items-center justify-between font-semibold text-gray-900 dark:text-white">
                   <span>{f.q}</span>
                   <svg className="w-5 h-5 text-gray-400 dark:text-ink-500 transition group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -405,16 +405,17 @@ export default function Home() {
           <h2 className="h-display text-gray-900 dark:text-white">
             Sẵn sàng <span className="text-brand-600 dark:text-brand-400">bắt đầu</span>?
           </h2>
-          <p className="mt-6 text-xl text-gray-600 dark:text-ink-400">Gửi yêu cầu — Alodev phản hồi trong 24h kèm báo giá sơ bộ.</p>
-          <div className="mt-10 flex flex-wrap gap-3 justify-center">
-            <span className="magnetic">
-              <QuoteCTA size="lg" className="px-7 py-4">Yêu cầu báo giá</QuoteCTA>
+          <p className="mt-4 sm:mt-6 text-base sm:text-xl text-gray-600 dark:text-ink-400">Phản hồi trong 24h kèm báo giá sơ bộ.</p>
+          <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center">
+            <span className="magnetic w-full sm:w-auto">
+              <QuoteCTA size="lg" className="px-7 py-4 w-full sm:w-auto justify-center">Yêu cầu báo giá</QuoteCTA>
             </span>
-            <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800 px-7 py-4 text-ink-900 dark:text-white font-semibold hover:border-ink-300 dark:hover:border-ink-700 transition">
+            <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800 px-7 py-4 text-ink-900 dark:text-white font-semibold hover:border-ink-300 dark:hover:border-ink-700 transition w-full sm:w-auto">
               Chat Zalo
             </a>
           </div>
-          <p className="mt-8 text-sm text-gray-500 dark:text-ink-500">
+          {/* ⌘K hint — desktop only; mobile users have no keyboard shortcut. */}
+          <p className="hidden md:block mt-8 text-sm text-gray-500 dark:text-ink-500">
             Hoặc nhấn <span className="kbd">⌘</span> <span className="kbd">K</span> ở bất kỳ trang nào để mở quick search (sắp ra mắt).
           </p>
         </div>
