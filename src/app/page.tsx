@@ -157,6 +157,119 @@ export default function Home() {
       </section>
 
 
+      {/* ─── BRAND MANIFESTO — the meaning of the cube ───
+           Placed immediately after the hero so the user reads the
+           PHILOSOPHY of the cube right after watching it animate.
+           Anchor #triet-ly for cross-page linking. */}
+      <section
+        id="triet-ly"
+        data-section-name="Triết lý"
+        className="relative py-12 lg:py-28 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 overflow-hidden"
+      >
+        {/* Faint 3x3 grid background — visual echo of a Rubik face. Very low
+            opacity so it doesn't compete with the prose. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none opacity-[0.04] dark:opacity-[0.06]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+            backgroundSize: '88px 88px',
+            maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, #000 30%, transparent 80%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, #000 30%, transparent 80%)',
+          }}
+        />
+
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* HOOK */}
+          <div className="reveal">
+            <Eyebrow>Triết lý</Eyebrow>
+            <h2 className="h-display mt-4 sm:mt-5 text-gray-900 dark:text-white">
+              Sáu mặt.{' '}
+              <span className="text-brand-600 dark:text-brand-400">Một sản phẩm.</span>
+            </h2>
+          </div>
+
+          {/* BODY 1 — setup the metaphor */}
+          <div className="reveal-stagger mt-8 sm:mt-10 space-y-5 sm:space-y-6 text-base sm:text-lg leading-relaxed text-gray-700 dark:text-ink-300">
+            <p>
+              Người ngoài nhìn vào dự án của bạn, thấy một cái hộp vuông.
+              Bạn nhìn vào, thấy một khối Rubik.
+            </p>
+            <p>
+              Dự án đang trên bàn của bạn — có thể đã nằm trong kế hoạch năm,
+              có thể vừa được giao tuần trước. Trên giấy, nó rõ ràng. Đủ rõ
+              để bảo vệ phạm vi, đủ rõ để cấp ngân sách, đủ rõ để bắt đầu.
+            </p>
+            <p>
+              Nhưng càng đến gần lúc triển khai, mọi thứ càng khó kiểm soát.
+              Quyết được phạm vi thì lệch tiến độ. Chốt được công nghệ thì
+              vướng quy trình. Thống nhất được giao diện lại mở ra ba câu hỏi
+              mới về dữ liệu.
+            </p>
+            <p>
+              Đó không phải vấn đề năng lực. Đó là vấn đề{' '}
+              <span className="text-gray-900 dark:text-white font-semibold">góc nhìn</span>.
+              Người ở bên trong một khối Rubik luôn thấy nó rối hơn người
+              đứng ngoài — và đó là lý do ngay cả những đội ngũ giàu kinh
+              nghiệm nhất vẫn cần một bên ngoài để biến một bản kế hoạch tốt
+              thành một hệ thống vận hành được.
+            </p>
+          </div>
+
+          {/* CALLOUT — left-bordered accent line */}
+          <div className="reveal mt-8 sm:mt-10 pl-5 sm:pl-6 border-l-2 border-brand-500 dark:border-brand-400">
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
+              Alodev tồn tại cho đúng giai đoạn đó.
+            </p>
+          </div>
+
+          {/* BODY 2 — process */}
+          <div className="reveal-stagger mt-8 sm:mt-10 space-y-5 sm:space-y-6 text-base sm:text-lg leading-relaxed text-gray-700 dark:text-ink-300">
+            <p>
+              Mỗi dự án bắt đầu bằng việc{' '}
+              <span className="text-gray-900 dark:text-white font-semibold">hiểu bài toán</span>,
+              không phải nhận yêu cầu. Đâu là ràng buộc cứng, đâu là điều có
+              thể linh hoạt. Đâu là phần đội ngũ bạn muốn tự chủ về sau, đâu
+              là phần cần Alodev gánh trọn. Đâu là kiến trúc cần dựng để hệ
+              thống còn scale được trong ba năm tới.
+            </p>
+            <p>
+              Khi những câu hỏi đó có câu trả lời, dòng code đầu tiên mới bắt
+              đầu — viết cho đúng bài toán của bạn, không cho bài toán nào khác.
+            </p>
+          </div>
+
+          {/* OUTCOME — closing block */}
+          <div className="reveal mt-10 sm:mt-12">
+            <p className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white leading-tight">
+              Khi dự án kết thúc, bạn cầm cả khối lẫn cách giải.
+            </p>
+            <ul className="mt-5 sm:mt-6 space-y-2.5 text-base sm:text-lg text-gray-700 dark:text-ink-200">
+              <li className="flex items-start gap-3">
+                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                <span>Toàn bộ source code.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                <span>Toàn bộ tài liệu kỹ thuật.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                <span>Toàn bộ quyền truy cập hạ tầng.</span>
+              </li>
+              <li className="flex items-start gap-3 font-semibold text-gray-900 dark:text-white">
+                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                <span>Tất cả thuộc về bạn.</span>
+              </li>
+            </ul>
+            <p className="mt-7 sm:mt-8 text-sm sm:text-base italic text-gray-500 dark:text-ink-400">
+              Đó là cách Alodev định nghĩa một dự án đã xong.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ─── LOGO CLOUD MARQUEE ─── */}
       <section className="border-y border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
