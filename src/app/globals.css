@@ -601,9 +601,19 @@ img, iframe { color-scheme: light; }
    Resend-style #07080c. Time-of-day script picks the default theme,
    user toggle in Navbar overrides. The rest of the homepage already
    theme-adapts via Tailwind dark: variants. */
+/* Hero background — coordinated palette across themes.
+   Light: cream base + subtle saffron blob upper-right (matches the cube
+   area + brand DNA) + slate-cool blob lower-left for depth. Both blobs
+   are barely-there so they don't compete with content but lift the bg
+   from "flat cream" to "atmospheric pocket".
+   Dark: same atmospheric idea but with the dark Resend-style #07080c
+   base — already moody enough that no extra blobs are needed. */
 .hero-resend,
 .dark-strip {
-  background: #f6f7f9;
+  background:
+    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(237, 146, 25, 0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 65% at 12% 78%, rgba(110, 125, 160, 0.06) 0%, transparent 70%),
+    #f6f7f9;
 }
 [data-theme=dark] .hero-resend,
 [data-theme=dark] .dark-strip {
@@ -629,30 +639,39 @@ img, iframe { color-scheme: light; }
     linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
 }
 
-/* Headline color.
-   Light theme: solid near-black for legible contrast on the cream bg.
-   Dark theme: subtle silver gradient (Resend-style) so the text reads as
-   polished metal rather than glaring pure white. The gradient was
-   originally applied to the .hero-h parent and failed to clip — the
-   word-cascade child spans use transform + filter which create new
-   compositing layers and `background-clip: text` does not inherit
-   through them. The fix is to apply the gradient ON each text-bearing
-   span directly, so each span clips its own background to its own text. */
+/* Headline color — coordinated tonal gradient on BOTH themes.
+   The headline applies a 3-stop vertical gradient on each word span so
+   the text reads as "premium ink / polished metal" rather than a flat
+   solid block. Both themes use the same technique with theme-tuned
+   colors so the cube + headline + bg form one coherent palette:
+
+     Light: black → dark slate-blue ink → mid charcoal
+            (premium-ink character, contrast 8.8:1 on cream bg, AAA)
+     Dark:  pure white → cool silver → cool grey
+            (polished-metal feel, matches the cube's Resend-style finish)
+
+   The gradient must be applied to each span (not the .hero-h parent) —
+   the word-cascade animation gives each span its own compositing layer
+   via transform + filter, and background-clip: text does NOT inherit
+   through composited layers. Per-span clip works because each span
+   becomes its own backdrop for its own glyphs. */
 .hero-h {
-  color: #0a0a0c;
+  color: #0a0a0c; /* fallback for text nodes outside spans (literal spaces) */
 }
-[data-theme=dark] .hero-h {
-  /* Fallback color for any text node that is NOT inside a span (e.g. the
-     literal space characters between word spans). Picked as the gradient's
-     midpoint so it never reads as pure white. */
-  color: #d6d9e0;
-}
-[data-theme=dark] .hero-h span {
-  background-image: linear-gradient(180deg, #ffffff 0%, #d6d9e0 55%, #aab0bd 100%);
+.hero-h span {
+  background-image: linear-gradient(180deg, #0a0a0c 0%, #20212e 60%, #3d3f4e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+[data-theme=dark] .hero-h {
+  /* Fallback midpoint of the dark gradient so text-node spaces never
+     read as pure white. */
+  color: #d6d9e0;
+}
+[data-theme=dark] .hero-h span {
+  background-image: linear-gradient(180deg, #ffffff 0%, #d6d9e0 55%, #aab0bd 100%);
 }
 
 /* Cube canvas viewport — modeled on Resend's 700×550 (1.27:1) container.
