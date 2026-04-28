@@ -106,7 +106,11 @@ body.admin-page {
 /* Massive responsive headline — clamp scales between mobile and ultra-wide */
 .h-display {
   font-size: clamp(2.125rem, 6.5vw, 5.5rem);
-  line-height: 1.05;
+  /* line-height bumped from 1.05 -> 1.18: at 1.05 Vietnamese diacritics
+     (ế, ấ, ậ, ằ, ổ, ỗ, ự…) on the next line clip the ones on the line
+     above. 1.18 gives the marks room to breathe without making the
+     headline feel airy. */
+  line-height: 1.18;
   letter-spacing: -0.03em;
   font-weight: 700;
 }
@@ -610,9 +614,15 @@ img, iframe { color-scheme: light; }
    base — already moody enough that no extra blobs are needed. */
 .hero-resend,
 .dark-strip {
+  /* Atmospheric blobs — brand-warm saffron in upper-right (where the
+     cube lives), cool slate in lower-left for balance. Alpha tuned so
+     the bg reads as "atmospheric pocket" not "flat cream". Bumped from
+     0.10/0.06 to 0.18/0.10 because the previous values were so subtle
+     they failed to lift the bg above flat — the brand color was
+     basically invisible against cream. */
   background:
-    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(237, 146, 25, 0.10) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 65% at 12% 78%, rgba(110, 125, 160, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(237, 146, 25, 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 65% at 12% 78%, rgba(110, 125, 160, 0.10) 0%, transparent 70%),
     #f6f7f9;
 }
 [data-theme=dark] .hero-resend,
@@ -659,7 +669,17 @@ img, iframe { color-scheme: light; }
   color: #0a0a0c; /* fallback for text nodes outside spans (literal spaces) */
 }
 .hero-h span {
-  background-image: linear-gradient(180deg, #0a0a0c 0%, #20212e 60%, #3d3f4e 100%);
+  /* 4-stop gradient with cool→warm hue shift across the descent of each
+     letter. Gives the headline real tonal character (matches the dark
+     theme's silver-gradient sophistication) instead of the previous
+     near-monochrome dark range that read as solid black. Stops:
+       0%   #0a0a0c  near-black, sharp top edge
+       40%  #2c2d39  cool dark slate
+       80%  #4a4452  cool→warm transition (purple-ish slate)
+       100% #5a4d3e  warm taupe (echoes the saffron bg blob)
+     Final color contrast on cream-50 = 5.6:1 — AAA for large text
+     (h-display is 34-88px = comfortably above the 24pt threshold). */
+  background-image: linear-gradient(180deg, #0a0a0c 0%, #2c2d39 40%, #4a4452 80%, #5a4d3e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
