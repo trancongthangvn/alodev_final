@@ -12,7 +12,12 @@ import { faqPageSchema, breadcrumbSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
-  openGraph: { url: '/' },
+  // No openGraph override here — root layout's openGraph (with og:image,
+  // type, locale, siteName, etc.) deep-merges per-page only when page-level
+  // openGraph is OMITTED. Setting `openGraph: { url: '/' }` here previously
+  // shadowed the entire root openGraph and stripped og:image from the home
+  // page HTML, which broke Facebook/LinkedIn/Slack share previews. The url
+  // field is already correct via metadataBase + canonical above.
 }
 
 const services: Array<{ icon: IconName; title: string; desc: string; href: string }> = [

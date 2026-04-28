@@ -40,7 +40,14 @@ export const metadata: Metadata = {
     siteName: "Alodev",
     title: "Alodev — Studio thiết kế & phát triển Web/App",
     description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị. 11+ sản phẩm vận hành thật.",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Alodev — Studio Web/App" }],
+    // Next 16 quirk: openGraph.images with object form ({url, width, height})
+    // silently fails to emit <meta property="og:image"/> in some build configs
+    // (verified locally — twitter.images with string form worked, og did not).
+    // Using mixed format below: string for the URL emission + width/height
+    // metadata in a separate string entry. Simplest reliable shape is just
+    // the string URL — Facebook/LinkedIn/Slack only need the URL anyway,
+    // they probe the image dimensions themselves.
+    images: ["/og.png"],
   },
   twitter: {
     card: "summary_large_image",
@@ -106,6 +113,17 @@ export default function RootLayout({
     // happy AND lets the inline script own html.classList for theme.
     <html lang="vi" suppressHydrationWarning>
       <head>
+        {/* Direct og:image emission — Next 16's metadata API silently drops
+            openGraph.images in some build configs even though twitter.images
+            (string-form) works. Hardcoding the head tag bypasses the quirk
+            and guarantees Facebook/LinkedIn/Slack/Discord show a preview
+            image when this URL is shared. og.png is 1200x630 PNG in /public. */}
+        <meta property="og:image" content={`${siteUrl}/og.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Alodev — Studio Web/App" />
+        <meta property="og:image:type" content="image/png" />
+
         {/* Apply theme before paint to prevent FOUC.
 
             Three-layer system:
