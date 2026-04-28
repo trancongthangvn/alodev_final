@@ -157,17 +157,18 @@ export default function Home() {
       </section>
 
 
-      {/* ─── BRAND MANIFESTO — the meaning of the cube ───
-           Placed immediately after the hero so the user reads the
-           PHILOSOPHY of the cube right after watching it animate.
-           Anchor #triet-ly for cross-page linking. */}
+      {/* ─── BRAND MANIFESTO — compact "1-viewport" version
+           Compressed version of the Rubik metaphor. Hook + 3 axis cards
+           + impact line fit roughly in one screen on desktop, one + a
+           half on mobile. Full essay collapsed inside <details> so users
+           who care can read it; users who don't aren't punished by a
+           long scroll. */}
       <section
         id="triet-ly"
         data-section-name="Triết lý"
-        className="relative py-12 lg:py-28 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 overflow-hidden"
+        className="relative py-12 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 overflow-hidden"
       >
-        {/* Faint 3x3 grid background — visual echo of a Rubik face. Very low
-            opacity so it doesn't compete with the prose. */}
+        {/* Faint 3×3 grid background — visual echo of a Rubik face. */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none opacity-[0.04] dark:opacity-[0.06]"
@@ -180,93 +181,138 @@ export default function Home() {
           }}
         />
 
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* HOOK */}
-          <div className="reveal">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* HOOK — center-aligned, big typography. The h-display + saffron
+              accent on "Một sản phẩm" makes this the first eye-catch as
+              the user scrolls past the hero cube. */}
+          <div className="reveal text-center max-w-3xl mx-auto">
             <Eyebrow>Triết lý</Eyebrow>
             <h2 className="h-display mt-4 sm:mt-5 text-gray-900 dark:text-white">
-              Sáu mặt.{' '}
-              <span className="text-brand-600 dark:text-brand-400">Một sản phẩm.</span>
+              Sáu mặt. <span className="text-brand-600 dark:text-brand-400">Một sản phẩm.</span>
             </h2>
-          </div>
-
-          {/* BODY 1 — setup the metaphor */}
-          <div className="reveal-stagger mt-8 sm:mt-10 space-y-5 sm:space-y-6 text-base sm:text-lg leading-relaxed text-gray-700 dark:text-ink-300">
-            <p>
-              Người ngoài nhìn vào dự án của bạn, thấy một cái hộp vuông.
-              Bạn nhìn vào, thấy một khối Rubik.
-            </p>
-            <p>
-              Dự án đang trên bàn của bạn — có thể đã nằm trong kế hoạch năm,
-              có thể vừa được giao tuần trước. Trên giấy, nó rõ ràng. Đủ rõ
-              để bảo vệ phạm vi, đủ rõ để cấp ngân sách, đủ rõ để bắt đầu.
-            </p>
-            <p>
-              Nhưng càng đến gần lúc triển khai, mọi thứ càng khó kiểm soát.
-              Quyết được phạm vi thì lệch tiến độ. Chốt được công nghệ thì
-              vướng quy trình. Thống nhất được giao diện lại mở ra ba câu hỏi
-              mới về dữ liệu.
-            </p>
-            <p>
-              Đó không phải vấn đề năng lực. Đó là vấn đề{' '}
-              <span className="text-gray-900 dark:text-white font-semibold">góc nhìn</span>.
-              Người ở bên trong một khối Rubik luôn thấy nó rối hơn người
-              đứng ngoài — và đó là lý do ngay cả những đội ngũ giàu kinh
-              nghiệm nhất vẫn cần một bên ngoài để biến một bản kế hoạch tốt
-              thành một hệ thống vận hành được.
+            <p className="mt-5 sm:mt-6 text-lg sm:text-xl text-gray-600 dark:text-ink-300 leading-relaxed">
+              Người ngoài thấy một cái hộp vuông.
+              <br className="hidden sm:block" />
+              {' '}Bạn thấy một <span className="font-semibold text-gray-900 dark:text-white">khối Rubik</span>.
             </p>
           </div>
 
-          {/* CALLOUT — left-bordered accent line */}
-          <div className="reveal mt-8 sm:mt-10 pl-5 sm:pl-6 border-l-2 border-brand-500 dark:border-brand-400">
-            <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
-              Alodev tồn tại cho đúng giai đoạn đó.
+          {/* 3-AXIS CHAOS CARDS — visually represents the multi-dimensional
+              problem the user faces. Each card: axis (eyebrow) + the
+              "thought you fixed it" line + the cost in saffron. */}
+          <div className="reveal-stagger mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+            {[
+              { axis: 'Phạm vi',     fix: 'Quyết được phạm vi',       cost: 'thì lệch tiến độ.' },
+              { axis: 'Công nghệ',   fix: 'Chốt được công nghệ',      cost: 'thì vướng quy trình.' },
+              { axis: 'Giao diện',   fix: 'Thống nhất được giao diện', cost: 'lại mở ra câu hỏi mới về dữ liệu.' },
+            ].map((c) => (
+              <div
+                key={c.axis}
+                className="group rounded-2xl border border-gray-200 dark:border-ink-800 bg-white/70 dark:bg-ink-900/70 backdrop-blur p-5 sm:p-6 hover:border-brand-300 dark:hover:border-brand-500/40 transition"
+              >
+                <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-3">
+                  {c.axis}
+                </div>
+                <p className="text-base sm:text-lg text-gray-900 dark:text-white leading-snug font-medium">
+                  {c.fix}
+                </p>
+                <div className="mt-2 flex items-baseline gap-1.5 text-sm sm:text-base text-rose-600 dark:text-rose-400 leading-snug">
+                  <span className="font-bold">→</span>
+                  <span>{c.cost}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* IMPACT LINE — the climax. Big punchy statement that re-frames
+              the chaos as a perspective problem, then declares Alodev's
+              role in 5 words. */}
+          <div className="reveal mt-12 sm:mt-16 max-w-3xl mx-auto text-center">
+            <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white leading-tight">
+              Đó không phải vấn đề năng lực.
+              <br />
+              Đó là vấn đề <span className="text-brand-600 dark:text-brand-400">góc nhìn</span>.
+            </p>
+            <p className="mt-5 text-base sm:text-lg text-gray-600 dark:text-ink-400 leading-relaxed">
+              Người bên trong khối Rubik luôn thấy nó rối hơn người đứng ngoài.
+            </p>
+            <p className="mt-3 text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
+              Alodev là góc nhìn từ ngoài.
             </p>
           </div>
 
-          {/* BODY 2 — process */}
-          <div className="reveal-stagger mt-8 sm:mt-10 space-y-5 sm:space-y-6 text-base sm:text-lg leading-relaxed text-gray-700 dark:text-ink-300">
-            <p>
-              Mỗi dự án bắt đầu bằng việc{' '}
-              <span className="text-gray-900 dark:text-white font-semibold">hiểu bài toán</span>,
-              không phải nhận yêu cầu. Đâu là ràng buộc cứng, đâu là điều có
-              thể linh hoạt. Đâu là phần đội ngũ bạn muốn tự chủ về sau, đâu
-              là phần cần Alodev gánh trọn. Đâu là kiến trúc cần dựng để hệ
-              thống còn scale được trong ba năm tới.
-            </p>
-            <p>
-              Khi những câu hỏi đó có câu trả lời, dòng code đầu tiên mới bắt
-              đầu — viết cho đúng bài toán của bạn, không cho bài toán nào khác.
-            </p>
-          </div>
-
-          {/* OUTCOME — closing block */}
-          <div className="reveal mt-10 sm:mt-12">
-            <p className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white leading-tight">
-              Khi dự án kết thúc, bạn cầm cả khối lẫn cách giải.
-            </p>
-            <ul className="mt-5 sm:mt-6 space-y-2.5 text-base sm:text-lg text-gray-700 dark:text-ink-200">
-              <li className="flex items-start gap-3">
-                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
-                <span>Toàn bộ source code.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
-                <span>Toàn bộ tài liệu kỹ thuật.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
-                <span>Toàn bộ quyền truy cập hạ tầng.</span>
-              </li>
-              <li className="flex items-start gap-3 font-semibold text-gray-900 dark:text-white">
-                <Icon name="check" className="w-5 h-5 mt-0.5 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
-                <span>Tất cả thuộc về bạn.</span>
-              </li>
-            </ul>
-            <p className="mt-7 sm:mt-8 text-sm sm:text-base italic text-gray-500 dark:text-ink-400">
-              Đó là cách Alodev định nghĩa một dự án đã xong.
-            </p>
-          </div>
+          {/* EXPAND — full essay for users who want depth. <details> stays
+              closed by default so the casual reader gets the punchy version
+              and moves on. open:shadow-md gives a small visual cue when
+              expanded. */}
+          <details className="reveal mt-10 sm:mt-14 max-w-3xl mx-auto group rounded-2xl border border-gray-200 dark:border-ink-800 bg-white/60 dark:bg-ink-900/40 px-5 sm:px-6 py-4 open:shadow-md transition">
+            <summary className="cursor-pointer list-none flex items-center justify-between gap-3 font-semibold text-gray-900 dark:text-white">
+              <span className="inline-flex items-center gap-2">
+                <span className="text-brand-600 dark:text-brand-400">+</span>
+                Đọc đầy đủ triết lý
+              </span>
+              <svg className="w-5 h-5 text-gray-400 dark:text-ink-500 transition group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div className="mt-5 sm:mt-6 space-y-4 sm:space-y-5 text-base sm:text-lg leading-relaxed text-gray-700 dark:text-ink-300">
+              <p>
+                Dự án đang trên bàn của bạn — có thể đã nằm trong kế hoạch năm,
+                có thể vừa được giao tuần trước. Trên giấy, nó rõ ràng. Đủ rõ
+                để bảo vệ phạm vi, đủ rõ để cấp ngân sách, đủ rõ để bắt đầu.
+              </p>
+              <p>
+                Nhưng càng đến gần lúc triển khai, mọi thứ càng khó kiểm soát.
+                Đó không phải vấn đề năng lực — ngay cả những đội ngũ giàu
+                kinh nghiệm nhất vẫn cần một bên ngoài để biến một bản kế hoạch
+                tốt thành một hệ thống vận hành được.
+              </p>
+              <div className="pl-4 sm:pl-5 border-l-2 border-brand-500 dark:border-brand-400 my-5">
+                <p className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white leading-snug">
+                  Alodev tồn tại cho đúng giai đoạn đó.
+                </p>
+              </div>
+              <p>
+                Mỗi dự án bắt đầu bằng việc{' '}
+                <span className="text-gray-900 dark:text-white font-semibold">hiểu bài toán</span>,
+                không phải nhận yêu cầu. Đâu là ràng buộc cứng, đâu là điều có
+                thể linh hoạt. Đâu là phần đội ngũ bạn muốn tự chủ về sau, đâu
+                là phần cần Alodev gánh trọn. Đâu là kiến trúc cần dựng để hệ
+                thống còn scale được trong ba năm tới.
+              </p>
+              <p>
+                Khi những câu hỏi đó có câu trả lời, dòng code đầu tiên mới bắt
+                đầu — viết cho đúng bài toán của bạn, không cho bài toán nào khác.
+              </p>
+              <div className="pt-4 mt-4 border-t border-gray-200 dark:border-ink-800">
+                <p className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
+                  Khi dự án kết thúc, bạn cầm cả khối lẫn cách giải.
+                </p>
+                <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm sm:text-base text-gray-700 dark:text-ink-200">
+                  <li className="flex items-center gap-2">
+                    <Icon name="check" className="w-4 h-4 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                    Toàn bộ source code
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Icon name="check" className="w-4 h-4 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                    Toàn bộ tài liệu kỹ thuật
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Icon name="check" className="w-4 h-4 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                    Toàn bộ quyền truy cập hạ tầng
+                  </li>
+                  <li className="flex items-center gap-2 font-semibold text-gray-900 dark:text-white">
+                    <Icon name="check" className="w-4 h-4 text-brand-600 dark:text-brand-400 shrink-0" strokeWidth={2.5} />
+                    Tất cả thuộc về bạn
+                  </li>
+                </ul>
+                <p className="mt-4 text-sm italic text-gray-500 dark:text-ink-400">
+                  Đó là cách Alodev định nghĩa một dự án đã xong.
+                </p>
+              </div>
+            </div>
+          </details>
         </div>
       </section>
 
