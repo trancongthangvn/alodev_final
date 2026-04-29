@@ -1,12 +1,23 @@
 import JsonLd from '@/components/JsonLd'
 import Icon, { type IconName } from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
-import { serviceSchema, breadcrumbSchema } from '@/lib/schema'
+import { serviceSchema, breadcrumbSchema, collectionPageSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Dịch vụ & bảng giá thiết kế web/app',
-  description: 'Báo giá rõ ràng cho 6 nhóm dịch vụ Alodev: website, app mobile, hệ thống quản trị, tự động hoá AI, bảo trì, UI/UX. Nhận báo giá chi tiết miễn phí trong 24h.',
+  // 152 chars — sweet spot for SERP truncation cap.
+  description: 'Bảng giá 6 nhóm dịch vụ Alodev: website, app mobile, CRM/ERP, AI, bảo trì, UI/UX. Mức giá khởi điểm minh bạch — báo giá chi tiết trong 24h.',
   alternates: { canonical: '/dich-vu' },
+  keywords: [
+    'dịch vụ thiết kế website',
+    'lập trình app mobile',
+    'hệ thống CRM ERP',
+    'báo giá website',
+    'thiết kế web doanh nghiệp',
+    'app iOS Android',
+    'studio website Việt Nam',
+    'Alodev',
+  ],
   openGraph: { url: '/dich-vu', title: 'Dịch vụ & bảng giá — Alodev', description: 'Báo giá rõ ràng cho 6 nhóm dịch vụ Alodev — website, app, hệ thống, AI, bảo trì, UI/UX.' },
 }
 
@@ -87,6 +98,22 @@ export default function DichVuPage() {
           { name: 'Trang chủ', url: '/' },
           { name: 'Dịch vụ', url: '/dich-vu' },
         ]),
+        // CollectionPage + ItemList — signals to crawlers that /dich-vu is a
+        // hub listing 6 distinct services, eligible for list-style rich
+        // results in some markets. Each item links to its detail page so
+        // PageRank flows down to the keyword-specific landings.
+        collectionPageSchema({
+          name: 'Dịch vụ Alodev — Web · App · Hệ thống · AI · Bảo trì · UI/UX',
+          description: 'Sáu nhóm dịch vụ Alodev với mức giá khởi điểm minh bạch. Click vào từng dịch vụ để xem chi tiết và bảng giá theo gói.',
+          url: '/dich-vu',
+          items: packages.map((p) => ({
+            name: `${p.name} — ${p.tagline}`,
+            url: ['website','mobile','system'].includes(p.id)
+              ? `/dich-vu/${p.id === 'website' ? 'thiet-ke-website' : p.id === 'mobile' ? 'lap-trinh-app-mobile' : 'he-thong-quan-tri'}`
+              : `/dich-vu#${p.id}`,
+            description: `${p.name}. ${p.tagline}. Mức giá khởi điểm: ${p.tiers[0].price}.`,
+          })),
+        }),
         ...packages.map((p) => serviceSchema({
           name: `${p.name} — ${p.tagline}`,
           description: `${p.name}. Các gói: ${p.tiers.map((t) => `${t.name} (${t.price})`).join(', ')}.`,

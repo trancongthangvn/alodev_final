@@ -3,12 +3,25 @@ import JsonLd from '@/components/JsonLd'
 import Icon from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { breadcrumbSchema, serviceSchema, faqPageSchema } from '@/lib/schema'
+import RelatedServices from '@/components/RelatedServices'
+import { breadcrumbSchema, serviceWithOffersSchema, faqPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Lập trình app mobile iOS / Android — Báo giá từ 60 triệu',
-  description: 'Dịch vụ lập trình app mobile native (Swift/Kotlin) hoặc cross-platform (React Native, Flutter) — đặt lịch, giao hàng, e-commerce, app nội bộ. Đưa lên App Store + Google Play, source code thuộc về bạn.',
+  // 49 chars + " — Alodev" template = 58, fits Google SERP ~60-char cap.
+  title: 'Lập trình app mobile iOS / Android — từ 60 triệu',
+  // 154 chars
+  description: 'Lập trình app mobile native (Swift/Kotlin) hoặc cross-platform (RN, Flutter) — đặt lịch, giao hàng, e-commerce, nội bộ. Publish App Store + Play. Từ 60tr.',
   alternates: { canonical: '/dich-vu/lap-trinh-app-mobile' },
+  keywords: [
+    'lập trình app mobile',
+    'lập trình app iOS Android',
+    'phát triển ứng dụng di động',
+    'app native Swift Kotlin',
+    'app cross-platform React Native Flutter',
+    'báo giá lập trình app',
+    'app đặt lịch giao hàng',
+    'studio app mobile Việt Nam',
+  ],
   openGraph: {
     url: '/dich-vu/lap-trinh-app-mobile',
     title: 'Lập trình app mobile iOS / Android — Alodev',
@@ -50,10 +63,17 @@ export default function LapTrinhAppMobilePage() {
           { name: 'Dịch vụ', url: '/dich-vu' },
           { name: 'Lập trình app mobile', url: '/dich-vu/lap-trinh-app-mobile' },
         ]),
-        serviceSchema({
+        serviceWithOffersSchema({
           name: 'Lập trình app mobile iOS / Android',
           description: 'Dịch vụ phát triển app mobile native (Swift/Kotlin) hoặc cross-platform (React Native, Flutter). Đặt lịch, giao hàng, e-commerce, nội bộ.',
           url: '/dich-vu/lap-trinh-app-mobile',
+          serviceType: 'Mobile application development',
+          tiers: [
+            { name: 'App đặt lịch / dịch vụ',  priceMin: 70_000_000, description: 'Đặt lịch nail/spa/khám/sửa chữa — push, payment in-app.' },
+            { name: 'App nội bộ công ty',      priceMin: 75_000_000, description: 'Chấm công, đơn nghỉ phép, báo cáo, chat — Face ID/vân tay.' },
+            { name: 'App bán hàng / e-commerce', priceMin: 85_000_000, description: 'App version của shop — sản phẩm, giỏ, thanh toán.' },
+            { name: 'App giao hàng / đặt món', priceMin: 95_000_000, description: 'Đặt món, shipper giao, bản đồ tracking real-time.' },
+          ],
         }),
         faqPageSchema(faq),
       ]} />
@@ -76,9 +96,9 @@ export default function LapTrinhAppMobilePage() {
               <span className="text-brand-700 dark:text-brand-400">iOS &amp; Android</span>
             </h1>
             <p className="mt-5 text-lg text-ink-500 dark:text-ink-300 max-w-3xl leading-relaxed">
-              Alodev nhận phát triển app mobile cho doanh nghiệp Việt — đặt lịch, giao hàng, e-commerce, app nội bộ.
-              Dùng <b className="text-ink-700 dark:text-ink-200">Swift/Kotlin native</b> cho hiệu năng tối đa hoặc <b className="text-ink-700 dark:text-ink-200">React Native/Flutter</b> cho tốc độ ship cả 2 nền tảng cùng lúc.
-              Alodev xử lý toàn bộ publish lên App Store + Google Play.
+              Alodev phát triển app mobile cho doanh nghiệp Việt — đặt lịch, giao hàng, e-commerce, app nội bộ.
+              Sử dụng <b className="text-ink-700 dark:text-ink-200">Swift/Kotlin native</b> cho hiệu năng tối đa, hoặc <b className="text-ink-700 dark:text-ink-200">React Native/Flutter</b> cho tốc độ triển khai cả hai nền tảng đồng thời.
+              Alodev xử lý toàn bộ quy trình publish lên App Store và Google Play.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <QuoteCTA size="lg">Yêu cầu báo giá app</QuoteCTA>
@@ -97,7 +117,7 @@ export default function LapTrinhAppMobilePage() {
               <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
               <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Cam kết</span>
             </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">6 thứ Alodev xử lý trọn gói</h2>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Sáu phần Alodev xử lý trọn gói</h2>
           </div>
           <div className="mt-6 lg:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
@@ -120,7 +140,7 @@ export default function LapTrinhAppMobilePage() {
               <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
               <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Loại app</span>
             </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">5 loại app Alodev nhận lập trình</h2>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Năm dòng app Alodev triển khai</h2>
           </div>
           <div className="mt-10 space-y-3">
             {types.map((t) => (
@@ -161,6 +181,8 @@ export default function LapTrinhAppMobilePage() {
           </div>
         </div>
       </section>
+
+      <RelatedServices exclude="lap-trinh-app-mobile" />
 
       <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-ink-100 dark:border-ink-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

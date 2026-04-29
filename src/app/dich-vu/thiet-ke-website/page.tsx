@@ -3,12 +3,24 @@ import JsonLd from '@/components/JsonLd'
 import Icon from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { breadcrumbSchema, serviceSchema, faqPageSchema } from '@/lib/schema'
+import RelatedServices from '@/components/RelatedServices'
+import { breadcrumbSchema, serviceWithOffersSchema, faqPageSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Thiết kế website chuyên nghiệp — Báo giá từ 8 triệu',
-  description: 'Dịch vụ thiết kế website doanh nghiệp, landing page, e-commerce, blog của Alodev — chuẩn SEO, responsive, tốc độ tải <1s. Founder-led studio tại Hà Nội, source code thuộc về bạn.',
+  // 150 chars (Vietnamese diacritics — Google SERP cap ~160 visible)
+  description: 'Thiết kế website doanh nghiệp, landing, e-commerce, blog — chuẩn SEO, responsive, tốc độ tải <1s. Founder-led tại Hà Nội. Từ 8 triệu.',
   alternates: { canonical: '/dich-vu/thiet-ke-website' },
+  keywords: [
+    'thiết kế website chuyên nghiệp',
+    'thiết kế web doanh nghiệp',
+    'thiết kế landing page',
+    'thiết kế website thương mại điện tử',
+    'báo giá thiết kế web',
+    'thiết kế website Hà Nội',
+    'thiết kế website chuẩn SEO',
+    'website Next.js Vietnam',
+  ],
   openGraph: {
     url: '/dich-vu/thiet-ke-website',
     title: 'Thiết kế website chuyên nghiệp — Alodev',
@@ -50,10 +62,17 @@ export default function ThietKeWebsitePage() {
           { name: 'Dịch vụ', url: '/dich-vu' },
           { name: 'Thiết kế website', url: '/dich-vu/thiet-ke-website' },
         ]),
-        serviceSchema({
+        serviceWithOffersSchema({
           name: 'Thiết kế website doanh nghiệp',
           description: 'Dịch vụ thiết kế website chuyên nghiệp — landing page, website công ty, e-commerce, blog. Chuẩn SEO, tốc độ tải <1s, responsive, bảo hành 6-12 tháng.',
           url: '/dich-vu/thiet-ke-website',
+          serviceType: 'Web design and development',
+          tiers: [
+            { name: 'Landing page bán hàng',         priceMin:  8_000_000, description: '1 trang dài tập trung 1 sản phẩm/dịch vụ, tối ưu chuyển đổi.' },
+            { name: 'Website giới thiệu công ty',    priceMin: 14_000_000, description: 'Trang chủ, Giới thiệu, Dịch vụ, Sản phẩm, Tin tức, Liên hệ.' },
+            { name: 'Blog / Trang tin tức',          priceMin: 12_000_000, description: 'CMS đăng bài, chuyên mục, SEO, đăng ký nhận tin email.' },
+            { name: 'Website thương mại điện tử',    priceMin: 25_000_000, description: 'Sản phẩm, giỏ hàng, thanh toán VNPay/MoMo, quản lý đơn.' },
+          ],
         }),
         faqPageSchema(faq),
       ]} />
@@ -76,9 +95,9 @@ export default function ThietKeWebsitePage() {
               <span className="text-brand-700 dark:text-brand-400">cho doanh nghiệp Việt</span>
             </h1>
             <p className="mt-5 text-lg text-ink-500 dark:text-ink-300 max-w-3xl leading-relaxed">
-              Alodev nhận thiết kế website doanh nghiệp, landing page bán hàng, website thương mại điện tử và blog tin tức.
+              Alodev thiết kế website doanh nghiệp, landing page bán hàng, website thương mại điện tử và blog tin tức.
               Code riêng bằng <b className="text-ink-700 dark:text-ink-200">Next.js</b> (không template Wordpress lắp ghép),
-              tốc độ tải dưới 1 giây, SEO chuẩn từ ngày deploy đầu tiên, source code thuộc về bạn.
+              tốc độ tải dưới 1 giây, SEO chuẩn từ ngày deploy đầu tiên, source code thuộc sở hữu của bạn.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <QuoteCTA size="lg">Yêu cầu báo giá website</QuoteCTA>
@@ -99,7 +118,7 @@ export default function ThietKeWebsitePage() {
               <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Tại sao Alodev</span>
             </div>
             <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">
-              6 cam kết khi thiết kế website cho bạn
+              Sáu cam kết Alodev áp dụng cho mọi website
             </h2>
           </div>
           <div className="mt-6 lg:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -125,7 +144,7 @@ export default function ThietKeWebsitePage() {
               <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Loại website</span>
             </div>
             <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">
-              5 loại website Alodev nhận thiết kế
+              Năm loại website Alodev triển khai
             </h2>
           </div>
           <div className="mt-10 space-y-3">
@@ -168,6 +187,8 @@ export default function ThietKeWebsitePage() {
           </div>
         </div>
       </section>
+
+      <RelatedServices exclude="thiet-ke-website" />
 
       {/* CTA */}
       <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-ink-100 dark:border-ink-800">

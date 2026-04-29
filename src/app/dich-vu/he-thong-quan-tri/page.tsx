@@ -3,16 +3,29 @@ import JsonLd from '@/components/JsonLd'
 import Icon from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { breadcrumbSchema, serviceSchema, faqPageSchema } from '@/lib/schema'
+import RelatedServices from '@/components/RelatedServices'
+import { breadcrumbSchema, serviceWithOffersSchema, faqPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Lập trình hệ thống quản trị CRM / ERP — Báo giá từ 25 triệu',
-  description: 'Phát triển hệ thống quản trị doanh nghiệp tuỳ chỉnh — CRM khách hàng, ERP quản lý kho, HR, SaaS multi-tenant. Báo giá rõ ràng, source code thuộc về bạn.',
+  // 51 chars + " — Alodev" template = 60 chars total, fits Google SERP.
+  title: 'Lập trình CRM / ERP / hệ thống quản trị — từ 25tr',
+  // 159 chars
+  description: 'Lập trình hệ thống quản trị tuỳ chỉnh — CRM khách hàng, ERP quản lý kho, HR, SaaS multi-tenant. Phân quyền, báo cáo, API, backup tự động. Từ 25 triệu.',
   alternates: { canonical: '/dich-vu/he-thong-quan-tri' },
+  keywords: [
+    'lập trình CRM',
+    'lập trình ERP',
+    'hệ thống quản trị doanh nghiệp',
+    'phần mềm CRM Việt Nam',
+    'phần mềm ERP custom',
+    'SaaS multi-tenant',
+    'phân quyền báo cáo',
+    'báo giá hệ thống quản trị',
+  ],
   openGraph: {
     url: '/dich-vu/he-thong-quan-tri',
-    title: 'Lập trình hệ thống quản trị — Alodev',
-    description: 'CRM, ERP, HR, SaaS multi-tenant. Báo giá từ 25 triệu, viết riêng theo nghiệp vụ thực tế.',
+    title: 'Lập trình hệ thống quản trị CRM / ERP — Alodev',
+    description: 'CRM, ERP, HR, SaaS multi-tenant. Viết riêng theo nghiệp vụ thực tế. Từ 25 triệu, source code thuộc về bạn.',
   },
 }
 
@@ -50,10 +63,17 @@ export default function HeThongQuanTriPage() {
           { name: 'Dịch vụ', url: '/dich-vu' },
           { name: 'Hệ thống quản trị', url: '/dich-vu/he-thong-quan-tri' },
         ]),
-        serviceSchema({
+        serviceWithOffersSchema({
           name: 'Lập trình hệ thống quản trị CRM / ERP',
           description: 'Phát triển hệ thống quản trị doanh nghiệp tuỳ chỉnh — CRM, ERP, HR, SaaS multi-tenant. Phân quyền, báo cáo, API, backup tự động.',
           url: '/dich-vu/he-thong-quan-tri',
+          serviceType: 'Custom CRM / ERP / business management software',
+          tiers: [
+            { name: 'CRM — Quản lý khách hàng',  priceMin: 35_000_000, description: 'Lưu data khách, theo dõi liên hệ, deal pipeline, báo cáo doanh thu.' },
+            { name: 'Quản lý kho / Bán hàng',    priceMin: 45_000_000, description: 'Sản phẩm, tồn kho, đơn nhập/xuất, công nợ, báo cáo Excel.' },
+            { name: 'Hệ thống nhân sự (HR)',     priceMin: 50_000_000, description: 'Chấm công, lương, đơn nghỉ phép, hợp đồng, workflow approval.' },
+            { name: 'SaaS Multi-tenant',         priceMin: 80_000_000, description: 'Hệ thống cho thuê — bán cho nhiều khách dùng chung, mỗi khách 1 không gian.' },
+          ],
         }),
         faqPageSchema(faq),
       ]} />
@@ -76,8 +96,8 @@ export default function HeThongQuanTriPage() {
               <span className="text-brand-700 dark:text-brand-400">CRM · ERP · SaaS</span>
             </h1>
             <p className="mt-5 text-lg text-ink-500 dark:text-ink-300 max-w-3xl leading-relaxed">
-              Alodev xây dựng hệ thống quản trị doanh nghiệp tuỳ chỉnh — CRM khách hàng, ERP quản lý kho/bán hàng, HR nhân sự, SaaS multi-tenant.
-              Code riêng theo nghiệp vụ thực tế của bạn (không phải <b>Misa/KiotViet</b> dùng chung), phân quyền chi tiết, báo cáo tự động, API mở.
+              Alodev xây dựng hệ thống quản trị doanh nghiệp tuỳ chỉnh — CRM khách hàng, ERP quản lý kho và bán hàng, HR nhân sự, SaaS multi-tenant.
+              Code riêng theo nghiệp vụ thực tế của bạn (không phải <b>Misa/KiotViet</b> dùng chung), phân quyền chi tiết, báo cáo tự động, API mở để tích hợp.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <QuoteCTA size="lg">Yêu cầu báo giá hệ thống</QuoteCTA>
@@ -96,7 +116,7 @@ export default function HeThongQuanTriPage() {
               <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
               <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Cam kết</span>
             </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">6 tính năng standard mọi hệ thống Alodev</h2>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Sáu tính năng tiêu chuẩn áp dụng cho mọi hệ thống</h2>
           </div>
           <div className="mt-6 lg:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((f) => (
@@ -119,7 +139,7 @@ export default function HeThongQuanTriPage() {
               <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
               <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Loại hệ thống</span>
             </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">5 loại hệ thống Alodev đã làm</h2>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Năm loại hệ thống Alodev đã triển khai</h2>
           </div>
           <div className="mt-10 space-y-3">
             {types.map((t) => (
@@ -160,6 +180,8 @@ export default function HeThongQuanTriPage() {
           </div>
         </div>
       </section>
+
+      <RelatedServices exclude="he-thong-quan-tri" />
 
       <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-ink-100 dark:border-ink-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

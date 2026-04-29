@@ -24,6 +24,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = getPost(slug)
   if (!post) return { title: 'Không tìm thấy bài viết', robots: { index: false } }
   const url = `/blog/${post.slug}`
+  // Per-post og:image from cover_image when set, else falls back to the
+  // route's opengraph-image.tsx (dynamic per-title PNG).  Without this,
+  // every post share on Facebook/LinkedIn/X shows the generic site logo.
+  const ogImages = post.cover_image
+    ? [{ url: post.cover_image, width: 1200, height: 630, alt: post.title }]
+    : undefined
   return {
     title: post.title,
     description: post.description || undefined,
@@ -39,6 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       modifiedTime: post.updated_at,
       authors: [post.author_name],
       tags: post.tags,
+      ...(ogImages ? { images: ogImages } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description || undefined,
+      ...(ogImages ? { images: ogImages.map((i) => i.url) } : {}),
     },
   }
 }
@@ -215,6 +228,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </span>
             <span aria-hidden="true" className="text-gray-300 dark:text-ink-700">·</span>
             <span>Xuất bản <time dateTime={post.published_at} itemProp="datePublished">{formatVnDate(post.published_at)}</time></span>
+            {post.updated_at && post.updated_at.slice(0, 10) !== post.published_at.slice(0, 10) && (
+              <>
+                <span aria-hidden="true" className="text-gray-300 dark:text-ink-700">·</span>
+                <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-medium">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.181-3.183m-4.991-2.691v4.992m0 0h-4.992m4.992 0l-3.181-3.183a8.25 8.25 0 00-11.667 0l-3.181 3.183" />
+                  </svg>
+                  Cập nhật <time dateTime={post.updated_at} itemProp="dateModified">{formatVnDate(post.updated_at)}</time>
+                </span>
+              </>
+            )}
             {post.reading_min && (
               <>
                 <span aria-hidden="true" className="text-gray-300 dark:text-ink-700">·</span>
