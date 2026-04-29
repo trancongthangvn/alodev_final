@@ -25,11 +25,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!post) return { title: 'Không tìm thấy bài viết', robots: { index: false } }
   const url = `/blog/${post.slug}`
   // Per-post og:image from cover_image when set, else falls back to the
-  // route's opengraph-image.tsx (dynamic per-title PNG).  Without this,
-  // every post share on Facebook/LinkedIn/X shows the generic site logo.
-  const ogImages = post.cover_image
-    ? [{ url: post.cover_image, width: 1200, height: 630, alt: post.title }]
-    : undefined
+  // site-wide /og.png.  Without this, Next 16's per-page openGraph silently
+  // replaces the root's openGraph (no merge), so a missing images field on a
+  // post means the og:image meta tag disappears entirely → every post share
+  // looks like a 404 preview on Facebook/LinkedIn.
+  const ogImages = [
+    post.cover_image
+      ? { url: post.cover_image, width: 1200, height: 630, alt: post.title }
+      : { url: '/og.png', width: 1200, height: 630, alt: 'Alodev' },
+  ]
   return {
     title: post.title,
     description: post.description || undefined,
@@ -45,13 +49,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       modifiedTime: post.updated_at,
       authors: [post.author_name],
       tags: post.tags,
-      ...(ogImages ? { images: ogImages } : {}),
+      images: ogImages,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description || undefined,
-      ...(ogImages ? { images: ogImages.map((i) => i.url) } : {}),
+      images: ogImages.map((i) => i.url),
     },
   }
 }
