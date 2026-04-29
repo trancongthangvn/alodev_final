@@ -1,0 +1,61 @@
+name: Deploy to Cloudflare Pages
+
+# Triggers:
+#   - push to main → auto-deploy
+#   - workflow_dispatch (manual + via /api/admin/deploy from BlogEditor)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Why this deploy was triggered (admin paste-import, manual, etc.)'
+        required: false
+        default: 'manual'
+
+# Required GitHub repo secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_ACCOUNT_ID  3ff009ebd0ff9a24b0cee3ad46c2b72f
+#   CLOUDFLARE_API_TOKEN   token with Pages:Edit + D1:Read scopes
+#   D1_DATABASE_ID         48b7781e-69a2-4cee-bf71-15ed99c893d0
+#
+# The token is read by:
+#   1. scripts/sync-blog-from-d1.mjs (build step) — fetches published posts
+#      from D1 + writes src/data/blog.generated.json
+#   2. wrangler pages deploy (deploy step)
+
+concurrency:
+  group: alodev-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build (sync D1 → JSON, then next build → out/)
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          D1_DATABASE_ID: ${{ secrets.D1_DATABASE_ID }}
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: npx wrangler pages deploy out --project-name=alodev --branch=main --commit-dirty=true
+
+      - name: Reason
+        run: echo "Trigger reason — ${{ github.event.inputs.reason || 'push' }}"

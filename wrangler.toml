@@ -1,0 +1,35 @@
+# Cloudflare Pages config — used by `wrangler pages deploy out`.
+# Bindings here are exposed to Pages Functions in `functions/` directory.
+#
+# Why TOML over wrangler.jsonc: Pages Functions still read wrangler.toml
+# reliably as of wrangler 4.81 (jsonc support is preview for Workers, not
+# Pages). Switch to jsonc when CF Pages goes stable on it.
+
+name = "alodev"
+pages_build_output_dir = "./out"
+compatibility_date = "2026-04-15"
+compatibility_flags = ["nodejs_compat"]
+
+# ─── D1 — lead inbox ───────────────────────────────────────────────────
+# Binding name = how Pages Function code addresses it: `env.LEADS`
+# Created via: wrangler d1 create alodev-leads
+[[d1_databases]]
+binding       = "LEADS"
+database_name = "alodev-leads"
+database_id   = "48b7781e-69a2-4cee-bf71-15ed99c893d0"
+
+# ─── R2 — blog images ─────────────────────────────────────────────────
+# Stores images uploaded from /admin/blog (cover_image + inline body imgs).
+# Served back via the public Pages route /blog-images/<key>
+# (functions/blog-images/[[path]].ts).
+[[r2_buckets]]
+binding     = "BLOG_IMAGES"
+bucket_name = "alodev-blog-images"
+
+# ─── Production env vars (non-secret) ─────────────────────────────────
+# Secrets (RESEND_API_KEY, TURNSTILE_SECRET) set via:
+#   wrangler pages secret put RESEND_API_KEY --project-name=alodev
+[vars]
+NOTIFY_EMAIL_TO   = "hello@alodev.vn"
+NOTIFY_EMAIL_FROM = "leads@alodev.vn"
+TURNSTILE_ENABLED = "false"

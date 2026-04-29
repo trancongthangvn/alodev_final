@@ -553,23 +553,50 @@ function stripCodeFence(s: string): string {
 // Quote unquoted list-item values that contain ": " where the part before the
 // colon has whitespace (e.g. "Công thức: S = √(p(p-a)(p-b)(p-c))").  js-yaml
 // misparses these as block-mapping entries, causing "bad indentation" errors.
+//
+// Two patterns we cover:
+//
+// (A) List item with prose value containing ": "
+//     `  - Tính góc bằng pháp tuyến: cos α = ...`
+//     → `  - "Tính góc bằng pháp tuyến: cos α = ..."`
+//
+// (B) FAQ-style mapping value with prose containing ": "
+//     `  - q: Như thế nào...`
+//     `    a: Tính bằng công thức: cos α = ...`   ← second line breaks
+//     → `    a: "Tính bằng công thức: cos α = ..."`
+//
+// Heuristic for "prose key": contains whitespace OR non-ASCII.  Real YAML
+// keys are short snake_case ASCII words, so this rarely false-fires.
 function sanitizeYamlListItems(yamlStr: string): string {
+  // Test if `value` contains a problematic ": " (key part is prose-y).
+  // Returns the index of ": " or -1 if value is fine.
+  const findProseColon = (value: string): number => {
+    if (/^["'{[|>]/.test(value)) return -1; // already quoted / complex / block scalar
+    const colonIdx = value.indexOf(': ');
+    if (colonIdx < 0) return -1;
+    const key = value.slice(0, colonIdx);
+    return /\s|[^\x00-\x7F]/.test(key) ? colonIdx : -1;
+  };
+  const escape = (s: string) => s.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+
   return yamlStr
     .split('\n')
     .map((line) => {
-      const m = line.match(/^(\s*-\s+)(.+)$/);
-      if (!m) return line;
-      const prefix = m[1];
-      const value = m[2];
-      if (/^["'{[]/.test(value)) return line; // already quoted / complex type
-      const colonIdx = value.indexOf(': ');
-      if (colonIdx < 0) return line;
-      const potentialKey = value.slice(0, colonIdx);
-      // Only quote when the "key" part contains spaces or non-ASCII — those
-      // are never valid bare YAML keys and signal a plain-string value.
-      if (/\s|[^\x00-\x7F]/.test(potentialKey)) {
-        const escaped = value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-        return `${prefix}"${escaped}"`;
+      // (A) list item: "  - prose: value"
+      const listMatch = line.match(/^(\s*-\s+)(.+)$/);
+      if (listMatch) {
+        const [, prefix, value] = listMatch;
+        if (findProseColon(value) >= 0) return `${prefix}"${escape(value)}"`;
+        return line;
+      }
+      // (B) mapping value: "  key: prose with: colon"  (typical for faq.a)
+      // Match indented "<short_key>: " followed by content.  Short_key must
+      // be plain ASCII word chars to avoid mis-quoting valid prose-y mapping
+      // entries (which would already be the "outer" key of this rule).
+      const mapMatch = line.match(/^(\s+[A-Za-z_][A-Za-z0-9_]*:\s+)(.+)$/);
+      if (mapMatch) {
+        const [, prefix, value] = mapMatch;
+        if (findProseColon(value) >= 0) return `${prefix}"${escape(value)}"`;
       }
       return line;
     })
@@ -585,7 +612,8 @@ function splitFrontmatter(src: string): { data: Record<string, unknown>; content
   try {
     raw = yaml.load(yamlStr) ?? {};
   } catch {
-    // Retry after quoting list items that contain ": " with space-ful keys
+    // Retry with prose-colon sanitization (handles BOTH list items and
+    // FAQ-style mapping values with embedded ": " — see sanitizer comment).
     raw = yaml.load(sanitizeYamlListItems(yamlStr)) ?? {};
   }
   if (typeof raw !== 'object' || Array.isArray(raw)) return { data: {}, content };

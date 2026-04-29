@@ -1,11 +1,36 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AdminShell from '../AdminShell'
 import PasteImport from '@/components/admin/PasteImport'
 import ImageAltAudit from '@/components/admin/ImageAltAudit'
 import type { ParseResult } from '@/lib/articleImport'
+
+// Strip ext + slugify → human-readable alt fallback.
+//   "IMG_3456.jpg" → "img 3456"
+//   "Đề thi Toán-12.png" → "Đề thi Toán 12"
+function filenameToAlt(name: string): string {
+  return name
+    .replace(/\.[a-z0-9]{2,5}$/i, '')
+    .replace(/[_\-.]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim() || 'image'
+}
+
+// POST file to /api/admin/images and return the public URL.
+async function uploadBlogImage(file: File): Promise<{ url: string; key: string }> {
+  const form = new FormData()
+  form.append('file', file)
+  const r = await fetch('/api/admin/images', {
+    method: 'POST',
+    credentials: 'same-origin',
+    body: form,
+  })
+  const j = await r.json()
+  if (!r.ok) throw new Error(j.error || `Upload failed (HTTP ${r.status})`)
+  return { url: j.url as string, key: j.key as string }
+}
 
 /**
  * BlogEditor — used by both /admin/blog/new and /admin/blog/edit?id=XXX.
@@ -146,9 +171,27 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
         const j = await r.json()
         if (!r.ok) throw new Error(j.error || `HTTP ${r.status}`)
       }
-      setStatusMsg(opts.publish ? 'Đã lưu + đặt published. Click Deploy để rebuild site.' : 'Đã lưu nháp.')
       if (opts.publish) {
         setPost((p) => ({ ...p, status: 'published' }))
+        // Auto-trigger deploy on publish — admin shouldn't have to click two
+        // buttons.  If DEPLOY_HOOK_URL isn't set on the Pages project, the
+        // function 503s and we surface the setup hint inline.
+        setStatusMsg('Đã publish. Đang trigger deploy…')
+        try {
+          const dr = await fetch('/api/admin/deploy', { method: 'POST', credentials: 'same-origin' })
+          const dj = await dr.json()
+          if (!dr.ok) {
+            setStatusMsg(null)
+            setError(`Đã publish nhưng deploy fail: ${dj.error || `HTTP ${dr.status}`}. Bài viết đã lưu trong D1, cần deploy thủ công để site cập nhật.`)
+          } else {
+            setStatusMsg('Đã publish + queue deploy. Site cập nhật trong ~60s.')
+          }
+        } catch (e) {
+          setStatusMsg(null)
+          setError(`Đã publish nhưng deploy fail: ${(e as Error).message}. Bài viết đã lưu trong D1, cần deploy thủ công để site cập nhật.`)
+        }
+      } else {
+        setStatusMsg('Đã lưu nháp.')
       }
       void savedSlug
       void savedId
@@ -297,8 +340,27 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
             <textarea
               value={post.content_html ?? ''}
               onChange={(e) => setPost({ ...post, content_html: e.target.value || null })}
+              onDragOver={(e) => { if (Array.from(e.dataTransfer.items).some(i => i.kind === 'file')) e.preventDefault() }}
+              onDrop={async (e) => {
+                const files = Array.from(e.dataTransfer.files || []).filter(f => f.type.startsWith('image/'))
+                if (files.length === 0) return
+                e.preventDefault()
+                for (const file of files) {
+                  try {
+                    const { url } = await uploadBlogImage(file)
+                    const alt = filenameToAlt(file.name)
+                    const tag = `<img src="${url}" alt="${alt}" loading="lazy" />`
+                    const ta = e.currentTarget as HTMLTextAreaElement
+                    const start = ta.selectionStart ?? (post.content_html?.length ?? 0)
+                    const end = ta.selectionEnd ?? start
+                    const before = (post.content_html ?? '').slice(0, start)
+                    const after = (post.content_html ?? '').slice(end)
+                    setPost((p) => ({ ...p, content_html: `${before}${tag}${after}` }))
+                  } catch (err) { setError((err as Error).message) }
+                }
+              }}
               rows={20}
-              placeholder="<article>\n  <h2>Heading</h2>\n  <p>...</p>\n</article>\n\nDán block YAML+HTML ở panel phía trên để tự động điền field này."
+              placeholder="<article>\n  <h2>Heading</h2>\n  <p>...</p>\n</article>\n\nDán block YAML+HTML ở panel phía trên để tự động điền field này.\nKéo thả ảnh vào textarea để upload + chèn <img> tự động."
               className="w-full rounded-lg border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950 text-gray-900 dark:text-white px-4 py-3 text-sm font-mono leading-relaxed focus:outline-none focus:border-brand-500"
             />
             <p className="mt-2 text-xs text-gray-500 dark:text-zinc-500">
@@ -346,13 +408,10 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
                 className="w-full rounded-lg border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950 text-gray-900 dark:text-white px-4 py-2 text-sm focus:outline-none focus:border-brand-500"
               />
             </Field>
-            <Field label="Cover image URL (tùy chọn)">
-              <input
-                type="url"
+            <Field label="Cover image">
+              <CoverImageUpload
                 value={post.cover_image ?? ''}
-                onChange={(e) => setPost({ ...post, cover_image: e.target.value })}
-                placeholder="https://..."
-                className="w-full rounded-lg border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950 text-gray-900 dark:text-white px-4 py-2 text-sm focus:outline-none focus:border-brand-500"
+                onChange={(v) => setPost({ ...post, cover_image: v })}
               />
             </Field>
           </>
@@ -370,6 +429,86 @@ function Field({ label, required, children }: { label: string; required?: boolea
       </div>
       {children}
     </label>
+  )
+}
+
+function CoverImageUpload({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [uploading, setUploading] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(file: File) {
+    setUploading(true); setErr(null)
+    try {
+      const { url } = await uploadBlogImage(file)
+      onChange(url)
+    } catch (e) {
+      setErr((e as Error).message)
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      <div
+        className={`relative rounded-lg border-2 border-dashed transition ${
+          uploading ? 'border-brand-500 bg-brand-50/50 dark:bg-brand-500/5' :
+          'border-gray-300 dark:border-ink-700 hover:border-brand-400 dark:hover:border-brand-500/60 bg-cream-50 dark:bg-ink-950'
+        } p-4`}
+        onDragOver={(e) => { if (Array.from(e.dataTransfer.items).some(i => i.kind === 'file')) e.preventDefault() }}
+        onDrop={(e) => {
+          e.preventDefault()
+          const f = e.dataTransfer.files?.[0]
+          if (f && f.type.startsWith('image/')) handleFile(f)
+        }}
+      >
+        {value ? (
+          <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={value} alt="" className="w-20 h-20 rounded object-cover bg-white border border-gray-200 dark:border-ink-700" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }} />
+            <div className="flex-1 min-w-0">
+              <div className="text-xs text-gray-500 dark:text-zinc-500 truncate" title={value}>{value}</div>
+              <div className="mt-1 flex gap-2">
+                <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading}
+                  className="text-xs px-2 py-1 rounded bg-white dark:bg-ink-900 border border-gray-300 dark:border-ink-700 hover:border-brand-500">
+                  Đổi ảnh
+                </button>
+                <button type="button" onClick={() => onChange('')}
+                  className="text-xs px-2 py-1 rounded text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10">
+                  Xoá
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="text-center py-3">
+            <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold disabled:opacity-50">
+              {uploading ? 'Đang tải lên…' : 'Tải ảnh lên'}
+            </button>
+            <p className="mt-2 text-xs text-gray-500 dark:text-zinc-500">
+              hoặc kéo thả ảnh vào đây · tối đa 8MB · PNG/JPG/WebP/AVIF
+            </p>
+          </div>
+        )}
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = '' }}
+        />
+      </div>
+      <input
+        type="url"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="hoặc dán URL https://..."
+        className="w-full rounded-lg border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950 text-gray-900 dark:text-white px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500"
+      />
+      {err && <div className="text-xs text-rose-600">{err}</div>}
+    </div>
   )
 }
 
