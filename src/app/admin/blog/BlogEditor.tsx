@@ -191,7 +191,7 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
           setError(`Đã publish nhưng deploy fail: ${(e as Error).message}. Bài viết đã lưu trong D1, cần deploy thủ công để site cập nhật.`)
         }
       } else {
-        setStatusMsg('Đã lưu nháp.')
+        setStatusMsg('Đã lưu.')
       }
       void savedSlug
       void savedId
@@ -265,7 +265,7 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <button onClick={() => save()} disabled={saving} className="rounded-lg border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 text-gray-900 dark:text-white px-4 py-2 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-ink-800 disabled:opacity-50">
-            {saving ? 'Đang lưu…' : 'Lưu nháp'}
+            {saving ? 'Đang lưu…' : 'Lưu'}
           </button>
           <button onClick={() => save({ publish: true })} disabled={saving} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 text-sm font-semibold disabled:opacity-50">
             Publish

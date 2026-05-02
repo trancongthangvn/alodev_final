@@ -99,17 +99,19 @@ export const onRequestPost: PagesFunction<Env> = async (ctx) => {
   // Reading time: prefer html length when provided (more accurate), fall back to markdown.
   const reading_min = readingTimeMinutes(content_html || content)
   const now = nowISO()
+  const status = typeof body.status === 'string' && body.status === 'published' ? 'published' : 'draft'
+  const published_at = status === 'published' ? now : null
 
   try {
     await ctx.env.LEADS.prepare(`
       INSERT INTO blog_posts (id, slug, title, description, content, cover_image, tags,
-                              status, reading_min, created_at, updated_at,
+                              status, reading_min, created_at, updated_at, published_at,
                               seo_title, focus_keyword, content_type, primary_intent,
                               content_html, lsi_keywords, faq, key_takeaways, related_entities)
-      VALUES (?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?, ?,
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
               ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).bind(
-      id, slug, title, description, content, cover_image, tags, reading_min, now, now,
+      id, slug, title, description, content, cover_image, tags, status, reading_min, now, now, published_at,
       seo_title, focus_keyword, content_type, primary_intent,
       content_html, lsi_keywords, faq, key_takeaways, related_entities,
     ).run()
