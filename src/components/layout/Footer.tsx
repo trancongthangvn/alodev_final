@@ -17,7 +17,7 @@ export default function Footer() {
             </Link>
             <p className="mt-3 text-sm text-slate-400 max-w-md leading-relaxed">
               Founder-led studio chuyên <b className="text-white">thiết kế website</b>, <b className="text-white">lập trình app mobile</b> và xây dựng hệ thống quản trị cho doanh nghiệp Việt Nam.
-              11+ sản phẩm vận hành thật, source code thuộc sở hữu của bạn.
+              11+ sản phẩm đang vận hành, source code thuộc sở hữu của bạn.
             </p>
             <div className="mt-4 text-xs text-slate-500 flex items-center gap-2">
               <Icon name="map-pin" className="w-3.5 h-3.5" />
@@ -48,6 +48,7 @@ export default function Footer() {
             <ul className="space-y-1 text-sm [&_a]:inline-flex [&_a]:items-center [&_a]:min-h-9 [&_a]:py-1">
               <li><Link href="/du-an" className="hover:text-white transition">Portfolio dự án</Link></li>
               <li><Link href="/dich-vu" className="hover:text-white transition">Tất cả dịch vụ &amp; bảng giá</Link></li>
+              <li><Link href="/blog" className="hover:text-white transition">Bài viết &amp; case study</Link></li>
               <li><Link href="/bao-gia" className="hover:text-white transition">Tự cấu hình báo giá</Link></li>
               <li><Link href="/ve-chung-toi" className="hover:text-white transition">Về Alodev</Link></li>
               <li><Link href="/lien-he" className="hover:text-white transition">Liên hệ</Link></li>

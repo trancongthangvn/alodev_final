@@ -1,0 +1,86 @@
+# Cloudflare Pages headers — security baseline + cache strategy.
+# Reference: https://developers.cloudflare.com/pages/configuration/headers/
+#
+# 2026 SEO/security ground floor: HSTS for HTTPS lock-in, X-Content-Type-
+# Options to prevent MIME-sniffing, Permissions-Policy to drop unused
+# capabilities, Referrer-Policy to keep referrer signal within scope.
+# Cache headers tuned for static-export bundles (immutable hashed assets
+# = max-age 1y, HTML = revalidate fast).
+
+# ─── Global ────────────────────────────────────────────────────────────
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+  X-DNS-Prefetch-Control: on
+
+# ─── HTML — revalidate often ───────────────────────────────────────────
+# Static export emits .html for each route. Cache 1h at edge with SWR so
+# content updates propagate quickly when we redeploy.
+/
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+/*.html
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+# ─── Hashed static bundles — immutable ─────────────────────────────────
+# Next produces hashed filenames in /_next/static; safe to cache forever.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ─── Fonts — long cache, immutable, CORS open for cross-origin loads ───
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# ─── Per-route OG images (Next /og generated) ──────────────────────────
+# Files in out/ have no extension → CF Pages defaults Content-Type to
+# application/octet-stream, which Facebook/Twitter/LinkedIn crawlers reject.
+# Force the correct image/png MIME so social previews render.
+/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400, s-maxage=604800
+/*/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400, s-maxage=604800
+/*/*/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400, s-maxage=604800
+
+# ─── Images and OG (legacy static fallback) ────────────────────────────
+/og.png
+  Cache-Control: public, max-age=86400, s-maxage=604800
+/og.svg
+  Cache-Control: public, max-age=86400, s-maxage=604800
+/favicon.svg
+  Cache-Control: public, max-age=86400
+/favicon-32.png
+  Cache-Control: public, max-age=86400
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
+/apple-touch-icon.svg
+  Cache-Control: public, max-age=86400
+
+# ─── Discovery files — short cache so updates land fast ────────────────
+/robots.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+/llms.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+  Content-Type: application/xml; charset=utf-8
+
+/manifest.json
+  Cache-Control: public, max-age=86400
+  Content-Type: application/manifest+json; charset=utf-8
+
+/.well-known/security.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8

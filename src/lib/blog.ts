@@ -79,5 +79,31 @@ export function getPost(slug: string): BlogPost | null {
 }
 
 export function getRelatedPosts(currentSlug: string, limit = 3): BlogPost[] {
-  return data.posts.filter((p) => p.slug !== currentSlug).slice(0, limit).map(normalize)
+  const current = data.posts.find((p) => p.slug === currentSlug)
+  if (!current) return data.posts.filter((p) => p.slug !== currentSlug).slice(0, limit).map(normalize)
+
+  const currentPost = normalize(current)
+  const currentTags = new Set(currentPost.tags.map((t) => t.toLowerCase()))
+  const currentTerms = new Set([
+    ...currentPost.lsi_keywords,
+    ...(currentPost.focus_keyword ? [currentPost.focus_keyword] : []),
+  ].map((t) => t.toLowerCase()))
+
+  return data.posts
+    .filter((p) => p.slug !== currentSlug)
+    .map((p) => {
+      const post = normalize(p)
+      const tagScore = post.tags.reduce((score, tag) => score + (currentTags.has(tag.toLowerCase()) ? 3 : 0), 0)
+      const termScore = [
+        ...post.lsi_keywords,
+        ...(post.focus_keyword ? [post.focus_keyword] : []),
+      ].reduce((score, term) => score + (currentTerms.has(term.toLowerCase()) ? 1 : 0), 0)
+      return { post, score: tagScore + termScore }
+    })
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score
+      return new Date(b.post.published_at).getTime() - new Date(a.post.published_at).getTime()
+    })
+    .slice(0, limit)
+    .map((item) => item.post)
 }

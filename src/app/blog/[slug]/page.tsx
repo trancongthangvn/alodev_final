@@ -34,16 +34,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ? { url: post.cover_image, width: 1200, height: 630, alt: post.title }
       : { url: '/og.png', width: 1200, height: 630, alt: 'Alodev' },
   ]
+  const metaTitle = post.seo_title || post.title
+  const metaDescription = post.description || undefined
+  const keywords = Array.from(new Set([
+    ...post.tags,
+    ...post.lsi_keywords,
+    ...(post.focus_keyword ? [post.focus_keyword] : []),
+  ].filter(Boolean)))
+
   return {
-    title: post.title,
-    description: post.description || undefined,
-    keywords: post.tags,
+    title: metaTitle,
+    description: metaDescription,
+    keywords,
     authors: [{ name: post.author_name, url: '/ve-chung-toi#founder' }],
     alternates: { canonical: url },
     openGraph: {
       url,
-      title: post.title,
-      description: post.description || undefined,
+      title: metaTitle,
+      description: metaDescription,
       type: 'article',
       publishedTime: post.published_at,
       modifiedTime: post.updated_at,
@@ -53,8 +61,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
-      description: post.description || undefined,
+      title: metaTitle,
+      description: metaDescription,
       images: ogImages.map((i) => i.url),
     },
   }

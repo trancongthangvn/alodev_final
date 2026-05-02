@@ -6,6 +6,7 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import contactRoutes from './routes/contact.js'
+import deployWebhookRoutes from './routes/deploy-webhook.js'
 
 const app = express()
 app.set('trust proxy', 1)
@@ -25,6 +26,9 @@ app.use(express.json({ limit: '64kb' }))
 
 // Contact form
 app.use('/api/contact', contactRoutes)
+
+// Internal deploy webhook (called by CF Pages Function /api/admin/deploy)
+app.use('/api', deployWebhookRoutes)
 
 // Health
 app.get('/api/health', (req, res) => {

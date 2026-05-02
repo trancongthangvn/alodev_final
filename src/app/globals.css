@@ -9,7 +9,7 @@
 @theme {
   --default-font-family: var(--font-sans);
 
-  /* ── Tech-vibe palette — cool slate base + warm saffron accent ── */
+  /* ── Tech-vibe palette — cool slate base + warm saffron accent + cool tech accent ── */
   /* Ink — cool slate scale (was warm ink). Tech UIs use cool tones. */
   --color-ink-50:  #f8fafc;
   --color-ink-100: #eef1f5;
@@ -28,17 +28,42 @@
   --color-cream-100: #eef1f5;
   --color-cream-200: #e2e6ec;
 
-  /* Saffron — single brand accent. Slightly cooler than pure amber for balance. */
-  --color-brand-50:  #fef7ec;
-  --color-brand-100: #fceac9;
-  --color-brand-200: #f9d28e;
-  --color-brand-300: #f5b652;
-  --color-brand-400: #ed9219;
-  --color-brand-500: #d27a08;
-  --color-brand-600: #ad5e07;
-  --color-brand-700: #8a4a09;
-  --color-brand-800: #703c0e;
-  --color-brand-900: #451a03;
+  /* Brand saffron — primary warm accent. Hue shifted 35° → 28° (Apr 2026)
+     to land between Cloudflare orange (23°) and the previous yellow-saffron
+     (35°). Old hue read as 90s/2000s tech orange + Asian-craft saffron;
+     the redder shift moves it into Cloudflare/Tailwind-tier "modern tech
+     orange" while keeping enough warmth that the brand DNA + cultural
+     resonance survive. Saturation/lightness profile preserved per-stop.
+     Reserve this color for brand moments: CTAs, eyebrows, hero atmospheric
+     blobs, cube flash + breath, hover/border accents, pingdots. */
+  --color-brand-50:  #fef4ec;
+  --color-brand-100: #fcdfc4;
+  --color-brand-200: #f9c187;
+  --color-brand-300: #f59c48;
+  --color-brand-400: #f4811a;
+  --color-brand-500: #d96b09;
+  --color-brand-600: #ab5407;
+  --color-brand-700: #8a4209;
+  --color-brand-800: #71370c;
+  --color-brand-900: #471c03;
+
+  /* Tech cyan — secondary cool accent (Apr 2026). Tailwind cyan ramp,
+     hue 188° = pure complement to brand saffron's 28° on the color
+     wheel. Reserved for tech-coded UI elements that should signal
+     "kỹ thuật, code, kết nối": kbd chips, font-mono stack badges,
+     loading wireframe stroke on dark, future code/terminal accents.
+     Distinct from :focus-visible blue (#3b82f6, hue 217°) so the two
+     never read as the same role. */
+  --color-tech-50:  #ecfeff;
+  --color-tech-100: #cffafe;
+  --color-tech-200: #a5f3fc;
+  --color-tech-300: #67e8f9;
+  --color-tech-400: #22d3ee;
+  --color-tech-500: #06b6d4;
+  --color-tech-600: #0891b2;
+  --color-tech-700: #0e7490;
+  --color-tech-800: #155e75;
+  --color-tech-900: #164e63;
 }
 
 :root {
@@ -48,8 +73,8 @@
   --surface-2: #eef1f5;
   --border: #e4e7ec;
   --muted: #64748b;
-  --accent: #ad5e07;           /* desaturated saffron */
-  --accent-soft: #d27a08;
+  --accent: #ab5407;           /* desaturated saffron — brand-600 */
+  --accent-soft: #d96b09;      /* brand-500 */
   color-scheme: light;
 }
 
@@ -60,8 +85,36 @@
   --surface-2: #1a1f2c;        /* nested surface */
   --border: #1f2330;
   --muted: #8590a1;
-  --accent: #ed9219;
-  --accent-soft: #f5b652;
+
+  /* ── Brand ramp dark-tuned override (Apr 2026) ──
+     Light theme keeps the punchy 91% sat saffron — on cream bg the
+     vibrancy is needed to read. On near-black bg (#0b0e14, lum ~9),
+     that same vibrancy creates "halation": pure-saturation warm color
+     beside dark surface bleeds into surrounding pixels and reads as
+     "rực/chói". Anthropic dark uses coral #cc785c (50% sat), Linear
+     and Stripe drop accent saturation 15-30% in dark for the same
+     reason.
+     Strategy: keep hue 28° (brand identity preserved), drop sat
+     ~91% → ~75%, lift L ~53% → ~63%. Result reads as "warm glow"
+     instead of "neon orange". Contrast on #0b0e14 still 8.2:1 (AAA
+     for normal text, dư for headline). All `dark:text-brand-400`,
+     `dark:bg-brand-500/10`, `dark:hover:border-brand-500/40` etc.
+     auto-cascade via these CSS vars. Only stops 300-600 are
+     overridden — 50/100/200 are pale tints, 700-900 are deep shades
+     rarely used on saturated dark surfaces.
+
+       Stop  Light (cream bg)  Dark (near-black bg)  Δ
+       300   #f59c48 (89,64)   #efb780 (65,71)       sat-24, L+7
+       400   #f4811a (91,53)   #eb9a55 (75,63)       sat-16, L+10  ← main
+       500   #d96b09 (92,44)   #d27c2c (68,50)       sat-24, L+6
+       600   #ab5407 (92,35)   #a76529 (62,41)       sat-30, L+6 */
+  --color-brand-300: #efb780;
+  --color-brand-400: #eb9a55;
+  --color-brand-500: #d27c2c;
+  --color-brand-600: #a76529;
+
+  --accent: #eb9a55;           /* brand-400 dark */
+  --accent-soft: #efb780;      /* brand-300 dark */
   color-scheme: dark;
 }
 
@@ -99,7 +152,7 @@ body.admin-page {
 [data-theme=dark] ::-webkit-scrollbar-track { background: #0b0e14; }
 [data-theme=dark] ::-webkit-scrollbar-thumb { background: #1f2330; border-radius: 5px; }
 [data-theme=dark] ::-webkit-scrollbar-thumb:hover { background: #334155; }
-[data-theme=dark] ::selection { background: rgba(237, 146, 25, 0.25); color: inherit; }
+[data-theme=dark] ::selection { background: rgba(235, 154, 85, 0.22); color: inherit; }
 
 /* ─── Motion / decoration utilities (Linear/Vercel/Stripe vibe) ─── */
 
@@ -215,7 +268,13 @@ body.admin-page {
 /* Mono number proof points */
 .tabular { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
 
-/* kbd-style chips (Raycast feel) */
+/* kbd-style chips (Raycast feel) — tinted with the new tech-cyan
+   secondary so monospace UI elements signal "kỹ thuật, code, terminal"
+   rather than reading as plain neutral grey. Hue is restrained on
+   light theme (tech-700 text on a faint tech-50 bg) so the chip still
+   feels like ink, not like a coloured button; on dark theme the chip
+   flips to bright tech-400 text on a near-black tech-tinted bg, which
+   reads as the iconic "dev terminal" aesthetic. */
 .kbd {
   display: inline-flex;
   align-items: center;
@@ -224,16 +283,16 @@ body.admin-page {
   border-radius: 0.375rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.7rem;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  color: #374151;
-  box-shadow: 0 1px 0 0 #e5e7eb;
+  background: #eaf6f9;
+  border: 1px solid #b8d8de;
+  color: #0e7490;
+  box-shadow: 0 1px 0 0 #c4dce0;
 }
 [data-theme=dark] .kbd {
-  background: #18181b;
-  border-color: #27272a;
-  color: #d4d4d8;
-  box-shadow: 0 1px 0 0 #18181b;
+  background: #0d1f25;
+  border-color: #155e75;
+  color: #22d3ee;
+  box-shadow: 0 1px 0 0 #0d1f25;
 }
 
 /* Smooth scroll for anchor links */
@@ -500,7 +559,7 @@ img, iframe { color-scheme: light; }
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(237, 146, 25, 0.18);
+  box-shadow: 0 0 0 3px rgba(244, 129, 26, 0.18);
 }
 .section-frame .ind-num {
   font-feature-settings: "tnum";
@@ -527,6 +586,17 @@ img, iframe { color-scheme: light; }
   filter: blur(8px);
   animation: wordCascade 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: opacity, transform, filter;
+  /* Descender clipping fix. Each span has `background-clip: text` (see
+     .hero-h span), so the gradient bg box defines where the text is
+     visible. inline-block's bg box defaults to the line-box bottom,
+     but Vietnamese glyphs with sub-baseline marks (ậ ọ ợ ụ + tail of
+     g/p/y) extend BELOW that box. Anything below the bg box renders
+     with -webkit-text-fill-color: transparent and no gradient cover →
+     literally invisible. Negative margin-bottom keeps surrounding flow
+     unchanged so line-height: 1.18 from .h-display still controls the
+     vertical rhythm. */
+  padding-bottom: 0.22em;
+  margin-bottom: -0.22em;
 }
 @keyframes wordCascade {
   /* `filter: none` — Lightning CSS strips both blur(0) and blur(0px) to the
@@ -554,7 +624,14 @@ img, iframe { color-scheme: light; }
   width: calc(var(--fill, 0) * 100%);
   background: linear-gradient(90deg, var(--accent), var(--accent-soft));
   transition: width 0.15s linear;
-  box-shadow: 0 0 12px rgba(237, 146, 25, 0.35);
+  /* Light theme: vibrant saffron glow on cream — looks punchy.
+     Dark theme: softer base (rgba 235,154,85 = brand-400 dark) +
+     reduced alpha so the scroll-progress line doesn't read as
+     "neon halation" against near-black bg. */
+  box-shadow: 0 0 12px rgba(244, 129, 26, 0.35);
+}
+[data-theme=dark] .process-track::after {
+  box-shadow: 0 0 12px rgba(235, 154, 85, 0.28);
 }
 .process-dot {
   position: relative;
@@ -589,7 +666,9 @@ img, iframe { color-scheme: light; }
 }
 [data-theme=dark] .tab-trigger[data-active] {
   background: #1a1f2c;
-  box-shadow: 0 0 0 1px rgba(237, 146, 25, 0.18);
+  /* Softer saffron base (brand-400 dark = #eb9a55 → rgba 235,154,85)
+     so the persistent active-tab outline doesn't glare. */
+  box-shadow: 0 0 0 1px rgba(235, 154, 85, 0.16);
 }
 
 /* ─── IntroAnimation overlay (theme-adaptive bg matches hero behind) ─── */
@@ -610,8 +689,12 @@ img, iframe { color-scheme: light; }
    area + brand DNA) + slate-cool blob lower-left for depth. Both blobs
    are barely-there so they don't compete with content but lift the bg
    from "flat cream" to "atmospheric pocket".
-   Dark: same atmospheric idea but with the dark Resend-style #07080c
-   base — already moody enough that no extra blobs are needed. */
+   Dark: same atmospheric idea against #07080c base, but the warm/cool
+   roles SWAP — cool-silver blob upper-right gives the cube a "lit
+   pocket" to silhouette against (the dark cube body + dark tile
+   textures sat ~9-30 lum on a 9-lum bg, so the cube was sinking into
+   the page). Saffron stays as the lower-left brand accent. Alphas are
+   half the light-theme values: dark surfaces take less lift to read. */
 .hero-resend,
 .dark-strip {
   /* Atmospheric blobs — brand-warm saffron in upper-right (where the
@@ -621,13 +704,21 @@ img, iframe { color-scheme: light; }
      they failed to lift the bg above flat — the brand color was
      basically invisible against cream. */
   background:
-    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(237, 146, 25, 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(244, 129, 26, 0.18) 0%, transparent 65%),
     radial-gradient(ellipse 55% 65% at 12% 78%, rgba(110, 125, 160, 0.10) 0%, transparent 70%),
     #f6f7f9;
 }
 [data-theme=dark] .hero-resend,
 [data-theme=dark] .dark-strip {
-  background: #07080c;
+  /* Cool-silver pocket where the cube sits (upper-right) lifts the bg
+     ~12-15 lum so the cube body (#2e2e36, lum 49) reads against a
+     ~22-lum local pocket instead of the 9-lum flat. Saffron lower-left
+     mirrors light theme's brand accent. Alphas kept low — on dark bg,
+     even 0.10 alpha registers visibly. */
+  background:
+    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(150, 170, 210, 0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 65% at 12% 78%, rgba(244, 129, 26, 0.06) 0%, transparent 70%),
+    #07080c;
 }
 
 /* Subtle grid bg with radial mask — Resend's signature backdrop.
@@ -666,20 +757,42 @@ img, iframe { color-scheme: light; }
    through composited layers. Per-span clip works because each span
    becomes its own backdrop for its own glyphs. */
 .hero-h {
-  color: #0a0a0c; /* fallback for text nodes outside spans (literal spaces) */
+  /* Fallback midpoint of the light gradient — text-node spaces (literal
+     " " between spans) inherit this color, so it should sit visually
+     between the top + bottom stops, not match either extreme. */
+  color: #25272d;
 }
 .hero-h span {
-  /* 4-stop gradient with cool→warm hue shift across the descent of each
-     letter. Gives the headline real tonal character (matches the dark
-     theme's silver-gradient sophistication) instead of the previous
-     near-monochrome dark range that read as solid black. Stops:
-       0%   #0a0a0c  near-black, sharp top edge
-       40%  #2c2d39  cool dark slate
-       80%  #4a4452  cool→warm transition (purple-ish slate)
-       100% #5a4d3e  warm taupe (echoes the saffron bg blob)
-     Final color contrast on cream-50 = 5.6:1 — AAA for large text
-     (h-display is 34-88px = comfortably above the 24pt threshold). */
-  background-image: linear-gradient(180deg, #0a0a0c 0%, #2c2d39 40%, #4a4452 80%, #5a4d3e 100%);
+  /* "Polished anthracite" gradient — light-theme structural mirror of
+     the dark theme's polished silver.
+
+     Earlier attempts diagnosed wrong: low-sat cool-slate (sat 25% mid)
+     read muddy, so the next iteration pushed saturation to ~60% indigo
+     — but that made the gradient feel "creative ink", not "tech
+     polished". The dark-silver vibe doesn't come from chroma at all;
+     it comes from RESTRAINT: dark stops sit at sat 12-14% with a barely
+     perceptible cool tint, lightness travels ~30% of the available
+     range, and the eye decodes the result as "polished neutral metal"
+     because there's no obvious hue.
+
+     Mirror structure precisely on the light side:
+       Stop  Hex       sRGB lum  HSL hue  HSL sat  Mirrors dark-silver…
+       0%    #050507   6         260°     14%      #ffffff (pure top)
+       50%   #25272d   38        225°     11%      #d6d9e0 (cool subtle mid)
+       100%  #54585f   88        217°     7%       #aab0bd (cool subtle end)
+
+     Lightness travel Δ82 ≈ dark Δ77. Saturation matches dark's 12-14%.
+     Hue stays in the same cool-slate family. Reads as "polished
+     anthracite" — same restrained metallic character as the dark
+     silver but inverted to the dark side of the spectrum.
+
+     `in oklch` interpolation is the path that keeps two near-neutral
+     stops looking neutral all the way through (RGB linear can drift
+     warm at the mid). Browser: Chrome 111+, Safari 16.2+, FF 113+.
+
+     Contrast bottom #54585f on cream #f6f7f9: ~5.5:1 (proper WCAG
+     relative-luminance calc, not naive sum/3) — comfortably AAA. */
+  background-image: linear-gradient(in oklch 180deg, #050507 0%, #25272d 50%, #54585f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -691,7 +804,11 @@ img, iframe { color-scheme: light; }
   color: #d6d9e0;
 }
 [data-theme=dark] .hero-h span {
-  background-image: linear-gradient(180deg, #ffffff 0%, #d6d9e0 55%, #aab0bd 100%);
+  /* OKLCH-interpolated "polished silver" gradient (added Apr 2026 to
+     match the new light theme's OKLCH-interpolated navy ink — same
+     perceptually-uniform descent technique on both themes keeps the
+     two visually balanced as siblings). */
+  background-image: linear-gradient(in oklch 180deg, #ffffff 0%, #d6d9e0 55%, #aab0bd 100%);
 }
 
 /* Cube canvas viewport — modeled on Resend's 700×550 (1.27:1) container.
@@ -703,6 +820,10 @@ img, iframe { color-scheme: light; }
    reference frame. */
 .hero-cube-wrap {
   position: relative;
+  /* isolation: isolate creates a stacking context so the dark-theme
+     ::after pocket below (z-index: -1) stays contained within the
+     wrap and doesn't leak behind the section bg / hero grid. */
+  isolation: isolate;
   aspect-ratio: 700 / 550;
   width: 100%;
   max-width: 700px;
@@ -716,6 +837,28 @@ img, iframe { color-scheme: light; }
   will-change: transform, opacity;
 }
 
+/* Local "lit pocket" behind the cube in dark mode. The page-level
+   atmospheric blob (.hero-resend dark bg) handles broad ambience, but
+   on its own it's too diffuse to give the cube real silhouette against
+   the near-black bg. This pseudo-element paints a tighter cool-silver
+   radial directly on the wrap so the cube's outline reads against a
+   ~lum 28 local pocket instead of the lum 9 page bg. WebGL canvas has
+   alpha clear (renderer.setClearColor(.., 0)), so the wrap bg shows
+   through everywhere geometry isn't drawn — including the soft halo
+   region where the three.js sprite already gradients into transparent.
+   Light theme stays untouched: cream bg already has plenty of contrast
+   with the cube. */
+[data-theme=dark] .hero-cube-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 65% at 50% 52%, rgba(170, 195, 235, 0.14) 0%, rgba(140, 160, 200, 0.05) 40%, transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: -1;
+}
+
 /* No stage backdrop. The earlier `::before` ellipse pool with alpha 0.92
    in light theme read as a rectangular dark panel behind the cube — the
    wrap is rectangular (700/550 aspect), so even with `border-radius: 50%`
@@ -725,19 +868,280 @@ img, iframe { color-scheme: light; }
    backdrop is removed entirely. The cube's own cubelet shadow plane and
    the WebGL halo sprite handle atmosphere now. */
 @media (max-width: 1023px) {
-  .hero-cube-wrap {
+  .hero-cube-wrap[data-variant="hero"] {
     /* On stacked tablet, breathing room above the next section. */
     max-width: 480px;
     margin: 0 auto;
   }
 }
 @media (max-width: 640px) {
-  .hero-cube-wrap {
+  .hero-cube-wrap[data-variant="hero"] {
     /* Phone: cube was eating 70%+ of the fold under the hero copy, with
        no animation (mobile deliberately skips the WebGL canvas — see
        HeroCube.tsx). Shrink to 280px so the eye reads it as a hero
        *icon* rather than the page's main visual. */
     max-width: 280px;
+  }
+}
+
+/* Inline variant — kept for potential future ornament use, currently
+   unused on the homepage (the single cube travels via the sticky
+   overlay below). */
+.hero-cube-wrap[data-variant="inline"] {
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── Single-cube scroll narrative ───
+   The Rubik cube lives once on the homepage but travels with the user's
+   scroll across the hero + Triết lý sections. Implementation is a
+   `position: absolute` overlay layered over both sections (inside the
+   `.rubik-narrative` wrapper which is `position: relative`) — the
+   overlay's child is `position: sticky; top: <offset>;` so the cube
+   pins to the top-right of the viewport during the entire hero +
+   Triết lý scroll range, then unsticks at the bottom of the philosophy
+   section.
+   This is the Apple-AirPods-Max / Stripe-Press / Linear-changelog
+   pattern: a signature visual element that anchors a multi-section
+   narrative without duplication. Section bgs (hero saffron blob,
+   Triết lý cream + grid) stay full-width on their own sections — the
+   cube floats independently above them.
+   `pointer-events: none` on the overlay lets click-throughs work for
+   the hero CTAs + philosophy cards underneath; `pointer-events: auto`
+   on the sticky child re-enables mouse interactivity (parallax,
+   spotlight) on the cube itself.
+   Mobile (<lg): overlay is `display: none`, cube renders inline in
+   the hero `col-span-5` (the `lg:hidden` block) — there's no scroll
+   range across both sections on mobile because the philosophy section
+   stacks below the hero, so the sticky travel pattern doesn't add
+   value. The width-check guard in `HeroCube.isWrapNearViewport`
+   ensures whichever cube DOM node is currently `display: none` at
+   the active breakpoint never boots WebGL — net 1 alive cube. */
+@media (min-width: 1024px) {
+  .cube-sticky-overlay {
+    /* CSS 3D context for the rotateY/rotateX in the keyframes below.
+       perspective(1500px) gives subtle depth without warping; centered
+       perspective-origin keeps rotation natural at both anchor
+       positions (right for hero, left for philosophy). */
+    perspective: 1500px;
+    perspective-origin: center center;
+  }
+
+  .cube-sticky-overlay .sticky {
+    /* Cube max-width 420px right-aligned within col-span-5 (hero anchor).
+       Two viewport-aware CSS vars drive the focal anchor positions:
+
+       --cube-x: FINAL X translate to land cube at the LEFT edge of
+       max-w-7xl content area. max() caps leftward distance so wide
+       viewports (V > 1344, max-w-7xl centered with side margin)
+       don't send the cube off-screen — without the cap, calc(440-100vw)
+       on a 2576px screen gives -2136px (cube ~450px past viewport left
+       edge). The -880px cap lands the cube at LEFT edge of centered
+       max-w-7xl content regardless of viewport width.
+
+       --cube-y-mid: translateY value that places the cube's geometric
+       center at vertical-center of the viewport, used for focal
+       anchors (Triết lý). Sticky baseline puts cube canvas top at
+       y=192 (96px sticky pin + 96px pt-24 padding). Cube canvas
+       height at scale 0.6 = 198px, half = 99px. So cube center at
+       50vh requires translateY = 50vh - 99 - 192 = 50vh - 291px.
+       clamp(100, calc(50vh - 291px), 320) keeps the value sane on
+       very short or very tall viewports. */
+    --cube-x: max(-880px, calc(440px - 100vw));
+    /* --cube-y-mid: cube vertical position for the Triết lý focal
+       anchor. Lands the cube center near the upper-mid of viewport
+       (~35-45% from viewport top) so it visually sits alongside the
+       h2 "Sáu mặt — Một sản phẩm" rather than below the 3-axis card
+       grid. clamp keeps the value reasonable on short / very tall
+       viewports. */
+    --cube-y-mid: clamp(20px, calc(40vh - 290px), 220px);
+    max-width: 420px;
+    margin-left: auto;
+    transform-origin: center;
+    transform-style: preserve-3d;
+  }
+
+  /* ─── Apple-style anchored travel ───
+     Reference: Apple AirPods Pro 3 / iPhone Pro / Vision Pro product
+     pages. The signature visual element is NOT just sticky-pinned —
+     it has DESIGNED ANCHOR POSITIONS per scroll milestone, with
+     premium easing between them. The cube has two anchors:
+
+       1. Hero anchor (scroll 0 → ~30vh)
+          Held at full size + opacity. The cube does nothing while the
+          user reads the hero copy — restraint is the Apple move.
+
+       2. Philosophy anchor (scroll ~130vh and beyond)
+          Cube settled at the top-right corner: scale 0.5 (dramatic
+          shrink, not subtle), translateY -20px (lifts toward corner
+          rather than just sitting at sticky-pin baseline), opacity
+          0.85 (visible "companion" presence, not over-faded).
+
+     Between anchors the cube interpolates with cubic-bezier
+     (0.32, 0.72, 0.24, 1) — the Apple/Material premium curve: slow
+     start, smooth middle, gentle settle. Linear interpolation feels
+     mechanical; this curve gives the "designed deliberate motion"
+     feel of Apple product showcases.
+
+     `transform-origin: top right` is critical — without it scale would
+     shrink toward the cube's centroid and the cube would visually
+     drift left. With top-right origin the cube shrinks INTO the
+     corner, reinforcing the "settling into its corner anchor" intent.
+
+     animation-range 0 130vh covers the hero scroll (~100vh) plus a
+     little of the philosophy section (~30vh) so the settle motion
+     finishes before the user is deep into reading philosophy text.
+
+     Browser support: Chrome 115+, Edge 115+, Safari 26+ (or 17.5
+     behind flag), Firefox 132+. Older browsers see a static cube at
+     420px — functional fallback. */
+  @supports (animation-timeline: scroll()) {
+    .cube-sticky-overlay .sticky {
+      animation: cube-apple-travel cubic-bezier(0.32, 0.72, 0.24, 1) both;
+      animation-timeline: scroll();
+      /* No animation-range — defaults to "cover" the full timeline,
+         so animation 0% → 100% maps to scroll 0% → 100% of the
+         document. Since `.cube-sticky-overlay` is absolute inset-0
+         of `.rubik-journey` which now wraps the entire homepage, the
+         cube's keyframes stretch over the whole-page scroll. */
+    }
+
+    /* ─── Cube journey across the entire homepage ───────────────────
+       Apple AirPods Pro 3 / Vision Pro / WWDC year-motif pattern: the
+       signature visual element follows the user through the whole
+       narrative with DESIGNED ANCHOR POSITIONS per phase, not just
+       sticky-pinned at one spot.
+
+       PHASE PERCENTAGES are calibrated to actual section scroll
+       positions: Triết lý (section 2) lives at ~12-25% scroll on
+       desktop, so the cube must SETTLE at LEFT before 13% and HOLD
+       through 26% — the entire reading window.
+
+         A. Hero focal       (0-10%)   → right column, scale 1, opacity 1
+                                         the brand introduction moment.
+         B. Travel arc       (10-13%)  → fast parabolic transit
+                                         (Y peak -80, Z forward 60)
+                                         right → left, settling early.
+         C. Triết lý focal   (13-26%)  → LEFT side, scale 0.65, opacity
+                                         0.92 — brand metaphor anchor.
+                                         Long hold so user reading
+                                         "Sáu mặt — Một sản phẩm"
+                                         literally sees the rubik beside
+                                         the copy.
+         D. Demote transit   (26-32%)  → curved retreat from LEFT-mid
+                                         to TOP-RIGHT corner.
+         E. Ambient observer (32-83%)  → cube anchored at top-right
+                                         corner (scale 0.42, opacity
+                                         0.55) with subtle rotateY
+                                         drift while user reads middle
+                                         sections (logo cloud, năng lực,
+                                         dịch vụ, quy trình, portfolio,
+                                         khác biệt, FAQ).
+         F. CTA approach     (83-93%)  → slight grow + lift hint.
+         G. Final CTA whisper(93-100%) → recede to scale 0.4 corner
+                                         whisper; CTA buttons own the
+                                         conversion focal point.
+
+       --cube-x is the LEFT-anchor X offset (capped via max() to
+       prevent off-screen on wide viewports). Multipliers across stops
+       give intermediate positions on the travel path. translateZ
+       gives 3D depth-pop at peaks. */
+    @keyframes cube-apple-travel {
+      /* CRITICAL CONSTRAINT: rotateY stays in ±8° range only.
+         CSS rotateY rotates the WRAPPER (which contains a 2D-rendered
+         WebGL canvas), NOT the 3D cube inside the canvas. At rotateY
+         90°/270° the canvas goes EDGE-ON to viewer — appears as a
+         thin foreshortened sliver = visual distortion. The brand
+         metaphor "show all faces" is already realised by Three.js's
+         internal cube tumbling (the cube rotates on its own layers
+         within the canvas). CSS just positions and scales the
+         wrapper; rotation stays subtle (±8°) for "lean into motion"
+         feel without breaking the canvas presentation.
+
+         SCALE FLOOR: 0.4 minimum. At max-w 420px, scale 0.4 = 168px
+         cube which stays recognisable as a Rubik. The previous 0.32
+         (134px) was too small + made the canvas blur at lower mip
+         levels, contributing to the "distorted" perception. */
+
+      /* ── A. Hero anchor (0-10% hold) ───────────────────────────
+         Cube at right column, full size, face-on (rotateY 0°). */
+      0% {
+        transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+        opacity: 1;
+      }
+      10% {
+        transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+        opacity: 1;
+      }
+
+      /* ── B. Travel arc, hero → Triết lý (10-13%) ──────────────
+         Compressed 3% transit: cube must SETTLE at LEFT focal anchor
+         BEFORE user enters Triết lý reading window (~13%). Fast,
+         decisive arc, not a long lazy traverse. Single mid-stop
+         parabolic peak. RotateY +8° = subtle lean left during slide. */
+      11.5% {
+        transform: translate3d(calc(var(--cube-x) * 0.55), -80px, 60px) rotateY(8deg) scale(0.78);
+        opacity: 0.95;
+      }
+
+      /* ── C. Triết lý anchor (13-26% hold) ──────────────────────
+         13% LONG HOLD aligned with Triết lý section's actual scroll
+         window (~12-25% on desktop). Cube at LEFT side, upper-mid
+         of viewport (--cube-y-mid), scale 0.65, FACE-ON (rotateY
+         0°). User reading "Sáu mặt. Một sản phẩm." sees the Rubik
+         cube literally pinned beside the copy = brand metaphor
+         reinforced. Three.js's internal layer twists handle "show
+         all faces" within the canvas. */
+      13% {
+        transform: translate3d(var(--cube-x), var(--cube-y-mid), 0) rotateY(0deg) scale(0.65);
+        opacity: 0.92;
+      }
+      26% {
+        transform: translate3d(var(--cube-x), var(--cube-y-mid), 0) rotateY(0deg) scale(0.65);
+        opacity: 0.92;
+      }
+
+      /* ── D. Demote transit (26-32%) ────────────────────────────
+         Curved retreat from LEFT-mid focal to TOP-RIGHT corner. */
+      29% {
+        transform: translate3d(calc(var(--cube-x) * 0.5), 60px, 0) rotateY(8deg) scale(0.5);
+        opacity: 0.7;
+      }
+
+      /* ── E. Ambient anchor (32-83%) ────────────────────────────
+         Cube at TOP-RIGHT corner, scale 0.42, opacity 0.55. Position
+         holds; rotateY drifts subtly 0° → -5° across the 51% scroll
+         range (gentle "settle" feel while user reads middle sections:
+         logo cloud → năng lực → dịch vụ → quy trình → portfolio →
+         khác biệt → FAQ). */
+      32% {
+        transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.42);
+        opacity: 0.55;
+      }
+      83% {
+        transform: translate3d(0, -110px, 0) rotateY(-5deg) scale(0.42);
+        opacity: 0.55;
+      }
+
+      /* ── F. CTA approach (83-93%) ──────────────────────────────
+         Cube STAYS at top-right corner. Slight grow 0.42 → 0.46 +
+         Y lift hint = "approaching attention" without blocking the
+         CTA buttons in viewport center. */
+      88% {
+        transform: translate3d(0, -100px, 0) rotateY(8deg) scale(0.46);
+        opacity: 0.65;
+      }
+
+      /* ── G. CTA whisper (93-100%) ──────────────────────────────
+         Returns to face-on (rotateY 0°), receded to scale 0.4,
+         opacity 0.3 — whisper-level brand mark at corner. CTA
+         buttons own the conversion focal point. */
+      100% {
+        transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.4);
+        opacity: 0.3;
+      }
+    }
   }
 }
 
@@ -759,6 +1163,81 @@ img, iframe { color-scheme: light; }
   isolation: isolate;
   overflow: hidden;
   border-radius: 18px;
+}
+
+/* ─── WireframeCube — loading-state structural anchor ───
+   3-face isometric Rubik wireframe rendered as outline paths. The
+   stroke-dashoffset animation traces each face over 1.0s with 250ms
+   stagger between faces, total draw time ~1.5s. After the draw
+   completes, a per-face opacity pulse (3s loop, also staggered) keeps
+   the wireframe from looking frozen during long three.js fetches.
+
+   Stacking inside .hero-cube-skeleton (which is a stacking context via
+   isolation: isolate above):
+     ::after  (saffron breath)   z: 0 — atmospheric glow behind.
+     wireframe                   z: 1 — structure on top of glow.
+     ::before (sheen sweep)      z: 2 — polish stroke over both via
+                                        mix-blend-mode.
+
+   currentColor lets the stroke pick up the theme via the [data-theme]
+   color rules below. */
+.wireframe-cube {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 80%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+  /* Saffron tint by default (light theme); dark theme overrides to
+     cool-silver so it sits in the same palette as the local cube
+     pocket added in the dark-mode work. */
+  color: rgba(244, 129, 26, 0.55);
+}
+[data-theme=dark] .wireframe-cube {
+  /* tech-400 (#22d3ee) at alpha 0.55 — gives the loading wireframe the
+     "dev terminal grid" feel that pairs with the kbd chip + monospace
+     stack badges, and contrasts against the saffron breath glow behind
+     it (warm/cool layering = clear "structure on top of ambience"). */
+  color: rgba(34, 211, 238, 0.55);
+}
+.hero-cube-skeleton::after { z-index: 0; }
+.hero-cube-skeleton::before { z-index: 2; }
+
+.wireframe-cube .wf-face path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* pathLength={1} on the path normalizes total length to 1, so
+     dashoffset 1 → 0 produces a complete trace regardless of which
+     subpath segment we're on. Eased so the stroke decelerates into
+     the seat — matches the Resend cube reveal's settled feel. */
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: wf-draw 1.0s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.wireframe-cube .wf-top  path { animation-delay: 100ms; }
+.wireframe-cube .wf-right path { animation-delay: 350ms; }
+.wireframe-cube .wf-left  path { animation-delay: 600ms; }
+
+/* Per-face opacity pulse begins after the draw lands (delay >
+   draw-in finish time). Stagger so the three faces don't pulse in
+   lockstep — uneven cycle reads as "alive" rather than "metronomic". */
+.wireframe-cube .wf-face {
+  animation: wf-pulse 3.2s ease-in-out infinite;
+}
+.wireframe-cube .wf-top   { animation-delay: 1.5s; }
+.wireframe-cube .wf-right { animation-delay: 1.85s; }
+.wireframe-cube .wf-left  { animation-delay: 2.2s;  transform-origin: center; }
+
+@keyframes wf-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes wf-pulse {
+  0%, 100% { opacity: 0.62; }
+  50%      { opacity: 1;    }
 }
 .hero-cube-skeleton::before {
   /* Sheen sweep. */
@@ -800,8 +1279,8 @@ img, iframe { color-scheme: light; }
   transform: translate(-50%, -50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(237, 146, 25, 0.18) 0%,
-    rgba(237, 146, 25, 0.06) 40%,
+    rgba(244, 129, 26, 0.18) 0%,
+    rgba(244, 129, 26, 0.06) 40%,
     transparent 75%
   );
   filter: blur(20px);
@@ -810,8 +1289,8 @@ img, iframe { color-scheme: light; }
 [data-theme=light] .hero-cube-skeleton::after {
   background: radial-gradient(
     ellipse at center,
-    rgba(237, 146, 25, 0.10) 0%,
-    rgba(237, 146, 25, 0.04) 40%,
+    rgba(244, 129, 26, 0.10) 0%,
+    rgba(244, 129, 26, 0.04) 40%,
     transparent 75%
   );
 }
@@ -910,9 +1389,9 @@ img, iframe { color-scheme: light; }
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    rgba(237, 146, 25, 0.55) 0%,
-    rgba(237, 146, 25, 0.18) 35%,
-    rgba(237, 146, 25, 0.04) 60%,
+    rgba(244, 129, 26, 0.55) 0%,
+    rgba(244, 129, 26, 0.18) 35%,
+    rgba(244, 129, 26, 0.04) 60%,
     transparent 75%
   );
   filter: blur(10px);
@@ -925,8 +1404,8 @@ img, iframe { color-scheme: light; }
 [data-theme=light] [data-cube-state="interactive"]::before {
   background: radial-gradient(
     circle at center,
-    rgba(237, 146, 25, 0.40) 0%,
-    rgba(237, 146, 25, 0.12) 35%,
+    rgba(244, 129, 26, 0.40) 0%,
+    rgba(244, 129, 26, 0.12) 35%,
     transparent 70%
   );
   mix-blend-mode: multiply;
@@ -963,6 +1442,155 @@ img, iframe { color-scheme: light; }
     transform: scale(1) translateY(0);
     filter: none;
   }
+}
+
+/* Blog article body: D1 content is rich HTML, so style semantic tags here. */
+.prose-content {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: #374151;
+}
+[data-theme=dark] .prose-content {
+  color: #d4d4d8;
+}
+.prose-content :where(p, ul, ol, blockquote, table, figure) {
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+.prose-content :where(h2) {
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1.2;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: 0;
+}
+.prose-content :where(h3) {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  font-weight: 750;
+  color: #1f2937;
+  letter-spacing: 0;
+}
+[data-theme=dark] .prose-content :where(h2) {
+  color: #ffffff;
+}
+[data-theme=dark] .prose-content :where(h3) {
+  color: #f4f4f5;
+}
+.prose-content :where(a) {
+  color: #b45309;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+[data-theme=dark] .prose-content :where(a) {
+  color: #67e8f9;
+}
+.prose-content :where(ul, ol) {
+  padding-left: 1.35rem;
+}
+.prose-content :where(li) {
+  margin: 0.45rem 0;
+  padding-left: 0.2rem;
+}
+.prose-content :where(ul) {
+  list-style: disc;
+}
+.prose-content :where(ol) {
+  list-style: decimal;
+}
+.prose-content :where(blockquote) {
+  border-left: 4px solid #f4811a;
+  padding-left: 1rem;
+  color: #4b5563;
+  font-style: italic;
+}
+[data-theme=dark] .prose-content :where(blockquote) {
+  color: #d4d4d8;
+}
+.prose-content :where(code) {
+  border: 1px solid rgba(8, 145, 178, 0.18);
+  border-radius: 6px;
+  background: rgba(236, 254, 255, 0.75);
+  padding: 0.12rem 0.35rem;
+  color: #155e75;
+  font-size: 0.92em;
+}
+[data-theme=dark] .prose-content :where(code) {
+  border-color: rgba(103, 232, 249, 0.18);
+  background: rgba(8, 145, 178, 0.12);
+  color: #a5f3fc;
+}
+.prose-content :where(pre) {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #0b0e14;
+  padding: 1rem;
+  line-height: 1.65;
+}
+.prose-content :where(pre code) {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #f4f4f5;
+  font-size: 0.875rem;
+}
+.prose-content .code-illustration {
+  margin: 1.5rem 0;
+}
+.prose-content .code-illustration figcaption {
+  margin-bottom: 0.5rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+[data-theme=dark] .prose-content .code-illustration figcaption {
+  color: #a1a1aa;
+}
+.prose-content .article-table-wrap {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+.prose-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.prose-content :where(th, td) {
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose-content th {
+  background: #f9fafb;
+  color: #111827;
+  font-weight: 750;
+}
+[data-theme=dark] .prose-content :where(th, td) {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme=dark] .prose-content th {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+.prose-content :where(.key-takeaways, .article-update-pack, .article-faq) {
+  margin: 2rem 0;
+  border-left: 4px solid #f4811a;
+  padding-left: 1rem;
+}
+.prose-content :where(.article-lead p:first-child) {
+  font-size: 1.16rem;
+  line-height: 1.75;
+  color: #1f2937;
+}
+[data-theme=dark] .prose-content :where(.article-lead p:first-child) {
+  color: #f4f4f5;
 }
 
 /* Generic theme-adaptive card (used by StackStrip) */
@@ -1016,4 +1644,9 @@ img, iframe { color-scheme: light; }
      reduced-motion by skipping abrupt face twists while keeping the slow
      auto-spin and gentle parallax (matching Resend's actual behavior). */
   .hero-cube-wrap { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  /* Wireframe: skip both the stroke-trace AND the per-face pulse. Show the
+     fully-drawn wireframe at a steady mid-opacity so reduced-motion users
+     still get the structural anchor. */
+  .wireframe-cube .wf-face path { animation: none !important; stroke-dashoffset: 0 !important; }
+  .wireframe-cube .wf-face { animation: none !important; opacity: 0.78 !important; }
 }

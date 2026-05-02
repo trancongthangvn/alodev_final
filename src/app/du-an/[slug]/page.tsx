@@ -1,11 +1,27 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { statSync } from 'node:fs'
+import { join } from 'node:path'
 import { projects, getProject, type Project } from '@/data/projects'
 import JsonLd from '@/components/JsonLd'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Icon, { type IconName } from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
-import { projectSchema, breadcrumbSchema } from '@/lib/schema'
+import { projectSchema, breadcrumbSchema, articleSchema, founderPersonSchema } from '@/lib/schema'
+
+/**
+ * Fallback dates for case studies that haven't filled `publishedAt`/`updatedAt`
+ * in `src/data/projects.ts`. We derive both from the projects.ts mtime so:
+ *   • Crawlers always see a real ISO date (E-E-A-T signal).
+ *   • Re-deploys without content edits don't bump the date (genuine signal).
+ *   • As soon as the founder backdates a project with explicit `publishedAt`,
+ *     that wins over the fallback.
+ */
+const PROJECTS_DATA_PATH = join(process.cwd(), 'src', 'data', 'projects.ts')
+const PROJECTS_DATA_MTIME = (() => {
+  try { return statSync(PROJECTS_DATA_PATH).mtime } catch { return new Date() }
+})()
+const FALLBACK_DATE_ISO = PROJECTS_DATA_MTIME.toISOString().slice(0, 10)
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }))
@@ -14,17 +30,25 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const p = getProject(slug)
-  if (!p) return { title: 'Không tìm thấy dự án' }
+  if (!p) return { title: 'Không tìm thấy dự án', robots: { index: false, follow: false } }
   const url = `/du-an/${p.slug}`
+  const published = p.publishedAt || FALLBACK_DATE_ISO
+  const modified = p.updatedAt || published
   return {
     title: `${p.name} — Case study ${p.category}`,
     description: p.shortDesc,
+    keywords: p.code.stack,
+    authors: [{ name: 'Trần Công Thắng', url: '/ve-chung-toi#founder' }],
     alternates: { canonical: url },
     openGraph: {
       url,
       title: `${p.name} — Case study Alodev`,
       description: p.shortDesc,
       type: 'article',
+      publishedTime: `${published}T00:00:00+07:00`,
+      modifiedTime: `${modified}T00:00:00+07:00`,
+      authors: ['Trần Công Thắng'],
+      tags: p.code.stack,
     },
   }
 }
@@ -40,37 +64,80 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
 
 function CaseStudy({ project }: { project: Project }) {
   const hasCaseStudy = !!project.caseStudy && project.caseStudy.sections.length > 0
+  const published = project.publishedAt || FALLBACK_DATE_ISO
+  const modified = project.updatedAt || published
+  const publishedHuman = formatVnDate(published)
+  const modifiedHuman = formatVnDate(modified)
+  const url = `/du-an/${project.slug}`
 
   return (
-    <>
+    <article itemScope itemType="https://schema.org/Article">
       <JsonLd data={[
         projectSchema(project),
+        articleSchema({
+          url,
+          headline: `${project.name} — Case study ${project.category}`,
+          description: project.longDesc || project.shortDesc,
+          datePublished: published,
+          dateModified: modified,
+          keywords: project.code.stack,
+          articleSection: project.category,
+        }),
+        founderPersonSchema(),
         breadcrumbSchema([
           { name: 'Trang chủ', url: '/' },
           { name: 'Dự án', url: '/du-an' },
-          { name: project.name, url: `/du-an/${project.slug}` },
+          { name: project.name, url },
         ]),
       ]} />
 
       {/* Hero */}
-      <section className={`relative overflow-hidden bg-gradient-to-br ${project.colorClass} border-b border-gray-100 dark:border-ink-800`}>
+      <header className={`relative overflow-hidden bg-gradient-to-br ${project.colorClass} border-b border-gray-100 dark:border-ink-800`}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
           <Breadcrumbs items={[
             { name: 'Trang chủ', href: '/' },
             { name: 'Dự án', href: '/du-an' },
-            { name: project.name, href: `/du-an/${project.slug}` },
+            { name: project.name, href: url },
           ]} />
           <div className="mt-6">
-            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 text-gray-700 dark:text-ink-200">{project.category}</span>
-            <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">{project.name}</h1>
+            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 text-gray-700 dark:text-ink-200" itemProp="articleSection">{project.category}</span>
+            <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight" itemProp="headline">{project.name}</h1>
             <a href={`https://${project.domain}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm text-gray-700 dark:text-ink-300 hover:text-brand-700 dark:hover:text-brand-400">
               {project.domain}
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
             </a>
-            <p className="mt-5 text-lg text-gray-700 dark:text-ink-300 max-w-3xl leading-relaxed">{project.longDesc || project.shortDesc}</p>
+            <p className="mt-5 text-lg text-gray-700 dark:text-ink-300 max-w-3xl leading-relaxed" itemProp="description">{project.longDesc || project.shortDesc}</p>
+
+            {/* Byline — author + dates. Visible E-E-A-T signal that mirrors
+                the JSON-LD Article schema. The microdata `itemProp` attributes
+                give crawlers a second route to the same fields if JSON-LD is
+                ignored or stripped by intermediaries. */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-ink-400">
+              <span itemProp="author" itemScope itemType="https://schema.org/Person" className="inline-flex items-center gap-2">
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-[11px] font-bold">TT</span>
+                <span>
+                  Bởi <Link href="/ve-chung-toi#founder" className="font-semibold text-gray-900 dark:text-white hover:text-brand-700 dark:hover:text-brand-400" itemProp="name">Trần Công Thắng</Link>
+                </span>
+              </span>
+              <span aria-hidden="true" className="text-gray-300 dark:text-ink-700">·</span>
+              <span>
+                Xuất bản <time dateTime={published} itemProp="datePublished">{publishedHuman}</time>
+              </span>
+              {modified !== published && (
+                <>
+                  <span aria-hidden="true" className="text-gray-300 dark:text-ink-700">·</span>
+                  <span>
+                    Cập nhật <time dateTime={modified} itemProp="dateModified">{modifiedHuman}</time>
+                  </span>
+                </>
+              )}
+              {modified === published && (
+                <time dateTime={modified} itemProp="dateModified" className="hidden" />
+              )}
+            </div>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* Three capability sections */}
       <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
@@ -159,8 +226,15 @@ function CaseStudy({ project }: { project: Project }) {
           </div>
         </div>
       </section>
-    </>
+    </article>
   )
+}
+
+/** Renders ISO 'YYYY-MM-DD' as Vietnamese 'dd/mm/yyyy' for the byline. */
+function formatVnDate(iso: string): string {
+  const [y, m, d] = iso.split('-')
+  if (!y || !m || !d) return iso
+  return `${d}/${m}/${y}`
 }
 
 function CapabilitySection({

@@ -3,13 +3,14 @@ import JsonLd from '@/components/JsonLd'
 import { breadcrumbSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Tự cấu hình & xem báo giá ngay',
-  description: 'Tick các tính năng web/app/hệ thống bạn cần, giá cập nhật real-time. Gửi cấu hình thẳng cho Alodev — phản hồi báo giá chi tiết trong 24h.',
+  title: 'Báo giá web/app — Tự cấu hình & xem giá real-time',
+  // 156 chars
+  description: 'Tự cấu hình báo giá web/app/hệ thống: tick tính năng cần, giá cập nhật real-time. Gửi cấu hình thẳng cho Alodev — báo giá chi tiết kèm timeline trong 24h.',
   alternates: { canonical: '/bao-gia' },
   openGraph: {
     url: '/bao-gia',
-    title: 'Tự cấu hình & xem báo giá — Alodev',
-    description: 'Calculator interactive: chọn tính năng → xem giá ngay → gửi cấu hình.',
+    title: 'Báo giá web/app tự cấu hình — Alodev',
+    description: 'Calculator interactive: tick tính năng → xem giá real-time → gửi cấu hình. Phản hồi 24h kèm timeline.',
   },
 }
 

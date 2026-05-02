@@ -229,12 +229,12 @@ export default function LienHeClient() {
       <style>{`
         .input{width:100%;border-radius:0.75rem;border:1px solid #e4e7ec;background:white;padding:0.75rem 1rem;font-size:16px;color:#1e293b;transition:all 0.15s;min-height:44px}
         @media(min-width:768px){.input{font-size:0.95rem}}
-        .input:focus{outline:none;border-color:#ad5e07;box-shadow:0 0 0 3px rgba(173,94,7,0.15)}
+        .input:focus{outline:none;border-color:#ab5407;box-shadow:0 0 0 3px rgba(171,84,7,0.15)}
         .input-error{border-color:#f43f5e;box-shadow:0 0 0 3px rgba(244,63,94,0.15)}
         .input-error:focus{border-color:#f43f5e;box-shadow:0 0 0 3px rgba(244,63,94,0.25)}
         [data-theme=dark] .input{background:#13171f;border-color:#1f2330;color:#e6e9ee}
         [data-theme=dark] .input::placeholder{color:#64748b}
-        [data-theme=dark] .input:focus{border-color:#ed9219;box-shadow:0 0 0 3px rgba(237,146,25,0.18)}
+        [data-theme=dark] .input:focus{border-color:#f4811a;box-shadow:0 0 0 3px rgba(244,129,26,0.18)}
         [data-theme=dark] .input-error{border-color:#f87171;box-shadow:0 0 0 3px rgba(248,113,113,0.18)}
         @keyframes banner-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
       `}</style>

@@ -4,6 +4,7 @@ import "./globals.css"
 import LayoutShell from "@/components/layout/LayoutShell"
 import JsonLd from "@/components/JsonLd"
 import Analytics from "@/components/Analytics"
+import AnalyticsBeacon from "@/components/AnalyticsBeacon"
 import { organizationSchema, websiteSchema } from "@/lib/schema"
 
 // SVN-Gilroy — bản Vietnamese-extended của Gilroy (đã subset xuống latin + vietnamese,
@@ -25,21 +26,39 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://alodev.vn"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  applicationName: "Alodev",
   title: {
     default: "Alodev — Studio thiết kế & phát triển Web/App",
     template: "%s — Alodev",
   },
-  description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị cho doanh nghiệp Việt. 11+ sản phẩm vận hành thật, source code thuộc về bạn.",
-  keywords: ["thiết kế website", "lập trình app", "phát triển web", "agency hà nội", "next.js việt nam", "studio web app"],
-  authors: [{ name: "Alodev" }],
+  // 154 chars — fits Google SERP cap (~160), keeps three primary services + USP.
+  description: "Founder-led studio thiết kế website, lập trình app mobile, xây dựng hệ thống CRM/ERP cho doanh nghiệp Việt. 11+ sản phẩm đang vận hành — source code thuộc về bạn.",
+  keywords: [
+    "thiết kế website", "lập trình website", "thiết kế web doanh nghiệp",
+    "lập trình app mobile", "lập trình app ios android", "thiết kế app",
+    "lập trình crm", "lập trình erp", "hệ thống quản trị doanh nghiệp",
+    "studio web app", "agency hà nội", "founder-led studio việt nam",
+    "next.js vietnam", "react việt nam",
+  ],
+  authors: [{ name: "Trần Công Thắng", url: `${siteUrl}/ve-chung-toi#founder` }],
   creator: "Alodev",
+  publisher: "Alodev",
+  category: "Web design and development",
+  formatDetection: {
+    // Stop iOS Safari auto-linking strings that look like phone numbers /
+    // email / dates — they get wrapped in <a> with default link styles, which
+    // breaks brand-styled CTAs and inline copy that mentions "0364 234 936".
+    telephone: false,
+    email: false,
+    address: false,
+  },
   openGraph: {
     type: "website",
     locale: "vi_VN",
     url: siteUrl,
     siteName: "Alodev",
     title: "Alodev — Studio thiết kế & phát triển Web/App",
-    description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị. 11+ sản phẩm vận hành thật.",
+    description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị. 11+ sản phẩm đang vận hành.",
     // Next 16 quirk: openGraph.images with object form ({url, width, height})
     // silently fails to emit <meta property="og:image"/> in some build configs
     // (verified locally — twitter.images with string form worked, og did not).
@@ -113,16 +132,26 @@ export default function RootLayout({
     // happy AND lets the inline script own html.classList for theme.
     <html lang="vi" suppressHydrationWarning>
       <head>
-        {/* Direct og:image emission — Next 16's metadata API silently drops
-            openGraph.images in some build configs even though twitter.images
-            (string-form) works. Hardcoding the head tag bypasses the quirk
-            and guarantees Facebook/LinkedIn/Slack/Discord show a preview
-            image when this URL is shared. og.png is 1200x630 PNG in /public. */}
-        <meta property="og:image" content={`${siteUrl}/og.png`} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Alodev — Studio Web/App" />
-        <meta property="og:image:type" content="image/png" />
+        {/* Resource hints — DNS pre-resolution + TLS handshake for third-party
+            origins likely to be touched on first paint. preconnect costs
+            ~3 round-trips up front but pays back if the resource is fetched
+            before the page is interactive (LCP / INP win). dns-prefetch is
+            cheaper (~1 lookup) and used for origins that may or may not be
+            hit, depending on user actions.
+              • Plausible — analytics beacon fires on every page load.
+              • Google Tag Manager — if/when added.
+            crossOrigin="anonymous" required for fonts/scripts that obey
+            CORS; harmless for endpoints that don't (browsers ignore). */}
+        <link rel="preconnect" href="https://plausible.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+        {/* og:image is now per-route via opengraph-image.tsx files (next/og
+            ImageResponse). Each route emits its own dynamic 1200×630 PNG with
+            the page-specific title rendered in Be Vietnam Pro (full VN
+            diacritic coverage). The static /og.png remains the layout-level
+            fallback for routes that don't declare their own opengraph-image
+            (e.g. /lien-he, /bao-gia — low share-traffic surfaces). */}
 
         {/* Apply theme before paint to prevent FOUC.
 
@@ -160,6 +189,7 @@ export default function RootLayout({
         <LayoutShell>{children}</LayoutShell>
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Analytics />
+        <AnalyticsBeacon />
       </body>
     </html>
   )

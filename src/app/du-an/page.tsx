@@ -3,19 +3,20 @@ import { projects, type Project } from '@/data/projects'
 import JsonLd from '@/components/JsonLd'
 import Icon, { type IconName } from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
-import { itemListSchema, breadcrumbSchema } from '@/lib/schema'
+import { itemListSchema, breadcrumbSchema, collectionPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Portfolio dự án — 11+ sản phẩm vận hành thật',
-  description: '11+ sản phẩm Alodev đã thiết kế, phát triển và đang vận hành — giáo dục, tin tức, e-commerce, hệ thống quản trị. Mỗi dự án có metric đo được cho 3 năng lực: lập trình, thiết kế, SEO.',
+  title: 'Portfolio dự án — 11+ sản phẩm đang vận hành',
+  // 158 chars
+  description: '11+ sản phẩm Alodev đang vận hành thực tế — giáo dục, tin tức, e-commerce, hệ thống quản trị. Mỗi dự án có metric đo được: lập trình · thiết kế · SEO.',
   alternates: { canonical: '/du-an' },
-  openGraph: { url: '/du-an', title: 'Portfolio dự án — Alodev', description: '11+ sản phẩm Alodev đã xây và vận hành. Lập trình · Thiết kế · SEO — đo bằng metric.' },
+  openGraph: { url: '/du-an', title: 'Portfolio dự án — Alodev', description: '11+ sản phẩm Alodev đã triển khai và vận hành. Lập trình · Thiết kế · SEO — đo bằng metric.' },
 }
 
 const capabilities: Array<{ icon: IconName; num: string; title: string; desc: string; points: string[] }> = [
-  { icon: 'code',    num: '01', title: 'Lập trình', desc: 'Stack hiện đại, kiến trúc scale được, monitoring + CI/CD ngay từ ngày deploy đầu tiên.', points: ['Next.js · Vue · Node · Postgres', 'Edge deploy + multi-region', 'CI/CD + monitoring 24/7'] },
-  { icon: 'palette', num: '02', title: 'Thiết kế', desc: 'Design system tự xây thay vì UI kit copy-paste. Mobile-first, dark mode, motion tinh tế.', points: ['Custom design system', 'Mobile-first + dark mode', 'Micro-interaction tinh tế'] },
-  { icon: 'search',  num: '03', title: 'SEO', desc: 'SEO kỹ thuật chuẩn từ deploy đầu tiên. Schema.org, sitemap, OG, canonical — không vá sau.', points: ['Schema.org đầy đủ', 'PageSpeed 90+', 'Sitemap + Search Console'] },
+  { icon: 'code',    num: '01', title: 'Lập trình', desc: 'Stack hiện đại, kiến trúc scale được, monitoring + CI/CD triển khai ngay từ ngày deploy đầu tiên.', points: ['Next.js · Vue · Node · Postgres', 'Edge deploy + multi-region', 'CI/CD + monitoring 24/7'] },
+  { icon: 'palette', num: '02', title: 'Thiết kế', desc: 'Design system thiết kế từ đầu, không ráp từ UI kit có sẵn. Mobile-first, dark mode, motion tinh tế.', points: ['Custom design system', 'Mobile-first + dark mode', 'Micro-interaction tinh tế'] },
+  { icon: 'search',  num: '03', title: 'SEO', desc: 'SEO kỹ thuật triển khai chuẩn từ deploy đầu tiên — Schema.org, sitemap, OG, canonical đầy đủ, không khắc phục muộn.', points: ['Schema.org đầy đủ', 'PageSpeed 90+', 'Sitemap + Search Console'] },
 ]
 
 export default function DuAnPage() {
@@ -26,6 +27,19 @@ export default function DuAnPage() {
           { name: 'Trang chủ', url: '/' },
           { name: 'Dự án', url: '/du-an' },
         ]),
+        // CollectionPage wraps the ItemList — same data twice in different
+        // entity types maximises rich-result eligibility (Google's docs
+        // recommend both for portfolio/listing pages).
+        collectionPageSchema({
+          name: 'Portfolio Alodev — 11+ sản phẩm đang vận hành',
+          description: 'Danh mục case study Alodev đã thiết kế, phát triển và đang vận hành thực tế.',
+          url: '/du-an',
+          items: projects.map((p) => ({
+            name: p.name,
+            url: `/du-an/${p.slug}`,
+            description: p.shortDesc,
+          })),
+        }),
         itemListSchema(projects.map((p) => ({
           name: p.name,
           url: `/du-an/${p.slug}`,

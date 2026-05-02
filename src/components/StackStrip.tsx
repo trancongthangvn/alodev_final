@@ -42,7 +42,14 @@ export default function StackStrip() {
               </div>
               <ul className="space-y-1.5">
                 {g.items.map((it) => (
-                  <li key={it} className="font-mono text-sm text-gray-700 dark:text-zinc-300">{it}</li>
+                  // Tech-cyan tint on the monospace stack names — pairs
+                  // with the .kbd chip palette so all "code-y" text in
+                  // the page reads as one coherent system. Section
+                  // labels above stay neutral grey (they're meta, not
+                  // content). On light cream the tech-700 sits readable
+                  // without screaming; on dark it lifts to tech-300 for
+                  // the iconic "terminal text" feel.
+                  <li key={it} className="font-mono text-sm text-tech-800 dark:text-tech-300">{it}</li>
                 ))}
               </ul>
             </div>

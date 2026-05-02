@@ -72,7 +72,29 @@ type CubeState = 'loading' | 'interactive' | 'fallback'
 // of staring at the skeleton forever.
 const FALLBACK_TIMEOUT_MS = 1800
 
-export default function HeroCube() {
+/**
+ * Variants:
+ *
+ *   'hero' (default) — 700px max, full animation (tumble + layer twists,
+ *     wrapper snaps, the whole "human solver flip loop"). Used in the
+ *     above-the-fold hero where the cube IS the visual.
+ *
+ *   'inline' — 280px max, simplified animation (continuous tumble +
+ *     parallax only, NO layer twists, NO wrapper snaps). Used as a
+ *     section ornament that reinforces the brand metaphor (e.g., the
+ *     "Triết lý — Sáu mặt một sản phẩm" section literally explains the
+ *     Rubik metaphor; visually rendering the cube right there is the
+ *     same Apple-WWDC-motif pattern of repeating a signature visual at
+ *     ~half scale to anchor the narrative). Skipping layer twists keeps
+ *     the GPU load low so two cubes co-existing on one page is cheap.
+ */
+type CubeVariant = 'hero' | 'inline'
+
+interface HeroCubeProps {
+  variant?: CubeVariant
+}
+
+export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const [state, setState] = useState<CubeState>('loading')
@@ -127,7 +149,11 @@ export default function HeroCube() {
       import('three').then((THREE) => {
         if (cancelled) return
         try {
-          cleanup = setupCube(canvas!, wrap!, THREE, { reducedMotion: reduced, mobile: small })
+          cleanup = setupCube(canvas!, wrap!, THREE, {
+            reducedMotion: reduced,
+            mobile: small,
+            simplifyAnimation: variant === 'inline',
+          })
           window.clearTimeout(slowTimer)
           setState('interactive')
         } catch (err) {
@@ -154,6 +180,12 @@ export default function HeroCube() {
 
     function isWrapNearViewport() {
       const r = wrap!.getBoundingClientRect()
+      // 0×0 rect = element is hidden via display:none (responsive class
+      // like `hidden lg:block` for the inline variant on mobile). Skip
+      // boot — IntersectionObserver also won't fire for hidden elements,
+      // so WebGL stays unallocated until the element becomes visible
+      // (e.g. user resizes window past lg breakpoint).
+      if (r.width === 0 || r.height === 0) return false
       return r.bottom > -200 && r.top < window.innerHeight + 200
     }
 
@@ -186,17 +218,26 @@ export default function HeroCube() {
       window.clearTimeout(slowTimer)
       cleanup?.()
     }
-  }, [])
+  }, [variant])
 
   return (
-    <div ref={wrapRef} className="hero-cube-wrap relative w-full" data-cube-state={state}>
-      {/* Skeleton — visible only during the 'loading' state. Pure CSS
-          (saffron breath + sheen sweep), no cube outline drawn. Reads as
-          "premium content materializing" instead of "fallback illustration." */}
+    <div ref={wrapRef} className="hero-cube-wrap relative w-full" data-cube-state={state} data-variant={variant}>
+      {/* Skeleton — visible only during the 'loading' state. Three layered
+          effects build a "premium content materializing" feel:
+            1. Saffron breath (::after, z-0) — atmospheric pulse glow.
+            2. WireframeCube (z-1) — Rubik structure draws in over ~1.5s
+               via stroke-dashoffset, then gently pulses. Tells the user
+               specifically WHAT is materializing — beats a generic blob.
+            3. Sheen sweep (::before, z-2) — diagonal polish stroke that
+               passes over both blob + wireframe via mix-blend-mode.
+          When state flips to 'interactive', the skeleton scales+blurs out
+          (skeleton-exit anim) and the wireframe dissolves with it. */}
       <div
         aria-hidden="true"
         className={`hero-cube-skeleton absolute inset-0 pointer-events-none transition-opacity duration-500 ${state === 'loading' ? 'opacity-100' : 'opacity-0'}`}
-      />
+      >
+        <WireframeCube />
+      </div>
 
       {/* Static SVG fallback — only fades in if WebGL fails or times out.
           For no-JS users the CSS noscript rule keeps it visible. */}
@@ -213,6 +254,41 @@ export default function HeroCube() {
         aria-label="3D Rubik visualization"
       />
     </div>
+  )
+}
+
+/**
+ * WireframeCube — loading-state visual. Same isometric projection as
+ * StaticCube (so users see structural continuity if they get bumped from
+ * loading → fallback), but rendered as outline-only paths that draw in
+ * via stroke-dashoffset over ~1.5s with per-face stagger.
+ *
+ * pathLength={1} normalizes each face's path to logical length 1, so
+ * stroke-dasharray: 1 + dashoffset 1→0 produces a clean draw across the
+ * outer rect first then 4 inner grid lines, single continuous stroke
+ * pass per face. Stagger handled in CSS by face-class delays.
+ *
+ * After draw, a face-level opacity pulse (3s loop, staggered) prevents
+ * the wireframe from looking frozen while three.js continues to load.
+ */
+function WireframeCube() {
+  // Outer 120×120 rect + 2 vertical + 2 horizontal grid lines = 5 strokes
+  // per face. Same shape Resend's reference uses for its loading wireframe
+  // (and matches the StaticCube fallback's tile grid for visual continuity).
+  const facePath = 'M0 0 L120 0 L120 120 L0 120 Z M40 0 L40 120 M80 0 L80 120 M0 40 L120 40 M0 80 L120 80'
+
+  return (
+    <svg viewBox="0 0 280 280" className="wireframe-cube" aria-hidden="true">
+      <g className="wf-face wf-top" transform="translate(80 60) skewX(-30) scale(0.95 0.6)">
+        <path d={facePath} pathLength={1} />
+      </g>
+      <g className="wf-face wf-right" transform="translate(140 130) skewY(-30)">
+        <path d={facePath} pathLength={1} />
+      </g>
+      <g className="wf-face wf-left" transform="translate(20 130) skewY(30)">
+        <path d={facePath} pathLength={1} />
+      </g>
+    </svg>
   )
 }
 
@@ -299,7 +375,7 @@ function setupCube(
   wrap: HTMLDivElement,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   THREE: any,
-  opts: { reducedMotion?: boolean; mobile?: boolean } = {}
+  opts: { reducedMotion?: boolean; mobile?: boolean; simplifyAnimation?: boolean } = {}
 ): () => void {
   const isMobile = !!opts.mobile
   const renderer = new THREE.WebGLRenderer({
@@ -425,11 +501,21 @@ function setupCube(
   // ~40% so the cube does not silhouette to "đen kịt" against the cream
   // page bg. The dark/light values are stored so we can interpolate
   // when the user toggles the theme.
+  //
+  // Dark-theme tuning revisited: the cube was sinking into the #07080c
+  // page bg even with cube-body + tile-base colors lifted. Two minimal
+  // bumps (kept well short of light-theme values so the dark "moody"
+  // feel is preserved):
+  //   • hemi 0.32 → 0.45  — more ambient on matte/non-reflective tiles
+  //                         so the 3×3 grid reads on the unlit face.
+  //   • rimL 0.50 → 0.72  — cool back-rim is what silhouettes the
+  //                         cube edge against the lit pocket; old
+  //                         value was too soft to register.
   const lightingForTheme = (theme: string) => {
     const isDark = theme === 'dark'
-    hemi.intensity   = isDark ? 0.32 : 0.55
+    hemi.intensity   = isDark ? 0.45 : 0.55
     key.intensity    = isDark ? 1.10 : 1.60
-    rimL.intensity   = isDark ? 0.50 : 0.65
+    rimL.intensity   = isDark ? 0.72 : 0.65
     rimR.intensity   = isDark ? 0.25 : 0.40
     fill.intensity   = isDark ? 0.35 : 0.55
     renderer.toneMappingExposure = isDark ? 1.85 : 2.20
@@ -606,7 +692,11 @@ function setupCube(
     const c = document.createElement('canvas')
     c.width = c.height = size
     const ctx = c.getContext('2d')!
-    ctx.fillStyle = '#13131a'; ctx.fillRect(0, 0, size, size)
+    // Base bg lifted #13131a → #1d1d28 (lum 21 → 35) so dark-theme bg
+    // (#07080c, lum 9) doesn't merge into the tile. Cell colors below
+    // overwrite this, but the lift keeps margin in case any pixel
+    // bleeds through at low mip levels.
+    ctx.fillStyle = '#1d1d28'; ctx.fillRect(0, 0, size, size)
 
     const step = size / cellsPerSide
     for (let i = 0; i < cellsPerSide; i++) {
@@ -616,7 +706,9 @@ function setupCube(
         const horizontal = (i + j) % 2 === 0
 
         // Slight base-tone variation per cell for the alternating-weave look.
-        ctx.fillStyle = horizontal ? '#1d1d24' : '#101016'
+        // Both lifted ~+10 lum so the tile reads above #07080c dark bg
+        // even on the unlit side of cube rotation.
+        ctx.fillStyle = horizontal ? '#26262e' : '#1a1a22'
         ctx.fillRect(x0, y0, step, step)
 
         // 3 fine threads per cell, perpendicular to the cell's "warp"
@@ -669,12 +761,18 @@ function setupCube(
     const c = document.createElement('canvas')
     c.width = c.height = size
     const ctx = c.getContext('2d')!
-    ctx.fillStyle = '#0e0e14'; ctx.fillRect(0, 0, size, size)
+    // Bg lifted #0e0e14 (lum 16) → #1a1a24 (lum 28). Old value was only
+    // 7 lum above dark bg (#07080c, lum 9) — stripe gaps blended into
+    // page bg making the tile invisible on unlit faces.
+    ctx.fillStyle = '#1a1a24'; ctx.fillRect(0, 0, size, size)
     const step = size / lines
     for (let i = 0; i < lines; i++) {
       const x = i * step
       const w = step * 0.42
-      const v = 38 + Math.random() * 14
+      // Stripe values lifted from 38-52 base to 56-70 so the bright
+      // stripe still reads as ~3x the bg lum, preserving the texture's
+      // pinstripe character after the bg lift.
+      const v = 56 + Math.random() * 14
       ctx.fillStyle = `rgb(${v},${v},${v + 2})`
       ctx.fillRect(x, 0, w, size)
     }
@@ -713,8 +811,10 @@ function setupCube(
     // bevel had a center-bright radial gradient that read as a soft round
     // disc on the tile (the last "circle" tile). The cubelet body groove
     // already gives the tile geometric definition, so the texture itself
-    // can be uniform without losing the inset look.
-    new THREE.MeshPhysicalMaterial({ color: 0x10101a, roughness: 0.45, metalness: 0.18, reflectivity: 0.2, envMapIntensity: 0.07 }),
+    // can be uniform without losing the inset look. Color lifted
+    // 0x10101a → 0x1c1c26 so the tile separates from #07080c bg even
+    // when the face is mid-tumble away from key light.
+    new THREE.MeshPhysicalMaterial({ color: 0x1c1c26, roughness: 0.45, metalness: 0.18, reflectivity: 0.2, envMapIntensity: 0.07 }),
     // granite/sparkle — heavy normal scale for noise pop
     new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: grainHeavy.map,  normalMap: grainHeavy.nor,  normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.2, metalness: 0.2, reflectivity: 0.2, envMapIntensity: 0.7 }),
     // micro-grain — subtle noise
@@ -814,12 +914,15 @@ function setupCube(
     tileGeo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
   })()
 
-  // Cubelet body at #2e2e36 — mid-dark grey that frames each tile and
-  // reads as visible 3D shape against either theme bg, while staying
-  // distinctly darker than the tile centers (#46-#5a) so the per-face
-  // 3x3 grid still reads unambiguously.
+  // Cubelet body at #3a3a44 — mid-dark grey that frames each tile and
+  // reads as visible 3D shape against either theme bg. Lifted from
+  // 0x2e2e36 (lum 49) to 0x3a3a44 (lum 65): dark-theme bg is only lum
+  // 9, and the unlit side of a tumbling cubelet at the previous tone
+  // sat too close to bg, dissolving the silhouette. Light theme is bg
+  // lum 247, so this 16-point lift cuts contrast by <8% — visually
+  // negligible there.
   const bodyMat = new THREE.MeshPhysicalMaterial({
-    color: 0x2e2e36, roughness: 0.7, metalness: 0.2, envMapIntensity: 0.55,
+    color: 0x3a3a44, roughness: 0.7, metalness: 0.2, envMapIntensity: 0.55,
   })
 
   function pickVariant(x: number, y: number, z: number, faceIndex: number) {
@@ -1080,7 +1183,13 @@ function setupCube(
       await new Promise((r) => { timer1 = setTimeout(r, thinkPause) })
     }
   }
-  flipLoop()
+  // Inline ornament cubes skip the layer-twist + wrapper-snap loop —
+  // continuous tumble alone keeps the visual alive while saving GPU
+  // (no rotation matrices for layers/cubelets per frame, no setTimeout
+  // chains). Hero cube still runs the full human-solver flip cadence.
+  if (!opts.simplifyAnimation) {
+    flipLoop()
+  }
 
   // Continuous tumble (Hệ 1 of the audit). Linear accumulation on all
   // 3 axes — no easing. Equal speed on every axis sums to a fixed diagonal
@@ -1088,6 +1197,35 @@ function setupCube(
   // any single axis. ~17s per full rotation per axis at 60fps.
   const TUMBLE = opts.reducedMotion ? 0.0015 : 0.005
   const tumble = { x: 0, y: 0, z: 0 }
+
+  // ─── Scroll-position-driven Y rotation ────────────────────────────
+  // The cube's Y-axis rotation is a DETERMINISTIC FUNCTION of the
+  // user's current scrollY position — not of scroll velocity. The
+  // user effectively "scrubs" the cube's Y orientation by scrolling
+  // the page: scroll down → cube rotates clockwise around Y; scroll
+  // up → cube rotates counter-clockwise; stop → cube stops at exactly
+  // that orientation. This is the cleanest expression of "scroll
+  // controls cube rotation" — visually it reads as the user grabbing
+  // a virtual turntable and spinning the cube with their scroll input.
+  //
+  // Brand metaphor "Sáu mặt — Một sản phẩm" becomes INTERACTIVE: the
+  // user reveals different cube faces by scrolling. At REVOLUTIONS_PER_
+  // PAGE=3, scrolling 100vh produces ~130° of Y rotation; full-page
+  // scroll produces 3 complete revolutions (cube returns to its
+  // starting face at page bottom = poetic bookend).
+  //
+  // Velocity-based approach (the previous implementation, with
+  // scrollMomentum + lerp + decay + 3-axis distribution) was retired
+  // because the boost read as "tumble pattern slightly different"
+  // rather than "I am rotating the cube". Position-based scrub is
+  // unambiguous: scroll = rotation, scrub-able both directions.
+  //
+  // X and Z axes keep the base TUMBLE rate (ambient gentle rotation
+  // for "alive when idle" feel). Only Y is taken over by scroll.
+  //
+  // Reduced-motion: REVOLUTIONS_PER_PAGE = 0 (no scroll-driven Y;
+  // cube tumbles ambient on all 3 axes only — vestibular comfort).
+  const REVOLUTIONS_PER_PAGE = opts.reducedMotion ? 0 : 3
 
   // Mouse parallax adds an extra resting offset on top of the tumble.
   const parallaxTarget = { x: 0, y: 0 }
@@ -1161,17 +1299,35 @@ function setupCube(
 
   function animate() {
     if (stopped) return
+
     if (!isVisible) {
       rafAnimate = requestAnimationFrame(animate)
       return
     }
 
-    // Accumulate continuous linear tumble — overwrites cubeGroup.rotation
-    // each frame (no smoothing, no easing). The wrapper holds the initial
-    // 3/4 view and any snap rotations, so cubeGroup is free to tumble.
+    // X, Y, Z all accumulate base TUMBLE (Y is overridden below when
+    // scroll-driven mode is active; kept here as a fallback for
+    // reduced-motion users where scroll-driven rotation is disabled).
     tumble.x += TUMBLE
     tumble.y += TUMBLE
     tumble.z += TUMBLE
+
+    // Compute Y rotation: scroll-position-driven when motion enabled,
+    // else fall back to base TUMBLE accumulation. The scroll-driven
+    // path lets the user "scrub" the cube's Y orientation by their
+    // scroll position — direct, deterministic, scrub-able both
+    // directions. REVOLUTIONS_PER_PAGE=3 gives ~130° per 100vh scroll.
+    let yRotation: number
+    if (REVOLUTIONS_PER_PAGE > 0) {
+      const totalScrollable = Math.max(
+        1,
+        document.documentElement.scrollHeight - window.innerHeight
+      )
+      const scrollProgress = window.scrollY / totalScrollable
+      yRotation = scrollProgress * Math.PI * 2 * REVOLUTIONS_PER_PAGE
+    } else {
+      yRotation = tumble.y
+    }
 
     parallaxCurrent.x += (parallaxTarget.x - parallaxCurrent.x) * 0.06
     parallaxCurrent.y += (parallaxTarget.y - parallaxCurrent.y) * 0.06
@@ -1186,7 +1342,10 @@ function setupCube(
     cursorLight.intensity = cursorCurrent.intensity
 
     cubeGroup.rotation.x = tumble.x + parallaxCurrent.x
-    cubeGroup.rotation.y = tumble.y + parallaxCurrent.y
+    // Y comes from yRotation (scroll-driven when motion enabled, base
+    // tumble otherwise). Mouse parallax Y adds a small hover offset
+    // so the cube also responds to cursor input.
+    cubeGroup.rotation.y = yRotation + parallaxCurrent.y
     cubeGroup.rotation.z = tumble.z
 
     renderer.render(scene, camera)

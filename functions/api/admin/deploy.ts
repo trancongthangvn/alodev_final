@@ -25,10 +25,38 @@ interface Env {
   DEPLOY_HOOK_URL?: string
   GH_TOKEN?: string
   GH_REPO?: string
+  INTERNAL_DEPLOY_URL?: string
+  INTERNAL_DEPLOY_TOKEN?: string
 }
 
 export const onRequestPost: PagesFunction<Env> = async (ctx) => {
-  // Path 1: GitHub Actions workflow_dispatch (preferred, works for ad-hoc Pages)
+  // Path 0: Self-hosted webhook on CT104 (CF Tunnel → Express).  Preferred when
+  // GitHub Actions deploy is fragile or build deps haven't been pushed yet.
+  // Pages secret pair INTERNAL_DEPLOY_URL + INTERNAL_DEPLOY_TOKEN gates this.
+  if (ctx.env.INTERNAL_DEPLOY_URL && ctx.env.INTERNAL_DEPLOY_TOKEN) {
+    const reason = await readReason(ctx.request)
+    try {
+      const r = await fetch(ctx.env.INTERNAL_DEPLOY_URL, {
+        method: 'POST',
+        headers: {
+          'X-Deploy-Token': ctx.env.INTERNAL_DEPLOY_TOKEN,
+          'Content-Type': 'application/json',
+          'User-Agent': 'alodev-admin-deploy',
+        },
+        body: JSON.stringify({ reason }),
+      })
+      if (r.ok) {
+        const body = await r.json().catch(() => ({}))
+        return jsonResponse(200, { ok: true, queued: true, via: 'internal-webhook', reason, ...body })
+      }
+      const text = await r.text()
+      return jsonResponse(502, { error: 'Internal deploy webhook trả lỗi', status: r.status, detail: text.slice(0, 500) })
+    } catch (e) {
+      return jsonResponse(500, { error: 'Internal deploy fetch failed', detail: String((e as Error).message).slice(0, 200) })
+    }
+  }
+
+  // Path 1: GitHub Actions workflow_dispatch (fallback)
   if (ctx.env.GH_TOKEN && ctx.env.GH_REPO) {
     const reason = await readReason(ctx.request)
     const r = await fetch(

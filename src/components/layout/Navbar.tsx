@@ -9,6 +9,7 @@ import QuoteCTA from '@/components/QuoteCTA'
 const navLinks = [
   { href: '/dich-vu', label: 'Dịch vụ' },
   { href: '/du-an', label: 'Dự án' },
+  { href: '/blog', label: 'Bài viết' },
   { href: '/ve-chung-toi', label: 'Về chúng tôi' },
   { href: '/lien-he', label: 'Liên hệ' },
 ]

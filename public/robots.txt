@@ -1,7 +1,91 @@
+# Alodev — robots.txt
+# Reference: RFC 9309 + Google/Bing/Yandex/AI-bot extensions.
+
+# ─── Default policy: open crawl ────────────────────────────────────────
 User-agent: *
 Allow: /
-
-# No bot traps, no admin paths after pivot
 Disallow: /api/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /404
+Disallow: /not-found
 
+# ─── AI / LLM crawlers — explicit allow ────────────────────────────────
+# Strategy: opt-in to AI-overview / answer-engine traffic. The site
+# exposes a llms.txt summary so AI agents can ground answers without
+# brute-scraping every page. Flip to Disallow if licensing policy
+# changes.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# ─── Scrapers we don't want ────────────────────────────────────────────
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# ─── Discovery files ───────────────────────────────────────────────────
 Sitemap: https://alodev.vn/sitemap.xml
+
+# llms.txt — site summary for AI agents (proposal: llmstxt.org).
+# Hosted at /llms.txt — referenced here as a hint for AI crawlers.

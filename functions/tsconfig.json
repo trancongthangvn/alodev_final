@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // Cloudflare Pages Functions run on the Workers runtime, not Node, not
+    // browser. Override the parent config's "dom" lib so we get the right
+    // globals (no `window`, no `document`; instead `Request`, `Response`,
+    // `crypto`, `fetch` from the Worker runtime types).
+    "lib": ["es2022"],
+    "types": ["@cloudflare/workers-types"],
+    "moduleResolution": "bundler",
+    "noEmit": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["../node_modules"]
+}

@@ -107,7 +107,7 @@ export default function IntroAnimation() {
         <div
           className="intro-orb absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] max-w-[640px] aspect-square rounded-full"
           style={{
-            background: 'radial-gradient(circle, #ed9219 0%, transparent 65%)',
+            background: 'radial-gradient(circle, #f4811a 0%, transparent 65%)',
             filter: 'blur(90px)',
             opacity: 0,
           }}

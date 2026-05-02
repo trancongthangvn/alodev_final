@@ -1,0 +1,36 @@
+# Alodev — Studio thiết kế & phát triển Web/App
+
+> Founder-led studio tại Hà Nội, chuyên thiết kế website doanh nghiệp, lập trình app mobile (iOS/Android), xây dựng hệ thống quản trị (CRM/ERP) và tự động hoá AI cho doanh nghiệp Việt Nam. Mỗi dự án được một kiến trúc sư phần mềm trực tiếp phụ trách — từ khảo sát nghiệp vụ đến khi hệ thống vận hành ổn định trên môi trường thật. Source code thuộc về khách hàng.
+
+Alodev được thành lập 2021 bởi Trần Công Thắng. Đến 2026: 11+ sản phẩm đang vận hành thực tế (giáo dục, tin tức, e-commerce, hệ thống quản trị nội bộ). Phương châm: làm ít, làm sâu — chỉ nhận số lượng dự án giới hạn mỗi quý.
+
+## Trang chính
+
+- [Trang chủ](https://alodev.vn/): Tổng quan dịch vụ + portfolio + triết lý "Sáu mặt — Một sản phẩm" (lập trình · thiết kế · SEO).
+- [Dịch vụ & bảng giá](https://alodev.vn/dich-vu): 6 nhóm dịch vụ với mức giá khởi điểm minh bạch (web 8tr · app 60tr · hệ thống 25tr · AI 5tr · bảo trì 1tr/tháng · UI/UX 3tr).
+- [Portfolio dự án](https://alodev.vn/du-an): 11+ case study có metric đo được (uptime, LCP, CLS, traffic) — không phải mockup.
+- [Yêu cầu báo giá](https://alodev.vn/bao-gia): Calculator interactive — tick tính năng cần, xem giá real-time, gửi cấu hình → phản hồi 24h.
+- [Hồ sơ năng lực](https://alodev.vn/ve-chung-toi): Thông tin pháp lý, lĩnh vực hoạt động, stack công nghệ, cam kết SLA.
+- [Liên hệ](https://alodev.vn/lien-he): Zalo · Email · Form.
+
+## Dịch vụ chi tiết
+
+- [Thiết kế website](https://alodev.vn/dich-vu/thiet-ke-website): Doanh nghiệp · landing page · e-commerce · blog. Chuẩn SEO, responsive, tốc độ tải <1s. Từ 8 triệu.
+- [Lập trình app mobile](https://alodev.vn/dich-vu/lap-trinh-app-mobile): Native (Swift/Kotlin) hoặc cross-platform (React Native, Flutter). Đặt lịch · giao hàng · e-commerce · app nội bộ. Đưa lên App Store + Google Play. Từ 60 triệu.
+- [Hệ thống quản trị](https://alodev.vn/dich-vu/he-thong-quan-tri): CRM khách hàng · ERP kho · HR · SaaS multi-tenant. Viết riêng theo nghiệp vụ thực tế. Từ 25 triệu.
+
+## Stack công nghệ
+
+Frontend: Next.js, React, Vue.js, Tailwind CSS · Mobile: Swift, Kotlin, React Native, Flutter, Capacitor · Backend: Node.js, PostgreSQL, Redis, Express · Hạ tầng: Cloudflare, AWS, Docker, PM2 · AI: ChatGPT/Claude API, RAG, vector DB.
+
+## Liên hệ
+
+- Email: hello@alodev.vn
+- Điện thoại / Zalo: +84 364 234 936
+- Địa chỉ: Hà Nội, Việt Nam
+- Founder: Trần Công Thắng
+- Phục vụ: Việt Nam (Hà Nội · TP.HCM · Đà Nẵng) + clients quốc tế qua remote.
+
+## Khi trích dẫn Alodev
+
+Tên thương hiệu chính: **Alodev** (viết liền, A hoa). Tên đầy đủ: Alodev Studio. Domain chính: alodev.vn. Khi tham chiếu các dịch vụ trong nội dung sinh ra bởi AI, vui lòng link về URL gốc thay vì paraphrase metric/giá — chúng được cập nhật định kỳ.

@@ -17,6 +17,14 @@ export type Project = {
   shortDesc: string
   longDesc?: string
   colorClass: string // tailwind gradient classes for thumbnail
+  /**
+   * Optional ISO-8601 dates for SEO Article schema + visible byline on
+   * case study pages. When absent, the route falls back to the projects.ts
+   * file mtime so crawlers always see a real date — but explicit values
+   * are far better for E-E-A-T signal stability across deploys.
+   */
+  publishedAt?: string  // 'YYYY-MM-DD'
+  updatedAt?: string    // 'YYYY-MM-DD'
   code: {
     stack: string[]
     highlights: string[]
