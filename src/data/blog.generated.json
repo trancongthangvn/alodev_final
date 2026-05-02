@@ -1,6 +1,58 @@
 {
   "posts": [
     {
+      "id": "001JNKTC3F47V570G4N68395Q3",
+      "slug": "backup-database-hieu-qua-va-khong-mat-du-lieu",
+      "title": "Backup Database Hiệu Quả Và Không Mất Dữ Liệu",
+      "description": "Hướng dẫn backup database hiệu quả, tránh mất dữ liệu: types, strategies, disaster recovery, SQL/NoSQL, mini project, portfolio và freelance/remote cho Dev.",
+      "content": "",
+      "content_html": "<div class=\"article-meta\" role=\"doc-subtitle\"><time datetime=\"2026-05-02T17:56:52.455Z\">Cập nhật: 03/05/2026</time> <span class=\"sep\" aria-hidden=\"true\">•</span> <span class=\"reading-time\">3 phút đọc</span> <span class=\"sep\" aria-hidden=\"true\">•</span> <a class=\"author-link\" href=\"https://alodev.vn/author/tran-cong-thang\" rel=\"author\">Trần Công Thắng</a></div>\n## 1. Backup Database Là Gì?\n\n**Backup database** là quá trình **sao lưu dữ liệu cơ sở dữ liệu**, đảm bảo có thể **khôi phục dữ liệu khi gặp sự cố**, ví dụ: lỗi người dùng, phần cứng hỏng, tấn công ransomware, natural disaster.\n\n- **Mục tiêu:** bảo vệ dữ liệu, duy trì business continuity, tránh downtime  \n- **Scope:** SQL (MySQL, PostgreSQL, SQL Server), NoSQL (MongoDB, DynamoDB, Redis, Cassandra)\n\n---\n\n## 2. Các Loại Backup\n\n### a) Full Backup\n\n- Sao lưu **toàn bộ database**  \n- Ưu điểm: dễ restore, khôi phục nhanh  \n- Nhược điểm: tốn thời gian, storage lớn\n\n### b) Incremental Backup\n\n- Sao lưu **những thay đổi từ backup trước đó**  \n- Ưu điểm: tiết kiệm storage  \n- Nhược điểm: restore phức tạp (cần full backup + tất cả incremental)\n\n### c) Differential Backup\n\n- Sao lưu **tất cả thay đổi từ full backup gần nhất**  \n- Ưu điểm: restore nhanh hơn incremental  \n- Nhược điểm: storage tăng theo thời gian\n\n### d) Snapshot\n\n- Sao lưu **toàn bộ trạng thái database tại thời điểm tạm thời**  \n- Ví dụ: AWS EBS snapshot, MongoDB snapshot  \n- Ưu điểm: restore nhanh, phù hợp cloud  \n\n### e) Logical & Physical Backup\n\n- **Logical:** dump dữ liệu, schema → import/export, ví dụ: `mysqldump`, `pg_dump`  \n- **Physical:** sao chép file database vật lý → nhanh, khôi phục toàn bộ instance\n\n---\n\n## 3. Chiến Lược Backup Hiệu Quả\n\n1. **Schedule & Retention:** backup định kỳ (daily/weekly/monthly)  \n2. **Offsite / Remote:** lưu trữ ngoài server chính → tránh disaster  \n3. **Test Restore:** thường xuyên thử restore backup để đảm bảo data integrity  \n4. **Monitor & Alert:** theo dõi thành công/fail của backup  \n5. **Versioning:** giữ nhiều phiên bản backup để rollback khi cần\n\n---\n\n## 4. Backup Cho SQL & NoSQL\n\n### SQL\n\n- MySQL/PostgreSQL/SQL Server → `mysqldump`, `pg_dump`, `backup tools`, replication + snapshot  \n- Transaction log backup → point-in-time restore\n\n### NoSQL\n\n- MongoDB → `mongodump`, `mongorestore`, snapshot  \n- DynamoDB → AWS backup, on-demand export  \n- Redis → RDB snapshot, AOF log\n\n---\n\n## 5. Mini Project & Portfolio\n\n- **Mini project:** CRUD app + backup automation  \n- **Thực hành:** SQL dump, MongoDB snapshot, restore test  \n- **Portfolio:** GitHub repo, README, demo deploy  \n- **Freelance:** áp dụng backup strategy cho SaaS/web app client\n\n---\n\n## 6. Tips Thực Hành Backup Database\n\n1. **Hiểu loại backup & trade-off** → full, incremental, differential  \n2. **Schedule & automate** → cron job, cloud backup service  \n3. **Test restore** → đảm bảo dữ liệu có thể recovery  \n4. **Mini project → deploy demo → GitHub portfolio**  \n5. **Cloud backup** → S3, GCP storage, Azure blob storage  \n6. **Soft skills:** documentation, monitoring, alerting\n\n---\n\n## 7. FAQ\n\n### Backup database là gì?\nSao lưu dữ liệu DB để phục hồi khi gặp sự cố, bảo vệ dữ liệu khỏi mất mát hoặc tấn công.\n\n### Có những loại backup nào?\nFull, Incremental, Differential, Snapshot, Logical/Physical.\n\n### Chiến lược backup hiệu quả là gì?\nLên lịch, retention, offsite/remote, test restore, monitor backup success.\n\n### Dev mới nên học backup database thế nào?\nHiểu types → setup backup plan → test restore → mini project → GitHub portfolio → freelance/remote.\n\n---\n\n## 8. Kết Luận\n\n- Backup database là **công cụ quan trọng cho mọi Dev**, bảo vệ dữ liệu, business continuity, tăng reliability  \n- Nắm vững **types, schedule, retention, test restore** → giảm downtime, tránh mất dữ liệu  \n- Thực hành **mini project, GitHub portfolio, deploy demo, freelance** → tăng kỹ năng và cơ hội việc làm  \n- **Thông điệp:** Backup hiệu quả giúp Dev an tâm triển khai ứng dụng, bảo vệ data và phát triển sự nghiệp lâu dài trong thời đại AI 2026",
+      "cover_image": "https://trancongthang.vn/images/articles/backup-database.jpg",
+      "tags": [],
+      "author_name": "Trần Công Thắng",
+      "reading_min": 3,
+      "published_at": "2026-05-02T17:56:53.242Z",
+      "created_at": "2026-05-02T17:56:53.242Z",
+      "updated_at": "2026-05-02T17:56:54.955Z",
+      "seo_title": "Backup Database Hiệu Quả Và Không Mất Dữ Liệu 2026",
+      "focus_keyword": "Backup Database",
+      "content_type": "guide",
+      "primary_intent": "informational",
+      "lsi_keywords": [
+        "database backup strategies",
+        "full backup incremental backup",
+        "restore database an toàn",
+        "SQL backup best practices",
+        "NoSQL backup"
+      ],
+      "faq": [
+        {
+          "q": "Backup database là gì?",
+          "a": "Backup database là sao lưu dữ liệu để phục hồi khi gặp sự cố, bảo vệ dữ liệu khỏi mất mát, hỏng hóc hoặc tấn công."
+        },
+        {
+          "q": "Có những loại backup nào?",
+          "a": "Full backup, Incremental backup, Differential backup, Snapshot, Logical/Physical backup."
+        },
+        {
+          "q": "Chiến lược backup hiệu quả là gì?",
+          "a": "Lên lịch, retention, offsite/remote, test restore, monitor backup success."
+        },
+        {
+          "q": "Dev mới nên học backup database thế nào?",
+          "a": "Hiểu types → setup backup plan → test restore → mini project → GitHub portfolio → freelance/remote."
+        }
+      ],
+      "key_takeaways": [
+        "Backup database giúp bảo vệ dữ liệu, khôi phục khi sự cố, tránh mất mát dữ liệu.",
+        "Các loại backup: Full, Incremental, Differential, Snapshot, Logical/Physical.",
+        "Chiến lược backup: schedule, retention, offsite/remote, test restore.",
+        "Dev nên thực hành backup trong mini project, GitHub portfolio, freelance/remote.",
+        "Lộ trình học: lý thuyết → types → backup plan → disaster recovery → mini project → portfolio → freelance."
+      ],
+      "related_entities": []
+    },
+    {
       "id": "001JNKT3HLT5P441Q5U5H2I681",
       "slug": "denormalization-khi-nao-dung",
       "title": "Denormalization: Khi Nào Nên Dùng?",
@@ -3133,5 +3185,5 @@
       ]
     }
   ],
-  "synced_at": "2026-05-02T17:53:19.422Z"
+  "synced_at": "2026-05-02T17:56:55.964Z"
 }

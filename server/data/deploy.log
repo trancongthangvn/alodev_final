@@ -4933,3 +4933,98 @@ Uploading... (731/731)
 ✨ Uploading Functions bundle
 🌎 Deploying...
 ✨ Deployment complete! Take a peek over at https://be617e64.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog-from-d1.mjs && next build
+
+[sync-blog] 49 published posts, 12 settings
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog-from-d1.mjs && next build
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+[sync-blog] 49 published posts, 12 settings
+⨯ Another next build process is already running.
+
+  This could be:
+  - A next build still in progress
+  - A previous build that didn't exit cleanly
+
+  Suggestion: Wait for the build to complete.
+✓ Compiled successfully in 6.0s
+  Running TypeScript ...
+  Finished TypeScript in 6.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/96) ...
+  Generating static pages using 4 workers (24/96) 
+  Generating static pages using 4 workers (48/96) 
+  Generating static pages using 4 workers (72/96) 
+✓ Generating static pages using 4 workers (96/96) in 2.4s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ ├ /blog/cassandra-dynamodb-so-sanh-database-cho-app-lon
+│ └ [+46 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (61/740)
+Uploading... (288/740)
+Uploading... (514/740)
+Uploading... (740/740)
+✨ Success! Uploaded 679 files (61 already uploaded) (5.10 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://e92f62ad.alodev.pages.dev
