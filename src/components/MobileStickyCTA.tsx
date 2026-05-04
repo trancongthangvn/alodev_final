@@ -96,7 +96,9 @@ export default function MobileStickyCTA() {
 
   return (
     <div
-      aria-hidden={!visible}
+      // `inert` khi !visible: aria-hidden + focusable descendant (button + a)
+      // là Lighthouse a11y fail. `inert` loại hẳn focus + a11y tree.
+      inert={!visible}
       className={`md:hidden fixed inset-x-0 bottom-0 z-40 pointer-events-none transition-opacity duration-200 ${
         visible ? 'opacity-100' : 'opacity-0'
       }`}

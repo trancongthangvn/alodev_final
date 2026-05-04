@@ -41,7 +41,7 @@ export default function EmailLink({ user, domain, className = '', children, pref
   const visible = children ?? (mounted ? email : ' ')  // nbsp keeps layout stable
 
   return (
-    <a href={href} className={className}>
+    <a href={href} className={className} aria-label="Email Alodev">
       {prefixIcon}
       {visible}
     </a>

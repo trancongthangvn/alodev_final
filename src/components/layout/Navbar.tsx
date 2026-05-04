@@ -30,7 +30,7 @@ export default function Navbar() {
     <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/70 sticky top-0 z-50 dark:bg-ink-950/75 dark:border-ink-800/70 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-ink-950/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
-          <Link href="/" className="text-2xl font-bold tracking-tight">
+          <Link href="/" className="text-2xl font-bold tracking-tight inline-flex items-center min-h-11 -mx-1 px-1" aria-label="Alodev — trang chủ">
             <span className="text-brand-600 dark:text-brand-400">alo</span>
             <span className="text-gray-900 dark:text-white">dev</span>
           </Link>

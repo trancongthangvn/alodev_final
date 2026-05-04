@@ -10,15 +10,36 @@ import { organizationSchema, websiteSchema } from "@/lib/schema"
 // SVN-Gilroy — bản Vietnamese-extended của Gilroy (đã subset xuống latin + vietnamese,
 // đủ tổ hợp dấu ế/ử/ợ/ặ/ờ/ẫ...). 4 file × ~20KB.
 // Source: github.com/trancongthangvn/font-svn-giroy
-const sansFont = localFont({
+// Split-preload: Regular (body) + Bold (heading hero) preload với priority cao
+// vì xuất hiện above-the-fold. Medium + SemiBold KHÔNG preload — browser tự
+// fetch khi gặp text cần weight đó. Tiết kiệm ~40KB priority bandwidth trên
+// mobile (LCP win).
+//
+// Phải gọi localFont() 2 lần vì option `preload` áp dụng cho cả call,
+// không thể set per-src. Cả 2 cùng map vào --font-sans variable → CSS không
+// đổi, hệ font-family `font-sans` vẫn hoạt động bình thường.
+const sansFontPreload = localFont({
   src: [
     { path: "./fonts/SVN-Gilroy-Regular.woff2", weight: "400", style: "normal" },
-    { path: "./fonts/SVN-Gilroy-Medium.woff2", weight: "500", style: "normal" },
-    { path: "./fonts/SVN-Gilroy-SemiBold.woff2", weight: "600", style: "normal" },
-    { path: "./fonts/SVN-Gilroy-Bold.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/SVN-Gilroy-Bold.woff2",    weight: "700", style: "normal" },
   ],
   variable: "--font-sans",
   display: "swap",
+  preload: true,
+  adjustFontFallback: "Arial",
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+})
+
+// Medium + SemiBold: same family, no preload. Khi CSS yêu cầu font-weight 500/600,
+// browser fetch on-demand từ /_next/static/media/. Không block LCP.
+const sansFontLazy = localFont({
+  src: [
+    { path: "./fonts/SVN-Gilroy-Medium.woff2",   weight: "500", style: "normal" },
+    { path: "./fonts/SVN-Gilroy-SemiBold.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-sans-extra",
+  display: "swap",
+  preload: false,
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
 })
 
@@ -131,18 +152,11 @@ export default function RootLayout({
     // to <body> (which IS rendered with className from JSX) keeps React
     // happy AND lets the inline script own html.classList for theme.
     <html lang="vi" suppressHydrationWarning>
+      {/* Resource hints — Plausible đã loại bỏ (không dùng trong code).
+          GA gtag.js bây giờ load lazyOnload (sau window load), nên KHÔNG cần
+          preload/preconnect early. dns-prefetch đủ rẻ (~1 lookup) để tận dụng
+          khi gtag finally fire. */}
       <head>
-        {/* Resource hints — DNS pre-resolution + TLS handshake for third-party
-            origins likely to be touched on first paint. preconnect costs
-            ~3 round-trips up front but pays back if the resource is fetched
-            before the page is interactive (LCP / INP win). dns-prefetch is
-            cheaper (~1 lookup) and used for origins that may or may not be
-            hit, depending on user actions.
-              • Plausible — analytics beacon fires on every page load.
-              • Google Tag Manager — if/when added.
-            crossOrigin="anonymous" required for fonts/scripts that obey
-            CORS; harmless for endpoints that don't (browsers ignore). */}
-        <link rel="preconnect" href="https://plausible.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
@@ -176,7 +190,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${sansFont.variable} h-full antialiased min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors`}>
+      <body className={`${sansFontPreload.variable} ${sansFontLazy.variable} h-full antialiased min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors`}>
         {/* Skip-to-content for keyboard users — visually hidden until focus
             lands on it. Lets screen readers / keyboard navigators jump past
             the navbar in a single tab. */}

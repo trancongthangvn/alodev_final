@@ -30,6 +30,11 @@ function emptyStubs(reason) {
 }
 
 if (!API_URL) {
+  if (process.env.CLOUDFLARE_ACCOUNT_ID && process.env.CLOUDFLARE_API_TOKEN) {
+    console.warn('[sync-blog] API_URL not set — falling back to D1 sync.')
+    await import('./sync-blog-from-d1.mjs')
+    process.exit(0)
+  }
   emptyStubs('API_URL not set')
   process.exit(0)
 }

@@ -138,12 +138,20 @@ export default function FeaturedTabs() {
               type="button"
               aria-label={`Tab ${i + 1}: ${tab.name}`}
               onClick={() => setActive(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === active
-                  ? 'w-6 bg-brand-600 dark:bg-brand-400'
-                  : 'w-1.5 bg-gray-300 dark:bg-ink-700 hover:bg-gray-400 dark:hover:bg-ink-600'
-              }`}
-            />
+              // Touch-target ≥ 24×24 (Lighthouse `tap-targets`). p-2.5 + h-1.5
+              // dot child cho hit area 26×26 nhưng VISUAL pill vẫn 6px. Trước
+              // đây dot là button trực tiếp 6×6 → fail tap-targets.
+              className="p-2.5 -my-2.5 inline-flex items-center justify-center"
+            >
+              <span
+                aria-hidden="true"
+                className={`h-1.5 rounded-full transition-all duration-300 block ${
+                  i === active
+                    ? 'w-6 bg-brand-600 dark:bg-brand-400'
+                    : 'w-1.5 bg-gray-300 dark:bg-ink-700 hover:bg-gray-400 dark:hover:bg-ink-600'
+                }`}
+              />
+            </button>
           ))}
         </div>
 
@@ -155,7 +163,10 @@ export default function FeaturedTabs() {
                 key={tab.slug}
                 className="tab-panel absolute inset-0"
                 {...(i === active ? { 'data-active': '' } : {})}
-                aria-hidden={i !== active}
+                // `inert` thay vì `aria-hidden`: aria-hidden + focusable descendants
+                // (CTA <a>) là Lighthouse a11y fail vì user vẫn Tab tới được.
+                // `inert` (Baseline 2023) loại hẳn khỏi focus order + a11y tree.
+                inert={i !== active}
               >
                 <div className="text-xs font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-400">
                   {tab.tag}

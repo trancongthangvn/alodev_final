@@ -22,7 +22,7 @@
  * with SRGBColorSpace/outputColorSpace per r152+ migration).
  */
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 // Floating tag chips were removed in the Resend-fidelity pass — Resend's
 // hero has nothing around its cube, and the chips were stealing focus from
@@ -126,6 +126,15 @@ export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
 
     const small = window.matchMedia('(max-width: 768px)').matches
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    // Mobile: skip WebGL hoàn toàn. three.js bundle ~723KB (~192KB gzip) không
+    // worth tải trên 4G để render một cube mà phần lớn user vuốt qua trong 1–2s.
+    // SVG StaticCube đã đẹp + smooth — đủ cho mobile. Tiết kiệm ~192KB gzip,
+    // ~300–600ms TBT trên Moto G4 4G (Lighthouse mobile baseline).
+    if (small) {
+      setState('fallback')
+      return
+    }
 
     // Guard against React Strict Mode double-mount: if cleanup runs before
     // `import('three')` resolves, we must NOT call setupCube — otherwise
@@ -304,6 +313,16 @@ function StaticCube() {
   const RIGHT = ['#3e3e48', '#42424d', '#37373f', '#3a3a44']
   const LEFT  = ['#2f2f39', '#353540', '#2b2b33', '#37373f']
 
+  // useId() — HeroCube được render 2 lần trên homepage (hero + journey).
+  // Hardcoded SVG defs IDs sẽ collision → Lighthouse a11y `duplicate-id`
+  // fail. useId cho mỗi instance một prefix riêng, ổn định qua SSR.
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const idGlow = `cubeGlow-${uid}`
+  const idTop = `topSheen-${uid}`
+  const idRight = `rightSheen-${uid}`
+  const idLeft = `leftSheen-${uid}`
+  const idShadow = `contactShadow-${uid}`
+
   const tile = (x: number, y: number, fill: string) => (
     <rect x={x} y={y} width="36" height="36" rx="4" fill={fill} stroke="#0a0a0c" strokeWidth="1" />
   )
@@ -313,54 +332,54 @@ function StaticCube() {
   return (
     <svg viewBox="0 0 280 280" className="w-[80%] max-w-[420px]" aria-hidden="true">
       <defs>
-        <radialGradient id="cubeGlow" cx="50%" cy="50%" r="50%">
+        <radialGradient id={idGlow} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="rgba(170,180,210,0.22)" />
           <stop offset="60%" stopColor="rgba(80,80,120,0.05)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0)" />
         </radialGradient>
 
-        <linearGradient id="topSheen" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={idTop} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="rgba(255,250,235,0.10)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0.10)" />
         </linearGradient>
-        <linearGradient id="rightSheen" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={idRight} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="rgba(255,215,170,0.05)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0.18)" />
         </linearGradient>
-        <linearGradient id="leftSheen" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={idLeft} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="rgba(170,200,255,0.05)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0.22)" />
         </linearGradient>
 
-        <radialGradient id="contactShadow" cx="50%" cy="50%" r="50%">
+        <radialGradient id={idShadow} cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor="rgba(0,0,0,0.45)" />
           <stop offset="70%" stopColor="rgba(0,0,0,0.10)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0)" />
         </radialGradient>
       </defs>
 
-      <rect x="0" y="0" width="280" height="280" fill="url(#cubeGlow)" />
-      <ellipse cx="140" cy="248" rx="92" ry="12" fill="url(#contactShadow)" />
+      <rect x="0" y="0" width="280" height="280" fill={`url(#${idGlow})`} />
+      <ellipse cx="140" cy="248" rx="92" ry="12" fill={`url(#${idShadow})`} />
 
       <g transform="translate(80 60) skewX(-30) scale(0.95 0.6)">
         {[0,1,2].map((r) => [0,1,2].map((c) => (
           <g key={`t-${r}-${c}`}>{tile(c * 40, r * 40, pick(TOP, r * 3 + c))}</g>
         )))}
-        <rect x="-2" y="-2" width="124" height="124" fill="url(#topSheen)" pointerEvents="none" />
+        <rect x="-2" y="-2" width="124" height="124" fill={`url(#${idTop})`} pointerEvents="none" />
       </g>
 
       <g transform="translate(140 130) skewY(-30)">
         {[0,1,2].map((r) => [0,1,2].map((c) => (
           <g key={`r-${r}-${c}`}>{tile(c * 40, r * 40, pick(RIGHT, r * 3 + c))}</g>
         )))}
-        <rect x="-2" y="-2" width="124" height="124" fill="url(#rightSheen)" pointerEvents="none" />
+        <rect x="-2" y="-2" width="124" height="124" fill={`url(#${idRight})`} pointerEvents="none" />
       </g>
 
       <g transform="translate(20 130) skewY(30)">
         {[0,1,2].map((r) => [0,1,2].map((c) => (
           <g key={`l-${r}-${c}`}>{tile(c * 40, r * 40, pick(LEFT, r * 3 + c))}</g>
         )))}
-        <rect x="-2" y="-2" width="124" height="124" fill="url(#leftSheen)" pointerEvents="none" />
+        <rect x="-2" y="-2" width="124" height="124" fill={`url(#${idLeft})`} pointerEvents="none" />
       </g>
     </svg>
   )

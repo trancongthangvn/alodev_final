@@ -5028,3 +5028,5494 @@ Uploading... (740/740)
 ✨ Uploading Functions bundle
 🌎 Deploying...
 ✨ Deployment complete! Take a peek over at https://e92f62ad.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (61/749)
+Uploading... (290/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 688 files (61 already uploaded) (6.76 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://bb7c9ba7.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (7.30 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://26eeb836.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.8s
+  Running TypeScript ...
+  Finished TypeScript in 7.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 3.0s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.47 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://9fc10c6b.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 7.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.01 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://c82366a1.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 6.1s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.46 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://222d52f3.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 6.1s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.30 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://d4d001f3.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 6.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.4s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.53 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://39a99802.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 5.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.4s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.93 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://d6024af8.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 6.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.29 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://4434cd90.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 6.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.3s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.87 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://97921cae.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.8s
+  Running TypeScript ...
+  Finished TypeScript in 8.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 3.3s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.42 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://bfb861ea.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.8s
+  Running TypeScript ...
+  Finished TypeScript in 9.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 3.2s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.85 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://c600c3fb.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 5.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.83 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://59514868.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.5s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.32 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://a1464bc9.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 5.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.4s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.57 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://b135f43b.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 5.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.70 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://fbe0cd00.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 7.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.18 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://1e788f90.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.4s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.95 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://b175358e.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.2s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.42 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://32932735.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.4s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.67 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://5390015f.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.1s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.14 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://7ff48b6f.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.77 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://29f4c1e6.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.2s
+  Running TypeScript ...
+  Finished TypeScript in 6.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.86 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://f4b55a7f.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.5s
+  Running TypeScript ...
+  Finished TypeScript in 6.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.98 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://7fbdc770.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.4s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.39 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://d588d3c6.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.3s
+  Running TypeScript ...
+  Finished TypeScript in 6.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.17 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://ebddc279.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.5s
+  Running TypeScript ...
+  Finished TypeScript in 5.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.19 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://7d880ebb.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.0s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.13.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.13.0
+npm notice To update run: npm install -g npm@11.13.0
+npm notice
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.39 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://3c1f6b73.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (7.41 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://5dfc0312.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.5s
+  Running TypeScript ...
+  Finished TypeScript in 6.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.22 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://a2475ae4.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.94 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://a223f68b.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (7.81 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://36a6e084.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (8.55 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://2253994e.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.44 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://f4380488.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+Uploading... (520/749)
+[sync-blog] 50 published posts, 12 settings
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.29 sec)
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+✨ Deployment complete! Take a peek over at https://55268311.alodev.pages.dev
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.98 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://610b581c.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.0s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.50 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://af592759.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.7s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.71 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://238b1b3f.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.2s
+  Running TypeScript ...
+  Finished TypeScript in 7.1s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.30 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://2c330d70.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 6.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.46 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://42768758.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (60/749)
+Uploading... (289/749)
+Uploading... (519/749)
+Uploading... (749/749)
+✨ Success! Uploaded 689 files (60 already uploaded) (5.60 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://680a9b6d.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (8.37 sec)
+
+[sync-blog] 50 published posts, 12 settings
+✨ Uploading _headers
+✨ Uploading Functions bundle
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://15a52869.alodev.pages.dev
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+⨯ Another next build process is already running.
+
+  This could be:
+  - A next build still in progress
+  - A previous build that didn't exit cleanly
+
+  Suggestion: Wait for the build to complete.
+  Finished TypeScript in 7.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.63 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://b61cf9cf.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 6.7s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.35 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://5c4b8147.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.7s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.15 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://ac514753.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 6.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.93 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://cee05ff4.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.49 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://1b7c2e0a.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 7.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.48 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://7d21cd2a.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.5s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.54 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://fdf2dd4f.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.1s
+  Running TypeScript ...
+  Finished TypeScript in 6.6s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.62 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://a49535ad.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.6s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.77 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://1b6b1b47.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.59 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://2f16d476.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.0s
+  Running TypeScript ...
+  Finished TypeScript in 6.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.63 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://37aeadc6.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.07 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://34c10288.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.6s
+  Running TypeScript ...
+  Finished TypeScript in 7.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (4.73 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://9c012516.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.16 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://f7f441d0.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.0s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (6.00 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://5fde321b.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.1s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.42 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://0b782e91.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.7s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (60/749)
+Uploading... (289/749)
+Uploading... (519/749)
+Uploading... (749/749)
+✨ Success! Uploaded 689 files (60 already uploaded) (6.89 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://85c37620.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.8s
+  Running TypeScript ...
+  Finished TypeScript in 6.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (61/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 688 files (61 already uploaded) (5.88 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://0f0aaf19.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.4s
+  Running TypeScript ...
+  Finished TypeScript in 6.2s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.6s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.53 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://44478fc2.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (40/749)
+Uploading... (277/749)
+Uploading... (513/749)
+Uploading... (749/749)
+✨ Success! Uploaded 709 files (40 already uploaded) (5.45 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://49940bb0.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 7.0s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (56/749)
+Uploading... (287/749)
+Uploading... (518/749)
+Uploading... (749/749)
+✨ Success! Uploaded 693 files (56 already uploaded) (7.53 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://70bc2a21.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+⨯ Another next build process is already running.
+
+  This could be:
+  - A next build still in progress
+  - A previous build that didn't exit cleanly
+
+  Suggestion: Wait for the build to complete.
+✓ Compiled successfully in 9.2s
+  Running TypeScript ...
+  Finished TypeScript in 10.1s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 3.8s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (61/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 688 files (61 already uploaded) (5.19 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://25d13a6e.alodev.pages.dev
+
+> alodev-nextjs@0.1.0 build
+> node scripts/sync-blog.mjs && next build
+
+[sync-blog] API_URL not set — falling back to D1 sync.
+[sync-blog] 50 published posts, 12 settings
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.9s
+  Running TypeScript ...
+  Finished TypeScript in 6.8s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/97) ...
+  Generating static pages using 4 workers (24/97) 
+  Generating static pages using 4 workers (48/97) 
+  Generating static pages using 4 workers (72/97) 
+✓ Generating static pages using 4 workers (97/97) in 2.9s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analytics
+├ ○ /admin/blog
+├ ○ /admin/blog/edit
+├ ○ /admin/blog/new
+├ ○ /admin/blog/preview
+├ ○ /admin/settings
+├ ○ /bao-gia
+├ ○ /bao-gia/opengraph-image
+├ ○ /blog
+├ ● /blog/[slug]
+│ ├ /blog/ky-thuat-toi-uu-database-toc-do-bi-thuat-van-hanh-web-du-lieu-lon
+│ ├ /blog/backup-database-hieu-qua-va-khong-mat-du-lieu
+│ ├ /blog/denormalization-khi-nao-dung
+│ └ [+47 more paths]
+├ ○ /dich-vu
+├ ○ /dich-vu/he-thong-quan-tri
+├ ○ /dich-vu/he-thong-quan-tri/opengraph-image
+├ ○ /dich-vu/lap-trinh-app-mobile
+├ ○ /dich-vu/lap-trinh-app-mobile/opengraph-image
+├ ○ /dich-vu/opengraph-image
+├ ○ /dich-vu/thiet-ke-website
+├ ○ /dich-vu/thiet-ke-website/opengraph-image
+├ ○ /du-an
+├ ● /du-an/[slug]
+│ ├ /du-an/onthi365
+│ ├ /du-an/ganday
+│ ├ /du-an/vn247
+│ └ [+6 more paths]
+├ ● /du-an/-/opengraph-image
+│ ├ /du-an/onthi365/opengraph-image
+│ ├ /du-an/ganday/opengraph-image
+│ ├ /du-an/vn247/opengraph-image
+│ └ [+6 more paths]
+├ ○ /du-an/opengraph-image
+├ ○ /lien-he
+├ ○ /lien-he/opengraph-image
+├ ○ /opengraph-image
+├ ○ /sitemap.xml
+├ ○ /ve-chung-toi
+└ ○ /ve-chung-toi/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+
+ ⛅️ wrangler 4.81.1 (update available 4.87.0)
+─────────────────────────────────────────────
+✨ Compiled Worker successfully
+Uploading... (62/749)
+Uploading... (291/749)
+Uploading... (520/749)
+Uploading... (749/749)
+✨ Success! Uploaded 687 files (62 already uploaded) (5.18 sec)
+
+✨ Uploading _headers
+✨ Uploading Functions bundle
+🌎 Deploying...
+✨ Deployment complete! Take a peek over at https://4c37eac0.alodev.pages.dev

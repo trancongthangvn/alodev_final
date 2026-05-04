@@ -1,17 +1,4 @@
 {
-  "settings": {
-    "site.title_default": "Alodev — Studio thiết kế & phát triển Web/App",
-    "site.title_template": "%s — Alodev",
-    "site.description": "Founder-led studio thiết kế website, lập trình app mobile, xây dựng hệ thống CRM/ERP cho doanh nghiệp Việt. 11+ sản phẩm đang vận hành — source code thuộc về bạn.",
-    "site.url": "https://alodev.vn",
-    "site.locale": "vi_VN",
-    "contact.email": "hello@alodev.vn",
-    "contact.phone": "+84-364-234-936",
-    "contact.zalo": "https://zalo.me/0364234936",
-    "contact.address": "Hà Nội, Việt Nam",
-    "contact.hours": "8h–22h hằng ngày",
-    "blog.enabled": true,
-    "blog.posts_per_page": 12
-  },
-  "synced_at": "2026-05-02T17:56:56.000Z"
+  "settings": {},
+  "synced_at": "2026-05-04T12:05:13.056Z"
 }
