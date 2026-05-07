@@ -21,6 +21,38 @@ const capabilities: Array<{ icon: IconName; num: string; title: string; desc: st
 const liveProjects = projects.filter((p) => (p.status ?? 'live') === 'live' || p.status === 'internal')
 const labProjects = projects.filter((p) => p.status === 'lab')
 
+/**
+ * Phân nhóm theo "thị trường" thay vì flat list — visitor scan nhanh hơn,
+ * mỗi nhóm có narrative riêng (sản phẩm có user khác mạng tin tức khác ops).
+ * Slug nào thiếu trong groups sẽ rơi xuống nhóm cuối "ops" để không lọt.
+ */
+const projectGroups: Array<{ id: string; label: string; sub: string; slugs: string[] }> = [
+  {
+    id: 'flagship',
+    label: 'Sản phẩm có user',
+    sub: 'SaaS, giáo dục, social commerce — có sign-up, có billing, có cộng đồng. Đây là phần fleet đang tạo doanh thu thực.',
+    slugs: ['maxmin', 'onthi365', 'vietnamid'],
+  },
+  {
+    id: 'media',
+    label: 'Mạng tin tức',
+    sub: '4 site nội dung dùng chung CMS multi-site — News schema chuẩn Google News, edge deploy, canonical sạch giữa các site.',
+    slugs: ['ganday', 'vn247', 'thitruongkinhte', 'hongbienduongpho'],
+  },
+  {
+    id: 'commerce',
+    label: 'E-commerce & tools',
+    sub: 'Marketplace số đa-tenant + bộ công cụ vận hành Facebook. Anti-fraud, payment escrow, rate-limit retry — vận hành 24/7.',
+    slugs: ['shopaccgame', 'lammmo'],
+  },
+  {
+    id: 'ops',
+    label: 'Personal & nội bộ',
+    sub: 'Personal brand + dashboard quản trị toàn fleet (11 site, 11 PostgreSQL, YouTube uploader, health-check song song).',
+    slugs: ['trancongthang', 'datacenter'],
+  },
+]
+
 const fleetStats: Array<{ value: string; label: string; sub: string }> = [
   { value: String(projects.filter((p) => (p.status ?? 'live') === 'live').length), label: 'Sản phẩm vận hành', sub: 'public-facing, domain riêng' },
   { value: String(labProjects.length), label: 'Studio Lab', sub: 'sub-tool, extension, study' },
@@ -119,30 +151,96 @@ export default function DuAnPage() {
         </div>
       </section>
 
-      {/* Sản phẩm vận hành */}
-      <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            eyebrow="Sản phẩm vận hành"
-            title="Đang chạy thật trên domain riêng."
-            sub={`${liveProjects.length} dự án — public-facing hoặc nội bộ ops, có metric đo được, có user thật.`}
-          />
-          <div className="reveal-stagger mt-10 lg:mt-12 space-y-6">
-            {liveProjects.map((p, i) => (
-              <ProjectCard key={p.slug} project={p} index={i + 1} />
-            ))}
-          </div>
+      {/* Chip rail — quick jump giữa 4 nhóm */}
+      <nav aria-label="Nhóm dự án" className="bg-white dark:bg-ink-950 border-b border-gray-200 dark:border-ink-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <ol className="flex flex-wrap gap-2 text-sm">
+            {projectGroups.map((g, i) => {
+              const count = liveProjects.filter((p) => g.slugs.includes(p.slug)).length
+              return (
+                <li key={g.id}>
+                  <a
+                    href={`#${g.id}`}
+                    className="group inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 hover:bg-cream-50 dark:hover:bg-ink-800 px-3.5 py-1.5 transition"
+                  >
+                    <span className="tabular text-[10px] font-mono text-ink-400 dark:text-ink-500">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="font-semibold text-gray-800 dark:text-ink-100 group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{g.label}</span>
+                    <span className="tabular text-xs text-gray-500 dark:text-ink-400 font-mono">{count}</span>
+                  </a>
+                </li>
+              )
+            })}
+            {labProjects.length > 0 && (
+              <li>
+                <a
+                  href="#lab"
+                  className="group inline-flex items-center gap-2 rounded-full border border-dashed border-gray-300 dark:border-ink-700 bg-cream-50 dark:bg-ink-900/40 hover:bg-white dark:hover:bg-ink-900 px-3.5 py-1.5 transition"
+                >
+                  <span className="text-[10px] font-mono text-ink-400 dark:text-ink-500">+</span>
+                  <span className="font-semibold text-gray-700 dark:text-ink-200 group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">Studio Lab</span>
+                  <span className="tabular text-xs text-gray-500 dark:text-ink-400 font-mono">{labProjects.length}</span>
+                </a>
+              </li>
+            )}
+          </ol>
         </div>
-      </section>
+      </nav>
+
+      {/* Sản phẩm vận hành — chia 4 nhóm */}
+      {projectGroups.map((g, gi) => {
+        const items = g.slugs.map((s) => liveProjects.find((p) => p.slug === s)).filter(Boolean) as Project[]
+        if (items.length === 0) return null
+        return (
+          <section
+            key={g.id}
+            id={g.id}
+            className={`scroll-mt-20 py-10 lg:py-20 ${gi % 2 === 0 ? 'bg-white dark:bg-ink-950' : 'bg-cream-50/50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800'}`}
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeader
+                eyebrow={`${String(gi + 1).padStart(2, '0')} / ${String(projectGroups.length).padStart(2, '0')}`}
+                title={g.label}
+                sub={g.sub}
+                count={items.length}
+              />
+              <div className="reveal-stagger mt-10 lg:mt-12 space-y-6">
+                {items.map((p, i) => (
+                  <ProjectCard key={p.slug} project={p} index={i + 1} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })}
+
+      {/* Bất kỳ live project nào không nằm trong nhóm nào — fallback */}
+      {(() => {
+        const grouped = new Set(projectGroups.flatMap((g) => g.slugs))
+        const orphans = liveProjects.filter((p) => !grouped.has(p.slug))
+        if (orphans.length === 0) return null
+        return (
+          <section className="py-10 lg:py-20 bg-white dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeader eyebrow="Khác" title="Dự án khác" sub="Chưa được phân nhóm rõ — sẽ cập nhật sau." count={orphans.length} />
+              <div className="reveal-stagger mt-10 space-y-6">
+                {orphans.map((p, i) => (
+                  <ProjectCard key={p.slug} project={p} index={i + 1} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      })()}
 
       {/* Studio Lab */}
       {labProjects.length > 0 && (
-        <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-900/40 border-t border-gray-200 dark:border-ink-800">
+        <section id="lab" className="scroll-mt-20 py-12 lg:py-20 bg-cream-50 dark:bg-ink-900/40 border-t border-gray-200 dark:border-ink-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader
-              eyebrow="Studio Lab"
-              title="Sub-tool, extension, design study."
-              sub={`${labProjects.length} thí nghiệm — không phải sản phẩm thương mại, là phạm vi kỹ thuật mở rộng: browser extension MV3, AI gateway, OBS overlay, Three.js.`}
+              eyebrow="+ / Lab"
+              title="Studio Lab"
+              sub="Thí nghiệm, sub-tool, design study — không phải sản phẩm thương mại, là phạm vi kỹ thuật mở rộng: browser extension MV3, AI gateway, OBS overlay, Three.js."
+              count={labProjects.length}
             />
             <div className="reveal-stagger mt-10 lg:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-5">
               {labProjects.map((p) => (
@@ -280,11 +378,16 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
-function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
+function SectionHeader({ eyebrow, title, sub, count }: { eyebrow: string; title: string; sub: string; count?: number }) {
   return (
     <div className="max-w-3xl">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="h-section mt-4 text-gray-900 dark:text-white">{title}</h2>
+      <div className="mt-4 flex items-baseline gap-3 flex-wrap">
+        <h2 className="h-section text-gray-900 dark:text-white">{title}</h2>
+        {typeof count === 'number' && (
+          <span className="tabular text-sm font-mono text-ink-400 dark:text-ink-500">— {count} dự án</span>
+        )}
+      </div>
       <p className="mt-3 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed">{sub}</p>
     </div>
   )
