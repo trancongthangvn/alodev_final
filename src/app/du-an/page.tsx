@@ -6,11 +6,10 @@ import QuoteCTA from '@/components/QuoteCTA'
 import { itemListSchema, breadcrumbSchema, collectionPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Portfolio dự án — 11+ sản phẩm đang vận hành',
-  // 158 chars
-  description: '11+ sản phẩm Alodev đang vận hành thực tế — giáo dục, tin tức, e-commerce, hệ thống quản trị. Mỗi dự án có metric đo được: lập trình · thiết kế · SEO.',
+  title: 'Portfolio — 11 sản phẩm vận hành + 4 studio lab',
+  description: '11 sản phẩm Alodev đang vận hành thực tế (giáo dục, livestream, social commerce, tin tức, e-commerce) cộng với 4 studio lab. Mỗi case study có metric đo được.',
   alternates: { canonical: '/du-an' },
-  openGraph: { url: '/du-an', title: 'Portfolio dự án — Alodev', description: '11+ sản phẩm Alodev đã triển khai và vận hành. Lập trình · Thiết kế · SEO — đo bằng metric.' },
+  openGraph: { url: '/du-an', title: 'Portfolio Alodev — 11 sản phẩm vận hành + 4 studio lab', description: 'Toàn bộ fleet sản phẩm Alodev đang chạy thật. Lập trình · Thiết kế · SEO — đo bằng metric, không slogan.' },
 }
 
 const capabilities: Array<{ icon: IconName; num: string; title: string; desc: string; points: string[] }> = [
@@ -18,6 +17,22 @@ const capabilities: Array<{ icon: IconName; num: string; title: string; desc: st
   { icon: 'palette', num: '02', title: 'Thiết kế', desc: 'Design system thiết kế từ đầu, không ráp từ UI kit có sẵn. Mobile-first, dark mode, motion tinh tế.', points: ['Custom design system', 'Mobile-first + dark mode', 'Micro-interaction tinh tế'] },
   { icon: 'search',  num: '03', title: 'SEO', desc: 'SEO kỹ thuật triển khai chuẩn từ deploy đầu tiên — Schema.org, sitemap, OG, canonical đầy đủ, không khắc phục muộn.', points: ['Schema.org đầy đủ', 'PageSpeed 90+', 'Sitemap + Search Console'] },
 ]
+
+const liveProjects = projects.filter((p) => (p.status ?? 'live') === 'live' || p.status === 'internal')
+const labProjects = projects.filter((p) => p.status === 'lab')
+
+const fleetStats: Array<{ value: string; label: string; sub: string }> = [
+  { value: String(projects.filter((p) => (p.status ?? 'live') === 'live').length), label: 'Sản phẩm vận hành', sub: 'public-facing, domain riêng' },
+  { value: String(labProjects.length), label: 'Studio Lab', sub: 'sub-tool, extension, study' },
+  { value: '6+', label: 'Stack chính', sub: 'Next · Vue · Node · Postgres · CF · FFmpeg' },
+  { value: '100%', label: 'Source thuộc khách', sub: 'không khoá vendor, không subscription' },
+]
+
+const statusBadge: Record<NonNullable<Project['status']>, { label: string; dot: string; ring: string }> = {
+  live:     { label: 'LIVE',    dot: 'bg-emerald-500',  ring: 'ring-emerald-500/30' },
+  internal: { label: 'NỘI BỘ', dot: 'bg-amber-500',    ring: 'ring-amber-500/30' },
+  lab:      { label: 'LAB',     dot: 'bg-stone-400',    ring: 'ring-stone-400/30' },
+}
 
 export default function DuAnPage() {
   return (
@@ -51,16 +66,27 @@ export default function DuAnPage() {
       <section className="relative overflow-hidden bg-white dark:bg-ink-950">
         <div className="aurora opacity-60" />
         <div className="absolute inset-0 grid-bg grid-bg-fade opacity-50" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10 lg:pt-28 lg:pb-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10 lg:pt-28 lg:pb-16">
           <div className="hero-rise max-w-3xl">
             <Eyebrow>Portfolio</Eyebrow>
             <h1 className="h-display mt-4 text-gray-900 dark:text-white">
-              Mỗi dự án là phép thử<br />
-              <span className="bg-gradient-to-r from-brand-600 to-brand-700 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">cho 3 năng lực cốt lõi.</span>
+              Một fleet sản phẩm thật —<br />
+              <span className="bg-gradient-to-r from-brand-600 to-brand-700 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">không phải showreel.</span>
             </h1>
             <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-ink-400 max-w-2xl leading-relaxed">
-              Lập trình · thiết kế · SEO. Mỗi card bên dưới đều có metric đo được. Click để xem case study chi tiết.
+              Tất cả dưới đây đang vận hành thật trên domain riêng. Mỗi case study là một quyết định kỹ thuật cụ thể: stack, kiến trúc, đánh đổi — đo bằng metric, không slogan.
             </p>
+          </div>
+
+          {/* Fleet stats — concrete numbers, founder voice */}
+          <div className="mt-10 lg:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
+            {fleetStats.map((s) => (
+              <div key={s.label} className="bg-white dark:bg-ink-950 p-5 lg:p-6">
+                <div className="text-3xl lg:text-4xl font-bold tabular tracking-tight text-gray-900 dark:text-white font-mono">{s.value}</div>
+                <div className="mt-1 text-sm font-semibold text-gray-700 dark:text-ink-200">{s.label}</div>
+                <div className="mt-1 text-xs text-gray-500 dark:text-ink-500 leading-snug">{s.sub}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -93,14 +119,39 @@ export default function DuAnPage() {
         </div>
       </section>
 
-      {/* Projects list */}
+      {/* Sản phẩm vận hành */}
       <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
-        <div className="reveal-stagger max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} index={i + 1} />
-          ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            eyebrow="Sản phẩm vận hành"
+            title="Đang chạy thật trên domain riêng."
+            sub={`${liveProjects.length} dự án — public-facing hoặc nội bộ ops, có metric đo được, có user thật.`}
+          />
+          <div className="reveal-stagger mt-10 lg:mt-12 space-y-6">
+            {liveProjects.map((p, i) => (
+              <ProjectCard key={p.slug} project={p} index={i + 1} />
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* Studio Lab */}
+      {labProjects.length > 0 && (
+        <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-900/40 border-t border-gray-200 dark:border-ink-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeader
+              eyebrow="Studio Lab"
+              title="Sub-tool, extension, design study."
+              sub={`${labProjects.length} thí nghiệm — không phải sản phẩm thương mại, là phạm vi kỹ thuật mở rộng: browser extension MV3, AI gateway, OBS overlay, Three.js.`}
+            />
+            <div className="reveal-stagger mt-10 lg:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-5">
+              {labProjects.map((p) => (
+                <LabCard key={p.slug} project={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
@@ -118,6 +169,8 @@ export default function DuAnPage() {
 }
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const status = project.status ?? 'live'
+  const badge = statusBadge[status]
   return (
     <article className="lift spotlight rounded-3xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700">
       <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr]">
@@ -131,6 +184,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
           <span className="absolute top-3 left-3 text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-200 font-bold">
             {project.category}
+          </span>
+          <span className={`absolute top-3 right-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-200 ring-1 ${badge.ring}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${badge.dot} ${status === 'live' ? 'animate-pulse' : ''}`} />
+            {badge.label}
           </span>
         </div>
 
@@ -220,5 +277,48 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
       <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
       <span className="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400">{children}</span>
     </div>
+  )
+}
+
+function SectionHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
+  return (
+    <div className="max-w-3xl">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 className="h-section mt-4 text-gray-900 dark:text-white">{title}</h2>
+      <p className="mt-3 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed">{sub}</p>
+    </div>
+  )
+}
+
+function LabCard({ project }: { project: Project }) {
+  const badge = statusBadge.lab
+  return (
+    <Link
+      href={`/du-an/${project.slug}`}
+      className="group lift block rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700"
+    >
+      <div className={`relative h-24 bg-gradient-to-br ${project.colorClass} overflow-hidden`}>
+        <div className="absolute inset-0 grid-bg opacity-30" />
+        <span className={`absolute top-3 right-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-200 ring-1 ${badge.ring}`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`} />
+          {badge.label}
+        </span>
+        <div className="absolute bottom-3 left-4 text-[10px] uppercase tracking-widest font-bold text-gray-700 dark:text-ink-200">
+          {project.category}
+        </div>
+      </div>
+      <div className="p-5">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{project.name}</h3>
+          <span className="text-xs font-mono text-gray-500 dark:text-ink-500 truncate">{project.domain}</span>
+        </div>
+        <p className="mt-2 text-sm text-gray-600 dark:text-ink-400 leading-relaxed line-clamp-3">{project.shortDesc}</p>
+        <div className="mt-3 flex flex-wrap gap-1">
+          {project.code.stack.slice(0, 4).map((s) => (
+            <span key={s} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cream-50 border border-gray-200 text-gray-700 dark:bg-ink-950 dark:border-ink-800 dark:text-ink-300">{s}</span>
+          ))}
+        </div>
+      </div>
+    </Link>
   )
 }

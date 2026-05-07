@@ -9,6 +9,13 @@ export type ProjectCaseStudySection = {
   body: string
 }
 
+/**
+ * - live     : sản phẩm public-facing đang chạy trên domain riêng
+ * - internal : công cụ nội bộ vận hành fleet (noindex, có auth)
+ * - lab      : thí nghiệm / sub-tool / design study — không phải sản phẩm chính
+ */
+export type ProjectStatus = 'live' | 'internal' | 'lab'
+
 export type Project = {
   slug: string
   name: string
@@ -17,6 +24,7 @@ export type Project = {
   shortDesc: string
   longDesc?: string
   colorClass: string // tailwind gradient classes for thumbnail
+  status?: ProjectStatus // default 'live'
   /**
    * Optional ISO-8601 dates for SEO Article schema + visible byline on
    * case study pages. When absent, the route falls back to the projects.ts
@@ -45,6 +53,79 @@ export type Project = {
 }
 
 export const projects: Project[] = [
+  {
+    slug: 'maxmin',
+    name: 'MAXMIN',
+    domain: 'maxmin.vn',
+    category: 'SaaS · Cloud restream',
+    shortDesc: 'Nền tảng restream cloud cho người livestream bán hàng — phát đồng thời lên Shopee, TikTok, Facebook từ một nguồn duy nhất, không cần PC mạnh hay OBS.',
+    longDesc: 'SaaS phục vụ seller live đa nền tảng: 1 video gốc → fan-out tới 3 đích đồng thời qua FFmpeg server-side. Auto-bitrate theo đường truyền, scheduler đặt lịch phát, dashboard realtime peak viewer chart, billing 3 gói (Free / Pro / Enterprise) với invoice tự động.',
+    publishedAt: '2026-03-15',
+    colorClass: 'from-violet-50 via-purple-50 to-fuchsia-50 dark:from-violet-500/10 dark:via-purple-500/5 dark:to-fuchsia-500/10',
+    code: {
+      stack: ['Vue 3', 'Pinia', 'Tailwind v4', 'Express', 'FFmpeg', 'PostgreSQL'],
+      highlights: [
+        'Pipeline FFmpeg server-side fan-out: 1 RTMP input → 3 đích song song, copy codec khi trùng để tiết kiệm CPU',
+        'Auto-bitrate theo upstream user (probe + ABR ladder) — mạng dao động không drop frame',
+        'Scheduler đặt lịch phát: worker pool + retry exponential khi nền tảng đích trả 429 / timeout',
+        'Billing multi-tenant 3 gói — invoice tự động qua webhook thanh toán, dunning 3 lần trước khi suspend',
+      ],
+      metrics: [
+        { label: 'Đích phát song song', value: '3' },
+        { label: 'Service tách (PM2 fork)', value: '4' },
+      ],
+    },
+    design: {
+      highlights: [
+        'Stream wizard 3 bước: kết nối kênh → chọn video → go live, từ login đến on-air ≤60 giây',
+        'Dashboard realtime: timeline live, chart peak viewer (Chart.js), engagement breakdown từng nền tảng',
+        'Mobile-first cho seller live tại chỗ — không cần laptop, không cần OBS, vuốt ngang giữa Shopee/TikTok/FB',
+      ],
+    },
+    seo: {
+      highlights: [
+        'Schema SoftwareApplication + AggregateRating + Offer cho 3 gói pricing',
+        'Pricing & blog tách bạch — tối ưu cho long-tail "restream shopee tiktok cùng lúc"',
+        'Internal link dày từ blog hướng dẫn → trang pricing, schema HowTo cho từng bài',
+      ],
+      metrics: [
+        { label: 'PSI mobile', value: '93' },
+      ],
+    },
+  },
+  {
+    slug: 'vietnamid',
+    name: 'VietnamID',
+    domain: 'vietnamid.vn',
+    category: 'Social commerce · PWA',
+    shortDesc: 'Mạng xã hội thương mại cho người Việt — feed bài viết, shop của seller, đơn hàng, leaderboard điểm thưởng, chat realtime trong cùng một PWA cài được homescreen.',
+    longDesc: 'Hybrid social + commerce: user vừa post nội dung kiếm điểm, vừa mua bán trong shop riêng. Hệ thống XP, leaderboard, follow/follower, wishlist, cart, order tracking, seller dashboard tách biệt với customer flow. Chạy như PWA trên iOS/Android — install homescreen, status bar override, offline-first cho feed đã cache.',
+    publishedAt: '2025-12-10',
+    colorClass: 'from-blue-50 via-cyan-50 to-sky-50 dark:from-blue-500/10 dark:via-cyan-500/5 dark:to-sky-500/10',
+    code: {
+      stack: ['Vue 3', 'Pinia', 'Vue Router', 'PWA', 'lucide-vue-next', 'Tailwind v4'],
+      highlights: [
+        '30+ route lazy-load, code splitting theo view — initial bundle < 80KB gz',
+        'PWA install homescreen iOS/Android, manifest custom theme-color, offline-first cho feed cache',
+        'Pinia store tách feed / cart / chat / leaderboard, hydrate từ localStorage có versioning để không vỡ schema khi deploy',
+        'Subdomain admin + seller dashboard tách auth scope — không trộn với customer app',
+      ],
+    },
+    design: {
+      highlights: [
+        'Bottom-nav mobile 5 tab giống native, gesture swipe chuyển tab',
+        'Avatar generated qua DiceBear API — không cần CDN cho user-generated avatar, không tốn storage',
+        'Shop UI dày: card sản phẩm có wishlist quick-add, comparison side-by-side, rating sao tổng hợp',
+      ],
+    },
+    seo: {
+      highlights: [
+        'Schema Person + Product + Offer cho profile và shop',
+        'Open Graph riêng từng post — share Facebook hiển thị thumbnail bài viết user',
+        'Sitemap tách: users / shops / posts / topics — index từng nhóm độc lập',
+      ],
+    },
+  },
   {
     slug: 'onthi365',
     name: 'OnThi365',
@@ -326,6 +407,7 @@ export const projects: Project[] = [
     name: 'Datacenter (nội bộ)',
     domain: 'datacenter.trancongthang.vn',
     category: 'Hệ thống quản trị',
+    status: 'internal',
     shortDesc: 'Dashboard quản trị tập trung cho cả fleet — health check 11 site, explorer Postgres, planner content, upload YouTube tự động.',
     colorClass: 'from-stone-100 via-orange-50 to-amber-50 dark:from-stone-500/10 dark:via-orange-500/5 dark:to-amber-500/10',
     code: {
@@ -353,6 +435,107 @@ export const projects: Project[] = [
         'Tool nội bộ — toàn site `noindex, nofollow`',
         'Auth required, không expose endpoint công cộng',
       ],
+    },
+  },
+  // ───────────────────────── Studio Lab ─────────────────────────
+  // Sub-tools, internal apps, design studies — không phải sản phẩm chính
+  // nhưng minh chứng phạm vi kỹ thuật: extension, gateway, 3D, vanilla CSS.
+  {
+    slug: 'dabong',
+    name: 'Dabong Scoreboard',
+    domain: 'dabong.vn247.vn',
+    category: 'Lab · OBS overlay',
+    status: 'lab',
+    shortDesc: 'Bảng tỷ số bóng đá tuỳ biến + overlay trong suốt cho OBS streamer — sub-domain của VN247, single-file HTML, không build pipeline.',
+    colorClass: 'from-rose-50 via-red-50 to-orange-50 dark:from-rose-500/10 dark:via-red-500/5 dark:to-orange-500/10',
+    code: {
+      stack: ['HTML5', 'CSS', 'Vanilla JS'],
+      highlights: [
+        'Single-file HTML — copy lên CDN là chạy, không build step, không runtime dependency',
+        'URL params điều khiển scoreboard: tên đội, tỷ số, hiệp đấu, đồng hồ — trigger được từ remote',
+        'Background trong suốt sẵn cho OBS browser source, dark theme phù hợp overlay',
+      ],
+    },
+    design: {
+      highlights: [
+        'Typography Barlow Condensed cho con số tỷ số — đọc rõ ở stream 1080p',
+        'Gradient đỏ branding bóng đá Việt, không lệ thuộc thư viện CSS',
+      ],
+    },
+    seo: {
+      highlights: ['Tool nội bộ — noindex, nofollow'],
+    },
+  },
+  {
+    slug: 'openclaw',
+    name: 'OpenClaw',
+    domain: 'claw (nội bộ)',
+    category: 'Lab · AI gateway',
+    status: 'lab',
+    shortDesc: 'Dashboard quản trị AI gateway — channels, messages, cron job, usage cost. Next.js 16 admin app phục vụ ops cho fleet.',
+    colorClass: 'from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-500/10 dark:via-teal-500/5 dark:to-cyan-500/10',
+    code: {
+      stack: ['Next.js 16', 'TypeScript', 'Tailwind', 'Express gateway'],
+      highlights: [
+        'Single-pane control AI gateway: channels / messages / cron / usage / logs',
+        'Auth context client + axios interceptor — gateway up/down trạng thái realtime',
+        'Doctor page chạy diagnostic: ping gateway, kiểm tra cron, dump logs',
+      ],
+    },
+    design: {
+      highlights: ['Dense dashboard UI — ưu tiên density > whitespace'],
+    },
+    seo: {
+      highlights: ['Tool nội bộ — noindex'],
+    },
+  },
+  {
+    slug: 'autofb',
+    name: 'AutoFB',
+    domain: 'Chrome Extension MV3',
+    category: 'Lab · Browser extension',
+    status: 'lab',
+    shortDesc: 'Chrome extension Manifest v3 — trợ lý engagement Facebook: lập lịch task, content script + background service worker chuẩn Google.',
+    colorClass: 'from-indigo-50 via-blue-50 to-sky-50 dark:from-indigo-500/10 dark:via-blue-500/5 dark:to-sky-500/10',
+    code: {
+      stack: ['Chrome MV3', 'Service Worker', 'Storage API', 'Alarms API'],
+      highlights: [
+        'Manifest v3 chuẩn Google: service worker thay background page, host_permissions tối thiểu',
+        'Content script chỉ chạy ở document_idle để không block Facebook native render',
+        'Storage API + Alarms API cho schedule task — không cần server backend',
+      ],
+    },
+    design: {
+      highlights: ['Popup compact 360×500, options page riêng cho config phức tạp'],
+    },
+    seo: {
+      highlights: ['Distribution qua Chrome Web Store, không phải web SEO'],
+    },
+  },
+  {
+    slug: 'rubik-resend',
+    name: 'Rubik Resend',
+    domain: 'design study',
+    category: 'Lab · Design study',
+    status: 'lab',
+    shortDesc: 'Bài tập tự code lại landing Resend với điểm nhấn khối Rubik 3D Three.js — học pipeline material PBR, glassmorphism, hero cinematics.',
+    colorClass: 'from-zinc-100 via-stone-100 to-neutral-100 dark:from-zinc-500/10 dark:via-stone-500/5 dark:to-neutral-500/10',
+    code: {
+      stack: ['HTML5', 'CSS', 'Three.js'],
+      highlights: [
+        'Cube 3×3×3 tự build từ BoxGeometry, 4 material variant: glossy onyx / matte void / granite / micro-grain',
+        'Sobel filter sinh normal map runtime cho granite tile — không asset đính kèm',
+        'Original implementation từ quan sát hình ảnh public — không sao chép code/asset Resend',
+      ],
+    },
+    design: {
+      highlights: [
+        'Phong cách tối + gradient text + glassmorphism — học từ Resend, áp dụng cho client riêng',
+        'Hero cinematics: cube xoay nhẹ, lighting clearcoat khoá vào palette đen',
+      ],
+    },
+    seo: {
+      highlights: ['Study artifact — không public deployment'],
     },
   },
 ]
