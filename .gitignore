@@ -42,7 +42,16 @@ next-env.d.ts
 
 # explicit nested .env (in case glob doesn't catch)
 server/.env
+.d1.env
 server/data/contact-submissions.jsonl
+
+# SQLite runtime files
+*.db-shm
+*.db-wal
+server/data/deploy.log
+
+# backup files
+*.bak
 
 # Claude Code local workspace (skills, agents, settings) — not part of project
 .claude/
