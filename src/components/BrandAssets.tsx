@@ -974,33 +974,47 @@ function GroupManifesto({ theme }: { theme: Theme }) {
 function GroupStats({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
   const t = tokens(theme)
-  // Number wallpaper. "5+" was retired — studio launched 31·03·2025
-  // (Q2/2026 = year 2), so "5+ năm" was conflating the founder's
-  // pre-studio fleet experience with the studio's own age. Replaced
-  // with "2025" launch year as a brand-grounding marker.
+  // Number wallpaper now self-labelled — each outline number paired
+  // with a small caption so the figure reads as a real, meaningful
+  // metric rather than a decorative numeral. Studio launched 31·03·2025
+  // so "5+" (founder's pre-studio fleet years) was retired earlier;
+  // "2025" now sits as the launch-year stamp.
   const stats = [
-    { num: '11+' },
-    { num: '2025' },
-    { num: '99.9' },
-    { num: '24h' },
+    { num: '11+',  label: 'sản phẩm' },
+    { num: '2025', label: 'ra mắt brand' },
+    { num: '99.9', label: '% uptime' },
+    { num: '24h',  label: 'phản hồi' },
   ]
   return (
     <div className="absolute inset-0 overflow-hidden" style={{ background: isDark ? '#06091a' : '#f5f7fc' }}>
       <Bloom color={t.bloomBlue} x="50%" y="30%" size="80%" blur={90} />
       <Grid opacity={isDark ? 0.08 : 0.16} lineColor={t.gridLine} size={72} />
-      <div className="absolute inset-0 flex items-center justify-around opacity-[0.13] pointer-events-none">
+      <div className="absolute inset-0 flex items-center justify-around pointer-events-none">
         {stats.map((s, i) => (
           <div
             key={i}
-            className="font-bold tracking-tight leading-none"
-            style={{
-              fontSize: 'clamp(5rem, 14vw, 13rem)',
-              WebkitTextStroke: `2px ${isDark ? 'white' : '#3c5cba'}`,
-              color: 'transparent',
-              transform: `translateY(${i % 2 === 0 ? '-10%' : '15%'})`,
-            }}
+            className="flex flex-col items-center gap-1"
+            style={{ transform: `translateY(${i % 2 === 0 ? '-8%' : '12%'})` }}
           >
-            {s.num}
+            <div
+              className="font-bold tracking-tight leading-none"
+              style={{
+                fontSize: 'clamp(5rem, 14vw, 13rem)',
+                WebkitTextStroke: `2px ${isDark ? 'white' : '#3c5cba'}`,
+                color: 'transparent',
+                opacity: 0.18,
+              }}
+            >
+              {s.num}
+            </div>
+            <div
+              className="text-[10px] lg:text-xs font-mono uppercase tracking-[0.32em]"
+              style={{
+                color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(60,92,186,0.50)',
+              }}
+            >
+              {s.label}
+            </div>
           </div>
         ))}
       </div>
