@@ -594,7 +594,7 @@ function AvatarBracket({ theme }: { theme: Theme }) {
           style={{ color: inkDim }}
           className="text-[9px] font-mono uppercase tracking-[0.42em]"
         >
-          studio · 2026
+          est. 31·03·2025
         </div>
       </div>
     </div>
@@ -622,7 +622,9 @@ function CoverEditorial({ theme }: { theme: Theme }) {
       <Bloom color={t.bloomBlueSoft} x="-5%" y="80%" size="55%" blur={60} />
       <div className="absolute top-[10%] left-[5%] flex items-center gap-3">
         <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={54} height={66} />
-        <span className={`${t.textLow} text-[10px] font-mono uppercase tracking-[0.32em]`}>alodev studio</span>
+        <span className={`${t.textLow} text-[10px] font-mono uppercase tracking-[0.32em]`}>
+          alodev studio · est. 2025
+        </span>
       </div>
       <div className="absolute inset-x-0 top-[42%] -translate-y-1/2 flex flex-col items-center px-[6%]">
         <div className={`${t.text} font-bold tracking-[-0.05em] leading-[0.85]`} style={{ fontSize: 'clamp(4.5rem, 13vw, 12rem)' }}>
@@ -679,13 +681,13 @@ function CoverMesh({ theme }: { theme: Theme }) {
         style={{ borderColor: ink, color: ink }}
       >
         <span className="text-[9px] font-mono font-bold uppercase tracking-[0.28em]">
-          Edition · 2026
+          Edition · Q2/2026
         </span>
       </div>
       {/* Vertical mark on the saffron stripe */}
       <div className="absolute left-[14%] top-1/2 -translate-y-1/2 -translate-x-1/2 origin-center" style={{ transform: 'translateX(-50%) translateY(-50%) rotate(-90deg)', whiteSpace: 'nowrap' }}>
         <span className="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-white">
-          studio · web · app
+          est. 31·03·2025
         </span>
       </div>
       {/* Main content right of saffron stripe */}
@@ -694,7 +696,7 @@ function CoverMesh({ theme }: { theme: Theme }) {
           <div className="flex items-center gap-3">
             <span className="w-8 h-[2px]" style={{ background: ink }} />
             <span className="text-[10px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
-              No. 26 · Q2
+              Year 02 · Q2/2026
             </span>
           </div>
           <div
@@ -772,7 +774,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
         <div className="relative z-10 h-full flex flex-col justify-between p-[6%]">
           <div className="flex items-center gap-3">
             <span className="w-6 h-px bg-white/40" />
-            <span className="text-white/55 text-[10px] font-mono uppercase tracking-[0.32em]">studio · 2026</span>
+            <span className="text-white/55 text-[10px] font-mono uppercase tracking-[0.32em]">est. 31·03·2025</span>
           </div>
           <div className="flex items-center gap-5">
             <Image
@@ -866,10 +868,10 @@ function CoverMasthead({ theme }: { theme: Theme }) {
       {/* Top masthead bar */}
       <div className="absolute top-[6%] inset-x-[5%] flex items-center justify-between border-y" style={{ borderColor: ink }}>
         <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
-          Vol. 5 — No. 26
+          Year 02 — Q2/2026
         </div>
         <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
-          Q2 · 2026
+          Est. 31·03·2025
         </div>
         <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
           alodev.vn
@@ -958,6 +960,7 @@ function GroupManifesto({ theme }: { theme: Theme }) {
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             Đang nhận dự án Q2/2026
           </span>
+          <span className={`${t.textXLow} text-xs font-mono uppercase tracking-[0.2em]`}>est. 31·03·2025</span>
           <span className={`${t.textXLow} text-xs font-mono uppercase tracking-[0.2em]`}>alodev.vn</span>
         </div>
         <div className={`pt-4 border-t ${t.borderLine} max-w-md`}>
@@ -971,9 +974,13 @@ function GroupManifesto({ theme }: { theme: Theme }) {
 function GroupStats({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
   const t = tokens(theme)
+  // Number wallpaper. "5+" was retired — studio launched 31·03·2025
+  // (Q2/2026 = year 2), so "5+ năm" was conflating the founder's
+  // pre-studio fleet experience with the studio's own age. Replaced
+  // with "2025" launch year as a brand-grounding marker.
   const stats = [
     { num: '11+' },
-    { num: '5+' },
+    { num: '2025' },
     { num: '99.9' },
     { num: '24h' },
   ]
@@ -1175,7 +1182,7 @@ function GroupBlueprint({ theme }: { theme: Theme }) {
         </div>
         <div className="text-right">
           <div className="text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
-            Drawn by
+            Drawn by · Est. 31·03·2025
           </div>
           <div className="text-sm font-bold" style={{ color: ink }}>alodev studio</div>
         </div>

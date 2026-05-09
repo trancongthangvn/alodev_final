@@ -16,7 +16,11 @@ export function organizationSchema() {
     image: `${SITE_URL}/og.png`,
     description: 'Founder-led studio chuyên thiết kế website doanh nghiệp, lập trình app mobile (iOS / Android), xây dựng hệ thống quản trị (CRM, ERP) và tự động hoá AI cho doanh nghiệp Việt Nam.',
     slogan: 'Thiết kế website & lập trình app chuyên nghiệp — source code thuộc về bạn',
-    foundingDate: '2021-01-01',
+    // Studio brand alodev.vn went public 2025-03-31 (the website launch
+    // date). Founder's fleet operations pre-date the brand by ~4 years
+    // — those years live in the milestones timeline, not as the brand's
+    // foundingDate. Schema reflects the brand entity, not the founder.
+    foundingDate: '2025-03-31',
     founder: { '@type': 'Person', name: 'Trần Công Thắng' },
     address: {
       '@type': 'PostalAddress',
