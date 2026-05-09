@@ -42,7 +42,7 @@ export default function BrandAssets() {
             </span>
           </div>
           <h2 className="h-section mt-3 text-gray-900 dark:text-white">
-            Bảy biến thể. Hai sắc thái. Một bộ nhận diện.
+            Tám biến thể. Hai sắc thái. Một bộ nhận diện.
           </h2>
           <p className="mt-4 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed">
             Mỗi card có toggle <strong>Tối / Sáng</strong> để khớp page Facebook của bạn,
@@ -577,7 +577,7 @@ function CoverEditorial({ theme }: { theme: Theme }) {
           alodev
         </div>
         <div className={`mt-3 ${t.textMid} text-base lg:text-xl font-medium tracking-wide`}>
-          Studio thiết kế &amp; phát triển web/app — founder-led.
+          Thiết kế web · Lập trình app · CRM/ERP · Tự động hoá AI
         </div>
       </div>
       <div className="absolute bottom-[8%] inset-x-0 px-[5%] flex items-center justify-between gap-3 flex-wrap">
@@ -615,7 +615,7 @@ function CoverMesh({ theme }: { theme: Theme }) {
           <div className="text-right">
             <div className={`${t.text} text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
             <div className={`mt-3 ${t.textHigh} text-sm lg:text-base font-medium`}>
-              Founder-led · web · app · CRM/ERP
+              Web · App · CRM/ERP · Tự động hoá AI
             </div>
             <div className="mt-3 flex justify-end">
               <ContactStrip theme={theme} size="xs" />
@@ -703,7 +703,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
                 alodev
               </div>
               <div className="mt-2 text-white/85 text-sm lg:text-base font-medium">
-                Studio thiết kế &amp; phát triển web/app
+                Web · App · CRM/ERP · Tự động hoá AI
               </div>
             </div>
           </div>
@@ -739,12 +739,12 @@ function CoverSplit({ theme }: { theme: Theme }) {
 
         <div className="relative z-10">
           <div className={`${t.textLow} text-[10px] font-mono uppercase tracking-[0.32em] mb-3`}>
-            ─── giá trị cam kết
+            ─── cam kết bàn giao
           </div>
           <ul className={`space-y-1.5 ${t.textHigh} text-sm lg:text-base font-medium`}>
             <li className="flex items-start gap-2">
               <span className="text-brand-500 mt-1">▸</span>
-              <span>Founder trực tiếp viết code</span>
+              <span>Tốc độ tải nhanh · Chuẩn SEO</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-brand-500 mt-1">▸</span>
@@ -752,7 +752,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-brand-500 mt-1">▸</span>
-              <span>Bàn giao đúng hợp đồng</span>
+              <span>Bàn giao đúng hạn · Bảo hành 6–12 tháng</span>
             </li>
           </ul>
         </div>
@@ -785,7 +785,7 @@ function GroupManifesto({ theme }: { theme: Theme }) {
           <div className={`${t.text} text-3xl lg:text-5xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
         </div>
         <div className={`${t.text} font-bold tracking-tight leading-[0.95]`} style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}>
-          Founder-led studio.<br />
+          Code chuẩn. Bàn giao đúng hạn.<br />
           <span className="text-brand-500">Source code thuộc về bạn.</span>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
@@ -838,7 +838,7 @@ function GroupStats({ theme }: { theme: Theme }) {
           <div className="flex flex-col gap-2.5">
             <div className={`${t.text} text-4xl lg:text-6xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
             <div className={`${t.textHigh} text-sm lg:text-base`}>
-              Founder-led studio — biến ý tưởng thành sản phẩm thật.
+              Web · App · CRM/ERP — biến ý tưởng thành sản phẩm thật.
             </div>
             <div className={`pt-2 border-t ${t.borderLine}`}>
               <ContactStrip theme={theme} />
@@ -885,7 +885,7 @@ function GroupMonogram({ theme }: { theme: Theme }) {
           <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={108} height={131} className={t.logoShadow} />
           <div className={`${t.text} text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
           <div className={`${t.textHigh} text-sm lg:text-base text-center max-w-md`}>
-            Studio thiết kế &amp; phát triển web/app — founder-led, source-code-yours.
+            Web · App · CRM/ERP · Tự động hoá AI — source code thuộc về bạn.
           </div>
           <div className={`pt-3 border-t ${t.borderLine} w-full flex justify-center`}>
             <ContactStrip theme={theme} />
