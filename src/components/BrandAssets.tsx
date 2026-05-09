@@ -300,6 +300,91 @@ function Grid({
   )
 }
 
+/* Contact strip — email + phone + telegram with small inline SVG icons.
+   Two layouts: 'inline' (one row, separators between), 'stack' (column,
+   one item per line). `tone` matches the surrounding card backdrop. */
+type ContactProps = {
+  layout?: 'inline' | 'stack'
+  tone?: 'light' | 'dim' | 'muted'
+  size?: 'xs' | 'sm' | 'md'
+  prefix?: string
+}
+function ContactStrip({
+  layout = 'inline',
+  tone = 'dim',
+  size = 'sm',
+  prefix,
+}: ContactProps) {
+  const items = [
+    { icon: <IconMail />, label: 'hello@alodev.vn' },
+    { icon: <IconPhone />, label: '0587 789 456' },
+    { icon: <IconTelegram />, label: '@alodevvn' },
+  ]
+  const colorMap = {
+    light: 'text-white/95',
+    dim: 'text-white/75',
+    muted: 'text-white/55',
+  } as const
+  const sizeMap = {
+    xs: 'text-[10px]',
+    sm: 'text-xs',
+    md: 'text-sm',
+  } as const
+  const cls = `${colorMap[tone]} ${sizeMap[size]} font-mono`
+  if (layout === 'stack') {
+    return (
+      <div className={`flex flex-col gap-1.5 ${cls}`}>
+        {prefix && (
+          <div className="uppercase tracking-[0.22em] text-[10px] text-white/45 mb-0.5">
+            {prefix}
+          </div>
+        )}
+        {items.map((it, i) => (
+          <div key={i} className="inline-flex items-center gap-2">
+            <span className="text-white/55">{it.icon}</span>
+            <span>{it.label}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  return (
+    <div className={`inline-flex flex-wrap items-center gap-x-3 gap-y-1 ${cls}`}>
+      {items.map((it, i) => (
+        <span key={i} className="inline-flex items-center gap-1.5">
+          <span className="text-white/55">{it.icon}</span>
+          <span>{it.label}</span>
+          {i < items.length - 1 && <span className="text-white/25 ml-1.5">·</span>}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+/* Inline SVG icons sized to font (1em). currentColor inherits. */
+function IconMail() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 7l9 6 9-6" />
+    </svg>
+  )
+}
+function IconPhone() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  )
+}
+function IconTelegram() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" />
+    </svg>
+  )
+}
+
 /* Soft radial bloom. */
 function Bloom({
   color = 'rgba(95,148,247,0.32)',
@@ -426,10 +511,10 @@ function CoverEditorial() {
         </span>
       </div>
       {/* Editorial wordmark — fills the layout */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center px-[6%]">
+      <div className="absolute inset-x-0 top-[42%] -translate-y-1/2 flex flex-col items-center px-[6%]">
         <div
           className="text-white font-bold tracking-[-0.05em] leading-[0.85]"
-          style={{ fontSize: 'clamp(5rem, 14.5vw, 13rem)' }}
+          style={{ fontSize: 'clamp(4.5rem, 13vw, 12rem)' }}
         >
           alodev
         </div>
@@ -437,10 +522,13 @@ function CoverEditorial() {
           Studio thiết kế &amp; phát triển web/app — founder-led.
         </div>
       </div>
-      {/* Footer-line */}
-      <div className="absolute bottom-[8%] right-[5%] flex items-center gap-3 text-white/40 text-[10px] font-mono uppercase tracking-[0.28em]">
-        <span className="w-8 h-px bg-white/30" />
-        alodev.vn
+      {/* Contact strip — bottom row */}
+      <div className="absolute bottom-[8%] inset-x-0 px-[5%] flex items-center justify-between gap-3 flex-wrap">
+        <ContactStrip layout="inline" tone="dim" size="sm" />
+        <div className="flex items-center gap-3 text-white/40 text-[10px] font-mono uppercase tracking-[0.28em]">
+          <span className="w-8 h-px bg-white/30" />
+          alodev.vn
+        </div>
       </div>
     </div>
   )
@@ -480,6 +568,9 @@ function CoverMesh() {
             </div>
             <div className="mt-3 text-white/85 text-sm lg:text-base font-medium">
               Founder-led · web · app · CRM/ERP
+            </div>
+            <div className="mt-3 flex justify-end">
+              <ContactStrip layout="inline" tone="dim" size="xs" />
             </div>
           </div>
         </div>
@@ -526,6 +617,27 @@ function CoverCode() {
               <span className="text-brand-400">{'<>'}</span> code is craft —{' '}
               <span className="text-emerald-400">{'/* shipped */'}</span>
             </div>
+            {/* Contact lines styled as code comments */}
+            <div className="mt-3 font-mono text-[11px] lg:text-xs text-white/60 leading-relaxed">
+              <div>
+                <span className="text-emerald-400/80">// reach us</span>
+              </div>
+              <div>
+                <span className="text-brand-400">mail</span>
+                <span className="text-white/40">: </span>
+                hello@alodev.vn
+              </div>
+              <div>
+                <span className="text-brand-400">tel</span>
+                <span className="text-white/40">: </span>
+                0587 789 456
+              </div>
+              <div>
+                <span className="text-brand-400">tg</span>
+                <span className="text-white/40">: </span>
+                @alodevvn
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -559,12 +671,12 @@ function GroupManifesto() {
         </div>
         <div
           className="text-white font-bold tracking-tight leading-[0.95]"
-          style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)' }}
+          style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
         >
           Founder-led studio.<br />
           <span className="text-brand-400">Source code thuộc về bạn.</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-white/85 text-xs font-mono">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             Đang nhận dự án Q2/2026
@@ -572,6 +684,10 @@ function GroupManifesto() {
           <span className="text-white/40 text-xs font-mono uppercase tracking-[0.2em]">
             alodev.vn
           </span>
+        </div>
+        {/* Contact strip — divider then 3 lines */}
+        <div className="pt-4 border-t border-white/10 max-w-md">
+          <ContactStrip layout="inline" tone="dim" size="sm" />
         </div>
       </div>
     </div>
@@ -608,7 +724,7 @@ function GroupStats() {
       </div>
       {/* Center brand block */}
       <div className="relative z-10 h-full flex items-center px-[7%]">
-        <div className="flex items-center gap-6 bg-black/35 backdrop-blur-md ring-1 ring-white/10 rounded-2xl px-7 py-6">
+        <div className="flex items-center gap-6 bg-black/45 backdrop-blur-md ring-1 ring-white/10 rounded-2xl px-7 py-6">
           <Image
             src="/brand/logo-symbol.svg"
             alt="Alodev logo"
@@ -616,12 +732,15 @@ function GroupStats() {
             height={107}
             className="drop-shadow-[0_8px_24px_rgba(95,148,247,0.5)]"
           />
-          <div>
+          <div className="flex flex-col gap-2.5">
             <div className="text-white text-4xl lg:text-6xl font-bold tracking-tight leading-[0.9]">
               alodev
             </div>
-            <div className="mt-2 text-white/80 text-sm lg:text-base">
+            <div className="text-white/80 text-sm lg:text-base">
               Founder-led studio — biến ý tưởng thành sản phẩm thật.
+            </div>
+            <div className="pt-2 border-t border-white/10">
+              <ContactStrip layout="inline" tone="dim" size="sm" />
             </div>
           </div>
         </div>
@@ -667,12 +786,12 @@ function GroupMonogram() {
       <Bloom color="rgba(60,92,186,0.5)" x="50%" y="50%" size="55%" blur={80} />
       {/* Center brand block */}
       <div className="relative z-10 h-full flex items-center justify-center px-[7%]">
-        <div className="flex flex-col items-center gap-5 bg-black/40 backdrop-blur-md ring-1 ring-white/10 rounded-3xl px-10 lg:px-16 py-8 lg:py-10">
+        <div className="flex flex-col items-center gap-5 bg-black/45 backdrop-blur-md ring-1 ring-white/10 rounded-3xl px-10 lg:px-16 py-8 lg:py-10">
           <Image
             src="/brand/logo-symbol.svg"
             alt="Alodev logo"
-            width={120}
-            height={146}
+            width={108}
+            height={131}
             className="drop-shadow-[0_8px_28px_rgba(95,148,247,0.55)]"
           />
           <div className="text-white text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]">
@@ -680,6 +799,9 @@ function GroupMonogram() {
           </div>
           <div className="text-white/75 text-sm lg:text-base text-center max-w-md">
             Studio thiết kế &amp; phát triển web/app — founder-led, source-code-yours.
+          </div>
+          <div className="pt-3 border-t border-white/10 w-full flex justify-center">
+            <ContactStrip layout="inline" tone="dim" size="sm" />
           </div>
         </div>
       </div>
