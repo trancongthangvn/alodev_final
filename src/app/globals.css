@@ -556,6 +556,67 @@ body.cursor-text .cursor-ring { opacity: 0; }
   .skew-on-scroll { transform: none !important; }
 }
 
+/* ─── Horizontal pin scroll (HorizontalPin.tsx) ───
+   Akaru/lusion-style pinned section. Desktop only — mobile/touch/reduced
+   motion render the .h-pin-fallback variant: native horizontal overflow
+   with scroll-snap so swipe still works naturally. */
+.h-pin-wrap {
+  position: relative;
+  /* JS sets --pin-h dynamically once it's measured the track. Default to
+     100vh so SSR HTML reserves at least one viewport of space (avoids
+     CLS during the brief frame between mount and measure). */
+  height: var(--pin-h, 100vh);
+}
+.h-pin-stick {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.h-pin-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.h-pin-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  /* Don't shrink children — track is sized by content, not viewport. */
+  width: max-content;
+  will-change: transform;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+/* Fallback for mobile / touch / reduced-motion: collapse the pin and let
+   the track scroll horizontally with native momentum + snap. */
+.h-pin-wrap.h-pin-fallback {
+  height: auto;
+}
+.h-pin-fallback .h-pin-stick {
+  position: relative;
+  height: auto;
+}
+.h-pin-fallback .h-pin-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  /* Hide scrollbar (still scrollable). */
+  scrollbar-width: none;
+}
+.h-pin-fallback .h-pin-viewport::-webkit-scrollbar { display: none; }
+.h-pin-fallback .h-pin-track {
+  transform: none !important;
+  height: auto;
+}
+.h-pin-fallback .h-pin-track > * {
+  scroll-snap-align: start;
+}
+
 /* ─── Big editorial type — for hero/section showpieces ─── */
 .editorial-display {
   font-weight: 700;

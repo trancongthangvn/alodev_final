@@ -10,6 +10,7 @@ import FeaturedTabs from '@/components/FeaturedTabs'
 import HeroCube from '@/components/HeroCube'
 import StackStrip from '@/components/StackStrip'
 import Marquee from '@/components/Marquee'
+import HorizontalPin from '@/components/HorizontalPin'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -513,47 +514,83 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── PORTFOLIO GRID ─── */}
-      <section id="du-an" className="py-10 lg:py-24 bg-white dark:bg-ink-950" data-section-name="Portfolio">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-8 lg:mb-12">
+      {/* ─── PORTFOLIO ───
+           Desktop (lg+): pinned horizontal-scroll gallery — section pins
+           at top of viewport while user's vertical scroll translates the
+           card track horizontally. Akaru/lusion signature pattern.
+           Mobile / touch / reduced-motion: HorizontalPin auto-falls back
+           to native horizontal swipe with scroll-snap (touch-friendly,
+           no fight with native momentum). */}
+      <section id="du-an" className="bg-white dark:bg-ink-950" data-section-name="Portfolio">
+        {/* Section header — kept vertical, sits above the pin. User reads
+            this first, then scrolls into the pinned region. */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 lg:pt-24 pb-6 lg:pb-12">
+          <div className="reveal flex items-end justify-between flex-wrap gap-4">
             <div className="max-w-2xl">
               <Eyebrow>Portfolio</Eyebrow>
               <h2 className="h-section mt-3 text-gray-900 dark:text-white">Sản phẩm Alodev đã triển khai.</h2>
+              <p className="hidden lg:block mt-3 text-sm text-gray-500 dark:text-ink-400">
+                Cuộn dọc — danh mục trượt ngang.
+              </p>
             </div>
             <Link href="/du-an" className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 inline-flex items-center gap-1">Xem tất cả <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></Link>
           </div>
-          <div className="reveal-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {featured.map((p) => (
-              <Link key={p.slug} href={`/du-an/${p.slug}`} className="lift spotlight group rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700 hover:shadow-xl hover:shadow-brand-500/10">
-                <div className={`relative aspect-[16/10] bg-gradient-to-br ${p.colorClass} flex items-center justify-center overflow-hidden`}>
-                  <div className="text-center px-4">
-                    <div className="text-2xl font-bold text-gray-700 dark:text-ink-200 dark:opacity-90">{p.name}</div>
-                    <div className="mt-1 text-xs text-gray-600 dark:text-ink-400 font-mono">{p.domain}</div>
-                  </div>
-                  <span className="absolute top-3 right-3 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-300 font-semibold">{p.category.split('·')[0].trim()}</span>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{p.name}</h3>
-                  <p className="mt-2 text-sm text-gray-600 dark:text-ink-400 line-clamp-2">{p.shortDesc}</p>
-                  {p.code.metrics && p.code.metrics[0] && (
-                    <div className="mt-4 pt-4 border-t border-gray-100 dark:border-ink-800 flex items-center justify-between">
-                      <div className="flex flex-wrap gap-1">
-                        {p.code.stack.slice(0, 2).map((t) => (
-                          <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-tech-50 dark:bg-tech-900/30 text-tech-700 dark:text-tech-300 font-medium font-mono ring-1 ring-tech-100 dark:ring-tech-800/40">{t}</span>
-                        ))}
-                      </div>
-                      <div className="tabular text-xs">
-                        <span className="font-bold text-gray-900 dark:text-white">{p.code.metrics[0].value}</span>
-                        <span className="text-gray-500 dark:text-ink-500 ml-1">{p.code.metrics[0].label.toLowerCase()}</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
         </div>
+
+        <HorizontalPin ariaLabel="Danh mục dự án">
+          {featured.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/du-an/${p.slug}`}
+              className="lift spotlight group flex-none w-[78vw] sm:w-[420px] lg:w-[clamp(380px,32vw,520px)] rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700 hover:shadow-xl hover:shadow-brand-500/10"
+            >
+              <div className={`relative aspect-[4/5] bg-gradient-to-br ${p.colorClass} flex items-center justify-center overflow-hidden`}>
+                <div className="text-center px-4">
+                  <div className="text-3xl lg:text-4xl font-bold text-gray-700 dark:text-ink-200 dark:opacity-90">{p.name}</div>
+                  <div className="mt-2 text-xs text-gray-600 dark:text-ink-400 font-mono">{p.domain}</div>
+                </div>
+                <span className="absolute top-4 left-4 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-300 font-semibold">{p.category.split('·')[0].trim()}</span>
+                <span className="absolute top-4 right-4 text-[10px] tabular text-white/80 mix-blend-difference font-mono">
+                  {String(featured.indexOf(p) + 1).padStart(2, '0')} / {String(featured.length).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="p-5 lg:p-6">
+                <h3 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{p.name}</h3>
+                <p className="mt-2 text-sm text-gray-600 dark:text-ink-400 line-clamp-2">{p.shortDesc}</p>
+                {p.code.metrics && p.code.metrics[0] && (
+                  <div className="mt-4 pt-4 border-t border-gray-100 dark:border-ink-800 flex items-center justify-between">
+                    <div className="flex flex-wrap gap-1">
+                      {p.code.stack.slice(0, 2).map((t) => (
+                        <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-tech-50 dark:bg-tech-900/30 text-tech-700 dark:text-tech-300 font-medium font-mono ring-1 ring-tech-100 dark:ring-tech-800/40">{t}</span>
+                      ))}
+                    </div>
+                    <div className="tabular text-xs">
+                      <span className="font-bold text-gray-900 dark:text-white">{p.code.metrics[0].value}</span>
+                      <span className="text-gray-500 dark:text-ink-500 ml-1">{p.code.metrics[0].label.toLowerCase()}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Link>
+          ))}
+          {/* End-of-track CTA card — common pattern in akaru-style galleries:
+              the "Xem tất cả" lives at the end as the natural final swipe. */}
+          <Link
+            href="/du-an"
+            className="lift group flex-none w-[78vw] sm:w-[420px] lg:w-[clamp(380px,32vw,520px)] rounded-2xl border border-dashed border-gray-300 dark:border-ink-700 bg-cream-50 dark:bg-ink-900/40 overflow-hidden flex flex-col items-center justify-center text-center p-10 hover:border-brand-500 hover:bg-white dark:hover:bg-ink-900 transition"
+          >
+            <div className="aspect-[4/5] w-full flex flex-col items-center justify-center">
+              <div className="text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">+</div>
+              <div className="mt-4 text-lg font-semibold text-gray-900 dark:text-white">Xem tất cả dự án</div>
+              <div className="mt-2 text-sm text-gray-600 dark:text-ink-400">19+ sản phẩm — 4 nhóm thị trường</div>
+              <div className="mt-6 inline-flex items-center gap-2 text-brand-600 dark:text-brand-400 text-sm font-semibold group-hover:gap-3 transition-all">
+                /du-an <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </div>
+          </Link>
+        </HorizontalPin>
+
+        <div className="lg:hidden h-6" aria-hidden="true" />
       </section>
 
       {/* ─── STACK STRIP — slim, cube now lives in hero ─── */}
