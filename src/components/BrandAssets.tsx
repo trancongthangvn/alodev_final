@@ -97,6 +97,14 @@ export default function BrandAssets() {
             exportW={EXPORT_W.cover}
             renderDesign={(t) => <CoverCode theme={t} />}
           />
+          <BrandCard
+            id="brand-cover-split"
+            label="Cover D — Split Panel"
+            sublabel="2 cột bất đối xứng — brand block + value props"
+            aspect="aspect-[820/428]"
+            exportW={EXPORT_W.cover}
+            renderDesign={(t) => <CoverSplit theme={t} />}
+          />
         </div>
 
         <SubHead label="Group cover 16:9" hint="1920×1080 · FB group · LinkedIn org · YouTube channel" />
@@ -645,27 +653,12 @@ function CoverCode({ theme }: { theme: Theme }) {
           <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={112} height={136} className={t.logoShadow} />
           <div>
             <div className={`${t.text} text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
-            <div className={`mt-4 ${t.textHigh} text-sm lg:text-base font-mono`}>
+            <div className={`mt-3 ${t.textHigh} text-sm lg:text-base font-mono`}>
               <span className="text-brand-500">{'<>'}</span> code is craft —{' '}
               <span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>{'/* shipped */'}</span>
             </div>
-            <div className={`mt-3 font-mono text-[11px] lg:text-xs ${t.textMid} leading-relaxed`}>
-              <div><span className={isDark ? 'text-emerald-400/80' : 'text-emerald-600/80'}>// reach us</span></div>
-              <div>
-                <span className="text-brand-500">mail</span>
-                <span className={t.textXLow}>: </span>
-                hello@alodev.vn
-              </div>
-              <div>
-                <span className="text-brand-500">tel</span>
-                <span className={t.textXLow}>: </span>
-                0587 789 456
-              </div>
-              <div>
-                <span className="text-brand-500">tg</span>
-                <span className={t.textXLow}>: </span>
-                @alodevvn
-              </div>
+            <div className="mt-4">
+              <ContactStrip theme={theme} />
             </div>
           </div>
         </div>
@@ -673,6 +666,102 @@ function CoverCode({ theme }: { theme: Theme }) {
       <div className={`absolute top-[10%] right-[6%] inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${isDark ? 'bg-white/8' : 'bg-white/70'} backdrop-blur ring-1 ${isDark ? 'ring-white/15' : 'ring-[#3c5cba]/15'}`}>
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
         <span className={`${t.textHigh} text-[10px] font-mono uppercase tracking-[0.22em]`}>Q2/2026 · open</span>
+      </div>
+    </div>
+  )
+}
+
+/* Cover D — Split Panel: 60/40 asymmetric split. Left side bold dark
+   brand block (always dark for accent contrast); right side adapts to
+   theme, holding 3 quick value props + contact. The split itself is the
+   design gesture. */
+function CoverSplit({ theme }: { theme: Theme }) {
+  const isDark = theme === 'dark'
+  const t = tokens(theme)
+  return (
+    <div className="absolute inset-0 flex">
+      {/* LEFT 60% — always dark brand panel */}
+      <div className="relative w-[58%] h-full overflow-hidden" style={{ background: '#06091a' }}>
+        <Bloom color="rgba(95,148,247,0.45)" x="35%" y="55%" size="80%" blur={70} />
+        <Bloom color="rgba(244,129,26,0.18)" x="85%" y="20%" size="50%" blur={60} />
+        <Grid opacity={0.10} lineColor="rgba(255,255,255,0.4)" size={56} maskImage="radial-gradient(ellipse at 35% 55%, #000 30%, transparent 80%)" />
+        <div className="relative z-10 h-full flex flex-col justify-between p-[6%]">
+          <div className="flex items-center gap-3">
+            <span className="w-6 h-px bg-white/40" />
+            <span className="text-white/55 text-[10px] font-mono uppercase tracking-[0.32em]">studio · 2026</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <Image
+              src="/brand/logo-symbol.svg"
+              alt="Alodev logo"
+              width={120}
+              height={146}
+              className="drop-shadow-[0_8px_24px_rgba(95,148,247,0.5)]"
+            />
+            <div>
+              <div className="text-white text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]">
+                alodev
+              </div>
+              <div className="mt-2 text-white/85 text-sm lg:text-base font-medium">
+                Studio thiết kế &amp; phát triển web/app
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="text-white/70 text-[10px] font-mono uppercase tracking-[0.22em]">
+              Đang nhận dự án Q2/2026
+            </span>
+          </div>
+        </div>
+        {/* Slanted divider — brand color stripe */}
+        <div
+          className="absolute right-0 top-0 bottom-0 w-[6%]"
+          style={{
+            background: 'linear-gradient(180deg, rgba(244,129,26,0.7) 0%, rgba(95,148,247,0.5) 100%)',
+            clipPath: 'polygon(70% 0, 100% 0, 30% 100%, 0% 100%)',
+          }}
+        />
+      </div>
+
+      {/* RIGHT 42% — theme-adaptive panel */}
+      <div
+        className="relative w-[42%] h-full overflow-hidden flex flex-col justify-between p-[5%]"
+        style={{ background: isDark ? '#10172e' : '#f3f6fc' }}
+      >
+        <Bloom color={isDark ? 'rgba(95,148,247,0.18)' : 'rgba(95,148,247,0.20)'} x="80%" y="20%" size="60%" blur={60} />
+        <Grid
+          opacity={isDark ? 0.06 : 0.14}
+          lineColor={t.gridLine}
+          size={36}
+          maskImage="radial-gradient(circle at 60% 50%, #000 40%, transparent 90%)"
+        />
+
+        <div className="relative z-10">
+          <div className={`${t.textLow} text-[10px] font-mono uppercase tracking-[0.32em] mb-3`}>
+            ─── giá trị cam kết
+          </div>
+          <ul className={`space-y-1.5 ${t.textHigh} text-sm lg:text-base font-medium`}>
+            <li className="flex items-start gap-2">
+              <span className="text-brand-500 mt-1">▸</span>
+              <span>Founder trực tiếp viết code</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-brand-500 mt-1">▸</span>
+              <span>Source code thuộc về bạn</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-brand-500 mt-1">▸</span>
+              <span>Bàn giao đúng hợp đồng</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="relative z-10">
+          <div className={`pt-3 border-t ${t.borderLine}`}>
+            <ContactStrip theme={theme} layout="stack" size="xs" />
+          </div>
+        </div>
       </div>
     </div>
   )
