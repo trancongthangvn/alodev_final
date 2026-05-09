@@ -1404,6 +1404,20 @@ function OgMonogram({ theme }: { theme: Theme }) {
       {/* Inner hairline frame */}
       <div className="absolute inset-[3.5%]" style={{ border: `1px solid ${inkXDim}` }} />
 
+      {/* Slim saffron accent bar — left edge, runs vertically inside the
+          frame. Single brand color signal, very thin (3px) so it reads
+          as a print-bound spine, not decoration. */}
+      <div
+        className="absolute"
+        style={{
+          left: '3.5%',
+          top: '14%',
+          bottom: '14%',
+          width: 3,
+          background: accent,
+        }}
+      />
+
       {/* Printer registration marks (crosshair + circle) at 4 corners */}
       {[
         { top: '5.5%', left: '4.5%' },
@@ -1426,8 +1440,8 @@ function OgMonogram({ theme }: { theme: Theme }) {
         </div>
       ))}
 
-      {/* Top eyebrow line */}
-      <div className="absolute top-[10.5%] inset-x-0 flex items-center justify-center gap-4">
+      {/* Top eyebrow line — single source of dateline truth */}
+      <div className="absolute top-[12%] inset-x-0 flex items-center justify-center gap-4">
         <span className="w-8 h-px" style={{ background: ink, opacity: 0.45 }} />
         <span className="text-[10px] lg:text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
           alodev studio · est. 31·03·2025
@@ -1435,17 +1449,12 @@ function OgMonogram({ theme }: { theme: Theme }) {
         <span className="w-8 h-px" style={{ background: ink, opacity: 0.45 }} />
       </div>
 
-      {/* Center brand block — ornamental rules, logo, wordmark, tagline */}
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center gap-5">
-        {/* Top ornamental rule with saffron diamond */}
-        <div className="flex items-center gap-3 w-full justify-center">
-          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
-          <span className="w-2 h-2 rotate-45" style={{ background: accent }} />
-          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
-        </div>
-
-        {/* Logo + wordmark — tighter letter-spacing, larger scale */}
-        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={140} height={171} />
+      {/* Center brand block — logo + wordmark + tagline.
+          International-standard restraint: no ornament rules, no diamond
+          marks. Brand mark breathes. Reference: Vercel, Linear, Stripe,
+          Pentagram, Aesop. */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center gap-7">
+        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={160} height={195} />
         <div
           className="font-bold leading-[0.8]"
           style={{
@@ -1462,27 +1471,14 @@ function OgMonogram({ theme }: { theme: Theme }) {
         >
           Web · App · CRM/ERP · AI
         </div>
-
-        {/* Bottom ornamental rule */}
-        <div className="flex items-center gap-3 w-full justify-center">
-          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
-          <span className="w-2 h-2 rotate-45" style={{ background: accent }} />
-          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
-        </div>
       </div>
 
-      {/* Bottom — Edition + URL with hairline accents.
-          Moved closer to the inner-frame edge (bottom-[7.5%]) so it
-          sits well clear of the center-block bottom ornamental rule. */}
-      <div className="absolute bottom-[7.5%] inset-x-0 flex flex-col items-center gap-2.5">
-        <div className="flex items-center gap-3">
-          <span className="w-6 h-px" style={{ background: ink, opacity: 0.35 }} />
-          <span className="text-[9px] lg:text-[10px] font-mono uppercase tracking-[0.42em]" style={{ color: inkXDim }}>
-            Edition No. 01 · Studio Plate
-          </span>
-          <span className="w-6 h-px" style={{ background: ink, opacity: 0.35 }} />
-        </div>
-        <span className="text-sm lg:text-base font-bold tracking-[-0.02em]" style={{ color: ink }}>
+      {/* Bottom — URL only, no contact / edition / serial.
+          OG image is a "knock on the door" — its job is to make viewers
+          click. Contact lives on the website, not on the share thumbnail
+          (Vercel/Linear/Stripe convention). */}
+      <div className="absolute bottom-[12%] inset-x-0 flex items-center justify-center">
+        <span className="text-base lg:text-lg font-bold tracking-[-0.02em]" style={{ color: ink }}>
           alodev.vn
         </span>
       </div>

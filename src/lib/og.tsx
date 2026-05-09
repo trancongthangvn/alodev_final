@@ -210,3 +210,218 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
     },
   )
 }
+
+/**
+ * renderOgHome — homepage OG image (Monogram Center / Studio Plate).
+ *
+ * International-standard restraint: logo + wordmark + tagline + URL.
+ * Print-craft refinements: 4 corner registration marks, inner hairline
+ * frame, slim saffron stripe at the left edge, halftone paper texture.
+ *
+ * Reference: Vercel / Linear / Stripe / Pentagram / Aesop OG conventions.
+ */
+export async function renderOgHome() {
+  const fonts = await loadFonts()
+  // Read logo SVG and inline as data URI so Satori can rasterize it.
+  const logoBuf = await readFile(join(process.cwd(), 'public/brand/logo-symbol.svg'))
+  const logoDataUri = `data:image/svg+xml;base64,${logoBuf.toString('base64')}`
+
+  // Palette — light cream paper, deep navy ink, saffron accent.
+  // Light theme reads cleaner at thumbnail size in social feeds where
+  // most platforms surround the preview with their own dark chrome.
+  const bg = '#f5f3ec'
+  const ink = '#0a1226'
+  const inkDim = 'rgba(10, 18, 38, 0.55)'
+  const inkXDim = 'rgba(10, 18, 38, 0.22)'
+  const accent = '#d96b09'
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          background: bg,
+          color: ink,
+          fontFamily: 'BeVNPro',
+          position: 'relative',
+        }}
+      >
+        {/* Halftone dot paper texture — subtle riso warmth */}
+        <div
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundImage: 'radial-gradient(rgba(217,107,9,0.06) 1.2px, transparent 1.4px)',
+            backgroundSize: '14px 14px',
+          }}
+        />
+
+        {/* Inner hairline frame */}
+        <div
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            top: 22,
+            right: 22,
+            bottom: 22,
+            left: 22,
+            border: `1px solid ${inkXDim}`,
+          }}
+        />
+
+        {/* Slim saffron stripe — left edge, mid-section */}
+        <div
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            left: 22,
+            top: 88,
+            bottom: 88,
+            width: 3,
+            background: accent,
+          }}
+        />
+
+        {/* Four printer registration marks (inline SVG) */}
+        {[
+          { top: 32, left: 32 },
+          { top: 32, right: 32 },
+          { bottom: 32, left: 32 },
+          { bottom: 32, right: 32 },
+        ].map((pos, i) => (
+          <div
+            key={i}
+            style={{
+              display: 'flex',
+              position: 'absolute',
+              ...pos,
+              width: 32,
+              height: 32,
+              opacity: 0.55,
+            }}
+          >
+            <svg viewBox="0 0 28 28" width="32" height="32" fill="none" stroke={ink} strokeWidth="1">
+              <line x1="14" y1="2" x2="14" y2="11" />
+              <line x1="14" y1="17" x2="14" y2="26" />
+              <line x1="2" y1="14" x2="11" y2="14" />
+              <line x1="17" y1="14" x2="26" y2="14" />
+              <circle cx="14" cy="14" r="6.5" />
+            </svg>
+          </div>
+        ))}
+
+        {/* Top eyebrow line */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 78,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 18,
+          }}
+        >
+          <div style={{ display: 'flex', width: 50, height: 1, background: ink, opacity: 0.45 }} />
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 16,
+              fontWeight: 600,
+              letterSpacing: '0.42em',
+              textTransform: 'uppercase',
+              color: inkDim,
+            }}
+          >
+            alodev studio · est. 31·03·2025
+          </div>
+          <div style={{ display: 'flex', width: 50, height: 1, background: ink, opacity: 0.45 }} />
+        </div>
+
+        {/* Center brand block — logo + wordmark + tagline */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoDataUri} alt="" width={140} height={170} />
+          <div
+            style={{
+              display: 'flex',
+              marginTop: 36,
+              fontSize: 168,
+              fontWeight: 700,
+              letterSpacing: '-0.045em',
+              lineHeight: 0.8,
+              color: ink,
+            }}
+          >
+            alodev
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              marginTop: 38,
+              fontSize: 18,
+              fontWeight: 600,
+              letterSpacing: '0.46em',
+              paddingLeft: '0.46em',
+              textTransform: 'uppercase',
+              color: inkDim,
+            }}
+          >
+            Web · App · CRM/ERP · AI
+          </div>
+        </div>
+
+        {/* Bottom URL */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 78,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 28,
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              color: ink,
+            }}
+          >
+            alodev.vn
+          </div>
+        </div>
+      </div>
+    ),
+    {
+      ...OG_SIZE,
+      fonts: [
+        { name: 'BeVNPro', data: fonts.semibold, style: 'normal', weight: 600 },
+        { name: 'BeVNPro', data: fonts.bold, style: 'normal', weight: 700 },
+      ],
+    },
+  )
+}
