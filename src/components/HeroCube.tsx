@@ -412,6 +412,19 @@ function setupCube(
     antialias: !isMobile,
     alpha: true,
     powerPreference: 'high-performance',
+    // preserveDrawingBuffer: true → the cube canvas keeps its pixel content
+    // between compositor reads. Without this (default false), the browser
+    // clears the WebGL drawing buffer after each composite, so any frame
+    // not immediately followed by another render() call leaves an empty
+    // canvas on screen — devastating when RAF is throttled (background
+    // tab, OS power-save, hidden iframe). With preserve=true the eager
+    // render below stays painted indefinitely until animate() draws the
+    // next frame. Trade-off is a small perf hit on Safari mobile (extra
+    // buffer allocation), which we already mitigate by skipping WebGL
+    // entirely on ≤768px (StaticCube SVG fallback). Verified via Chrome
+    // MCP toDataURL inspection 2026-05-09: cube renders correctly to the
+    // canvas but the compositor was painting a cleared snapshot.
+    preserveDrawingBuffer: true,
   })
   renderer.setPixelRatio(
     isMobile
@@ -1393,6 +1406,12 @@ function setupCube(
     renderer.render(scene, camera)
     rafAnimate = requestAnimationFrame(animate)
   }
+  // Render one frame IMMEDIATELY before the RAF chain starts. Without this,
+  // the canvas stays empty until the first requestAnimationFrame fires —
+  // which can be deferred indefinitely (background tab, throttled iframe,
+  // OS power-save). Drawing once synchronously means the cube is on screen
+  // the moment setupCube returns; the RAF loop then takes over for motion.
+  try { renderer.render(scene, camera) } catch { /* ignore — animate() will retry */ }
   rafAnimate = requestAnimationFrame(animate)
 
   return () => {
