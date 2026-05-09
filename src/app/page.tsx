@@ -9,6 +9,7 @@ import QuoteCTA from '@/components/QuoteCTA'
 import FeaturedTabs from '@/components/FeaturedTabs'
 import HeroCube from '@/components/HeroCube'
 import StackStrip from '@/components/StackStrip'
+import Marquee from '@/components/Marquee'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -553,6 +554,36 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ─── KINETIC MARQUEE — akaru/lenis-style oversized rolling
+           tagline. Editorial type as gesture. Pauses on hover, speeds
+           up briefly when user scrolls fast (--scroll-vel coupling).
+           aria-hidden because the same value props are stated in
+           hero copy + Khác biệt section — this is decorative. */}
+      <section
+        className="relative py-12 lg:py-20 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 overflow-hidden"
+        aria-hidden="true"
+      >
+        <Marquee speed={70}>
+          {[
+            'Founder-led studio',
+            'Source code thuộc về bạn',
+            'Bàn giao đúng hợp đồng',
+            'Hà Nội · Việt Nam',
+            '11+ sản phẩm đang vận hành',
+            'Next.js · Node · Postgres',
+          ].map((t, i) => (
+            <span
+              key={i}
+              className="editorial-display px-8 lg:px-12 text-gray-900 dark:text-white inline-flex items-center gap-8 lg:gap-12"
+              style={{ fontSize: 'clamp(2.5rem, 9vw, 8rem)' }}
+            >
+              {t}
+              <span className="inline-block w-3 h-3 lg:w-5 lg:h-5 rounded-full bg-brand-500 align-middle" />
+            </span>
+          ))}
+        </Marquee>
       </section>
 
       {/* ─── STACK STRIP — slim, cube now lives in hero ─── */}

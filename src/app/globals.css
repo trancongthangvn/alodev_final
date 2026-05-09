@@ -371,6 +371,204 @@ a, button, [role="button"] {
 .reveal-stagger[data-revealed] > *:nth-child(8) { transition-delay: 420ms; }
 .reveal-stagger[data-revealed] > *:nth-child(n+9) { transition-delay: 480ms; }
 
+/* ─── Akaru-style scroll utilities ───
+   Pair with Lenis (SmoothScroll.tsx) — these effects feel flat without
+   inertia scrolling. All gracefully degrade when Lenis is disabled
+   (mobile / reduced motion) since they're driven by scroll position. */
+
+/* Lenis recommends html.lenis-smooth { scroll-behavior: auto } so its own
+   easing isn't fought by the browser's instant CSS-smooth. */
+html.lenis-smooth { scroll-behavior: auto; }
+
+/* Parallax host — element will be transformed by data-parallax="<speed>".
+   Speeds: 0.05–0.15 = subtle background drift; 0.2–0.35 = mid-depth layer;
+   negative values drift opposite to scroll. translate3d() forces GPU layer. */
+[data-parallax] {
+  will-change: transform;
+}
+
+/* Reveal-image — clip-path mask reveal, akaru-style. Use on figure/img wrap.
+   Image scales 1.08 → 1 while the clip opens for a subtle Ken Burns feel. */
+.reveal-image {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: clip-path;
+}
+.reveal-image[data-revealed] { clip-path: inset(0 0 0 0); }
+.reveal-image > img,
+.reveal-image > video,
+.reveal-image > picture > img {
+  transform: scale(1.08);
+  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.reveal-image[data-revealed] > img,
+.reveal-image[data-revealed] > video,
+.reveal-image[data-revealed] > picture > img { transform: scale(1); }
+
+/* Reveal-words — split text with <span class="word"> children, each rises
+   with stagger. Pair with `.reveal` for the IntersectionObserver trigger. */
+.reveal-words .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-words[data-revealed] .word { opacity: 1; transform: translateY(0); }
+.reveal-words[data-revealed] .word:nth-child(1)  { transition-delay:  20ms; }
+.reveal-words[data-revealed] .word:nth-child(2)  { transition-delay:  60ms; }
+.reveal-words[data-revealed] .word:nth-child(3)  { transition-delay: 100ms; }
+.reveal-words[data-revealed] .word:nth-child(4)  { transition-delay: 140ms; }
+.reveal-words[data-revealed] .word:nth-child(5)  { transition-delay: 180ms; }
+.reveal-words[data-revealed] .word:nth-child(6)  { transition-delay: 220ms; }
+.reveal-words[data-revealed] .word:nth-child(7)  { transition-delay: 260ms; }
+.reveal-words[data-revealed] .word:nth-child(8)  { transition-delay: 300ms; }
+.reveal-words[data-revealed] .word:nth-child(9)  { transition-delay: 340ms; }
+.reveal-words[data-revealed] .word:nth-child(10) { transition-delay: 380ms; }
+.reveal-words[data-revealed] .word:nth-child(n+11) { transition-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax] { transform: none !important; }
+  .reveal-image { clip-path: none !important; }
+  .reveal-image > img, .reveal-image > video { transform: none !important; }
+  .reveal-words .word { opacity: 1 !important; transform: none !important; }
+}
+
+/* ─── Custom cursor (CustomCursor.tsx) ───
+   Two-layer cursor: dot tracks 1:1, ring lerps with trail. mix-blend-mode
+   `difference` auto-inverts against any background. Only fine pointers. */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * { cursor: none !important; }
+  /* But keep visible cursor on form fields & contenteditable so users can
+     still see where they're typing — covered by .cursor-text state. */
+  body.has-custom-cursor input,
+  body.has-custom-cursor textarea,
+  body.has-custom-cursor [contenteditable=true] { cursor: text !important; }
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform, width, height, border-radius;
+  transition:
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s ease,
+    opacity 0.2s ease,
+    border-color 0.25s ease;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  background: #fff;
+  border-radius: 50%;
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  background: transparent;
+  /* Translate handled by JS — but include subtle scaleY tied to scroll velocity
+     so the ring squeezes vertically when scrolling fast (akaru signature). */
+}
+
+/* Hover state — over any link/button */
+body.cursor-hover .cursor-ring {
+  width: 56px;
+  height: 56px;
+}
+body.cursor-hover .cursor-dot {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+/* Magnetic state — ring becomes a pill matching the element. */
+body.cursor-magnetic .cursor-ring {
+  width: var(--cw, 56px);
+  height: var(--ch, 56px);
+  border-radius: var(--cr, 28px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+body.cursor-magnetic .cursor-dot { opacity: 0; }
+
+/* Press state — quick squeeze */
+body.cursor-press .cursor-ring {
+  transform-origin: center;
+  filter: brightness(1.15);
+}
+body.cursor-press .cursor-dot { transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.6); }
+
+/* Text state — turn dot into thin I-beam */
+body.cursor-text .cursor-dot {
+  width: 2px;
+  height: 18px;
+  margin-left: -1px;
+  margin-top: -9px;
+  border-radius: 1px;
+}
+body.cursor-text .cursor-ring { opacity: 0; }
+
+/* ─── Kinetic marquee (Marquee.tsx) ─── */
+.marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Edge mask — content fades into the page edges instead of hard-cutting,
+     same trick lenis.dev / akaru use on their kinetic strips. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.marquee-copy {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-right: 0;
+}
+
+/* ─── Scroll-velocity skew ───
+   Apply `.skew-on-scroll` to images / blocks for an akaru-style "the page
+   has weight" feel. Skew angle is derived from the --scroll-vel CSS variable
+   set by SmoothScroll. Capped low so it never reads as broken. */
+.skew-on-scroll {
+  transform: skewY(calc(var(--scroll-vel, 0) * 0.08deg));
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skew-on-scroll { transform: none !important; }
+}
+
+/* ─── Big editorial type — for hero/section showpieces ─── */
+.editorial-display {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  font-size: clamp(3rem, 12vw, 11rem);
+  /* Outline variant — type as art, not as label */
+}
+.editorial-display.outline {
+  -webkit-text-stroke: 1.5px currentColor;
+  color: transparent;
+}
+
 /* Hero entry: page load sequential cascade */
 @keyframes hero-up {
   from { opacity: 0; transform: translateY(16px); }
@@ -926,6 +1124,20 @@ img, iframe { color-scheme: light; }
        positions (right for hero, left for philosophy). */
     perspective: 1500px;
     perspective-origin: center center;
+    /* L5: cube travels in BACKGROUND layer. Sections (with their bg
+       colors) stack above so text never overlaps cube visually.
+       Hero (no solid bg) lets cube show through naturally; ambient
+       phase corner anchor pokes through page-level bg gaps. This
+       reads as "atmospheric companion" rather than competing
+       overlay. */
+    z-index: 0;
+  }
+  .rubik-journey > section {
+    position: relative;
+    z-index: 1;
+    /* Stacking context per-section so internal elements (cards,
+       headlines) layer cleanly without leaking into sibling sections. */
+    isolation: isolate;
   }
 
   .cube-sticky-overlay .sticky {
@@ -948,6 +1160,7 @@ img, iframe { color-scheme: light; }
        50vh requires translateY = 50vh - 99 - 192 = 50vh - 291px.
        clamp(100, calc(50vh - 291px), 320) keeps the value sane on
        very short or very tall viewports. */
+    will-change: transform, opacity;
     --cube-x: max(-880px, calc(440px - 100vw));
     /* --cube-y-mid: cube vertical position for the Triết lý focal
        anchor. Lands the cube center near the upper-mid of viewport
@@ -958,7 +1171,7 @@ img, iframe { color-scheme: light; }
     --cube-y-mid: clamp(20px, calc(40vh - 290px), 220px);
     max-width: 420px;
     margin-left: auto;
-    transform-origin: center;
+    transform-origin: top right;
     transform-style: preserve-3d;
   }
 
@@ -1080,20 +1293,22 @@ img, iframe { color-scheme: light; }
          BEFORE user enters Triết lý reading window (~13%). Fast,
          decisive arc, not a long lazy traverse. Single mid-stop
          parabolic peak. RotateY +8° = subtle lean left during slide. */
-      11.5% {
-        transform: translate3d(calc(var(--cube-x) * 0.55), -80px, 60px) rotateY(8deg) scale(0.78);
-        opacity: 0.95;
+      12% {
+        transform: translate3d(calc(var(--cube-x) * 0.5), -60px, 80px) rotateY(6deg) scale(0.72);
+        opacity: 0.96;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      14.5% {
+        transform: translate3d(calc(var(--cube-x) * 1.02), -8px, 20px) rotateY(-2deg) scale(0.64);
+        opacity: 0.93;
+        animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
-      /* ── C. Triết lý anchor (13-26% hold) ──────────────────────
-         13% LONG HOLD aligned with Triết lý section's actual scroll
-         window (~12-25% on desktop). Cube at LEFT side, upper-mid
-         of viewport (--cube-y-mid), scale 0.65, FACE-ON (rotateY
-         0°). User reading "Sáu mặt. Một sản phẩm." sees the Rubik
-         cube literally pinned beside the copy = brand metaphor
-         reinforced. Three.js's internal layer twists handle "show
-         all faces" within the canvas. */
-      13% {
+      /* ── C. Triết lý anchor (16-26% hold) ──────────────────────
+         Extended travel arc (10-16%, was 10-13%): 6% transit window
+         instead of 3%, eliminates the teleport feel. Hold 16-26%
+         covers the full Triết lý reading window. */
+      16% {
         transform: translate3d(var(--cube-x), var(--cube-y-mid), 0) rotateY(0deg) scale(0.65);
         opacity: 0.92;
       }
@@ -1119,6 +1334,17 @@ img, iframe { color-scheme: light; }
         transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.42);
         opacity: 0.55;
       }
+      /* Portfolio spotlight — cube brightens as user scrolls through
+         project showcase (~50%), then settles before CTA. */
+      50% {
+        transform: translate3d(0, -95px, 0) rotateY(-3deg) scale(0.46);
+        opacity: 0.68;
+        animation-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+      }
+      70% {
+        transform: translate3d(0, -110px, 0) rotateY(-5deg) scale(0.42);
+        opacity: 0.55;
+      }
       83% {
         transform: translate3d(0, -110px, 0) rotateY(-5deg) scale(0.42);
         opacity: 0.55;
@@ -1141,6 +1367,53 @@ img, iframe { color-scheme: light; }
         transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.4);
         opacity: 0.3;
       }
+    }
+  }
+}
+
+/* ─── L6: Cube travel halo — soft saffron glow follows the cube
+   wrap during scroll-driven journey, gives a subtle atmospheric trail
+   that fills the perceptual gap between discrete keyframe stops.
+   Pure CSS pseudo-element, GPU-composited (transform + opacity only). */
+@media (min-width: 1024px) {
+  @supports (animation-timeline: scroll()) {
+    .cube-sticky-overlay .sticky::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center,
+        rgba(244, 129, 26, 0.18) 0%,
+        rgba(244, 129, 26, 0.08) 30%,
+        rgba(244, 129, 26, 0) 60%);
+      pointer-events: none;
+      z-index: -1;
+      will-change: opacity, transform;
+      animation: cube-halo-pulse cubic-bezier(0.32, 0.72, 0.24, 1) both;
+      animation-timeline: scroll();
+    }
+    [data-theme=dark] .cube-sticky-overlay .sticky::before {
+      background: radial-gradient(circle at center,
+        rgba(34, 211, 238, 0.14) 0%,
+        rgba(34, 211, 238, 0.06) 30%,
+        rgba(34, 211, 238, 0) 60%);
+    }
+    @keyframes cube-halo-pulse {
+      0%   { opacity: 0.35; transform: scale(1); }
+      10%  { opacity: 0.35; transform: scale(1); }
+      /* Brighten during travel arc — cube is moving, halo trails it */
+      13%  { opacity: 0.65; transform: scale(1.15); }
+      /* Settle at Triết lý anchor — halo holds at moderate level */
+      16%  { opacity: 0.50; transform: scale(1.05); }
+      26%  { opacity: 0.50; transform: scale(1.05); }
+      /* Demote — halo dims as cube retreats to corner */
+      32%  { opacity: 0.30; transform: scale(0.95); }
+      /* Portfolio spotlight — slight brightness rise */
+      50%  { opacity: 0.45; transform: scale(1.08); }
+      70%  { opacity: 0.30; transform: scale(0.95); }
+      83%  { opacity: 0.30; transform: scale(0.95); }
+      /* CTA approach — gentle fade as conversion area takes focus */
+      100% { opacity: 0.18; transform: scale(0.9); }
     }
   }
 }

@@ -126,8 +126,26 @@ export default function MotionLayer() {
           progress = Math.max(0, Math.min(1, progress))
           track.style.setProperty('--fill', String(progress))
         })
+
+        // Parallax — translate3d Y by (element-center-from-viewport-center * speed).
+        // data-parallax="0.15" → light depth; "0.3" → medium; negative → reverse.
+        // Driven from same scroll callback (Lenis dispatches synthetic 'scroll' via
+        // its native scrollTo, plus we listen for 'lenis-scroll' below).
+        const vh = window.innerHeight
+        document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+          const speed = parseFloat(el.dataset.parallax || '0') || 0
+          if (!speed) return
+          const r = el.getBoundingClientRect()
+          // 0 when element-center sits at viewport-center, ±1 when at edges
+          const centerOffset = (r.top + r.height / 2 - vh / 2) / vh
+          const y = -centerOffset * speed * 100 // px
+          el.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`
+        })
       }
       window.addEventListener('scroll', onScroll, { passive: true })
+      // Lenis dispatches this on every interpolated frame — drives parallax
+      // smoothly without binding a second RAF loop in MotionLayer.
+      window.addEventListener('lenis-scroll', onScroll as EventListener)
       onScroll()
 
       return () => {
@@ -136,6 +154,7 @@ export default function MotionLayer() {
         window.removeEventListener('pointermove', onMove)
         window.removeEventListener('pointerleave', onLeave)
         window.removeEventListener('scroll', onScroll)
+        window.removeEventListener('lenis-scroll', onScroll as EventListener)
       }
     } else {
       // Reduced motion — just reveal everything immediately
