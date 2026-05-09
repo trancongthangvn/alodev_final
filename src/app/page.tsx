@@ -9,7 +9,6 @@ import QuoteCTA from '@/components/QuoteCTA'
 import FeaturedTabs from '@/components/FeaturedTabs'
 import HeroCube from '@/components/HeroCube'
 import StackStrip from '@/components/StackStrip'
-import Marquee from '@/components/Marquee'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -758,37 +757,6 @@ export default function Home() {
       </div>
 
       </div>{/* /.rubik-journey */}
-
-      {/* ─── KINETIC MARQUEE — sits OUTSIDE .rubik-journey on purpose:
-           the journey rule `.rubik-journey > section { z-index: 1 }` would
-           paint this opaque-bg strip over the cube overlay (cube has
-           z-index: 0). Placed between the journey end and Footer as a
-           brand-voice send-off. Decorative — value props are duplicated
-           in hero + Khác biệt section, so aria-hidden is correct. */}
-      <section
-        className="relative py-10 lg:py-16 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800 overflow-hidden"
-        aria-hidden="true"
-      >
-        <Marquee speed={70}>
-          {[
-            'Founder-led studio',
-            'Source code thuộc về bạn',
-            'Bàn giao đúng hợp đồng',
-            'Hà Nội · Việt Nam',
-            '11+ sản phẩm đang vận hành',
-            'Next.js · Node · Postgres',
-          ].map((t, i) => (
-            <span
-              key={i}
-              className="editorial-display px-8 lg:px-12 text-gray-900 dark:text-white inline-flex items-center gap-8 lg:gap-12"
-              style={{ fontSize: 'clamp(2.25rem, 7vw, 6rem)' }}
-            >
-              {t}
-              <span className="inline-block w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-brand-500 align-middle" />
-            </span>
-          ))}
-        </Marquee>
-      </section>
     </>
   )
 }

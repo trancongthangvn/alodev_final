@@ -241,32 +241,25 @@ export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
                passes over both blob + wireframe via mix-blend-mode.
           When state flips to 'interactive', the skeleton scales+blurs out
           (skeleton-exit anim) and the wireframe dissolves with it. */}
-      {/* Opacity transitions REMOVED on these three layers — `transition-opacity`
-          runs on document.timeline, which pauses when the tab is hidden /
-          throttled / when scroll-timeline kicks in unfavourably. Pausing left
-          the canvas frozen at the pre-class-swap opacity (0) regardless of
-          the post-swap class (`opacity-100`), turning the cube invisible.
-          Class swap is now instant — no fade between state stages, but the
-          cube is GUARANTEED to render once `state` flips. */}
       <div
         aria-hidden="true"
-        className={`hero-cube-skeleton absolute inset-0 pointer-events-none ${state === 'loading' ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-skeleton absolute inset-0 pointer-events-none transition-opacity duration-500 ${state === 'loading' ? 'opacity-100' : 'opacity-0'}`}
       >
         <WireframeCube />
       </div>
 
-      {/* Static SVG fallback — only shown if WebGL fails or times out.
+      {/* Static SVG fallback — only fades in if WebGL fails or times out.
           For no-JS users the CSS noscript rule keeps it visible. */}
       <div
         aria-hidden="true"
-        className={`hero-cube-fallback absolute inset-0 flex items-center justify-center pointer-events-none ${state === 'fallback' ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-fallback absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700 ${state === 'fallback' ? 'opacity-100' : 'opacity-0'}`}
       >
         <StaticCube />
       </div>
 
       <canvas
         ref={canvasRef}
-        className={`hero-cube-canvas relative w-full h-full ${state === 'interactive' ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-canvas relative w-full h-full transition-opacity duration-700 ${state === 'interactive' ? 'opacity-100' : 'opacity-0'}`}
         aria-label="3D Rubik visualization"
       />
     </div>
@@ -412,19 +405,6 @@ function setupCube(
     antialias: !isMobile,
     alpha: true,
     powerPreference: 'high-performance',
-    // preserveDrawingBuffer: true → the cube canvas keeps its pixel content
-    // between compositor reads. Without this (default false), the browser
-    // clears the WebGL drawing buffer after each composite, so any frame
-    // not immediately followed by another render() call leaves an empty
-    // canvas on screen — devastating when RAF is throttled (background
-    // tab, OS power-save, hidden iframe). With preserve=true the eager
-    // render below stays painted indefinitely until animate() draws the
-    // next frame. Trade-off is a small perf hit on Safari mobile (extra
-    // buffer allocation), which we already mitigate by skipping WebGL
-    // entirely on ≤768px (StaticCube SVG fallback). Verified via Chrome
-    // MCP toDataURL inspection 2026-05-09: cube renders correctly to the
-    // canvas but the compositor was painting a cleared snapshot.
-    preserveDrawingBuffer: true,
   })
   renderer.setPixelRatio(
     isMobile
@@ -574,7 +554,7 @@ function setupCube(
   // intensity is capped low (1.6) so PointLight's specular response on
   // low-roughness materials does NOT saturate tiles into bright round
   // discs — the goal is to *reveal* the material, not flash a hotspot.
-  const cursorLight = new THREE.PointLight(0xfff4e4, 0, 3.2, 2)
+  const cursorLight = new THREE.PointLight(0xfff4e4, 0, 2.6, 2)
   cursorLight.position.set(0, 0, 3)
   scene.add(cursorLight)
 
@@ -1071,8 +1051,6 @@ function setupCube(
   const scrambleSeq: Array<['x' | 'y' | 'z', number, number]> = [
     ['y',  1,  1], ['x',  1, -1], ['z', -1,  1],
     ['y', -1,  1], ['x', -1,  1], ['z',  1, -1],
-    ['y',  0,  1], ['x',  0, -1], ['z',  0,  1],
-    ['z', -1, -1], ['x',  1,  1], ['y',  1, -1],
   ]
   scrambleSeq.forEach(([a, l, d]) => instantTwist(a, l, d))
 
@@ -1138,7 +1116,6 @@ function setupCube(
   let rafTwist = 0
   let rafAnimate = 0
   let stopped = false
-  let lastFrameTime = 0
 
   let timer1: ReturnType<typeof setTimeout> | null = null
   let timer2: ReturnType<typeof setTimeout> | null = null
@@ -1237,9 +1214,8 @@ function setupCube(
   // 3 axes — no easing. Equal speed on every axis sums to a fixed diagonal
   // vector, which reads as a "tumbling" object rather than spinning around
   // any single axis. ~17s per full rotation per axis at 60fps.
-  const TUMBLE = opts.reducedMotion ? 0.0009 : 0.003
+  const TUMBLE = opts.reducedMotion ? 0.0015 : 0.005
   const tumble = { x: 0, y: 0, z: 0 }
-  let yRotationCurrent = 0
 
   // ─── Scroll-position-driven Y rotation ────────────────────────────
   // The cube's Y-axis rotation is a DETERMINISTIC FUNCTION of the
@@ -1268,7 +1244,7 @@ function setupCube(
   //
   // Reduced-motion: REVOLUTIONS_PER_PAGE = 0 (no scroll-driven Y;
   // cube tumbles ambient on all 3 axes only — vestibular comfort).
-  const REVOLUTIONS_PER_PAGE = opts.reducedMotion ? 0 : 1
+  const REVOLUTIONS_PER_PAGE = opts.reducedMotion ? 0 : 3
 
   // Mouse parallax adds an extra resting offset on top of the tumble.
   const parallaxTarget = { x: 0, y: 0 }
@@ -1292,7 +1268,7 @@ function setupCube(
     // cursor without the light leaving the cube's reach.
     cursorTarget.x = nx * 2.6
     cursorTarget.y = -ny * 2.6
-    cursorTarget.intensity = 2.4
+    cursorTarget.intensity = 1.6
   }
   function onLeave() {
     parallaxTarget.x = 0
@@ -1340,7 +1316,7 @@ function setupCube(
   // curves disagreed on the final frame.
   cubeGroup.scale.setScalar(1)
 
-  function animate(now: number) {
+  function animate() {
     if (stopped) return
 
     if (!isVisible) {
@@ -1348,41 +1324,29 @@ function setupCube(
       return
     }
 
-    // Delta-time normalized: constant tumble speed on 60/120/144Hz.
-    // Cap delta at 50ms to avoid jump after tab-switch or heavy frame.
-    const delta = lastFrameTime > 0 ? Math.min(now - lastFrameTime, 50) : 16.67
-    lastFrameTime = now
-    const step = TUMBLE * (delta / 16.67)
+    // X, Y, Z all accumulate base TUMBLE (Y is overridden below when
+    // scroll-driven mode is active; kept here as a fallback for
+    // reduced-motion users where scroll-driven rotation is disabled).
+    tumble.x += TUMBLE
+    tumble.y += TUMBLE
+    tumble.z += TUMBLE
 
-    tumble.x += step
-    tumble.y += step
-    tumble.z += step
-
-    // Compute Y rotation target: scroll-position-driven when motion
-    // enabled, else fall back to base TUMBLE accumulation. The scroll-
-    // driven path lets the user "scrub" the cube's Y orientation by
-    // their scroll position. REVOLUTIONS_PER_PAGE=1 gives one full
-    // rotation across the full page scroll — calm enough to read as
-    // "reveal sáu mặt" without spinning aggressively.
-    //
-    // Lerp toward target (factor 0.08) damps browser scroll jitter
-    // and gives the cube an organic "chasing" feel rather than
-    // direct 1:1 lockstep with scroll. Without lerp, scroll smoothing
-    // wobbles compound with the wrapper's CSS rotateY producing
-    // visible jitter at scroll micro-stops.
-    let yTarget: number
+    // Compute Y rotation: scroll-position-driven when motion enabled,
+    // else fall back to base TUMBLE accumulation. The scroll-driven
+    // path lets the user "scrub" the cube's Y orientation by their
+    // scroll position — direct, deterministic, scrub-able both
+    // directions. REVOLUTIONS_PER_PAGE=3 gives ~130° per 100vh scroll.
+    let yRotation: number
     if (REVOLUTIONS_PER_PAGE > 0) {
       const totalScrollable = Math.max(
         1,
         document.documentElement.scrollHeight - window.innerHeight
       )
       const scrollProgress = window.scrollY / totalScrollable
-      yTarget = scrollProgress * Math.PI * 2 * REVOLUTIONS_PER_PAGE
+      yRotation = scrollProgress * Math.PI * 2 * REVOLUTIONS_PER_PAGE
     } else {
-      yTarget = tumble.y
+      yRotation = tumble.y
     }
-    yRotationCurrent += (yTarget - yRotationCurrent) * 0.08
-    const yRotation = yRotationCurrent
 
     parallaxCurrent.x += (parallaxTarget.x - parallaxCurrent.x) * 0.06
     parallaxCurrent.y += (parallaxTarget.y - parallaxCurrent.y) * 0.06
@@ -1406,12 +1370,6 @@ function setupCube(
     renderer.render(scene, camera)
     rafAnimate = requestAnimationFrame(animate)
   }
-  // Render one frame IMMEDIATELY before the RAF chain starts. Without this,
-  // the canvas stays empty until the first requestAnimationFrame fires —
-  // which can be deferred indefinitely (background tab, throttled iframe,
-  // OS power-save). Drawing once synchronously means the cube is on screen
-  // the moment setupCube returns; the RAF loop then takes over for motion.
-  try { renderer.render(scene, camera) } catch { /* ignore — animate() will retry */ }
   rafAnimate = requestAnimationFrame(animate)
 
   return () => {
