@@ -87,13 +87,18 @@ export const metadata: Metadata = {
     // metadata in a separate string entry. Simplest reliable shape is just
     // the string URL — Facebook/LinkedIn/Slack only need the URL anyway,
     // they probe the image dimensions themselves.
-    images: ["/og.png"],
+    // Points to the dynamic /opengraph-image route (Cloudflare Pages
+    // Function intercepts and serves light or dark variant by ICT time:
+    // day → light cream Studio Plate, night → dark ink variant). Per-
+    // route opengraph-image.tsx files were removed — every page on
+    // alodev.vn inherits this single time-aware OG.
+    images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Alodev — Studio thiết kế & phát triển Web/App",
     description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị.",
-    images: ["/og.png"],
+    images: ["/opengraph-image"],
   },
   // canonical is set per-page; root only provides metadataBase so relative URLs resolve.
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },

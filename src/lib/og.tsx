@@ -220,20 +220,23 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
  *
  * Reference: Vercel / Linear / Stripe / Pentagram / Aesop OG conventions.
  */
-export async function renderOgHome() {
+export async function renderOgHome(theme: 'light' | 'dark' = 'light') {
   const fonts = await loadFonts()
   // Read logo SVG and inline as data URI so Satori can rasterize it.
   const logoBuf = await readFile(join(process.cwd(), 'public/brand/logo-symbol.svg'))
   const logoDataUri = `data:image/svg+xml;base64,${logoBuf.toString('base64')}`
 
-  // Palette — light cream paper, deep navy ink, saffron accent.
-  // Light theme reads cleaner at thumbnail size in social feeds where
-  // most platforms surround the preview with their own dark chrome.
-  const bg = '#f5f3ec'
-  const ink = '#0a1226'
-  const inkDim = 'rgba(10, 18, 38, 0.55)'
-  const inkXDim = 'rgba(10, 18, 38, 0.22)'
-  const accent = '#d96b09'
+  // Palette switches by theme. Light = cream paper / deep navy ink /
+  // saffron accent (default for daytime). Dark = ink-black / off-white
+  // ink / saffron accent (for night). Pages Function picks at request
+  // time based on Vietnamese ICT hour (functions/opengraph-image.ts).
+  const isDark = theme === 'dark'
+  const bg = isDark ? '#0a0a0a' : '#f5f3ec'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkDim = isDark ? 'rgba(251, 252, 255, 0.55)' : 'rgba(10, 18, 38, 0.55)'
+  const inkXDim = isDark ? 'rgba(251, 252, 255, 0.22)' : 'rgba(10, 18, 38, 0.22)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
+  const dotColor = isDark ? 'rgba(244,129,26,0.07)' : 'rgba(217,107,9,0.06)'
 
   return new ImageResponse(
     (
@@ -258,7 +261,7 @@ export async function renderOgHome() {
             right: 0,
             bottom: 0,
             left: 0,
-            backgroundImage: 'radial-gradient(rgba(217,107,9,0.06) 1.2px, transparent 1.4px)',
+            backgroundImage: `radial-gradient(${dotColor} 1.2px, transparent 1.4px)`,
             backgroundSize: '14px 14px',
           }}
         />
