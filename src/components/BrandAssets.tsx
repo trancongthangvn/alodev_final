@@ -24,6 +24,7 @@ const EXPORT_W = {
   avatar: 1080,
   cover: 1640,
   group: 1920,
+  og: 1200, // Open Graph standard 1200×630
 } as const
 
 export default function BrandAssets() {
@@ -148,6 +149,42 @@ export default function BrandAssets() {
             aspect="aspect-video"
             exportW={EXPORT_W.group}
             renderDesign={(t) => <GroupBlueprint theme={t} />}
+          />
+        </div>
+
+        {/* ═══ OG IMAGE CANDIDATES ═══ — pick 1, then apply to opengraph-image.tsx */}
+        <div className="mt-12 lg:mt-20 mb-4 lg:mb-6">
+          <SubHead label="OG image · 1200×630" hint="Bản preview khi share alodev.vn lên FB/X/LinkedIn — pick 1 concept duyệt rồi áp dụng" />
+          <p className="text-xs text-gray-500 dark:text-ink-500 max-w-2xl">
+            3 phương án dưới đây <strong>chưa</strong> active. Bạn pick concept nào,
+            tôi áp dụng vào <code className="font-mono text-[11px]">/opengraph-image</code> route
+            (sẽ replace OG image hiện tại trên alodev.vn).
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-6 lg:gap-8">
+          <BrandCard
+            id="brand-og-editorial"
+            label="OG A — Editorial Bold"
+            sublabel="Type-as-hero, oversized statement, restrained palette"
+            aspect="aspect-[1200/630]"
+            exportW={EXPORT_W.og}
+            renderDesign={(t) => <OgEditorial theme={t} />}
+          />
+          <BrandCard
+            id="brand-og-split"
+            label="OG B — Split + Saffron Block"
+            sublabel="Brand block left, bold saffron geometry right"
+            aspect="aspect-[1200/630]"
+            exportW={EXPORT_W.og}
+            renderDesign={(t) => <OgSplit theme={t} />}
+          />
+          <BrandCard
+            id="brand-og-monogram"
+            label="OG C — Monogram Center"
+            sublabel="Logo monumental, minimal type, brand identity focus"
+            aspect="aspect-[1200/630]"
+            exportW={EXPORT_W.og}
+            renderDesign={(t) => <OgMonogram theme={t} />}
           />
         </div>
       </div>
@@ -974,16 +1011,14 @@ function GroupManifesto({ theme }: { theme: Theme }) {
 function GroupStats({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
   const t = tokens(theme)
-  // Number wallpaper now self-labelled — each outline number paired
-  // with a small caption so the figure reads as a real, meaningful
-  // metric rather than a decorative numeral. Studio launched 31·03·2025
-  // so "5+" (founder's pre-studio fleet years) was retired earlier;
-  // "2025" now sits as the launch-year stamp.
+  // English-only labels for international scan-readability — Vietnamese
+  // labels were dropped per design feedback. Each label is a short,
+  // industry-standard term so the figure parses across languages.
   const stats = [
-    { num: '11+',  label: 'sản phẩm' },
-    { num: '2025', label: 'ra mắt brand' },
-    { num: '99.9', label: '% uptime' },
-    { num: '24h',  label: 'phản hồi' },
+    { num: '11+',  label: 'products' },
+    { num: '2025', label: 'established' },
+    { num: '99.9', label: 'uptime  %' },
+    { num: '24h',  label: 'response' },
   ]
   return (
     <div className="absolute inset-0 overflow-hidden" style={{ background: isDark ? '#06091a' : '#f5f7fc' }}>
@@ -1023,8 +1058,8 @@ function GroupStats({ theme }: { theme: Theme }) {
           <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={88} height={107} className={t.logoShadow} />
           <div className="flex flex-col gap-2.5">
             <div className={`${t.text} text-4xl lg:text-6xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
-            <div className={`${t.textHigh} text-sm lg:text-base`}>
-              Web · App · CRM/ERP — biến ý tưởng thành sản phẩm thật.
+            <div className={`${t.textHigh} text-sm lg:text-base font-mono uppercase tracking-[0.18em]`}>
+              Web · App · CRM/ERP · AI Automation
             </div>
             <div className={`pt-2 border-t ${t.borderLine}`}>
               <ContactStrip theme={theme} />
@@ -1200,6 +1235,209 @@ function GroupBlueprint({ theme }: { theme: Theme }) {
           </div>
           <div className="text-sm font-bold" style={{ color: ink }}>alodev studio</div>
         </div>
+      </div>
+    </div>
+  )
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   OG IMAGE CANDIDATES — 1200×630
+   These are previews. Once user approves one, port the chosen design
+   to src/app/opengraph-image.tsx (Next.js OG image route).
+   ════════════════════════════════════════════════════════════════════ */
+
+/* OG A — Editorial Bold.
+   Single-page magazine cover. Off-cream paper or deep navy, oversized
+   wordmark + brand statement, restrained 2-color palette. Reads at
+   thumbnail (300×157) without losing the brand. */
+function OgEditorial({ theme }: { theme: Theme }) {
+  const isDark = theme === 'dark'
+  const bg = isDark ? '#0a0a0a' : '#f5f3ec'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkDim = isDark ? 'rgba(251,252,255,0.55)' : 'rgba(10,18,38,0.55)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
+  return (
+    <div className="absolute inset-0 overflow-hidden flex" style={{ background: bg, color: ink }}>
+      {/* Top dateline bar */}
+      <div className="absolute top-[8%] inset-x-[6%] flex items-center justify-between border-b pb-2" style={{ borderColor: ink }}>
+        <div className="flex items-center gap-3">
+          <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={32} height={39} />
+          <span className="text-[11px] font-mono uppercase tracking-[0.32em]" style={{ color: ink }}>
+            alodev studio
+          </span>
+        </div>
+        <span className="text-[11px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+          est. 31·03·2025
+        </span>
+      </div>
+      {/* Big editorial statement */}
+      <div className="absolute inset-x-[6%] top-1/2 -translate-y-1/2">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="w-12 h-px" style={{ background: ink }} />
+          <span className="text-[11px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+            Web · App · CRM/ERP · AI
+          </span>
+        </div>
+        <div
+          className="font-bold tracking-[-0.05em] leading-[0.86]"
+          style={{ fontSize: 'clamp(4rem, 11vw, 9rem)', color: ink }}
+        >
+          Code is craft.
+        </div>
+        <div
+          className="font-bold tracking-[-0.05em] leading-[0.86]"
+          style={{ fontSize: 'clamp(4rem, 11vw, 9rem)', color: accent }}
+        >
+          Shipped.
+        </div>
+      </div>
+      {/* Bottom URL bar */}
+      <div className="absolute bottom-[8%] inset-x-[6%] flex items-center justify-between border-t pt-2" style={{ borderColor: ink }}>
+        <span className="text-sm lg:text-base font-bold tracking-tight" style={{ color: ink }}>
+          alodev
+        </span>
+        <span className="text-[11px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+          alodev.vn
+        </span>
+      </div>
+    </div>
+  )
+}
+
+/* OG B — Split + Saffron Block.
+   Left: deep ink with logo + brand statement. Right: bold saffron
+   geometric block with white wordmark + service keywords.
+   Pure 2-color discipline, no gradients. */
+function OgSplit({ theme }: { theme: Theme }) {
+  const isDark = theme === 'dark'
+  const bgL = isDark ? '#0a0a0a' : '#0a1226'
+  const bgR = '#d96b09' // saffron block — same in both themes for brand consistency
+  return (
+    <div className="absolute inset-0 flex">
+      {/* LEFT 58% — ink panel */}
+      <div className="relative w-[58%] h-full overflow-hidden flex flex-col justify-between p-[5%]" style={{ background: bgL }}>
+        <div className="flex items-center gap-3">
+          <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={56} height={68} />
+          <span className="text-white/55 text-[11px] font-mono uppercase tracking-[0.32em]">
+            est. 31·03·2025
+          </span>
+        </div>
+        <div>
+          <div
+            className="text-white font-bold tracking-[-0.04em] leading-[0.88]"
+            style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)' }}
+          >
+            alodev
+          </div>
+          <div className="mt-3 text-white/85 text-base lg:text-xl font-mono uppercase tracking-[0.18em]">
+            Studio · Web · App · CRM/ERP
+          </div>
+        </div>
+        <div className="flex items-center gap-2 text-white/55 text-[11px] font-mono uppercase tracking-[0.32em]">
+          <span className="w-6 h-px bg-white/40" />
+          alodev.vn
+        </div>
+      </div>
+      {/* SLANTED EDGE between panels */}
+      <div
+        className="absolute top-0 bottom-0 w-[3%]"
+        style={{
+          left: '57%',
+          background: '#fbfcff',
+          opacity: 0.95,
+          clipPath: 'polygon(80% 0, 100% 0, 20% 100%, 0% 100%)',
+        }}
+      />
+      {/* RIGHT 42% — saffron block with reversed brand */}
+      <div className="relative w-[42%] h-full overflow-hidden flex flex-col justify-between p-[6%]" style={{ background: bgR }}>
+        <div className="flex justify-end">
+          <span className="text-white/85 text-[11px] font-mono uppercase tracking-[0.32em]">
+            Q2 / 2026
+          </span>
+        </div>
+        <div>
+          <div className="text-white font-bold tracking-[-0.02em] leading-[1.05] uppercase text-2xl lg:text-3xl">
+            Code is craft.
+          </div>
+          <div className="text-white font-bold tracking-[-0.02em] leading-[1.05] uppercase text-2xl lg:text-3xl">
+            Shipped.
+          </div>
+          <div className="mt-3 text-white/80 text-xs lg:text-sm font-mono uppercase tracking-[0.22em]">
+            Web · App · AI · Auto
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+          <span className="text-white/85 text-[11px] font-mono uppercase tracking-[0.32em]">
+            now open
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* OG C — Monogram Center.
+   Logo monumental in middle of canvas, sparse type around. Most
+   "iconic" feel — works extra well at very small thumbnail sizes
+   because the logo dominates. */
+function OgMonogram({ theme }: { theme: Theme }) {
+  const isDark = theme === 'dark'
+  const bg = isDark ? '#06091a' : '#f5f3ec'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkDim = isDark ? 'rgba(251,252,255,0.55)' : 'rgba(10,18,38,0.55)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
+  return (
+    <div className="absolute inset-0 overflow-hidden flex items-center justify-center" style={{ background: bg, color: ink }}>
+      {/* Quad-corner alignment marks (designer print hairlines) */}
+      {[
+        { top: '6%', left: '5%' },
+        { top: '6%', right: '5%' },
+        { bottom: '6%', left: '5%' },
+        { bottom: '6%', right: '5%' },
+      ].map((pos, i) => (
+        <span
+          key={i}
+          className="absolute w-6 h-6"
+          style={{
+            ...pos,
+            borderTop: pos.top ? `1px solid ${ink}` : undefined,
+            borderBottom: pos.bottom ? `1px solid ${ink}` : undefined,
+            borderLeft: pos.left ? `1px solid ${ink}` : undefined,
+            borderRight: pos.right ? `1px solid ${ink}` : undefined,
+            opacity: 0.4,
+          }}
+        />
+      ))}
+      {/* Top eyebrow */}
+      <div className="absolute top-[12%] inset-x-0 flex items-center justify-center gap-3">
+        <span className="w-6 h-px" style={{ background: ink, opacity: 0.4 }} />
+        <span className="text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
+          alodev studio · est. 31·03·2025
+        </span>
+        <span className="w-6 h-px" style={{ background: ink, opacity: 0.4 }} />
+      </div>
+      {/* Center logo + wordmark */}
+      <div className="relative z-10 flex flex-col items-center gap-7">
+        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={150} height={183} />
+        <div
+          className="font-bold tracking-tight leading-none"
+          style={{ fontSize: 'clamp(4rem, 10vw, 8.5rem)', color: ink }}
+        >
+          alodev
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
+          <span className="text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
+            Web · App · CRM/ERP · AI
+          </span>
+        </div>
+      </div>
+      {/* Bottom URL */}
+      <div className="absolute bottom-[12%] inset-x-0 flex items-center justify-center">
+        <span className="text-sm font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+          alodev.vn
+        </span>
       </div>
     </div>
   )
