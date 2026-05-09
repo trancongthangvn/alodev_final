@@ -11,6 +11,9 @@ import HeroCube from '@/components/HeroCube'
 import StackStrip from '@/components/StackStrip'
 import Marquee from '@/components/Marquee'
 import HorizontalPin from '@/components/HorizontalPin'
+import ScrollTell from '@/components/ScrollTell'
+import StackReveal from '@/components/StackReveal'
+import Counter from '@/components/Counter'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -849,6 +852,115 @@ export default function Home() {
             </div>
           </Link>
         </HorizontalPin>
+      </section>
+
+      {/* ─── COUNTER BAND — số đếm lên khi vào viewport.
+          Fourth scroll flavour: vertical scroll, but content materializes
+          via animated numbers instead of fade/slide. */}
+      <section className="bg-white dark:bg-ink-950 border-b border-gray-200 dark:border-ink-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+          <div className="reveal max-w-2xl mb-8 lg:mb-12">
+            <Eyebrow>Bằng chứng</Eyebrow>
+            <h2 className="h-section mt-3 text-gray-900 dark:text-white">
+              Năm năm. Mười một sản phẩm. Một studio.
+            </h2>
+          </div>
+          <div className="reveal-stagger grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+            {[
+              { value: '11+', label: 'Sản phẩm đang vận hành' },
+              { value: '5+',  label: 'Năm kinh nghiệm founder-led' },
+              { value: '99.9%', label: 'Uptime production' },
+              { value: '24h', label: 'Phản hồi báo giá tối đa' },
+            ].map((s, i) => (
+              <div key={i} className="rounded-2xl border border-gray-200 dark:border-ink-800 bg-cream-50 dark:bg-ink-900/40 p-6 lg:p-8">
+                <div className="text-5xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white tabular leading-none">
+                  <Counter value={s.value} />
+                </div>
+                <div className="mt-3 text-sm text-gray-600 dark:text-ink-400">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── STICKY SCROLL-TELL — left title pins while right narrative
+          glides past. Fifth scroll flavour: vertical scroll where the
+          eye stays fixed on the left while the right reveals
+          step-by-step. Apple feature page / lusion case study pattern. */}
+      <ScrollTell
+        eyebrow="Cách Alodev làm việc"
+        title="Bốn bước. Không trung gian."
+        intro="Quy trình founder-led: bạn trao đổi trực tiếp với người viết code, không qua sales hay PM. Mỗi giai đoạn có deliverable rõ ràng, tracking công khai trên dashboard riêng."
+        steps={[
+          {
+            badge: '01 · 24h',
+            title: 'Tư vấn miễn phí',
+            body: 'Một cuộc Zalo / Google Meet 30 phút để hiểu nhu cầu thực, ngân sách, deadline. Không bắt đăng ký, không sales pitch — chỉ đánh giá xem Alodev có phải đối tác phù hợp.',
+          },
+          {
+            badge: '02 · 48h',
+            title: 'Báo giá & hợp đồng',
+            body: 'Báo giá chi tiết theo từng hạng mục — không có chi phí ẩn, không có dòng "tuỳ phát sinh". Hợp đồng ràng buộc deadline, scope, sở hữu source code.',
+          },
+          {
+            badge: '03 · 2–12 tuần',
+            title: 'Thiết kế & phát triển',
+            body: 'Bạn duyệt mockup Figma trước khi code. Tiến độ track real-time trên dashboard riêng. Demo hàng tuần qua staging URL — feedback sớm, ít rework.',
+          },
+          {
+            badge: '04 · 6–12 tháng',
+            title: 'Bàn giao & bảo hành',
+            body: 'Test toàn diện, training sử dụng, tài liệu kỹ thuật bàn giao đầy đủ. Bảo hành lỗi miễn phí 6–12 tháng. Sau đó hỗ trợ theo gói tháng — bạn chấm dứt bất cứ lúc nào.',
+          },
+        ]}
+      />
+
+      {/* ─── STACK-REVEAL — cards xếp chồng, sticky pin từng cái.
+          Sixth scroll flavour: each card stacks on top of the previous
+          while pinned, creating a card-deck reveal. Used by Apple Vision
+          Pro feature stack, lusion sliders. */}
+      <section className="bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-20 pb-6 lg:pb-12">
+          <div className="reveal max-w-2xl">
+            <Eyebrow>Stack có lý do</Eyebrow>
+            <h2 className="h-section mt-3 text-gray-900 dark:text-white">
+              Bốn lớp công nghệ.
+            </h2>
+            <p className="mt-3 text-base text-gray-600 dark:text-ink-400">
+              Cuộn xuống — từng lớp xếp chồng vào nhau.
+            </p>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 lg:pb-32">
+          <StackReveal
+            cards={[
+              {
+                bg: 'from-gray-900 to-gray-700',
+                index: '01',
+                title: 'Frontend',
+                body: 'Next.js · React · Vue · SwiftUI · Compose Multiplatform. Server components, edge SSR, hydration tối thiểu — tốc độ thật chứ không phải số PageSpeed.',
+              },
+              {
+                bg: 'from-tech-700 to-tech-500',
+                index: '02',
+                title: 'Backend',
+                body: 'Node.js · NestJS · Express · Spring Boot · Django. RESTful + GraphQL khi cần. Schema-first, OpenAPI, contract test — không phải "code rồi tài liệu sau".',
+              },
+              {
+                bg: 'from-emerald-700 to-emerald-500',
+                index: '03',
+                title: 'Database',
+                body: 'PostgreSQL · MySQL · Redis · ClickHouse. Migrations versioned, backups định kỳ, monitoring query plan. Database thuộc về bạn — schema, dump, hosting đứng tên bạn.',
+              },
+              {
+                bg: 'from-brand-600 to-brand-400',
+                index: '04',
+                title: 'Infrastructure',
+                body: 'AWS · Cloudflare · Docker · PM2. CI/CD GitHub Actions, monitoring uptime + log aggregation, deploy 1-click. Không vendor lock-in cứng — bạn move stack được bất cứ lúc nào.',
+              },
+            ]}
+          />
+        </div>
       </section>
     </>
   )

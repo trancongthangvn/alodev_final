@@ -1781,3 +1781,46 @@ body.cursor-text .cursor-ring { opacity: 0; }
   .kmq-track { transform: none !important; }
   .h-pin-track { transform: none !important; }
 }
+
+/* ─── Sticky scroll-tell (ScrollTell.tsx) ─── */
+.scroll-tell-step {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.scroll-tell-step[data-revealed] {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-tell-step { opacity: 1 !important; transform: none !important; }
+}
+
+/* ─── Stack-reveal (StackReveal.tsx) ─── */
+.stack-reveal {
+  position: relative;
+  /* Each card occupies ~80vh of scroll; outer height = N * 80vh keeps
+     the stick range matched to card count. */
+}
+.stack-reveal-card {
+  position: sticky;
+  margin: 0 auto 16vh;
+  max-width: min(72rem, 92vw);
+}
+.stack-reveal-card:last-child { margin-bottom: 0; }
+.stack-reveal-inner {
+  border-radius: 1.5rem;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  min-height: clamp(20rem, 50vh, 28rem);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+/* Mobile / reduced-motion: drop sticky, plain stack */
+.stack-reveal.stack-reveal-fallback .stack-reveal-card {
+  position: relative;
+  top: auto !important;
+  margin-bottom: 1.25rem;
+}
