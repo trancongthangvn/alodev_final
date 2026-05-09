@@ -1383,59 +1383,106 @@ function OgSplit({ theme }: { theme: Theme }) {
    because the logo dominates. */
 function OgMonogram({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
-  const bg = isDark ? '#06091a' : '#f5f3ec'
+  const bg = isDark ? '#0a0a0a' : '#f5f3ec'
   const ink = isDark ? '#fbfcff' : '#0a1226'
   const inkDim = isDark ? 'rgba(251,252,255,0.55)' : 'rgba(10,18,38,0.55)'
+  const inkXDim = isDark ? 'rgba(251,252,255,0.22)' : 'rgba(10,18,38,0.22)'
   const accent = isDark ? '#f4811a' : '#d96b09'
+  const dotColor = isDark ? 'rgba(244,129,26,0.07)' : 'rgba(217,107,9,0.06)'
+
   return (
-    <div className="absolute inset-0 overflow-hidden flex items-center justify-center" style={{ background: bg, color: ink }}>
-      {/* Quad-corner alignment marks (designer print hairlines) */}
+    <div className="absolute inset-0 overflow-hidden" style={{ background: bg, color: ink }}>
+      {/* Halftone dot paper texture (riso/print grade) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(${dotColor} 1.2px, transparent 1.4px)`,
+          backgroundSize: '12px 12px',
+        }}
+      />
+
+      {/* Inner hairline frame */}
+      <div className="absolute inset-[3.5%]" style={{ border: `1px solid ${inkXDim}` }} />
+
+      {/* Printer registration marks (crosshair + circle) at 4 corners */}
       {[
-        { top: '6%', left: '5%' },
-        { top: '6%', right: '5%' },
-        { bottom: '6%', left: '5%' },
-        { bottom: '6%', right: '5%' },
+        { top: '5.5%', left: '4.5%' },
+        { top: '5.5%', right: '4.5%' },
+        { bottom: '5.5%', left: '4.5%' },
+        { bottom: '5.5%', right: '4.5%' },
       ].map((pos, i) => (
-        <span
+        <div
           key={i}
-          className="absolute w-6 h-6"
-          style={{
-            ...pos,
-            borderTop: pos.top ? `1px solid ${ink}` : undefined,
-            borderBottom: pos.bottom ? `1px solid ${ink}` : undefined,
-            borderLeft: pos.left ? `1px solid ${ink}` : undefined,
-            borderRight: pos.right ? `1px solid ${ink}` : undefined,
-            opacity: 0.4,
-          }}
-        />
+          className="absolute"
+          style={{ ...pos, width: 28, height: 28, color: ink, opacity: 0.55 }}
+        >
+          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1">
+            <line x1="14" y1="2" x2="14" y2="11" />
+            <line x1="14" y1="17" x2="14" y2="26" />
+            <line x1="2" y1="14" x2="11" y2="14" />
+            <line x1="17" y1="14" x2="26" y2="14" />
+            <circle cx="14" cy="14" r="6.5" />
+          </svg>
+        </div>
       ))}
-      {/* Top eyebrow */}
-      <div className="absolute top-[12%] inset-x-0 flex items-center justify-center gap-3">
-        <span className="w-6 h-px" style={{ background: ink, opacity: 0.4 }} />
-        <span className="text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
+
+      {/* Top eyebrow line */}
+      <div className="absolute top-[10.5%] inset-x-0 flex items-center justify-center gap-4">
+        <span className="w-8 h-px" style={{ background: ink, opacity: 0.45 }} />
+        <span className="text-[10px] lg:text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
           alodev studio · est. 31·03·2025
         </span>
-        <span className="w-6 h-px" style={{ background: ink, opacity: 0.4 }} />
+        <span className="w-8 h-px" style={{ background: ink, opacity: 0.45 }} />
       </div>
-      {/* Center logo + wordmark */}
-      <div className="relative z-10 flex flex-col items-center gap-7">
-        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={150} height={183} />
+
+      {/* Center brand block — ornamental rules, logo, wordmark, tagline */}
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center gap-5">
+        {/* Top ornamental rule with saffron diamond */}
+        <div className="flex items-center gap-3 w-full justify-center">
+          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
+          <span className="w-2 h-2 rotate-45" style={{ background: accent }} />
+          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
+        </div>
+
+        {/* Logo + wordmark — tighter letter-spacing, larger scale */}
+        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={140} height={171} />
         <div
-          className="font-bold tracking-tight leading-none"
-          style={{ fontSize: 'clamp(4rem, 10vw, 8.5rem)', color: ink }}
+          className="font-bold leading-[0.8]"
+          style={{
+            fontSize: 'clamp(4.5rem, 12vw, 10.5rem)',
+            letterSpacing: '-0.045em',
+            color: ink,
+          }}
         >
           alodev
         </div>
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
-          <span className="text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
-            Web · App · CRM/ERP · AI
-          </span>
+        <div
+          className="text-[11px] lg:text-xs font-mono uppercase"
+          style={{ color: inkDim, letterSpacing: '0.46em', paddingLeft: '0.46em' }}
+        >
+          Web · App · CRM/ERP · AI
+        </div>
+
+        {/* Bottom ornamental rule */}
+        <div className="flex items-center gap-3 w-full justify-center">
+          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
+          <span className="w-2 h-2 rotate-45" style={{ background: accent }} />
+          <span className="w-32 h-px" style={{ background: ink, opacity: 0.35 }} />
         </div>
       </div>
-      {/* Bottom URL */}
-      <div className="absolute bottom-[12%] inset-x-0 flex items-center justify-center">
-        <span className="text-sm font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+
+      {/* Bottom — Edition + URL with hairline accents.
+          Moved closer to the inner-frame edge (bottom-[7.5%]) so it
+          sits well clear of the center-block bottom ornamental rule. */}
+      <div className="absolute bottom-[7.5%] inset-x-0 flex flex-col items-center gap-2.5">
+        <div className="flex items-center gap-3">
+          <span className="w-6 h-px" style={{ background: ink, opacity: 0.35 }} />
+          <span className="text-[9px] lg:text-[10px] font-mono uppercase tracking-[0.42em]" style={{ color: inkXDim }}>
+            Edition No. 01 · Studio Plate
+          </span>
+          <span className="w-6 h-px" style={{ background: ink, opacity: 0.35 }} />
+        </div>
+        <span className="text-sm lg:text-base font-bold tracking-[-0.02em]" style={{ color: ink }}>
           alodev.vn
         </span>
       </div>
