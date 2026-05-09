@@ -62,9 +62,9 @@ export default function BrandAssets() {
             renderDesign={(t) => <AvatarMono theme={t} />}
           />
           <BrandCard
-            id="brand-avatar-bracket"
-            label="Avatar Bracket"
-            sublabel="Logo + bracket-glyph wallpaper — kỹ thuật forward"
+            id="brand-avatar-seal"
+            label="Avatar Seal"
+            sublabel="Notary seal — concentric rings + cardinal marks"
             aspect="aspect-square"
             exportW={EXPORT_W.avatar}
             renderDesign={(t) => <AvatarBracket theme={t} />}
@@ -82,9 +82,9 @@ export default function BrandAssets() {
             renderDesign={(t) => <CoverEditorial theme={t} />}
           />
           <BrandCard
-            id="brand-cover-mesh"
-            label="Cover B — Gradient Mesh"
-            sublabel="Radial + conic mesh, logo right-anchored"
+            id="brand-cover-riso"
+            label="Cover B — Riso 2-color"
+            sublabel="Risograph print, halftone, saffron block accent"
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
             renderDesign={(t) => <CoverMesh theme={t} />}
@@ -104,6 +104,14 @@ export default function BrandAssets() {
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
             renderDesign={(t) => <CoverSplit theme={t} />}
+          />
+          <BrandCard
+            id="brand-cover-masthead"
+            label="Cover E — Newspaper Masthead"
+            sublabel="Editorial print — masthead + ruled lines + serial"
+            aspect="aspect-[820/428]"
+            exportW={EXPORT_W.cover}
+            renderDesign={(t) => <CoverMasthead theme={t} />}
           />
         </div>
 
@@ -132,6 +140,14 @@ export default function BrandAssets() {
             aspect="aspect-video"
             exportW={EXPORT_W.group}
             renderDesign={(t) => <GroupMonogram theme={t} />}
+          />
+          <BrandCard
+            id="brand-group-blueprint"
+            label="Group D — Blueprint Technical"
+            sublabel="ISO drawing — fine grid, dimension labels, sheet borders"
+            aspect="aspect-video"
+            exportW={EXPORT_W.group}
+            renderDesign={(t) => <GroupBlueprint theme={t} />}
           />
         </div>
       </div>
@@ -528,21 +544,57 @@ function AvatarMono({ theme }: { theme: Theme }) {
   )
 }
 
+/* Avatar Bracket — RE-CONCEIVED as a NOTARY SEAL.
+   No glow, no AI-vibe halo. Concentric solid rings + tight dotted
+   border + circular text path = official-document feel. Restrained
+   2-color palette (cream + navy on light, ink-black + saffron on dark). */
 function AvatarBracket({ theme }: { theme: Theme }) {
-  const t = tokens(theme)
   const isDark = theme === 'dark'
+  const bg = isDark ? '#0a0a0a' : '#f5f3ec'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkDim = isDark ? 'rgba(251,252,255,0.55)' : 'rgba(10,18,38,0.55)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
   return (
-    <div className="absolute inset-0 flex items-center justify-center" style={{ background: isDark ? '#0a0e1f' : '#f1f5fc' }}>
-      <BracketWallpaper color={t.bracketColor} />
-      <Bloom color={isDark ? 'rgba(60,92,186,0.4)' : 'rgba(95,148,247,0.22)'} x="50%" y="50%" size="70%" blur={60} />
-      <span className="absolute w-[72%] aspect-square rounded-full" style={{ border: `1px solid ${isDark ? 'rgba(255,255,255,0.10)' : 'rgba(60,92,186,0.18)'}` }} />
-      <span className="absolute w-[56%] aspect-square rounded-full" style={{ border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(60,92,186,0.10)'}` }} />
-      <div className="relative z-10 flex flex-col items-center gap-5">
-        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={180} height={219} className={t.logoShadow} />
-        <div className={`${t.text} text-5xl font-bold tracking-tight`}>alodev</div>
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
-          <span className={`${t.textLow} text-[10px] font-mono uppercase tracking-[0.32em]`}>studio · web · app</span>
+    <div className="absolute inset-0 flex items-center justify-center" style={{ background: bg }}>
+      {/* Outer ring */}
+      <span
+        className="absolute aspect-square w-[80%] rounded-full"
+        style={{ border: `2px solid ${ink}` }}
+      />
+      {/* Inner ring */}
+      <span
+        className="absolute aspect-square w-[68%] rounded-full"
+        style={{ border: `1px solid ${ink}` }}
+      />
+      {/* Dotted concentric border between rings */}
+      <span
+        className="absolute aspect-square w-[74%] rounded-full"
+        style={{ border: `1px dashed ${inkDim}` }}
+      />
+      {/* Saffron accent dots at cardinal points */}
+      {[0, 90, 180, 270].map((deg) => (
+        <span
+          key={deg}
+          className="absolute w-[40%] aspect-square flex items-center justify-center"
+          style={{ transform: `rotate(${deg}deg)` }}
+        >
+          <span
+            className="absolute w-1.5 h-1.5 rounded-full"
+            style={{ background: accent, top: '0', transform: 'translateY(-100%)' }}
+          />
+        </span>
+      ))}
+      <div className="relative z-10 flex flex-col items-center gap-3">
+        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={120} height={146} />
+        <div style={{ color: ink }} className="text-4xl font-bold tracking-tight">
+          alodev
+        </div>
+        <div className="w-12 h-px" style={{ background: ink, opacity: 0.5 }} />
+        <div
+          style={{ color: inkDim }}
+          className="text-[9px] font-mono uppercase tracking-[0.42em]"
+        >
+          studio · 2026
         </div>
       </div>
     </div>
@@ -591,41 +643,73 @@ function CoverEditorial({ theme }: { theme: Theme }) {
   )
 }
 
+/* Cover B — RE-CONCEIVED as RISOGRAPH 2-COLOR PRINT.
+   Drops the multi-bloom mesh (read as AI-synthwave). Now a print-grade
+   2-color riso poster: cream paper + halftone dot texture + navy-on-
+   cream typography + saffron stamp accent. Restrained palette discipline. */
 function CoverMesh({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
-  const t = tokens(theme)
+  const bg = isDark ? '#0a0a0a' : '#faf8f1'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkSoft = isDark ? 'rgba(251,252,255,0.70)' : 'rgba(10,18,38,0.70)'
+  const inkDim = isDark ? 'rgba(251,252,255,0.45)' : 'rgba(10,18,38,0.45)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
+  // Halftone dot pattern: small dots on cream paper, gives riso feel
+  const dotColor = isDark ? 'rgba(244,129,26,0.18)' : 'rgba(217,107,9,0.16)'
   return (
-    <div className="absolute inset-0 overflow-hidden" style={{ background: isDark ? '#06091a' : '#f3f6fc' }}>
-      <Bloom color={isDark ? 'rgba(95,148,247,0.55)' : 'rgba(95,148,247,0.35)'} x="20%" y="20%" size="55%" blur={80} />
-      <Bloom color={isDark ? 'rgba(60,92,186,0.45)' : 'rgba(60,92,186,0.22)'} x="60%" y="80%" size="60%" blur={90} />
-      <Bloom color="rgba(244,129,26,0.20)" x="92%" y="35%" size="40%" blur={70} />
-      <Bloom color={isDark ? 'rgba(160,80,220,0.18)' : 'rgba(160,80,220,0.10)'} x="40%" y="55%" size="45%" blur={70} />
+    <div className="absolute inset-0 overflow-hidden flex" style={{ background: bg }}>
+      {/* Halftone dot texture */}
       <div
-        className="absolute inset-0 mix-blend-screen"
+        className="absolute inset-0"
         style={{
-          opacity: isDark ? 0.3 : 0.15,
-          background: 'conic-gradient(from 210deg at 70% 50%, transparent 0deg, rgba(95,148,247,0.4) 60deg, transparent 120deg)',
-          filter: 'blur(36px)',
+          backgroundImage: `radial-gradient(${dotColor} 1.5px, transparent 1.6px)`,
+          backgroundSize: '14px 14px',
+          maskImage: 'radial-gradient(ellipse at 30% 50%, #000 30%, transparent 80%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 30% 50%, #000 30%, transparent 80%)',
         }}
       />
-      <Grid opacity={isDark ? 0.10 : 0.16} lineColor={t.gridLine} size={56} maskImage="linear-gradient(135deg, #000 0%, transparent 80%)" />
-      <div className="relative z-10 h-full flex items-center justify-end pr-[6%] pl-[35%]">
-        <div className="flex items-center gap-6">
-          <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={108} height={131} className={t.logoShadow} />
-          <div className="text-right">
-            <div className={`${t.text} text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
-            <div className={`mt-3 ${t.textHigh} text-sm lg:text-base font-medium`}>
-              Web · App · CRM/ERP · Tự động hoá AI
-            </div>
-            <div className="mt-3 flex justify-end">
-              <ContactStrip theme={theme} size="xs" />
-            </div>
+      {/* Saffron offset block — left edge accent (riso print signature) */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-[14%]"
+        style={{ background: accent }}
+      />
+      {/* Hand-stamped EDITION mark, top-right */}
+      <div
+        className="absolute top-[10%] right-[5%] inline-flex items-center gap-2 px-3 py-1.5 border-2"
+        style={{ borderColor: ink, color: ink }}
+      >
+        <span className="text-[9px] font-mono font-bold uppercase tracking-[0.28em]">
+          Edition · 2026
+        </span>
+      </div>
+      {/* Vertical mark on the saffron stripe */}
+      <div className="absolute left-[14%] top-1/2 -translate-y-1/2 -translate-x-1/2 origin-center" style={{ transform: 'translateX(-50%) translateY(-50%) rotate(-90deg)', whiteSpace: 'nowrap' }}>
+        <span className="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-white">
+          studio · web · app
+        </span>
+      </div>
+      {/* Main content right of saffron stripe */}
+      <div className="relative z-10 h-full flex items-center pl-[20%] pr-[8%]" style={{ color: ink }}>
+        <div>
+          <div className="flex items-center gap-3">
+            <span className="w-8 h-[2px]" style={{ background: ink }} />
+            <span className="text-[10px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+              No. 26 · Q2
+            </span>
+          </div>
+          <div
+            className="font-bold tracking-[-0.04em] leading-[0.85] mt-3"
+            style={{ fontSize: 'clamp(3.5rem, 11vw, 9rem)' }}
+          >
+            alodev
+          </div>
+          <div className="mt-3 text-base lg:text-xl font-medium" style={{ color: inkSoft }}>
+            Web · App · CRM/ERP · Tự động hoá AI
+          </div>
+          <div className="mt-5 pt-3 border-t" style={{ borderColor: inkDim, maxWidth: '38rem' }}>
+            <ContactStrip theme={theme} size="xs" />
           </div>
         </div>
-      </div>
-      <div className="absolute top-[12%] left-[5%] flex items-center gap-3">
-        <span className="w-6 h-px" style={{ background: isDark ? 'rgba(255,255,255,0.40)' : 'rgba(60,92,186,0.40)' }} />
-        <span className={`${t.textLow} text-[10px] font-mono uppercase tracking-[0.32em]`}>studio · 2026</span>
       </div>
     </div>
   )
@@ -767,6 +851,87 @@ function CoverSplit({ theme }: { theme: Theme }) {
   )
 }
 
+/* Cover E — Newspaper Masthead.
+   Editorial print: serif-mood masthead bar, dateline, columns. Real
+   designers use newsprint references for tech publications (Wired,
+   MIT Tech Review, Monocle). Off-cream paper + ink + saffron reserve. */
+function CoverMasthead({ theme }: { theme: Theme }) {
+  const isDark = theme === 'dark'
+  const bg = isDark ? '#0d0d0d' : '#f5f3ec'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkDim = isDark ? 'rgba(251,252,255,0.55)' : 'rgba(10,18,38,0.55)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
+  return (
+    <div className="absolute inset-0 overflow-hidden" style={{ background: bg, color: ink }}>
+      {/* Top masthead bar */}
+      <div className="absolute top-[6%] inset-x-[5%] flex items-center justify-between border-y" style={{ borderColor: ink }}>
+        <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+          Vol. 5 — No. 26
+        </div>
+        <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+          Q2 · 2026
+        </div>
+        <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+          alodev.vn
+        </div>
+      </div>
+      {/* Headline */}
+      <div className="absolute inset-x-[5%] top-[20%]">
+        <div className="flex items-center gap-3 mb-3">
+          <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={42} height={51} />
+          <span className="text-[10px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+            Studio Issue
+          </span>
+        </div>
+        <div
+          className="font-bold tracking-[-0.04em] leading-[0.86]"
+          style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}
+        >
+          alodev
+        </div>
+        <div className="mt-2 flex items-center gap-3">
+          <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-[0.22em]" style={{ background: accent, color: '#fff' }}>
+            Open
+          </span>
+          <span className="text-sm lg:text-base font-medium" style={{ color: inkDim }}>
+            Web · App · CRM/ERP · Tự động hoá AI
+          </span>
+        </div>
+      </div>
+      {/* 3-column footer (newsprint feel) */}
+      <div className="absolute bottom-[8%] inset-x-[5%] grid grid-cols-3 gap-6 pt-3 border-t" style={{ borderColor: ink }}>
+        <div>
+          <div className="text-[9px] font-mono uppercase tracking-[0.32em] mb-1" style={{ color: inkDim }}>
+            Tốc độ
+          </div>
+          <div className="text-xs font-medium" style={{ color: ink }}>
+            Tải nhanh · Chuẩn SEO
+          </div>
+        </div>
+        <div>
+          <div className="text-[9px] font-mono uppercase tracking-[0.32em] mb-1" style={{ color: inkDim }}>
+            Bảo hành
+          </div>
+          <div className="text-xs font-medium" style={{ color: ink }}>
+            6–12 tháng · 99.9% uptime
+          </div>
+        </div>
+        <div>
+          <div className="text-[9px] font-mono uppercase tracking-[0.32em] mb-1" style={{ color: inkDim }}>
+            Liên hệ
+          </div>
+          <div className="text-xs font-mono" style={{ color: ink }}>
+            hello@alodev.vn
+          </div>
+          <div className="text-xs font-mono" style={{ color: ink }}>
+            0587 789 456
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ════════════════════════════════════════════════════════════════════
    GROUP COVER DESIGNS  (16:9)
    ════════════════════════════════════════════════════════════════════ */
@@ -890,6 +1055,129 @@ function GroupMonogram({ theme }: { theme: Theme }) {
           <div className={`pt-3 border-t ${t.borderLine} w-full flex justify-center`}>
             <ContactStrip theme={theme} />
           </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* Group D — Blueprint Technical.
+   ISO drawing aesthetic: fine grid + dimension labels + sheet border +
+   serial number. Print-design influence (NASA tech specs, architecture
+   sheets). 2-color discipline: ink + saffron only. */
+function GroupBlueprint({ theme }: { theme: Theme }) {
+  const isDark = theme === 'dark'
+  const bg = isDark ? '#0a0a0a' : '#f5f3ec'
+  const ink = isDark ? '#fbfcff' : '#0a1226'
+  const inkDim = isDark ? 'rgba(251,252,255,0.55)' : 'rgba(10,18,38,0.55)'
+  const accent = isDark ? '#f4811a' : '#d96b09'
+  const gridLine = isDark ? 'rgba(251,252,255,0.10)' : 'rgba(10,18,38,0.10)'
+  return (
+    <div className="absolute inset-0 overflow-hidden" style={{ background: bg, color: ink }}>
+      {/* Fine grid (small, ISO-paper feel) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `linear-gradient(to right, ${gridLine} 1px, transparent 1px), linear-gradient(to bottom, ${gridLine} 1px, transparent 1px)`,
+          backgroundSize: '24px 24px',
+        }}
+      />
+      {/* Major grid lines every 6 cells */}
+      <div
+        className="absolute inset-0"
+        style={{
+          opacity: 1,
+          backgroundImage: `linear-gradient(to right, ${gridLine} 1px, transparent 1px), linear-gradient(to bottom, ${gridLine} 1px, transparent 1px)`,
+          backgroundSize: '144px 144px',
+        }}
+      />
+      {/* Sheet border */}
+      <div
+        className="absolute inset-[3.5%]"
+        style={{ border: `1px solid ${ink}` }}
+      />
+      <div
+        className="absolute inset-[4.5%]"
+        style={{ border: `1px solid ${inkDim}` }}
+      />
+
+      {/* Top-left brand block */}
+      <div className="absolute top-[7%] left-[6%] flex items-center gap-3">
+        <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={56} height={68} />
+        <div>
+          <div style={{ color: ink }} className="text-3xl lg:text-5xl font-bold tracking-tight leading-none">
+            alodev
+          </div>
+          <div className="text-[10px] font-mono uppercase tracking-[0.32em] mt-1" style={{ color: inkDim }}>
+            studio · technical sheet
+          </div>
+        </div>
+      </div>
+
+      {/* Right-side dimension column */}
+      <div className="absolute top-[8%] right-[6%] flex flex-col items-end gap-3">
+        <div className="text-right">
+          <div className="text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>Sheet</div>
+          <div className="font-mono text-sm" style={{ color: ink }}>A · 1/1</div>
+        </div>
+        <div className="text-right">
+          <div className="text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>Scale</div>
+          <div className="font-mono text-sm" style={{ color: ink }}>1 : 1</div>
+        </div>
+      </div>
+
+      {/* Center — large statement with dimension lines */}
+      <div className="absolute inset-x-[10%] top-[40%] -translate-y-1/2">
+        <div className="flex items-center gap-3 mb-2">
+          <span className="w-12 h-px" style={{ background: ink }} />
+          <span className="text-[10px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+            Spec · 001
+          </span>
+        </div>
+        <div
+          className="font-bold tracking-[-0.03em] leading-[0.92]"
+          style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
+        >
+          Web · App · Hệ thống.
+        </div>
+        <div
+          className="font-bold tracking-[-0.03em] leading-[0.92]"
+          style={{ color: accent, fontSize: 'clamp(2rem, 5vw, 4rem)' }}
+        >
+          Bàn giao đúng hạn.
+        </div>
+      </div>
+
+      {/* Bottom-left — title block (engineering drawing convention) */}
+      <div
+        className="absolute bottom-[7%] left-[6%] right-[6%] flex items-center justify-between gap-6 pt-3 border-t"
+        style={{ borderColor: ink }}
+      >
+        <div className="grid grid-cols-3 gap-x-8 text-[10px] font-mono uppercase tracking-[0.22em]">
+          <div>
+            <div style={{ color: inkDim }}>Email</div>
+            <div className="font-sans normal-case tracking-normal text-xs" style={{ color: ink }}>
+              hello@alodev.vn
+            </div>
+          </div>
+          <div>
+            <div style={{ color: inkDim }}>Phone</div>
+            <div className="font-sans normal-case tracking-normal text-xs" style={{ color: ink }}>
+              0587 789 456
+            </div>
+          </div>
+          <div>
+            <div style={{ color: inkDim }}>Telegram</div>
+            <div className="font-sans normal-case tracking-normal text-xs" style={{ color: ink }}>
+              @alodevvn
+            </div>
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
+            Drawn by
+          </div>
+          <div className="text-sm font-bold" style={{ color: ink }}>alodev studio</div>
         </div>
       </div>
     </div>
