@@ -17,14 +17,25 @@
   Cross-Origin-Opener-Policy: same-origin
   X-DNS-Prefetch-Control: on
 
-# ─── HTML — revalidate often ───────────────────────────────────────────
-# Static export emits .html for each route. Cache 1h at edge with SWR so
-# content updates propagate quickly when we redeploy.
+# ─── HTML — ALWAYS revalidate ──────────────────────────────────────────
+# Static export emits .html for each route. Previous `s-maxage=3600` made
+# CF edge serve up-to-1-hour-old HTML, which on 2026-05-09 left users
+# stuck on a pre-fix bundle (cf-cache-status HIT, age 2079) until a
+# manual zone-wide purge.
+#
+# `no-cache, must-revalidate` does NOT mean "don't cache" — it means the
+# cached copy MUST be revalidated against origin every request. Origin
+# returns 304 Not Modified when nothing changed (~few hundred bytes), so
+# cost is minimal but redeploys are visible immediately. JS chunks keep
+# their long-lived immutable cache below, so total bandwidth barely moves.
+# CDN-Cache-Control: no-store explicitly tells CF edge not to cache HTML.
 /
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: no-store
 
 /*.html
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: no-store
 
 # ─── Hashed static bundles — immutable ─────────────────────────────────
 # Next produces hashed filenames in /_next/static; safe to cache forever.

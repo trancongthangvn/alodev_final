@@ -249,11 +249,15 @@ export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
   // window comfortably covers the 1.5s + 1.4s + 0.7s animations); on broken
   // timelines the cube becomes visible regardless.
   useEffect(() => {
-    if (state !== 'interactive') return
+    // Trigger for BOTH 'interactive' (desktop WebGL path) AND 'fallback'
+    // (mobile / no-WebGL / save-data SVG path). Both states render real
+    // cube content; only 'loading' should keep the skeleton visible.
+    if (state !== 'interactive' && state !== 'fallback') return
     const wrap = wrapRef.current
     const canvas = canvasRef.current
     if (!wrap || !canvas) return
     const skel = wrap.querySelector<HTMLElement>('.hero-cube-skeleton')
+    const fb = wrap.querySelector<HTMLElement>('.hero-cube-fallback')
     const t = window.setTimeout(() => {
       // animation: none kills the running keyframe; transition: none kills
       // any pending Tailwind class-swap transitions (`transition-opacity`).
@@ -267,13 +271,18 @@ export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
       wrap.style.filter = 'none'
       canvas.style.animation = 'none'
       canvas.style.transition = 'none'
-      canvas.style.opacity = '1'
+      canvas.style.opacity = state === 'interactive' ? '1' : '0'
       canvas.style.transform = 'none'
       canvas.style.filter = 'none'
       if (skel) {
         skel.style.animation = 'none'
         skel.style.transition = 'none'
         skel.style.opacity = '0'
+      }
+      if (fb) {
+        fb.style.animation = 'none'
+        fb.style.transition = 'none'
+        fb.style.opacity = state === 'fallback' ? '1' : '0'
       }
     }, 2000)
     return () => window.clearTimeout(t)
