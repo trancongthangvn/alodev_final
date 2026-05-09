@@ -241,25 +241,32 @@ export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
                passes over both blob + wireframe via mix-blend-mode.
           When state flips to 'interactive', the skeleton scales+blurs out
           (skeleton-exit anim) and the wireframe dissolves with it. */}
+      {/* Opacity transitions REMOVED on these three layers — `transition-opacity`
+          runs on document.timeline, which pauses when the tab is hidden /
+          throttled / when scroll-timeline kicks in unfavourably. Pausing left
+          the canvas frozen at the pre-class-swap opacity (0) regardless of
+          the post-swap class (`opacity-100`), turning the cube invisible.
+          Class swap is now instant — no fade between state stages, but the
+          cube is GUARANTEED to render once `state` flips. */}
       <div
         aria-hidden="true"
-        className={`hero-cube-skeleton absolute inset-0 pointer-events-none transition-opacity duration-500 ${state === 'loading' ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-skeleton absolute inset-0 pointer-events-none ${state === 'loading' ? 'opacity-100' : 'opacity-0'}`}
       >
         <WireframeCube />
       </div>
 
-      {/* Static SVG fallback — only fades in if WebGL fails or times out.
+      {/* Static SVG fallback — only shown if WebGL fails or times out.
           For no-JS users the CSS noscript rule keeps it visible. */}
       <div
         aria-hidden="true"
-        className={`hero-cube-fallback absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-700 ${state === 'fallback' ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-fallback absolute inset-0 flex items-center justify-center pointer-events-none ${state === 'fallback' ? 'opacity-100' : 'opacity-0'}`}
       >
         <StaticCube />
       </div>
 
       <canvas
         ref={canvasRef}
-        className={`hero-cube-canvas relative w-full h-full transition-opacity duration-700 ${state === 'interactive' ? 'opacity-100' : 'opacity-0'}`}
+        className={`hero-cube-canvas relative w-full h-full ${state === 'interactive' ? 'opacity-100' : 'opacity-0'}`}
         aria-label="3D Rubik visualization"
       />
     </div>

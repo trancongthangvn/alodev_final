@@ -1092,8 +1092,15 @@ img, iframe { color-scheme: light; }
      crushing the lifted tile mids back into the body color. Three.js does
      all colour work in linear space already; CSS post-processing fights
      the PBR result. */
-  animation: hero-cube-scale-in-fade 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: transform, opacity;
+  /* CRITICAL: opacity 1 default so the cube is ALWAYS visible even when
+     the document.timeline is paused (background tab, browser-throttled
+     animations, scroll-timeline polyfill conflicts). The scale-in-fade
+     animation runs on top with fill-mode: forwards (NOT both) so the
+     pre-animation state doesn't force opacity 0 — which previously left
+     the cube entirely invisible whenever the timeline didn't progress. */
+  opacity: 1;
+  animation: hero-cube-scale-in-fade 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform;
 }
 
 /* Local "lit pocket" behind the cube in dark mode. The page-level
@@ -1681,23 +1688,23 @@ img, iframe { color-scheme: light; }
 
    Selector targets data-cube-state on the wrap so the animation only
    fires at the moment of transition — never re-runs once interactive. */
+/* hero-cube-canvas-reveal: opacity AND rotateY/rotateX removed from
+   keyframes — a paused document.timeline (background tab, throttle, edge
+   case in scroll-timeline interaction) holds animations at currentTime: 0
+   indefinitely, which previously left the canvas at opacity: 0 + rotateY:
+   -90deg = literally edge-on and invisible. Now keyframes only animate
+   scale + filter. The Tailwind opacity-100 class (set by React when
+   state='interactive') controls visibility unconditionally. */
 @keyframes hero-cube-canvas-reveal {
   0% {
-    opacity: 0;
-    transform: scale(0.55) rotateY(-90deg) rotateX(12deg);
-    filter: blur(18px) brightness(0.45) saturate(0.7);
+    transform: scale(0.85);
+    filter: blur(8px) brightness(0.7) saturate(0.85);
   }
-  40% {
-    opacity: 1;
-    filter: blur(3px) brightness(0.85) saturate(0.92);
-  }
-  70% {
-    transform: scale(1.045) rotateY(7deg) rotateX(-1.5deg);
+  60% {
     filter: blur(0) brightness(1) saturate(1);
   }
   100% {
-    opacity: 1;
-    transform: scale(1) rotateY(0deg) rotateX(0deg);
+    transform: scale(1);
     filter: blur(0) brightness(1) saturate(1);
   }
 }
@@ -1761,18 +1768,21 @@ img, iframe { color-scheme: light; }
   100% { opacity: 0; transform: scale(1.25); filter: blur(8px); }
 }
 
+/* hero-cube-scale-in-fade: entry polish ONLY. Opacity is INTENTIONALLY
+   omitted from the keyframes — when document.timeline is paused (background
+   tab, browser-throttle, scroll-timeline edge cases) a "running" animation
+   with opacity: 0 in the from-keyframe leaves the wrap permanently invisible
+   regardless of fill-mode. By only animating transform + filter, the wrap
+   stays at its CSS default (opacity: 1) even if the timeline never advances. */
 @keyframes hero-cube-scale-in-fade {
   from {
-    opacity: 0;
     transform: scale(0.85) translateY(8px);
     filter: blur(6px);
   }
   60% {
-    opacity: 1;
     filter: blur(0);
   }
   to {
-    opacity: 1;
     transform: scale(1) translateY(0);
     filter: none;
   }
