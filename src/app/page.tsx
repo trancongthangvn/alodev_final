@@ -9,6 +9,8 @@ import QuoteCTA from '@/components/QuoteCTA'
 import FeaturedTabs from '@/components/FeaturedTabs'
 import HeroCube from '@/components/HeroCube'
 import StackStrip from '@/components/StackStrip'
+import Marquee from '@/components/Marquee'
+import HorizontalPin from '@/components/HorizontalPin'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
@@ -757,6 +759,97 @@ export default function Home() {
       </div>
 
       </div>{/* /.rubik-journey */}
+
+      {/* ═══════════════════════════════════════════════════════════════
+          AKARU/LENIS MOTION BANDS — sit OUTSIDE .rubik-journey on
+          purpose. The journey rule `.rubik-journey > section { z-index: 1 }`
+          paints opaque sections OVER the cube; placing these bands here
+          (after the journey closes) keeps the cube travel intact.
+          ═══════════════════════════════════════════════════════════════ */}
+
+      {/* Kinetic marquee — value props as oversized rolling type, akaru-style.
+          Decorative only (same value props are stated in hero + Khác biệt). */}
+      <section
+        className="relative py-10 lg:py-16 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800 overflow-hidden"
+        aria-hidden="true"
+      >
+        <Marquee speed={70}>
+          {[
+            'Founder-led studio',
+            'Source code thuộc về bạn',
+            'Bàn giao đúng hợp đồng',
+            'Hà Nội · Việt Nam',
+            '11+ sản phẩm đang vận hành',
+            'Next.js · Node · Postgres',
+          ].map((t, i) => (
+            <span
+              key={i}
+              className="editorial-display px-8 lg:px-12 text-gray-900 dark:text-white inline-flex items-center gap-8 lg:gap-12"
+            >
+              {t}
+              <span className="inline-block w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-brand-500 align-middle" />
+            </span>
+          ))}
+        </Marquee>
+      </section>
+
+      {/* Horizontal-pin showcase — services in akaru/lusion style. Pins at
+          top of viewport; vertical scroll → horizontal track translation.
+          Mobile / touch / reduced-motion: native swipe + scroll-snap. */}
+      <section
+        className="relative bg-white dark:bg-ink-950 border-b border-gray-200 dark:border-ink-800"
+        aria-label="Dịch vụ Alodev"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-20 pb-6 lg:pb-12">
+          <div className="reveal max-w-2xl">
+            <Eyebrow>Tại sao chọn Alodev</Eyebrow>
+            <h2 className="h-section mt-3 text-gray-900 dark:text-white">
+              Sáu cam kết. Một thoả thuận.
+            </h2>
+            <p className="hidden lg:block mt-3 text-sm text-gray-500 dark:text-ink-400">
+              Cuộn dọc — sáu cam kết trượt ngang.
+            </p>
+          </div>
+        </div>
+        <HorizontalPin ariaLabel="Sáu cam kết của Alodev">
+          {[
+            { idx: '01', title: 'Founder trực tiếp', desc: 'Bạn trao đổi thẳng với người trực tiếp viết code — không sales, không middleman.', accent: 'from-brand-500/20 to-transparent' },
+            { idx: '02', title: 'Source code thuộc về bạn', desc: 'Repo, database, domain, hosting đứng tên bạn. Không vendor lock-in.', accent: 'from-tech-500/20 to-transparent' },
+            { idx: '03', title: 'Bàn giao đúng hợp đồng', desc: 'Deadline ràng buộc trong hợp đồng — trễ giảm 5%/tuần.', accent: 'from-emerald-500/20 to-transparent' },
+            { idx: '04', title: 'Stack có lý do', desc: 'Mỗi quyết định stack đều giải thích được trong tài liệu kỹ thuật.', accent: 'from-fuchsia-500/20 to-transparent' },
+            { idx: '05', title: 'Đo lường minh bạch', desc: 'PageSpeed 90+, P95 < 200ms, uptime > 99.9% — báo cáo định kỳ.', accent: 'from-amber-500/20 to-transparent' },
+            { idx: '06', title: 'Bảo hành 6–12 tháng', desc: 'Mọi bug do Alodev gây ra đều khắc phục miễn phí trong thời gian bảo hành.', accent: 'from-sky-500/20 to-transparent' },
+          ].map((c) => (
+            <article
+              key={c.idx}
+              className="lift flex-none w-[78vw] sm:w-[420px] lg:w-[clamp(380px,32vw,520px)] aspect-[4/5] rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden p-7 lg:p-9 flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-[10px] tabular font-mono text-gray-500 dark:text-ink-500">
+                  {c.idx} / 06
+                </span>
+                <h3 className="mt-6 text-2xl lg:text-3xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+                  {c.title}
+                </h3>
+                <p className="mt-4 text-gray-600 dark:text-ink-400 leading-relaxed">{c.desc}</p>
+              </div>
+              <div className={`h-24 -mx-7 lg:-mx-9 -mb-7 lg:-mb-9 rounded-b-2xl bg-gradient-to-tr ${c.accent}`} />
+            </article>
+          ))}
+          {/* End-of-track CTA card */}
+          <Link
+            href="/bao-gia"
+            className="lift group flex-none w-[78vw] sm:w-[420px] lg:w-[clamp(380px,32vw,520px)] aspect-[4/5] rounded-2xl border border-dashed border-gray-300 dark:border-ink-700 bg-cream-50 dark:bg-ink-900/40 overflow-hidden flex flex-col items-center justify-center text-center p-10 hover:border-brand-500 hover:bg-white dark:hover:bg-ink-900 transition"
+          >
+            <div className="text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white">→</div>
+            <div className="mt-4 text-lg font-semibold text-gray-900 dark:text-white">Bắt đầu dự án</div>
+            <div className="mt-2 text-sm text-gray-600 dark:text-ink-400">Phản hồi trong 24h kèm báo giá sơ bộ</div>
+            <div className="mt-6 inline-flex items-center gap-2 text-brand-600 dark:text-brand-400 text-sm font-semibold group-hover:gap-3 transition-all">
+              /bao-gia
+            </div>
+          </Link>
+        </HorizontalPin>
+      </section>
     </>
   )
 }

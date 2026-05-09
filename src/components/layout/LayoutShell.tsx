@@ -6,6 +6,8 @@ import Footer from './Footer'
 import BackToTop from '@/components/BackToTop'
 import CommandPalette from '@/components/CommandPalette'
 import MotionLayer from '@/components/MotionLayer'
+import SmoothScroll from '@/components/SmoothScroll'
+import CustomCursor from '@/components/CustomCursor'
 import MobileStickyCTA from '@/components/MobileStickyCTA'
 import PaletteHint from '@/components/PaletteHint'
 import QuoteChoice from '@/components/QuoteChoice'
@@ -24,6 +26,8 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <CommandPalette />
       <PaletteHint />
       <QuoteChoice />
+      <SmoothScroll />
+      <CustomCursor />
       <MotionLayer />
       <SectionFrame />
       <IntroAnimation />

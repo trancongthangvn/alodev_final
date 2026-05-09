@@ -1650,3 +1650,149 @@ img, iframe { color-scheme: light; }
   .wireframe-cube .wf-face path { animation: none !important; stroke-dashoffset: 0 !important; }
   .wireframe-cube .wf-face { animation: none !important; opacity: 0.78 !important; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   AKARU/LENIS-STYLE MOTION LAYER (added 2026-05-09)
+   These utilities are mounted via SmoothScroll, CustomCursor,
+   Marquee, and HorizontalPin components. They live OUTSIDE the
+   .rubik-journey wrapper to keep the cube journey calibration intact.
+   See feedback_protect_cube.md memory for the full constraint set.
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Lenis sets html.lenis-smooth — disable native CSS scroll-behavior so
+   the browser's instant smooth doesn't fight Lenis' own easing. */
+html.lenis-smooth { scroll-behavior: auto; }
+
+/* ─── Custom cursor (CustomCursor.tsx) ───
+   Two-layer pointer with mix-blend-mode difference for auto-contrast.
+   Disabled on coarse pointers / reduced-motion at the JS level. */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor * { cursor: none !important; }
+  body.has-custom-cursor input,
+  body.has-custom-cursor textarea,
+  body.has-custom-cursor [contenteditable=true] { cursor: text !important; }
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform, width, height, border-radius;
+  transition:
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s ease,
+    opacity 0.2s ease,
+    border-color 0.25s ease;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  background: #fff;
+  border-radius: 50%;
+}
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  background: transparent;
+}
+body.cursor-hover .cursor-ring { width: 56px; height: 56px; }
+body.cursor-hover .cursor-dot  { width: 0; height: 0; opacity: 0; }
+body.cursor-magnetic .cursor-ring {
+  width: var(--cw, 56px);
+  height: var(--ch, 56px);
+  border-radius: var(--cr, 28px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+body.cursor-magnetic .cursor-dot { opacity: 0; }
+body.cursor-press .cursor-ring  { filter: brightness(1.15); }
+body.cursor-text .cursor-dot {
+  width: 2px; height: 18px;
+  margin-left: -1px; margin-top: -9px;
+  border-radius: 1px;
+}
+body.cursor-text .cursor-ring { opacity: 0; }
+
+/* ─── Kinetic marquee (Marquee.tsx, .kmq-* class prefix) ───
+   Class-prefixed to avoid the legacy `.marquee` CSS-only rule above. */
+.kmq {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.kmq-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.kmq-copy {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+/* ─── Horizontal pin (HorizontalPin.tsx) ─── */
+.h-pin-wrap { position: relative; height: var(--pin-h, 100vh); }
+.h-pin-stick {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.h-pin-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.h-pin-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+.h-pin-wrap.h-pin-fallback { height: auto; }
+.h-pin-fallback .h-pin-stick { position: relative; height: auto; }
+.h-pin-fallback .h-pin-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.h-pin-fallback .h-pin-viewport::-webkit-scrollbar { display: none; }
+.h-pin-fallback .h-pin-track { transform: none !important; height: auto; }
+.h-pin-fallback .h-pin-track > * { scroll-snap-align: start; }
+
+/* ─── Editorial display type (oversized akaru-grade headings) ─── */
+.editorial-display {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  font-size: clamp(2.25rem, 7vw, 6rem);
+}
+.editorial-display.outline {
+  -webkit-text-stroke: 1.5px currentColor;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kmq-track { transform: none !important; }
+  .h-pin-track { transform: none !important; }
+}

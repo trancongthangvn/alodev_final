@@ -87,10 +87,13 @@ export default function Marquee({
   }, [speed, reverse, pauseOnHover])
 
   return (
-    <div className={`marquee ${className}`} aria-hidden="true">
-      <div ref={trackRef} className="marquee-track">
-        <div className="marquee-copy">{children}</div>
-        <div className="marquee-copy">{children}</div>
+    // Class prefix is `kmq-` (kinetic-marquee-quick) instead of `marquee`
+    // to avoid collision with the existing CSS-only `.marquee` rule in
+    // globals.css (a 32s linear scroll used by older logo strips).
+    <div className={`kmq ${className}`} aria-hidden="true">
+      <div ref={trackRef} className="kmq-track">
+        <div className="kmq-copy">{children}</div>
+        <div className="kmq-copy">{children}</div>
       </div>
     </div>
   )
