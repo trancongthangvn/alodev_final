@@ -697,26 +697,16 @@ img, iframe { color-scheme: light; }
    half the light-theme values: dark surfaces take less lift to read. */
 .hero-resend,
 .dark-strip {
-  /* Atmospheric blobs — brand-warm saffron in upper-right (where the
-     cube lives), cool slate in lower-left for balance. Alpha tuned so
-     the bg reads as "atmospheric pocket" not "flat cream". Bumped from
-     0.10/0.06 to 0.18/0.10 because the previous values were so subtle
-     they failed to lift the bg above flat — the brand color was
-     basically invisible against cream. */
+  /* Cube stands alone — atmospheric blob upper-right was reading as a
+     dirty smudge behind the cube. Lower-left brand accent stays for
+     bg ambience away from the cube area. */
   background:
-    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(244, 129, 26, 0.18) 0%, transparent 65%),
     radial-gradient(ellipse 55% 65% at 12% 78%, rgba(110, 125, 160, 0.10) 0%, transparent 70%),
     #f6f7f9;
 }
 [data-theme=dark] .hero-resend,
 [data-theme=dark] .dark-strip {
-  /* Cool-silver pocket where the cube sits (upper-right) lifts the bg
-     ~12-15 lum so the cube body (#2e2e36, lum 49) reads against a
-     ~22-lum local pocket instead of the 9-lum flat. Saffron lower-left
-     mirrors light theme's brand accent. Alphas kept low — on dark bg,
-     even 0.10 alpha registers visibly. */
   background:
-    radial-gradient(ellipse 60% 55% at 78% 22%, rgba(150, 170, 210, 0.10) 0%, transparent 65%),
     radial-gradient(ellipse 55% 65% at 12% 78%, rgba(244, 129, 26, 0.06) 0%, transparent 70%),
     #07080c;
 }
@@ -848,16 +838,11 @@ img, iframe { color-scheme: light; }
    region where the three.js sprite already gradients into transparent.
    Light theme stays untouched: cream bg already has plenty of contrast
    with the cube. */
-[data-theme=dark] .hero-cube-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 65% at 50% 52%, rgba(170, 195, 235, 0.14) 0%, rgba(140, 160, 200, 0.05) 40%, transparent 75%);
-  filter: blur(8px);
-  pointer-events: none;
-  z-index: -1;
-}
+/* Local lit pocket REMOVED 2026-05-09 — user feedback: cube standalone
+   reads cleaner; the radial glow behind it was registering as a smudge.
+   Three.js's own shadow plane handles ground anchoring; no atmospheric
+   halo needed behind the wrap.
+[data-theme=dark] .hero-cube-wrap::after { ...removed... } */
 
 /* No stage backdrop. The earlier `::before` ellipse pool with alpha 0.92
    in light theme read as a rectangular dark panel behind the cube — the

@@ -647,20 +647,13 @@ function setupCube(
     tex.colorSpace = THREE.SRGBColorSpace
     return tex
   }
-  const haloMat = new THREE.SpriteMaterial({
-    map: makeHaloTexture(),
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-  })
-  const halo = new THREE.Sprite(haloMat)
-  // Scale 4 (was 7) so the soft glow fits comfortably inside the canvas
-  // viewport. At 7, the sprite plane projected larger than the canvas
-  // and got clipped at the canvas right edge, leaving a visible
-  // rectangular cutoff in the upper-right of the cube wrap.
-  halo.scale.set(4, 4, 1)
-  halo.position.set(0, 0.2, -2.5)
-  scene.add(halo)
+  // Halo sprite REMOVED 2026-05-09 — user feedback "khối rubik đi 1 mình,
+  // đằng sau nó không có đốm sáng". The cube stands alone. The shadow
+  // plane below still anchors it to a ground; nothing behind/around the
+  // body any more. Texture factory and material kept above only because
+  // setupCube's cleanup function still references them — we instead
+  // create-but-don't-add an empty no-op sprite to keep dispose() safe.
+  const haloMat = new THREE.SpriteMaterial({ map: makeHaloTexture(), transparent: true, opacity: 0 })
 
   function applyAOVignette(ctx: CanvasRenderingContext2D, size: number, edgeDark = 0.18, falloffStart = 0.25) {
     ctx.save()
