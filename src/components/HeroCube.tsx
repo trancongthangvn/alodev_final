@@ -229,6 +229,56 @@ export default function HeroCube({ variant = 'hero' }: HeroCubeProps) {
     }
   }, [variant])
 
+  // ─── Cube-visibility safety net ───
+  // The cube wrap, canvas, and skeleton each carry a CSS entrance animation
+  // (`hero-cube-scale-in-fade`, `hero-cube-canvas-reveal`, `hero-cube-skeleton-exit`).
+  // Each from/0% keyframe deliberately HIDES the element (opacity 0 / blur /
+  // rotateY -90deg / skeleton at opacity 1). All three animations run on
+  // document.timeline, which pauses when the tab is hidden, the OS suspends
+  // the browser process, low-power mode kicks in, or in edge cases when a
+  // scroll-driven animation elsewhere on the page interacts unfavourably.
+  // A paused timeline freezes "running" animations at currentTime 0 — the
+  // from-keyframe — so the cube stays invisible permanently even though
+  // three.js correctly drew pixels into the canvas (verified 2026-05-09 via
+  // Chrome MCP toDataURL: 490k+ non-zero pixels while on-screen output blank,
+  // skeleton opacity 1 covering canvas).
+  //
+  // Fix: 2s after state flips to 'interactive', kill the entrance animations
+  // and pin the elements to their END-keyframe state via inline styles. The
+  // entrance choreography still runs normally on healthy browsers (the 2s
+  // window comfortably covers the 1.5s + 1.4s + 0.7s animations); on broken
+  // timelines the cube becomes visible regardless.
+  useEffect(() => {
+    if (state !== 'interactive') return
+    const wrap = wrapRef.current
+    const canvas = canvasRef.current
+    if (!wrap || !canvas) return
+    const skel = wrap.querySelector<HTMLElement>('.hero-cube-skeleton')
+    const t = window.setTimeout(() => {
+      // animation: none kills the running keyframe; transition: none kills
+      // any pending Tailwind class-swap transitions (`transition-opacity`).
+      // BOTH ride document.timeline and freeze if the timeline pauses, so
+      // both must be cleared. After cancelling, explicit inline styles set
+      // the desired final state.
+      wrap.style.animation = 'none'
+      wrap.style.transition = 'none'
+      wrap.style.opacity = '1'
+      wrap.style.transform = 'none'
+      wrap.style.filter = 'none'
+      canvas.style.animation = 'none'
+      canvas.style.transition = 'none'
+      canvas.style.opacity = '1'
+      canvas.style.transform = 'none'
+      canvas.style.filter = 'none'
+      if (skel) {
+        skel.style.animation = 'none'
+        skel.style.transition = 'none'
+        skel.style.opacity = '0'
+      }
+    }, 2000)
+    return () => window.clearTimeout(t)
+  }, [state])
+
   return (
     <div ref={wrapRef} className="hero-cube-wrap relative w-full" data-cube-state={state} data-variant={variant}>
       {/* Skeleton — visible only during the 'loading' state. Three layered
@@ -405,6 +455,14 @@ function setupCube(
     antialias: !isMobile,
     alpha: true,
     powerPreference: 'high-performance',
+    // preserveDrawingBuffer: true keeps the canvas's drawn pixels across
+    // compositor reads. Without it (default false), the browser is allowed
+    // to clear the WebGL buffer the moment a frame is composited; if RAF
+    // is throttled (background tab, OS power-save, hidden iframe) no new
+    // render() repaints, so the on-screen canvas goes blank even though
+    // three.js had drawn the cube. Verified 2026-05-09: drawImage from the
+    // canvas extracted 490k+ non-zero pixels while the screen showed nothing.
+    preserveDrawingBuffer: true,
   })
   renderer.setPixelRatio(
     isMobile
@@ -1370,6 +1428,12 @@ function setupCube(
     renderer.render(scene, camera)
     rafAnimate = requestAnimationFrame(animate)
   }
+  // Render once IMMEDIATELY before scheduling the RAF chain. Without this,
+  // the canvas stays empty until the first requestAnimationFrame fires —
+  // which can be deferred indefinitely on a throttled tab. With
+  // preserveDrawingBuffer:true above this single eager frame stays painted
+  // until animate() takes over for motion.
+  try { renderer.render(scene, camera) } catch { /* animate() will retry */ }
   rafAnimate = requestAnimationFrame(animate)
 
   return () => {
