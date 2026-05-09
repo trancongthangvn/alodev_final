@@ -4,6 +4,7 @@ import Icon, { type IconName } from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
 import { breadcrumbSchema, aboutPageSchema, founderPersonSchema } from '@/lib/schema'
 import { projects } from '@/data/projects'
+import BrandAssets from '@/components/BrandAssets'
 
 export const metadata = {
   // `absolute` to bypass the '%s — Alodev' template since the title already
@@ -474,6 +475,11 @@ export default function VeChungToiPage() {
           </div>
         </div>
       </section>
+
+      {/* BRAND ASSETS — logo + Rubik symbol export cards (avatar / cover /
+          group). Sits before the final CTA so partners scrolling through
+          the capability profile can grab the social-ready files in flow. */}
+      <BrandAssets />
 
       {/* FINAL CTA (NEW) — close out the capability profile with a clear
           next-step funnel. Two paths: (1) immediate quote request for
