@@ -1773,11 +1773,19 @@ img, iframe { color-scheme: light; }
    the basic opacity fade, the skeleton scales outward and blurs as the
    cube emerges, like a placeholder dissolving into the real artifact. */
 [data-cube-state="interactive"] .hero-cube-skeleton {
-  animation: hero-cube-skeleton-exit 700ms cubic-bezier(0.7, 0, 0.84, 0) both;
-}
-@keyframes hero-cube-skeleton-exit {
-  0%   { opacity: 1; transform: scale(1);    filter: blur(0); }
-  100% { opacity: 0; transform: scale(1.25); filter: blur(8px); }
+  /* Animation REMOVED — same root cause as wrap/canvas above. The exit
+     keyframe held `opacity: 1` at 0% so a paused document.timeline
+     (hidden tab / throttle / scroll-timeline edge case) left the
+     skeleton at full opacity, COMPLETELY COVERING the WebGL cube
+     behind it (skeleton is `absolute inset-0` over the canvas).
+     React's Tailwind class swap (`opacity-100` → `opacity-0`) when
+     state flips to 'interactive' now hides the skeleton instantly,
+     no animation involved. Verified via Chrome MCP 2026-05-09:
+     animation playState 'running', currentTime 0, computed opacity 1
+     → cube hidden behind skeleton even though canvas had 490k+ drawn
+     pixels. */
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 /* hero-cube-scale-in-fade: entry polish ONLY. Opacity is INTENTIONALLY
