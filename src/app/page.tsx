@@ -3,8 +3,6 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { projects } from '@/data/projects'
 import JsonLd from '@/components/JsonLd'
-import Icon from '@/components/Icon'
-import QuoteCTA from '@/components/QuoteCTA'
 import HeroCube from '@/components/HeroCube'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
@@ -12,26 +10,31 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-// Phase ticks for the inline process teaser — duration shorthand only.
-// Full deliverables / quality gates live on /quy-trinh.
-const phaseTicks = [
-  { i: '01', d: '24h' },
-  { i: '02', d: '48h' },
-  { i: '03', d: '7d' },
-  { i: '04', d: '3w' },
-  { i: '05', d: '12w' },
-  { i: '06', d: '7d' },
-  { i: '07', d: '3d' },
-  { i: '08', d: '12m' },
+/* Studio press sheet doctrine — homepage IS the studio's monthly issue.
+   Reference: Pentagram, Bureau Borsche, Studio Lin, Daikoku, Wendy
+   Trommer. No SaaS-landing pattern (no hero pill / 3-col grid / final
+   CTA section / timeline strip). Editorial monograph: type-as-art,
+   ruled lines, project INDEX (not gallery), colophon footer.
+
+   Cube journey wrapper kept; 3 narrative beats only — Statement,
+   Index, Colophon. Cube travels through the 3 stops via the existing
+   scroll-timeline keyframes. */
+
+// Project index — 8 most representative entries with hand-curated year + role.
+// Full 19-entry portfolio lives at /du-an.
+const indexEntries: { slug: string; name: string; year: string; role: string }[] = [
+  { slug: 'onthi365',         name: 'OnThi365',         year: '2024', role: 'edtech · live PvP' },
+  { slug: 'ganday',           name: 'Gần Đây',          year: '2025', role: 'multi-site CMS' },
+  { slug: 'lammmo',           name: 'Lammmo',           year: '2025', role: 'marketplace' },
+  { slug: 'shopaccgame',      name: 'Shop Acc Game',    year: '2022', role: 'e-commerce' },
+  { slug: 'datacenter',       name: 'Datacenter',       year: '2025', role: 'fleet dashboard' },
+  { slug: 'vietnamid',        name: 'VietnamID',        year: '2026', role: 'identity verify' },
+  { slug: 'maxmin',           name: 'MAXMIN',           year: '2026', role: 'social commerce' },
+  { slug: 'vn247',            name: 'VN247',            year: '2024', role: 'classifieds' },
 ]
+// Validate slugs exist (build-time guard).
+const validIndex = indexEntries.filter((e) => projects.some((p) => p.slug === e.slug))
 
-// Just 3 featured projects — selected work, not portfolio dump.
-// Full portfolio lives on /du-an.
-const featuredSlugs = ['onthi365', 'shopaccgame', 'ganday']
-const featured = featuredSlugs.map((s) => projects.find((p) => p.slug === s)!).filter(Boolean)
-
-// Two FAQ items only — depth content lives on /quy-trinh and other route pages.
-// Just enough to satisfy FAQPage schema for SERP rich result eligibility.
 const faq = [
   {
     q: 'Chi phí thiết kế website doanh nghiệp khoảng bao nhiêu?',
@@ -53,75 +56,90 @@ export default function Home() {
         breadcrumbSchema([{ name: 'Trang chủ', url: '/' }]),
       ]} />
 
-      {/* ═══ RUBIK JOURNEY REGION ═══
-          Single sticky cube travels the entire homepage scroll via CSS
-          scroll-timeline (cube-apple-travel keyframes in globals.css).
-          Sections inside this wrapper are sparse on purpose — restraint
-          is the design. Reference: Linear / Vercel / Resend / Pentagram. */}
       <div className="rubik-journey relative">
 
-        {/* ─── HERO ─────────────────────────────────────────────────── */}
-        <section className="hero-resend relative text-ink-900 dark:text-white overflow-hidden" data-section-name="Trang chủ">
-          <div className="hero-resend-grid absolute inset-0" />
+        {/* ═══ MASTHEAD — issue number / dateline / colophon-style top
+            bar. Real studios open with print metadata, not a marketing
+            pill. Inspired by Wired/Monocle/MIT Tech Review mastheads. */}
+        <div className="hero-resend relative">
+          <div className="hero-resend-grid absolute inset-0 opacity-50" />
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 lg:pt-10 pb-3">
+            <div className="flex items-center justify-between gap-4 border-b border-gray-300 dark:border-ink-800 pb-3">
+              <div className="text-[10px] lg:text-xs font-mono uppercase tracking-[0.32em] text-gray-700 dark:text-ink-400">
+                Vol. 5 · No. 26
+              </div>
+              <div className="hidden sm:block text-[10px] lg:text-xs font-mono uppercase tracking-[0.32em] text-gray-700 dark:text-ink-400">
+                Studio · Web · App · CRM/ERP · AI
+              </div>
+              <div className="text-[10px] lg:text-xs font-mono uppercase tracking-[0.32em] text-gray-700 dark:text-ink-400">
+                Q2 / 2026
+              </div>
+            </div>
+          </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12 lg:pt-24 lg:pb-32">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-start">
+          {/* ═══ STATEMENT — single editorial paragraph, monumental
+              type. No headline + subhead split. No CTA buttons. The
+              statement IS the value prop. Cube anchors the right
+              column on desktop via the sticky overlay. */}
+          <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 lg:pt-24 lg:pb-40" data-section-name="Statement">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
               <div className="hero-rise lg:col-span-7">
-                {/* Single status pill — replaces the "Hà Nội · founder-led" line. */}
-                <div className="flex">
-                  <Link
-                    href="/du-an"
-                    className="group inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 backdrop-blur px-3.5 py-1.5 text-xs font-medium text-gray-700 dark:text-zinc-300 hover:border-gray-300 dark:hover:border-zinc-700 hover:text-gray-900 dark:hover:text-white transition shadow-sm dark:shadow-lg dark:shadow-black/30"
-                  >
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full rounded-full bg-brand-500 dark:bg-brand-400 opacity-75 animate-ping" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand-500 dark:bg-brand-400" />
-                    </span>
-                    <span>Đang nhận dự án Q2/2026 — còn slot</span>
-                    <Icon name="arrow-right" className="w-3.5 h-3.5 opacity-50 group-hover:translate-x-0.5 transition" />
-                  </Link>
+                <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400">
+                  ── Statement, Q2/2026
                 </div>
-
-                <h1 className="hero-h h-display mt-6 sm:mt-8 text-left max-w-3xl">
+                <h1
+                  className="hero-h mt-6 lg:mt-8 text-gray-900 dark:text-white font-bold tracking-[-0.04em] leading-[0.95]"
+                  style={{ fontSize: 'clamp(2.75rem, 8vw, 7rem)' }}
+                >
                   <span className="word-cascade block">
-                    {['Thiết', 'kế', 'website', '&', 'lập', 'trình', 'app', '—'].map((w, i, a) => (
+                    {['Một', 'bên', 'ngoài,'].map((w, i, a) => (
                       <Fragment key={i}>
-                        <span style={{ animationDelay: `${80 + i * 55}ms` }}>{w}</span>
+                        <span style={{ animationDelay: `${80 + i * 65}ms` }}>{w}</span>
                         {i < a.length - 1 ? ' ' : ''}
                       </Fragment>
                     ))}
                   </span>
                   <span className="word-cascade block">
-                    {['biến', 'ý', 'tưởng', 'thành', 'sản', 'phẩm', 'thật'].map((w, i) => (
+                    {['để', 'biến', 'kế', 'hoạch', 'tốt'].map((w, i, a) => (
                       <Fragment key={i}>
-                        <span style={{ animationDelay: `${500 + i * 55}ms` }}>{w}</span>
-                        {' '}
+                        <span style={{ animationDelay: `${340 + i * 65}ms` }}>{w}</span>
+                        {i < a.length - 1 ? ' ' : ''}
                       </Fragment>
                     ))}
-                    <span style={{ animationDelay: `${500 + 7 * 55}ms` }}>.</span>
+                  </span>
+                  <span className="word-cascade block">
+                    {['thành', 'hệ', 'thống'].map((w, i, a) => (
+                      <Fragment key={i}>
+                        <span style={{ animationDelay: `${680 + i * 65}ms` }}>{w}</span>
+                        {i < a.length - 1 ? ' ' : ''}
+                      </Fragment>
+                    ))}
+                  </span>
+                  <span className="word-cascade block">
+                    <span style={{ animationDelay: '880ms' }} className="text-brand-600 dark:text-brand-400">
+                      vận hành được.
+                    </span>
                   </span>
                 </h1>
 
-                {/* Single tagline — short, no Hà Nội mention. */}
-                <p className="mt-6 sm:mt-8 text-base sm:text-lg text-gray-700 dark:text-zinc-400 max-w-xl leading-relaxed">
-                  Studio thiết kế &amp; phát triển web/app · CRM/ERP · tự động hoá AI.
-                  Source code thuộc về bạn. Bàn giao đúng hạn — bảo hành 6–12 tháng.
-                </p>
-
-                <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-                  <span className="magnetic w-full sm:w-auto">
-                    <QuoteCTA size="lg" variant="solid" className="w-full sm:w-auto justify-center">Yêu cầu báo giá</QuoteCTA>
-                  </span>
-                  <Link
-                    href="/du-an"
-                    className="ghost-dark inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition w-full sm:w-auto"
-                  >
-                    Xem dự án
-                  </Link>
+                {/* Inline footnote, not subheading — sets context without
+                    competing for hierarchy with the statement. */}
+                <div className="mt-8 lg:mt-12 flex items-start gap-3 max-w-xl">
+                  <span className="text-brand-500 mt-1 text-xs font-mono">¹</span>
+                  <p className="text-sm lg:text-base text-gray-600 dark:text-ink-400 leading-relaxed">
+                    Studio thiết kế &amp; phát triển web · app · CRM/ERP · automation AI.
+                    Source code thuộc về bạn, bàn giao đúng hạn, bảo hành 6–12 tháng.{' '}
+                    <Link
+                      href="/bao-gia"
+                      className="text-gray-900 dark:text-white underline decoration-brand-500/40 underline-offset-4 hover:decoration-brand-500"
+                    >
+                      → Yêu cầu báo giá
+                    </Link>
+                  </p>
                 </div>
               </div>
 
-              {/* Mobile cube (lg:hidden); desktop cube via sticky overlay below. */}
+              {/* Cube column — mobile inline; desktop via sticky overlay below. */}
               <div className="lg:col-span-5">
                 <div className="lg:hidden">
                   <HeroCube />
@@ -132,165 +150,173 @@ export default function Home() {
                 />
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        {/* ─── TRIẾT LÝ — "Sáu mặt. Một sản phẩm." ────────────────────
-            Trimmed: hook + single impact line + collapsed essay only.
-            The chaos cards / 3-axis breakdown moved out — cube anchor
-            beside the centered statement is the entire visual gesture. */}
+        {/* ═══ INDEX — project list as text catalog, NOT image grid.
+            Studio Lin / Bureau Borsche pattern. Each row hover-reveals
+            the role + arrow. Numbered entries, year right-aligned. */}
         <section
-          id="triet-ly"
-          data-section-name="Triết lý"
-          className="relative py-20 lg:py-40 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 overflow-hidden"
+          id="du-an"
+          data-section-name="Index"
+          className="relative bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 py-20 lg:py-32"
         >
-          <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal text-center">
-              <Eyebrow>Triết lý</Eyebrow>
-              <h2 className="h-display mt-4 sm:mt-5 text-gray-900 dark:text-white">
-                Sáu mặt. <span className="text-brand-600 dark:text-brand-400">Một sản phẩm.</span>
-              </h2>
-              <p className="mt-6 sm:mt-8 text-lg sm:text-xl text-gray-600 dark:text-ink-300 leading-relaxed">
-                Người ngoài thấy một cái hộp vuông.
-                <br className="hidden sm:block" />
-                {' '}Bạn thấy một <span className="font-semibold text-gray-900 dark:text-white">khối Rubik</span>.
-              </p>
-              <div className="mt-12 lg:mt-16">
-                <div className="inline-block w-12 h-px bg-brand-500 mb-6" />
-                <p className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white leading-snug">
-                  Alodev là góc nhìn từ ngoài.
-                </p>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="reveal flex items-baseline justify-between gap-4 pb-6 mb-8 lg:mb-12 border-b border-gray-300 dark:border-ink-700">
+              <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400">
+                ── Index of work, 2022 — 2026
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
+                {validIndex.length} of 19
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* ─── SELECTED WORK — 3 projects, magazine layout ─────────── */}
-        <section id="du-an" className="py-20 lg:py-32 bg-white dark:bg-ink-950" data-section-name="Selected work">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-10 lg:mb-16">
-              <div>
-                <Eyebrow>Selected work</Eyebrow>
-                <h2 className="h-section mt-3 text-gray-900 dark:text-white">
-                  Ba dự án. Đang vận hành thật.
-                </h2>
+            <ol className="reveal-stagger divide-y divide-gray-200 dark:divide-ink-800">
+              {validIndex.map((e, i) => (
+                <li key={e.slug}>
+                  <Link
+                    href={`/du-an/${e.slug}`}
+                    className="group flex items-baseline gap-3 sm:gap-6 py-4 lg:py-5 hover:bg-white dark:hover:bg-ink-900/40 transition px-2 -mx-2 rounded"
+                  >
+                    <span className="text-[11px] lg:text-sm font-mono tabular text-gray-400 dark:text-ink-600 w-7 lg:w-10 shrink-0">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="font-bold text-base lg:text-2xl tracking-tight text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition shrink-0">
+                      {e.name}
+                    </span>
+                    <span className="hidden sm:inline-block flex-1 mx-3 border-b border-dotted border-gray-300 dark:border-ink-700 translate-y-[-0.4em]" />
+                    <span className="hidden md:inline text-xs lg:text-sm font-mono text-gray-500 dark:text-ink-500 ml-auto sm:ml-0 shrink-0">
+                      {e.role}
+                    </span>
+                    <span className="text-xs lg:text-sm font-mono tabular text-gray-700 dark:text-ink-400 ml-auto sm:ml-6 w-12 text-right shrink-0">
+                      {e.year}
+                    </span>
+                    <span className="hidden lg:inline-block text-brand-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 -translate-x-1 transition w-4 text-right">
+                      →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+
+            <div className="reveal mt-10 lg:mt-14 flex items-baseline justify-between gap-4 pt-6 border-t border-gray-300 dark:border-ink-700">
+              <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-gray-500 dark:text-ink-500">
+                ── 11 đang vận hành thật, 8 case study mở
               </div>
               <Link
                 href="/du-an"
-                className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 inline-flex items-center gap-1.5"
+                className="text-xs lg:text-sm font-mono uppercase tracking-[0.22em] text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300"
               >
-                Xem 11+ dự án
-                <Icon name="arrow-right" className="w-4 h-4" />
+                Toàn bộ index →
               </Link>
             </div>
-            <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-              {featured.map((p, i) => (
-                <Link
-                  key={p.slug}
-                  href={`/du-an/${p.slug}`}
-                  className="lift group flex flex-col rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700 transition"
-                >
-                  <div className={`relative aspect-[4/5] bg-gradient-to-br ${p.colorClass} flex items-center justify-center overflow-hidden`}>
-                    <span className="absolute top-4 left-4 text-[10px] tabular text-white/70 font-mono">
-                      {String(i + 1).padStart(2, '0')} / 03
-                    </span>
-                    <span className="absolute top-4 right-4 text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-300 font-semibold">
-                      {p.category.split('·')[0].trim()}
-                    </span>
-                    <div className="text-center px-4">
-                      <div className="text-3xl lg:text-4xl font-bold text-gray-700 dark:text-ink-200 dark:opacity-90">{p.name}</div>
-                      <div className="mt-2 text-xs text-gray-600 dark:text-ink-400 font-mono">{p.domain}</div>
-                    </div>
-                  </div>
-                  <div className="p-5 lg:p-6">
-                    <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">
-                      {p.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-600 dark:text-ink-400 line-clamp-2">{p.shortDesc}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
           </div>
         </section>
 
-        {/* ─── PROCESS TEASER — single line + 8-tick strip + CTA ─── */}
+        {/* ═══ COLOPHON — print-book-style closing. Manifesto + contact
+            + edition + URL all in one tight typographic block. NO
+            "Get started" button — single inline link to /bao-gia. */}
         <section
-          id="quy-trinh"
-          data-section-name="Quy trình"
-          className="py-20 lg:py-32 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800"
+          data-section-name="Colophon"
+          className="relative py-20 lg:py-32 bg-white dark:bg-ink-950"
         >
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <Eyebrow>Quy trình</Eyebrow>
-            <h2 className="h-display mt-4 sm:mt-5 text-gray-900 dark:text-white">
-              Tám giai đoạn. <span className="text-brand-600 dark:text-brand-400">Có deliverable.</span>
-            </h2>
-            <p className="mt-5 text-base sm:text-lg text-gray-600 dark:text-ink-400 max-w-2xl mx-auto leading-relaxed">
-              Từ tư vấn miễn phí (24h) đến hết bảo hành (6–12 tháng) — minh bạch, có quality gate, không skip.
-            </p>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400 pb-6 mb-10 border-b border-gray-300 dark:border-ink-700">
+              ── Colophon
+            </div>
 
-            <div className="reveal-stagger mt-10 lg:mt-14 grid grid-cols-4 lg:grid-cols-8 gap-3">
-              {phaseTicks.map((p) => (
-                <div
-                  key={p.i}
-                  className="flex flex-col items-center gap-1.5 rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 py-3 lg:py-4"
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+              {/* LEFT — manifesto column */}
+              <div className="lg:col-span-7">
+                <p
+                  className="font-bold tracking-[-0.02em] leading-[1.05] text-gray-900 dark:text-white"
+                  style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.5rem)' }}
                 >
-                  <div className="text-base lg:text-lg font-mono font-bold tabular text-gray-900 dark:text-white">
-                    {p.i}
+                  Sáu mặt. <span className="text-brand-600 dark:text-brand-400">Một sản phẩm.</span>
+                </p>
+                <p className="mt-6 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed max-w-xl">
+                  Người ngoài thấy một cái hộp vuông. Bạn thấy một khối Rubik.
+                  Alodev là góc nhìn từ ngoài — một bên ngoài để biến kế hoạch
+                  tốt thành hệ thống vận hành được.
+                </p>
+                <p className="mt-6">
+                  <Link
+                    href="/bao-gia"
+                    className="text-base lg:text-lg font-semibold text-gray-900 dark:text-white underline decoration-brand-500 underline-offset-[6px] hover:decoration-2 transition"
+                  >
+                    → Yêu cầu báo giá
+                  </Link>
+                </p>
+              </div>
+
+              {/* RIGHT — colophon metadata stack */}
+              <div className="lg:col-span-5 lg:border-l lg:border-gray-300 lg:dark:border-ink-700 lg:pl-12">
+                <dl className="space-y-5 text-sm">
+                  <div>
+                    <dt className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
+                      Founded
+                    </dt>
+                    <dd className="mt-1 font-mono text-gray-900 dark:text-white">
+                      31 · 03 · 2025
+                    </dd>
                   </div>
-                  <div className="text-[10px] lg:text-xs font-mono text-gray-500 dark:text-ink-500">
-                    {p.d}
+                  <div>
+                    <dt className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
+                      Reach
+                    </dt>
+                    <dd className="mt-1 font-mono text-gray-900 dark:text-white space-y-0.5">
+                      <div>hello@alodev.vn</div>
+                      <div>0587 789 456</div>
+                      <div>@alodevvn — Telegram</div>
+                    </dd>
                   </div>
-                </div>
-              ))}
+                  <div>
+                    <dt className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
+                      Read further
+                    </dt>
+                    <dd className="mt-1 font-mono text-gray-900 dark:text-white space-y-0.5">
+                      <div>
+                        <Link href="/dich-vu" className="hover:text-brand-600 dark:hover:text-brand-400 transition">
+                          → /dich-vu
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="/quy-trinh" className="hover:text-brand-600 dark:hover:text-brand-400 transition">
+                          → /quy-trinh
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="/du-an" className="hover:text-brand-600 dark:hover:text-brand-400 transition">
+                          → /du-an
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="/ve-chung-toi" className="hover:text-brand-600 dark:hover:text-brand-400 transition">
+                          → /ve-chung-toi
+                        </Link>
+                      </div>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
             </div>
 
-            <Link
-              href="/quy-trinh"
-              className="mt-10 lg:mt-14 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300"
-            >
-              Xem chi tiết quy trình
-              <Icon name="arrow-right" className="w-4 h-4" />
-            </Link>
-          </div>
-        </section>
-
-        {/* ─── FINAL CTA ───────────────────────────────────────────── */}
-        <section className="relative py-20 lg:py-32 bg-white dark:bg-ink-950 overflow-hidden" data-section-name="Liên hệ">
-          <div className="aurora opacity-40" />
-          <div className="reveal relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="h-display text-gray-900 dark:text-white">
-              Sẵn sàng <span className="text-brand-600 dark:text-brand-400">bắt đầu</span>?
-            </h2>
-            <p className="mt-5 text-base sm:text-lg text-gray-600 dark:text-ink-400">
-              Phản hồi trong 24h kèm báo giá sơ bộ — không sales pitch.
-            </p>
-            <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <span className="magnetic w-full sm:w-auto">
-                <QuoteCTA size="lg" className="px-8 py-4 w-full sm:w-auto justify-center">Yêu cầu báo giá</QuoteCTA>
-              </span>
-              <a
-                href="https://zalo.me/0364234936"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-ink-800 px-8 py-4 text-gray-900 dark:text-white font-semibold hover:border-gray-300 dark:hover:border-ink-700 transition w-full sm:w-auto"
-              >
-                Chat Zalo
-              </a>
+            {/* Bottom imprint line */}
+            <div className="mt-16 lg:mt-24 pt-6 border-t border-gray-300 dark:border-ink-700 flex items-baseline justify-between gap-4">
+              <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-gray-500 dark:text-ink-500">
+                alodev studio · est. 31·03·2025 · alodev.vn
+              </div>
+              <div className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
+                Vol. 5 · Q2 / 2026
+              </div>
             </div>
-            {/* Single contact line — quiet at the bottom. */}
-            <p className="mt-10 text-xs font-mono text-gray-500 dark:text-ink-500 tracking-wider">
-              hello@alodev.vn  ·  0587 789 456  ·  @alodevvn
-            </p>
           </div>
         </section>
 
         {/* ─── DESKTOP STICKY CUBE OVERLAY ─── (inside .rubik-journey)
-             Travels the entire scroll. Mobile (<lg) hides this overlay;
-             the inline cube in the hero col-span-5 (lg:hidden) handles
-             mobile. Width-check guard in HeroCube.isWrapNearViewport
-             ensures only the active visible cube boots WebGL — net 1
-             cube at any one viewport size. */}
+             Same overlay as before — cube travels through Statement →
+             Index → Colophon. Mobile (<lg) hides this; the inline
+             cube in the statement column (lg:hidden) handles mobile. */}
         <div className="cube-sticky-overlay absolute inset-0 hidden lg:block pointer-events-none">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
             <div className="grid grid-cols-12 h-full">
@@ -306,14 +332,5 @@ export default function Home() {
 
       </div>{/* /.rubik-journey */}
     </>
-  )
-}
-
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-2">
-      <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-      <span className="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400">{children}</span>
-    </div>
   )
 }
