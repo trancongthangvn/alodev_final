@@ -81,15 +81,15 @@ export default function Home() {
               type. No headline + subhead split. No CTA buttons. The
               statement IS the value prop. Cube anchors the right
               column on desktop via the sticky overlay. */}
-          <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 lg:pt-24 lg:pb-40" data-section-name="Statement">
+          <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-20 lg:pb-28" data-section-name="Statement">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
               <div className="hero-rise lg:col-span-7">
                 <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400">
                   ── Statement, Q2/2026
                 </div>
                 <h1
-                  className="hero-h mt-6 lg:mt-8 text-gray-900 dark:text-white font-bold tracking-[-0.04em] leading-[0.95]"
-                  style={{ fontSize: 'clamp(2.75rem, 8vw, 7rem)' }}
+                  className="hero-h mt-5 lg:mt-7 text-gray-900 dark:text-white font-semibold tracking-[-0.025em] leading-[1.05]"
+                  style={{ fontSize: 'clamp(2rem, 4.6vw, 4.25rem)' }}
                 >
                   <span className="word-cascade block">
                     {['Một', 'bên', 'ngoài,'].map((w, i, a) => (
@@ -122,11 +122,10 @@ export default function Home() {
                   </span>
                 </h1>
 
-                {/* Inline footnote, not subheading — sets context without
-                    competing for hierarchy with the statement. */}
-                <div className="mt-8 lg:mt-12 flex items-start gap-3 max-w-xl">
-                  <span className="text-brand-500 mt-1 text-xs font-mono">¹</span>
-                  <p className="text-sm lg:text-base text-gray-600 dark:text-ink-400 leading-relaxed">
+                {/* Inline footnote, not subheading. */}
+                <div className="mt-7 lg:mt-9 flex items-start gap-3 max-w-md">
+                  <span className="text-brand-500 mt-0.5 text-[10px] font-mono">¹</span>
+                  <p className="text-[13px] lg:text-sm text-gray-600 dark:text-ink-400 leading-[1.65]">
                     Studio thiết kế &amp; phát triển web · app · CRM/ERP · automation AI.
                     Source code thuộc về bạn, bàn giao đúng hạn, bảo hành 6–12 tháng.{' '}
                     <Link
@@ -159,7 +158,7 @@ export default function Home() {
         <section
           id="du-an"
           data-section-name="Index"
-          className="relative bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 py-20 lg:py-32"
+          className="relative bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 py-16 lg:py-24"
         >
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="reveal flex items-baseline justify-between gap-4 pb-6 mb-8 lg:mb-12 border-b border-gray-300 dark:border-ink-700">
@@ -176,22 +175,22 @@ export default function Home() {
                 <li key={e.slug}>
                   <Link
                     href={`/du-an/${e.slug}`}
-                    className="group flex items-baseline gap-3 sm:gap-6 py-4 lg:py-5 hover:bg-white dark:hover:bg-ink-900/40 transition px-2 -mx-2 rounded"
+                    className="group flex items-baseline gap-3 sm:gap-5 py-3.5 lg:py-4 hover:bg-white dark:hover:bg-ink-900/40 transition px-2 -mx-2 rounded"
                   >
-                    <span className="text-[11px] lg:text-sm font-mono tabular text-gray-400 dark:text-ink-600 w-7 lg:w-10 shrink-0">
+                    <span className="text-[10px] lg:text-xs font-mono tabular text-gray-400 dark:text-ink-600 w-6 lg:w-8 shrink-0">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="font-bold text-base lg:text-2xl tracking-tight text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition shrink-0">
+                    <span className="font-semibold text-[15px] lg:text-lg tracking-[-0.01em] text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition shrink-0">
                       {e.name}
                     </span>
-                    <span className="hidden sm:inline-block flex-1 mx-3 border-b border-dotted border-gray-300 dark:border-ink-700 translate-y-[-0.4em]" />
-                    <span className="hidden md:inline text-xs lg:text-sm font-mono text-gray-500 dark:text-ink-500 ml-auto sm:ml-0 shrink-0">
+                    <span className="hidden sm:inline-block flex-1 mx-3 border-b border-dotted border-gray-300 dark:border-ink-700 translate-y-[-0.35em]" />
+                    <span className="hidden md:inline text-[11px] lg:text-xs font-mono text-gray-500 dark:text-ink-500 ml-auto sm:ml-0 shrink-0">
                       {e.role}
                     </span>
-                    <span className="text-xs lg:text-sm font-mono tabular text-gray-700 dark:text-ink-400 ml-auto sm:ml-6 w-12 text-right shrink-0">
+                    <span className="text-[11px] lg:text-xs font-mono tabular text-gray-700 dark:text-ink-400 ml-auto sm:ml-5 w-10 text-right shrink-0">
                       {e.year}
                     </span>
-                    <span className="hidden lg:inline-block text-brand-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 -translate-x-1 transition w-4 text-right">
+                    <span className="hidden lg:inline-block text-brand-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 -translate-x-1 transition w-3 text-right text-sm">
                       →
                     </span>
                   </Link>
@@ -218,7 +217,7 @@ export default function Home() {
             "Get started" button — single inline link to /bao-gia. */}
         <section
           data-section-name="Colophon"
-          className="relative py-20 lg:py-32 bg-white dark:bg-ink-950"
+          className="relative py-16 lg:py-24 bg-white dark:bg-ink-950"
         >
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400 pb-6 mb-10 border-b border-gray-300 dark:border-ink-700">
@@ -229,12 +228,12 @@ export default function Home() {
               {/* LEFT — manifesto column */}
               <div className="lg:col-span-7">
                 <p
-                  className="font-bold tracking-[-0.02em] leading-[1.05] text-gray-900 dark:text-white"
-                  style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.5rem)' }}
+                  className="font-semibold tracking-[-0.015em] leading-[1.15] text-gray-900 dark:text-white"
+                  style={{ fontSize: 'clamp(1.25rem, 2.4vw, 1.875rem)' }}
                 >
                   Sáu mặt. <span className="text-brand-600 dark:text-brand-400">Một sản phẩm.</span>
                 </p>
-                <p className="mt-6 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed max-w-xl">
+                <p className="mt-5 text-[14px] lg:text-base text-gray-600 dark:text-ink-400 leading-[1.7] max-w-lg">
                   Người ngoài thấy một cái hộp vuông. Bạn thấy một khối Rubik.
                   Alodev là góc nhìn từ ngoài — một bên ngoài để biến kế hoạch
                   tốt thành hệ thống vận hành được.
@@ -242,7 +241,7 @@ export default function Home() {
                 <p className="mt-6">
                   <Link
                     href="/bao-gia"
-                    className="text-base lg:text-lg font-semibold text-gray-900 dark:text-white underline decoration-brand-500 underline-offset-[6px] hover:decoration-2 transition"
+                    className="text-sm lg:text-base font-semibold text-gray-900 dark:text-white underline decoration-brand-500 underline-offset-[6px] decoration-1 hover:decoration-2 transition"
                   >
                     → Yêu cầu báo giá
                   </Link>
@@ -251,12 +250,12 @@ export default function Home() {
 
               {/* RIGHT — colophon metadata stack */}
               <div className="lg:col-span-5 lg:border-l lg:border-gray-300 lg:dark:border-ink-700 lg:pl-12">
-                <dl className="space-y-5 text-sm">
+                <dl className="space-y-5 text-[13px]">
                   <div>
                     <dt className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
                       Founded
                     </dt>
-                    <dd className="mt-1 font-mono text-gray-900 dark:text-white">
+                    <dd className="mt-1.5 font-mono text-gray-900 dark:text-white">
                       31 · 03 · 2025
                     </dd>
                   </div>
@@ -264,7 +263,7 @@ export default function Home() {
                     <dt className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
                       Reach
                     </dt>
-                    <dd className="mt-1 font-mono text-gray-900 dark:text-white space-y-0.5">
+                    <dd className="mt-1.5 font-mono text-gray-900 dark:text-white space-y-0.5 leading-relaxed">
                       <div>hello@alodev.vn</div>
                       <div>0587 789 456</div>
                       <div>@alodevvn — Telegram</div>
@@ -274,7 +273,7 @@ export default function Home() {
                     <dt className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
                       Read further
                     </dt>
-                    <dd className="mt-1 font-mono text-gray-900 dark:text-white space-y-0.5">
+                    <dd className="mt-1.5 font-mono text-gray-900 dark:text-white space-y-0.5 leading-relaxed">
                       <div>
                         <Link href="/dich-vu" className="hover:text-brand-600 dark:hover:text-brand-400 transition">
                           → /dich-vu
