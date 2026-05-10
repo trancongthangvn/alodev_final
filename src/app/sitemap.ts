@@ -48,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/dich-vu/thiet-ke-website`,    lastModified: pageMTime('dich-vu/thiet-ke-website'),      changeFrequency: 'monthly', priority: 0.9  },
     { url: `${BASE}/dich-vu/lap-trinh-app-mobile`,lastModified: pageMTime('dich-vu/lap-trinh-app-mobile'),  changeFrequency: 'monthly', priority: 0.9  },
     { url: `${BASE}/dich-vu/he-thong-quan-tri`,   lastModified: pageMTime('dich-vu/he-thong-quan-tri'),     changeFrequency: 'monthly', priority: 0.9  },
+    { url: `${BASE}/quy-trinh`,                   lastModified: pageMTime('quy-trinh'),                     changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/du-an`,                       lastModified: pageMTime('du-an'),                         changeFrequency: 'weekly',  priority: 0.9  },
     { url: `${BASE}/blog`,                        lastModified: pageMTime('blog'),                          changeFrequency: 'weekly',  priority: 0.85 },
     { url: `${BASE}/bao-gia`,                     lastModified: pageMTime('bao-gia'),                       changeFrequency: 'monthly', priority: 0.85 },
