@@ -1824,3 +1824,83 @@ body.cursor-text .cursor-ring { opacity: 0; }
   top: auto !important;
   margin-bottom: 1.25rem;
 }
+
+/* ─── Studio Live — homepage breakthrough effects (2026-05-10) ───
+   Minimal but distinctive. Letter-by-letter scramble reveal on the
+   hero statement; horizontal-rule "draw-in" on section dividers;
+   hover-row reveal on the index. Pure CSS, no JS framework. */
+
+/* Statement letter reveal — each letter starts blurred + offset, then
+   settles into place with a stagger. Wraps individual <span>s to get
+   per-letter timing. JS injection-free: the page's existing
+   word-cascade pattern already wraps spans. */
+@keyframes letter-settle {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(0.5em) skewY(2deg);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) skewY(0);
+  }
+}
+.letter-cascade > span {
+  display: inline-block;
+  animation: letter-settle 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform, filter;
+}
+
+/* Animated draw-in for horizontal rule dividers. Triggers on
+   .reveal[data-revealed] (already wired via MotionLayer). */
+.draw-rule {
+  position: relative;
+  height: 1px;
+  background: transparent;
+  overflow: hidden;
+}
+.draw-rule::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.reveal[data-revealed] .draw-rule::after,
+.draw-rule[data-revealed]::after {
+  transform: scaleX(1);
+}
+
+/* Studio-log row — terminal-line aesthetic, mono throughout. The
+   "▸" indicator brightens on hover. */
+.log-row {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  gap: 0.875rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  border-radius: 0.25rem;
+  margin: 0 -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.log-row:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+[data-theme=dark] .log-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-cascade > span { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  .draw-rule::after { transform: scaleX(1) !important; transition: none !important; }
+}
