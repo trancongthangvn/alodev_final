@@ -173,7 +173,7 @@ export default function Home() {
             move: shows the studio is operating, not selling. */}
         <section
           data-section-name="Studio Log"
-          className="relative bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 py-16 lg:py-24"
+          className="relative bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 min-h-screen flex flex-col justify-center py-20 lg:py-28"
         >
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="reveal flex items-baseline justify-between gap-4 pb-4 mb-6 lg:mb-10">
@@ -217,7 +217,7 @@ export default function Home() {
         <section
           id="du-an"
           data-section-name="Index"
-          className="relative py-16 lg:py-24 bg-white dark:bg-ink-950"
+          className="relative min-h-screen flex flex-col justify-center py-20 lg:py-28 bg-white dark:bg-ink-950"
         >
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="reveal flex items-baseline justify-between gap-4 pb-4 mb-6 lg:mb-10">
@@ -277,7 +277,7 @@ export default function Home() {
         {/* ═══ COLOPHON — print-book closer */}
         <section
           data-section-name="Colophon"
-          className="relative py-16 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800"
+          className="relative min-h-screen flex flex-col justify-center py-20 lg:py-28 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800"
         >
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="reveal flex items-center gap-3 pb-4 mb-8 lg:mb-12">
