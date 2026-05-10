@@ -33,23 +33,25 @@ const indexEntries: { slug: string; name: string; year: string; role: string }[]
 ]
 const validIndex = indexEntries.filter((e) => projects.some((p) => p.slug === e.slug))
 
-// Studio activity log — git-log-style entries for the last ~2 weeks.
-// Hand-curated for honesty; would be auto-fed from CI in future.
+// Activity log for businesses — what shipped on the fleet recently.
+// Vietnamese tags so non-tech buyers parse instantly. Same metadata
+// format (date · project · update · tag) but business-friendly copy.
 const studioLog: { date: string; project: string; line: string; tag: string }[] = [
-  { date: '10·05', project: 'studio',    line: 'Homepage redesign — Studio Live doctrine shipped', tag: 'design' },
-  { date: '09·05', project: 'vietnamid', line: 'KYC workflow v1.2 deployed to production',         tag: 'ship' },
-  { date: '08·05', project: 'ganday',    line: 'Multi-site CMS — added /hong-bien-duong-pho',     tag: 'feature' },
-  { date: '06·05', project: 'maxmin',    line: 'PWA install prompt — opt-in tracking 18% → 31%',   tag: 'metric' },
-  { date: '04·05', project: 'onthi365',  line: 'Livestream HLS — Safari iOS 26 fix',              tag: 'fix' },
-  { date: '02·05', project: 'lammmo',    line: 'Marketplace seller dashboard — 4 weeks build',     tag: 'ship' },
+  { date: '10·05', project: 'alodev.vn',  line: 'Cập nhật bộ nhận diện + trang quy trình mới',     tag: 'thiết kế' },
+  { date: '09·05', project: 'vietnamid',  line: 'Ra mắt phiên bản KYC mới — duyệt hồ sơ ≤ 30s',   tag: 'ra mắt' },
+  { date: '08·05', project: 'ganday',     line: 'Mở rộng thêm 1 site con cho mạng lưới tin tức',  tag: 'mở rộng' },
+  { date: '06·05', project: 'maxmin',     line: 'Tỷ lệ cài app (PWA) tăng từ 18% lên 31%',        tag: 'tăng trưởng' },
+  { date: '04·05', project: 'onthi365',   line: 'Khắc phục lỗi livestream trên Safari iOS 26',    tag: 'sửa lỗi' },
+  { date: '02·05', project: 'lammmo',     line: 'Bàn giao dashboard cho seller — đúng 4 tuần',    tag: 'bàn giao' },
 ]
 
 const tagColor: Record<string, string> = {
-  ship:    'text-emerald-600 dark:text-emerald-400',
-  feature: 'text-brand-600 dark:text-brand-400',
-  fix:     'text-rose-600 dark:text-rose-400',
-  metric:  'text-tech-600 dark:text-tech-400',
-  design:  'text-fuchsia-600 dark:text-fuchsia-400',
+  'ra mắt':       'text-emerald-600 dark:text-emerald-400',
+  'mở rộng':      'text-brand-600 dark:text-brand-400',
+  'sửa lỗi':      'text-rose-600 dark:text-rose-400',
+  'tăng trưởng':  'text-tech-600 dark:text-tech-400',
+  'thiết kế':     'text-fuchsia-600 dark:text-fuchsia-400',
+  'bàn giao':     'text-emerald-600 dark:text-emerald-400',
 }
 
 const faq = [
@@ -119,33 +121,40 @@ export default function Home() {
                 <div className="reveal flex items-center gap-3 mb-6 lg:mb-8">
                   <div className="draw-rule w-12 text-brand-500" />
                   <span className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400">
-                    Statement / Q2·2026
+                    Studio · Q2 / 2026
                   </span>
                 </div>
 
+                {/* Brand-first headline — wordmark monumental, then a
+                    one-line business description. Targeted at SME buyers,
+                    not developers: "đối tác công nghệ" framing instead
+                    of philosophical statement. */}
                 <h1
-                  className="text-gray-900 dark:text-white font-semibold tracking-[-0.025em] leading-[1.05]"
-                  style={{ fontSize: 'clamp(1.875rem, 4.4vw, 4rem)' }}
+                  className="text-gray-900 dark:text-white font-bold tracking-[-0.04em] leading-[0.92]"
+                  style={{ fontSize: 'clamp(2.75rem, 7.2vw, 6.5rem)' }}
                 >
                   <span className="letter-cascade block">
-                    {letterize('Một bên ngoài,', 80, 22)}
-                  </span>
-                  <span className="letter-cascade block">
-                    {letterize('để biến kế hoạch tốt', 480, 22)}
-                  </span>
-                  <span className="letter-cascade block">
-                    {letterize('thành hệ thống', 940, 22)}
+                    {letterize('ALODEV', 80, 28)}
                   </span>
                   <span className="letter-cascade block text-brand-600 dark:text-brand-400">
-                    {letterize('vận hành được.', 1280, 22)}
+                    {letterize('STUDIO', 320, 28)}
                   </span>
                 </h1>
+
+                <p
+                  className="reveal mt-6 lg:mt-8 text-gray-700 dark:text-ink-300 leading-[1.4] max-w-2xl font-medium"
+                  style={{ fontSize: 'clamp(1.125rem, 1.8vw, 1.5rem)' }}
+                >
+                  Đối tác công nghệ cho doanh nghiệp Việt — thiết kế website,
+                  lập trình app mobile, xây dựng hệ thống quản trị &amp; tự động hoá AI
+                  theo yêu cầu thực tế.
+                </p>
 
                 <div className="reveal mt-7 lg:mt-9 flex items-start gap-3 max-w-md">
                   <span className="text-brand-500 mt-0.5 text-[10px] font-mono">¹</span>
                   <p className="text-[13px] lg:text-sm text-gray-600 dark:text-ink-400 leading-[1.65]">
-                    Studio thiết kế &amp; phát triển web · app · CRM/ERP · automation AI.
-                    Source code thuộc về bạn, bàn giao đúng hạn, bảo hành 6–12 tháng.{' '}
+                    11+ sản phẩm doanh nghiệp đang vận hành. Source code thuộc về bạn,
+                    bàn giao đúng hạn, bảo hành 6–12 tháng.{' '}
                     <Link
                       href="/bao-gia"
                       className="text-gray-900 dark:text-white underline decoration-brand-500/40 underline-offset-4 hover:decoration-brand-500"
@@ -180,11 +189,11 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <div className="draw-rule w-10 text-brand-500" />
                 <span className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400">
-                  Studio Log / last 14 days
+                  Cập nhật / 14 ngày qua
                 </span>
               </div>
               <span className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
-                $ git log --oneline
+                Đang vận hành 11 sản phẩm
               </span>
             </div>
 
@@ -208,7 +217,8 @@ export default function Home() {
             </div>
 
             <div className="reveal mt-8 text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
-              ── 6 of 87 commits this quarter
+              ── 6 cập nhật gần nhất trên fleet · xem toàn bộ tại{' '}
+              <Link href="/du-an" className="text-brand-600 dark:text-brand-400 hover:underline">/du-an</Link>
             </div>
           </div>
         </section>
@@ -224,11 +234,11 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <div className="draw-rule w-10 text-brand-500" />
                 <span className="text-[10px] font-mono uppercase tracking-[0.42em] text-brand-600 dark:text-brand-400">
-                  Index of work / 2022 — 2026
+                  Sản phẩm tiêu biểu / 2022 — 2026
                 </span>
               </div>
               <span className="text-[10px] font-mono uppercase tracking-[0.32em] text-gray-500 dark:text-ink-500">
-                {validIndex.length} of 19
+                {validIndex.length} / 19 dự án
               </span>
             </div>
 
@@ -268,7 +278,7 @@ export default function Home() {
                 href="/du-an"
                 className="text-xs lg:text-sm font-mono uppercase tracking-[0.22em] text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300"
               >
-                Toàn bộ index →
+                Xem toàn bộ →
               </Link>
             </div>
           </div>

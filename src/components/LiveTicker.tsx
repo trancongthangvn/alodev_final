@@ -47,11 +47,11 @@ export default function LiveTicker() {
         <span className="opacity-50">ICT</span>
       </span>
       <span className="mx-3 text-gray-400 dark:text-ink-700">·</span>
-      <span>11 / 11 ops</span>
+      <span>11 / 11 sản phẩm hoạt động</span>
       <span className="mx-3 text-gray-400 dark:text-ink-700">·</span>
-      <span>uptime 99.94%</span>
+      <span>ổn định 99.94%</span>
       <span className="mx-3 hidden sm:inline text-gray-400 dark:text-ink-700">·</span>
-      <span className="hidden sm:inline">last deploy {lastDeploy} ago</span>
+      <span className="hidden sm:inline">cập nhật {lastDeploy} trước</span>
     </div>
   )
 }
