@@ -13,7 +13,6 @@ import PaletteHint from '@/components/PaletteHint'
 import QuoteChoice from '@/components/QuoteChoice'
 import IntroAnimation from '@/components/IntroAnimation'
 import SectionFrame from '@/components/SectionFrame'
-import SectionIndicator from '@/components/SectionIndicator'
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
@@ -31,7 +30,6 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <CustomCursor />
       <MotionLayer />
       <SectionFrame />
-      <SectionIndicator />
       <IntroAnimation />
       <MobileStickyCTA />
       <BackToTop />
