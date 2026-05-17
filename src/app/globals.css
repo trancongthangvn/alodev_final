@@ -654,7 +654,7 @@ img, iframe { color-scheme: light; }
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(244, 129, 26, 0.18);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 .section-frame .ind-num {
   font-feature-settings: "tnum";
@@ -722,7 +722,7 @@ img, iframe { color-scheme: light; }
      Dark theme: softer base (rgba 235,154,85 = brand-400 dark) +
      reduced alpha so the scroll-progress line doesn't read as
      "neon halation" against near-black bg. */
-  box-shadow: 0 0 12px rgba(244, 129, 26, 0.35);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.35);
 }
 [data-theme=dark] .process-track::after {
   box-shadow: 0 0 12px rgba(235, 154, 85, 0.28);
@@ -803,7 +803,7 @@ img, iframe { color-scheme: light; }
 [data-theme=dark] .hero-resend,
 [data-theme=dark] .dark-strip {
   background:
-    radial-gradient(ellipse 55% 65% at 12% 78%, rgba(244, 129, 26, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 65% at 12% 78%, rgba(59, 130, 246, 0.06) 0%, transparent 70%),
     #07080c;
 }
 
@@ -1130,7 +1130,7 @@ img, iframe { color-scheme: light; }
   /* Saffron tint by default (light theme); dark theme overrides to
      cool-silver so it sits in the same palette as the local cube
      pocket added in the dark-mode work. */
-  color: rgba(244, 129, 26, 0.55);
+  color: rgba(59, 130, 246, 0.55);
 }
 [data-theme=dark] .wireframe-cube {
   /* tech-400 (#22d3ee) at alpha 0.55 - gives the loading wireframe the
@@ -1216,8 +1216,8 @@ img, iframe { color-scheme: light; }
   transform: translate(-50%, -50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(244, 129, 26, 0.18) 0%,
-    rgba(244, 129, 26, 0.06) 40%,
+    rgba(59, 130, 246, 0.18) 0%,
+    rgba(59, 130, 246, 0.06) 40%,
     transparent 75%
   );
   filter: blur(20px);
@@ -1226,8 +1226,8 @@ img, iframe { color-scheme: light; }
 [data-theme=light] .hero-cube-skeleton::after {
   background: radial-gradient(
     ellipse at center,
-    rgba(244, 129, 26, 0.10) 0%,
-    rgba(244, 129, 26, 0.04) 40%,
+    rgba(59, 130, 246, 0.10) 0%,
+    rgba(59, 130, 246, 0.04) 40%,
     transparent 75%
   );
 }
@@ -1326,9 +1326,9 @@ img, iframe { color-scheme: light; }
   border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    rgba(244, 129, 26, 0.55) 0%,
-    rgba(244, 129, 26, 0.18) 35%,
-    rgba(244, 129, 26, 0.04) 60%,
+    rgba(59, 130, 246, 0.55) 0%,
+    rgba(59, 130, 246, 0.18) 35%,
+    rgba(59, 130, 246, 0.04) 60%,
     transparent 75%
   );
   filter: blur(10px);
@@ -1341,8 +1341,8 @@ img, iframe { color-scheme: light; }
 [data-theme=light] [data-cube-state="interactive"]::before {
   background: radial-gradient(
     circle at center,
-    rgba(244, 129, 26, 0.40) 0%,
-    rgba(244, 129, 26, 0.12) 35%,
+    rgba(59, 130, 246, 0.40) 0%,
+    rgba(59, 130, 246, 0.12) 35%,
     transparent 70%
   );
   mix-blend-mode: multiply;
@@ -3696,9 +3696,9 @@ html.lenis-smooth { scroll-behavior: auto; }
   border: 1px solid var(--border);
 }
 [data-theme='dark'] .mag-commit-tile-icon {
-  background: rgba(244, 129, 26, 0.08);
+  background: rgba(59, 130, 246, 0.08);
   color: var(--brand-soft, var(--brand-soft, #3b82f6));
-  border-color: rgba(244, 129, 26, 0.18);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 .mag-commit-tile-label {
   font-size: 11px;
@@ -3723,9 +3723,9 @@ html.lenis-smooth { scroll-behavior: auto; }
   transition: background 180ms ease, color 180ms ease, transform 220ms ease;
 }
 [data-theme='dark'] .mag-service-card-icon {
-  background: rgba(244, 129, 26, 0.08);
+  background: rgba(59, 130, 246, 0.08);
   color: var(--brand-soft, var(--brand-soft, #3b82f6));
-  border-color: rgba(244, 129, 26, 0.18);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 .mag-service-card:hover .mag-service-card-icon {
   background: var(--brand-strong, var(--brand-strong, #2563eb));
