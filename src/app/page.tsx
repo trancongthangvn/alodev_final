@@ -19,14 +19,24 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-const featured = [
-  { slug: 'onthi365',        name: 'OnThi365',           domain: 'onthi365.com',        tag: 'Edtech · Livestream HLS',      year: '2024' },
-  { slug: 'maxmin',          name: 'MAXMIN',             domain: 'maxmin.vn',           tag: 'SaaS · Cloud restream',        year: '2025' },
-  { slug: 'vietnamid',       name: 'VietnamID',          domain: 'vietnamid.vn',        tag: 'Social commerce · PWA',        year: '2024' },
-  { slug: 'shopaccgame',     name: 'Shop Acc Game',      domain: 'shopaccgame.net',     tag: 'E-commerce · Multi-tenant',    year: '2023' },
-  { slug: 'ganday',          name: 'Gần Đây',            domain: 'ganday.com.vn',       tag: 'Multi-site CMS',               year: '2024' },
-  { slug: 'thitruongkinhte', name: 'Thị trường Kinh tế', domain: 'thitruongkinhte.net', tag: 'Tin tức · Realtime',           year: '2024' },
-].filter((f) => projects.some((p) => p.slug === f.slug))
+// Featured projects for homepage — 1 hero + 3 grid. Pull full Project
+// objects from projects.ts so cards can surface code.stack, metrics,
+// publishedAt etc without redefining.
+const featuredSlugs = ['onthi365', 'maxmin', 'vietnamid', 'shopaccgame'] as const
+const featured = featuredSlugs
+  .map((slug) => projects.find((p) => p.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p))
+
+// Extract first available metric across code/design/seo sections.
+function pickMetric(p: typeof projects[number]): { value: string; label: string } | null {
+  const m = p.code?.metrics?.[0] || p.design?.metrics?.[0] || p.seo?.metrics?.[0]
+  return m ? { value: m.value, label: m.label } : null
+}
+
+// Friendly year from publishedAt (YYYY) or fallback.
+function pickYear(p: typeof projects[number]): string {
+  return p.publishedAt?.slice(0, 4) || '2024'
+}
 
 const capabilities = [
   { label: 'Website',           note: 'Landing, doanh nghiệp, e-commerce',    anchor: '/dich-vu#website' },
@@ -231,59 +241,97 @@ export default function Home() {
                 11+ sản phẩm vận hành thật - giáo dục, SaaS, social commerce, tin tức.
               </p>
 
-              {/* Hero featured project - biggest visual statement */}
-              {featured[0] && (
-                <Link href={`/du-an/${featured[0].slug}`}
-                  className="mag-pf-hero group mt-6"
-                  data-stagger="up"
-                  aria-label={`Dự án ${featured[0].name}`}>
-                  <div className="mag-pf-hero-art" aria-hidden="true">
-                    <div className="mag-pf-hero-grid">
-                      <span /><span /><span /><span /><span /><span />
-                    </div>
-                  </div>
-                  <div className="mag-pf-hero-meta">
-                    <div className="mag-pf-hero-row">
-                      <span className="mag-pf-hero-num">01</span>
-                      <span className="mag-pf-hero-name">{featured[0].name}</span>
-                      <span className="mag-pf-hero-arrow">→</span>
-                    </div>
-                    <div className="mag-pf-hero-sub">
-                      <span>{featured[0].tag}</span>
-                      <span className="opacity-50">·</span>
-                      <span className="font-mono">{featured[0].domain}</span>
-                      <span className="opacity-50">·</span>
-                      <span className="font-mono">{featured[0].year}</span>
-                    </div>
-                  </div>
-                </Link>
-              )}
+              {/* Portfolio cards — device-mockup pattern, metric pulled from project data */}
+              <div className="mag-pf">
+                {featured.map((p, idx) => {
+                  const isHero = idx === 0
+                  const metric = pickMetric(p)
+                  const year = pickYear(p)
+                  return (
+                    <Link
+                      key={p.slug}
+                      href={`/du-an/${p.slug}`}
+                      className={`mag-pf-card group ${isHero ? 'mag-pf-card--hero' : ''}`}
+                      data-stagger="up"
+                      aria-label={`Dự án ${p.name}`}
+                    >
+                      <div className={`mag-pf-mockup bg-gradient-to-br ${p.colorClass}`} aria-hidden="true">
+                        <div className="mag-pf-chrome">
+                          <div className="mag-pf-chrome-dots">
+                            <span className="mag-pf-chrome-dot" />
+                            <span className="mag-pf-chrome-dot" />
+                            <span className="mag-pf-chrome-dot" />
+                          </div>
+                          <span className="mag-pf-chrome-url">{p.domain}</span>
+                        </div>
+                        {(p.status ?? 'live') === 'live' && (
+                          <span className="mag-pf-live-pill">Live</span>
+                        )}
+                        <div className="mag-pf-mockup-body">
+                          <div className="mag-pf-row">
+                            <div className="mag-pf-block mag-pf-block--header" />
+                            <div className="mag-pf-block" style={{ flex: 0, minWidth: '8%' }} />
+                            <div className="mag-pf-block mag-pf-block--accent mag-pf-block--narrow" />
+                          </div>
+                          <div className="mag-pf-row mag-pf-row--tall">
+                            <div className="mag-pf-block mag-pf-block--tall" />
+                            <div className="mag-pf-block mag-pf-block--tall mag-pf-block--accent" />
+                            <div className="mag-pf-block mag-pf-block--tall" />
+                          </div>
+                          <div className="mag-pf-row">
+                            <div className="mag-pf-block" style={{ flex: 3 }} />
+                            <div className="mag-pf-block mag-pf-block--accent" style={{ flex: 1, maxWidth: '24%' }} />
+                          </div>
+                        </div>
+                        {isHero && (
+                          <span className="mag-pf-mockup-num" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
+                        )}
+                      </div>
 
-              {/* Compact list - next 3 */}
-              <div className="mt-2 mag-pf-list">
-                {featured.slice(1, 4).map((p, i) => (
-                  <Link key={p.slug} href={`/du-an/${p.slug}`}
-                    className="mag-pf-row group"
-                    data-stagger="row"
-                    aria-label={`Dự án ${p.name}`}>
-                    <span className="mag-pf-num">{String(i + 2).padStart(2, '0')}</span>
-                    <span className="mag-pf-name">{p.name}</span>
-                    <span className="mag-pf-tag">{p.tag}</span>
-                    <span className="mag-pf-year">{p.year}</span>
-                    <span className="mag-pf-arrow" aria-hidden="true">→</span>
-                  </Link>
-                ))}
+                      <div className="mag-pf-meta">
+                        <div className="mag-pf-meta-main">
+                          <div className="mag-pf-row-head">
+                            <span className="mag-pf-num">{String(idx + 1).padStart(2, '0')}</span>
+                            <span className="mag-pf-name">{p.name}</span>
+                            {!isHero && <span className="mag-pf-arrow" aria-hidden="true">→</span>}
+                          </div>
+                          <div className="mag-pf-sub">
+                            <span className="mag-pf-sub-tag">{p.category}</span>
+                            <span className="mag-pf-sub-dot" aria-hidden="true">·</span>
+                            <span className="mag-pf-sub-domain">{p.domain}</span>
+                            <span className="mag-pf-sub-dot" aria-hidden="true">·</span>
+                            <span>{year}</span>
+                          </div>
+                          {isHero && p.shortDesc && (
+                            <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-2xl line-clamp-2 leading-relaxed">
+                              {p.shortDesc}
+                            </p>
+                          )}
+                          {p.code?.stack && (
+                            <div className="mag-pf-stack">
+                              {p.code.stack.slice(0, isHero ? 6 : 3).map((tech) => (
+                                <span key={tech} className="mag-pf-stack-chip">{tech}</span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        {metric && (
+                          <div className="mag-pf-meta-side">
+                            <div className="mag-pf-metric">
+                              <span className="mag-pf-metric-value">{metric.value}</span>
+                              <span className="mag-pf-metric-label">{metric.label}</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  )
+                })}
               </div>
 
-              {/* Strong CTA to full portfolio page */}
-              <Link href="/du-an" className="mag-pf-cta group mt-5">
-                <span className="mag-pf-cta-label">
-                  Xem portfolio đầy đủ
-                </span>
-                <span className="mag-pf-cta-meta">
-                  11+ dự án · case study · metric
-                </span>
-                <span className="mag-pf-cta-arrow" aria-hidden="true">→</span>
+              <Link href="/du-an" className="mag-pf-cta-new">
+                <span>Xem portfolio đầy đủ →</span>
+                <span className="mag-pf-cta-new-meta">11+ dự án · case study · metric</span>
               </Link>
 
               {/* Stats strip */}
