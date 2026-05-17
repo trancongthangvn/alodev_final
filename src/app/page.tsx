@@ -18,16 +18,16 @@ export const metadata: Metadata = {
 
 const capabilities = [
   { label: 'Website',           note: 'Landing, doanh nghiệp, e-commerce',    anchor: '/dich-vu#website' },
-  { label: 'App mobile',        note: 'iOS, Android, cross-platform',          anchor: '/dich-vu#mobile' },
+  { label: 'Ứng dụng di động', note: 'iOS, Android, cross-platform',          anchor: '/dich-vu#mobile' },
   { label: 'Hệ thống quản trị', note: 'CRM, ERP, dashboard nội bộ',            anchor: '/dich-vu#system' },
   { label: 'Tự động hoá & AI',  note: 'Chatbot Zalo, workflow, tích hợp LLM', anchor: '/dich-vu#automation' },
 ]
 
 const process = [
-  { step: 'Brief',     desc: 'Nghe nghiệp vụ, đề xuất scope',     time: '2–3 ngày' },
-  { step: 'Design',    desc: 'Wireframe, báo giá rõ ràng',         time: '1–2 tuần' },
-  { step: 'Build',     desc: 'Code theo milestone, demo hàng tuần', time: '4–12 tuần' },
-  { step: 'Handover',  desc: 'Bàn giao + bảo hành',                 time: '6–12 tháng' },
+  { step: 'Khảo sát',  desc: 'Khảo sát nghiệp vụ, đề xuất phạm vi dự án', time: '2–3 ngày' },
+  { step: 'Thiết kế',  desc: 'Wireframe, đặc tả kỹ thuật, báo giá chi tiết', time: '1–2 tuần' },
+  { step: 'Phát triển',desc: 'Triển khai theo milestone, demo định kỳ',    time: '4–12 tuần' },
+  { step: 'Bàn giao',  desc: 'Chuyển giao mã nguồn + hỗ trợ kỹ thuật',     time: '6–12 tháng' },
 ]
 
 const toc = [
@@ -40,25 +40,25 @@ const toc = [
 ]
 
 const stats = [
-  { num: '11+',  label: 'Dự án đã triển khai' },
-  { num: '6+',   label: 'Ngành dọc phục vụ' },
-  { num: '100%', label: 'Source code thuộc khách hàng' },
-  { num: '24h',  label: 'Phản hồi yêu cầu báo giá' },
+  { num: '11+',  label: 'Dự án production đã bàn giao' },
+  { num: '6+',   label: 'Ngành dọc đã triển khai' },
+  { num: '100%', label: 'Quyền sở hữu mã nguồn thuộc khách hàng' },
+  { num: '24h',  label: 'Phản hồi yêu cầu báo giá đầu tiên' },
 ]
 
 const commitments = [
-  'Source code, database, domain đứng tên khách hàng',
-  'Bảo hành 6–12 tháng',
-  'Demo định kỳ hàng tuần theo milestone',
-  'Hợp đồng ràng buộc deadline: phạt 5% giá trị hợp đồng/tuần chậm tiến độ',
-  'Không vendor lock-in, không phí license ẩn',
+  'Bàn giao mã nguồn, database, domain dưới tên doanh nghiệp khách hàng',
+  'Hỗ trợ kỹ thuật 6–12 tháng sau bàn giao',
+  'Báo cáo tiến độ định kỳ theo milestone',
+  'Cam kết SLA về tiến độ và chất lượng — quy định cụ thể trong hợp đồng',
+  'Không vendor lock-in, không phí license phát sinh',
 ]
 
 const faq = [
-  { q: 'Chi phí thiết kế website doanh nghiệp khoảng bao nhiêu?', a: 'Website giới thiệu từ 8tr, e-commerce từ 25tr, app mobile từ 60tr, hệ thống quản trị báo theo scope. Cấu hình tại /bao-gia.' },
+  { q: 'Chi phí thiết kế website doanh nghiệp khoảng bao nhiêu?', a: 'Website giới thiệu từ 8 triệu, e-commerce từ 25 triệu, ứng dụng di động từ 60 triệu, hệ thống quản trị báo giá theo phạm vi dự án. Cấu hình chi tiết tại /bao-gia.' },
   { q: 'Mã nguồn và dữ liệu thuộc sở hữu của ai sau bàn giao?', a: 'Khách hàng. Toàn bộ mã nguồn, database, domain và hosting bàn giao dưới tên doanh nghiệp khách hàng. Không vendor lock-in, không phí license phát sinh.' },
-  { q: 'Thời gian triển khai một dự án mất bao lâu?', a: 'Website 3–5 tuần. E-commerce 6–10 tuần. App mobile 10–16 tuần. Hệ thống quản trị 8–20 tuần. Demo hàng tuần.' },
-  { q: 'Sau bàn giao có hỗ trợ tiếp không?', a: 'Bảo hành 6–12 tháng tuỳ hợp đồng. Phát triển thêm tính theo gói retainer hoặc giờ.' },
+  { q: 'Thời gian triển khai một dự án mất bao lâu?', a: 'Website 3–5 tuần. E-commerce 6–10 tuần. Ứng dụng di động 10–16 tuần. Hệ thống quản trị 8–20 tuần. Báo cáo tiến độ định kỳ.' },
+  { q: 'Sau bàn giao có hỗ trợ tiếp không?', a: 'Hỗ trợ kỹ thuật 6–12 tháng tuỳ hợp đồng. Phát triển bổ sung theo gói retainer hoặc tính theo giờ kỹ sư.' },
 ]
 
 export default function Home() {
@@ -167,18 +167,18 @@ export default function Home() {
           <section id="gioi-thieu" className="mag-section mag-bg-paper" data-section-name="Studio">
             <div className="mag-section-inner">
               <p className="mag-section-index">01</p>
-              <h1 className="mag-section-head">Phần mềm do <br />người làm ra.</h1>
+              <h1 className="mag-section-head">Phát triển phần mềm <br />cho doanh nghiệp Việt.</h1>
               <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
-                Studio kỹ thuật Hà Nội — triển khai website, ứng dụng di động và hệ thống quản trị cho doanh nghiệp quy mô 5–50 nhân sự.
+                Triển khai website, ứng dụng di động và hệ thống quản trị nội bộ. Trụ sở Hà Nội, phục vụ doanh nghiệp 5–50 nhân sự trên toàn quốc.
               </p>
 
               {/* Differentiators - 4 icon tiles (no descriptions — visual-led) */}
               <div className="mag-commit-grid">
                 {[
-                  { icon: 'handshake'    as const, label: 'Đội ngũ\nkỹ thuật trực tiếp' },
-                  { icon: 'package'      as const, label: 'Sở hữu\ntoàn bộ mã nguồn' },
-                  { icon: 'gauge'        as const, label: 'Báo cáo\ntheo milestone' },
-                  { icon: 'shield-check' as const, label: 'Bảo hành\n6–12 tháng' },
+                  { icon: 'handshake'    as const, label: 'Đội ngũ\nkỹ thuật in-house' },
+                  { icon: 'package'      as const, label: 'Quyền sở hữu\nmã nguồn' },
+                  { icon: 'gauge'        as const, label: 'Quản trị dự án\ntheo milestone' },
+                  { icon: 'shield-check' as const, label: 'Hỗ trợ kỹ thuật\nsau bàn giao' },
                 ].map((d) => (
                   <div key={d.label} className="mag-commit-tile" data-stagger="up">
                     <span className="mag-commit-tile-icon">
@@ -213,10 +213,10 @@ export default function Home() {
 
               <div className="mag-services-grid">
                 {[
-                  { label: 'Website',           note: 'Doanh nghiệp, e-commerce', anchor: '/dich-vu#website',    icon: 'globe' as const },
-                  { label: 'App mobile',        note: 'iOS · Android',              anchor: '/dich-vu#mobile',     icon: 'phone' as const },
-                  { label: 'Hệ thống quản trị', note: 'CRM · ERP · Dashboard',      anchor: '/dich-vu#system',     icon: 'cpu' as const },
-                  { label: 'Tự động hoá · AI',  note: 'Chatbot · Workflow',         anchor: '/dich-vu#automation', icon: 'bot' as const },
+                  { label: 'Website',             note: 'Doanh nghiệp · E-commerce', anchor: '/dich-vu#website',    icon: 'globe' as const },
+                  { label: 'Ứng dụng di động',    note: 'iOS · Android',             anchor: '/dich-vu#mobile',     icon: 'phone' as const },
+                  { label: 'Hệ thống quản trị',   note: 'CRM · ERP · Dashboard',     anchor: '/dich-vu#system',     icon: 'cpu' as const },
+                  { label: 'Tự động hoá · AI',    note: 'Chatbot · Workflow',        anchor: '/dich-vu#automation', icon: 'bot' as const },
                 ].map((c, i) => (
                   <Link key={c.label} href={c.anchor} className="mag-service-card group" data-stagger="up">
                     <span className="mag-service-card-icon">
@@ -249,9 +249,9 @@ export default function Home() {
 
               {/* Lead with the strongest line — drop big head, let the quote breathe */}
               <blockquote className="mag-about-led-quote">
-                11 sản phẩm production đang vận hành trên domain riêng <em>—</em> không phải bản demo.
+                11 sản phẩm production đang vận hành trên domain riêng <em>của khách hàng.</em>
               </blockquote>
-              <p className="mag-about-led-attr">Hà Nội · 03/2025 · SME 5–50 người</p>
+              <p className="mag-about-led-attr">Trụ sở Hà Nội · Hoạt động từ 03/2025 · Phục vụ doanh nghiệp 5–50 nhân sự</p>
 
               {/* 4 trust tiles — visual instead of CAM KẾT bullet list */}
               <div className="mag-trust-strip">
@@ -268,7 +268,7 @@ export default function Home() {
                 <div className="mag-trust-tile" data-stagger="up">
                   <span className="mag-trust-icon"><Icon name="package" className="w-5 h-5" strokeWidth={1.75} /></span>
                   <span className="mag-trust-num">100%</span>
-                  <span className="mag-trust-label">Source code</span>
+                  <span className="mag-trust-label">Mã nguồn</span>
                 </div>
                 <div className="mag-trust-tile" data-stagger="up">
                   <span className="mag-trust-icon"><Icon name="clock" className="w-5 h-5" strokeWidth={1.75} /></span>
@@ -289,7 +289,7 @@ export default function Home() {
               Editorial rhythm break between two information-heavy sections. */}
           <aside className="mag-pullquote-band" aria-hidden="false">
             <p className="mag-pullquote-text">
-              Báo cáo tiến độ theo milestone. <em>Cam kết SLA: phạt 5%/tuần</em> chậm deadline. Bàn giao mã nguồn <em>dưới tên doanh nghiệp.</em>
+              Quản trị dự án theo milestone. <em>Cam kết SLA</em> về tiến độ và chất lượng. Quyền sở hữu mã nguồn <em>thuộc khách hàng.</em>
             </p>
             <p className="mag-pullquote-attr">Cam kết hợp đồng · alodev.vn</p>
           </aside>
@@ -302,7 +302,7 @@ export default function Home() {
                 <span aria-hidden="true">/</span>
                 <span>Cách làm việc</span>
               </p>
-              <h2 className="mag-section-head">4 phase. 1 timeline.</h2>
+              <h2 className="mag-section-head">Quy trình 4 giai đoạn.</h2>
 
               <div className="mag-timeline">
                 <div className="mag-timeline-track">
@@ -363,11 +363,11 @@ export default function Home() {
             <div className="mag-section-inner">
               <p className="mag-section-index">06</p>
               <h2 className="mag-section-head">
-                Có dự án<br className="hidden sm:block" /> cần triển khai?
+                Liên hệ tư vấn<br className="hidden sm:block" /> dự án.
               </h2>
               <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-sm leading-relaxed">
-                Mô tả yêu cầu + ngân sách dự kiến → đội ngũ Alodev phản hồi trong <span className="text-gray-900 dark:text-white font-medium">24h</span>.
-                Tư vấn miễn phí, không cam kết ràng buộc.
+                Gửi yêu cầu kèm phạm vi dự án và ngân sách dự kiến. Đội ngũ kỹ thuật phản hồi trong <span className="text-gray-900 dark:text-white font-medium">24h</span>.
+                Tư vấn ban đầu miễn phí.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <div className="magnetic">
@@ -414,7 +414,7 @@ export default function Home() {
                     alodev<span className="text-brand-600 dark:text-brand-400">.vn</span>
                   </Link>
                   <p className="mt-1 text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-wide">
-                    Founder-led studio · Hà Nội · Est. 2025
+                    Công ty phần mềm · Hà Nội · Hoạt động từ 03/2025
                   </p>
                 </div>
                 <nav aria-label="Footer navigation">
