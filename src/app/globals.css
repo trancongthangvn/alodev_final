@@ -324,7 +324,6 @@ body.home-mag-page #global-footer {
 }
 @keyframes marquee {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
 }
 .marquee-mask {
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
@@ -415,17 +414,14 @@ body.home-mag-page #global-footer {
 /* Banner enter animation - used by status banners on /lien-he and elsewhere. */
 @keyframes banner-in {
   from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* QuoteChoice modal animations - extracted from inline <style>. */
 @keyframes qcFade {
   from { opacity: 0; }
-  to   { opacity: 1; }
 }
 @keyframes qcSlide {
   from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Smooth scroll for anchor links */
@@ -487,7 +483,6 @@ a, button, [role="button"] {
 /* Hero entry: page load sequential cascade */
 @keyframes hero-up {
   from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 /* hero-rise neutralized - was a sequential page-load cascade.
    The cascade signaled "designer demo reel" rather than "professional
@@ -572,7 +567,6 @@ img, iframe { color-scheme: light; }
 /* Mobile menu fade-in (extracted from Navbar inline style) */
 @keyframes mfade {
   from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Grid background pattern (Vercel-style) */
@@ -704,7 +698,6 @@ img, iframe { color-scheme: light; }
      invalid blur(), so we use `none` instead. CSS spec interpolates between
      blur(8px) and none by treating none as blur(0), so the animation still
      smoothly clears the blur. */
-  to { opacity: 1; transform: translateY(0); filter: none; }
 }
 
 /* ─── Process step scroll-fill connector ─── */
@@ -1088,154 +1081,7 @@ img, iframe { color-scheme: light; }
      Browser support: Chrome 115+, Edge 115+, Safari 26+ (or 17.5
      behind flag), Firefox 132+. Older browsers see a static cube at
      420px - functional fallback. */
-  @supports (animation-timeline: scroll()) {
-    .cube-sticky-overlay .sticky {
-      animation: cube-apple-travel cubic-bezier(0.32, 0.72, 0.24, 1) both;
-      animation-timeline: scroll();
-      /* No animation-range - defaults to "cover" the full timeline,
-         so animation 0% → 100% maps to scroll 0% → 100% of the
-         document. Since `.cube-sticky-overlay` is absolute inset-0
-         of `.rubik-journey` which now wraps the entire homepage, the
-         cube's keyframes stretch over the whole-page scroll. */
-    }
-
-    /* ─── Cube journey across the entire homepage ───────────────────
-       Apple AirPods Pro 3 / Vision Pro / WWDC year-motif pattern: the
-       signature visual element follows the user through the whole
-       narrative with DESIGNED ANCHOR POSITIONS per phase, not just
-       sticky-pinned at one spot.
-
-       PHASE PERCENTAGES are calibrated to actual section scroll
-       positions: Triết lý (section 2) lives at ~12-25% scroll on
-       desktop, so the cube must SETTLE at LEFT before 13% and HOLD
-       through 26% - the entire reading window.
-
-         A. Hero focal       (0-10%)   → right column, scale 1, opacity 1
-                                         the brand introduction moment.
-         B. Travel arc       (10-13%)  → fast parabolic transit
-                                         (Y peak -80, Z forward 60)
-                                         right → left, settling early.
-         C. Triết lý focal   (13-26%)  → LEFT side, scale 0.65, opacity
-                                         0.92 - brand metaphor anchor.
-                                         Long hold so user reading
-                                         "Sáu mặt - Một sản phẩm"
-                                         literally sees the rubik beside
-                                         the copy.
-         D. Demote transit   (26-32%)  → curved retreat from LEFT-mid
-                                         to TOP-RIGHT corner.
-         E. Ambient observer (32-83%)  → cube anchored at top-right
-                                         corner (scale 0.42, opacity
-                                         0.55) with subtle rotateY
-                                         drift while user reads middle
-                                         sections (logo cloud, năng lực,
-                                         dịch vụ, quy trình, portfolio,
-                                         khác biệt, FAQ).
-         F. CTA approach     (83-93%)  → slight grow + lift hint.
-         G. Final CTA whisper(93-100%) → recede to scale 0.4 corner
-                                         whisper; CTA buttons own the
-                                         conversion focal point.
-
-       --cube-x is the LEFT-anchor X offset (capped via max() to
-       prevent off-screen on wide viewports). Multipliers across stops
-       give intermediate positions on the travel path. translateZ
-       gives 3D depth-pop at peaks. */
-    @keyframes cube-apple-travel {
-      /* CRITICAL CONSTRAINT: rotateY stays in ±8° range only.
-         CSS rotateY rotates the WRAPPER (which contains a 2D-rendered
-         WebGL canvas), NOT the 3D cube inside the canvas. At rotateY
-         90°/270° the canvas goes EDGE-ON to viewer - appears as a
-         thin foreshortened sliver = visual distortion. The brand
-         metaphor "show all faces" is already realised by Three.js's
-         internal cube tumbling (the cube rotates on its own layers
-         within the canvas). CSS just positions and scales the
-         wrapper; rotation stays subtle (±8°) for "lean into motion"
-         feel without breaking the canvas presentation.
-
-         SCALE FLOOR: 0.4 minimum. At max-w 420px, scale 0.4 = 168px
-         cube which stays recognisable as a Rubik. The previous 0.32
-         (134px) was too small + made the canvas blur at lower mip
-         levels, contributing to the "distorted" perception. */
-
-      /* ── A. Hero anchor (0-10% hold) ───────────────────────────
-         Cube at right column, full size, face-on (rotateY 0°). */
-      0% {
-        transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
-        opacity: 1;
-      }
-      10% {
-        transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
-        opacity: 1;
-      }
-
-      /* ── B. Travel arc, hero → Triết lý (10-13%) ──────────────
-         Compressed 3% transit: cube must SETTLE at LEFT focal anchor
-         BEFORE user enters Triết lý reading window (~13%). Fast,
-         decisive arc, not a long lazy traverse. Single mid-stop
-         parabolic peak. RotateY +8° = subtle lean left during slide. */
-      11.5% {
-        transform: translate3d(calc(var(--cube-x) * 0.55), -80px, 60px) rotateY(8deg) scale(0.78);
-        opacity: 0.95;
-      }
-
-      /* ── C. Triết lý anchor (13-26% hold) ──────────────────────
-         13% LONG HOLD aligned with Triết lý section's actual scroll
-         window (~12-25% on desktop). Cube at LEFT side, upper-mid
-         of viewport (--cube-y-mid), scale 0.65, FACE-ON (rotateY
-         0°). User reading "Sáu mặt. Một sản phẩm." sees the Rubik
-         cube literally pinned beside the copy = brand metaphor
-         reinforced. Three.js's internal layer twists handle "show
-         all faces" within the canvas. */
-      13% {
-        transform: translate3d(var(--cube-x), var(--cube-y-mid), 0) rotateY(0deg) scale(0.65);
-        opacity: 0.92;
-      }
-      26% {
-        transform: translate3d(var(--cube-x), var(--cube-y-mid), 0) rotateY(0deg) scale(0.65);
-        opacity: 0.92;
-      }
-
-      /* ── D. Demote transit (26-32%) ────────────────────────────
-         Curved retreat from LEFT-mid focal to TOP-RIGHT corner. */
-      29% {
-        transform: translate3d(calc(var(--cube-x) * 0.5), 60px, 0) rotateY(8deg) scale(0.5);
-        opacity: 0.7;
-      }
-
-      /* ── E. Ambient anchor (32-83%) ────────────────────────────
-         Cube at TOP-RIGHT corner, scale 0.42, opacity 0.55. Position
-         holds; rotateY drifts subtly 0° → -5° across the 51% scroll
-         range (gentle "settle" feel while user reads middle sections:
-         logo cloud → năng lực → dịch vụ → quy trình → portfolio →
-         khác biệt → FAQ). */
-      32% {
-        transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.42);
-        opacity: 0.55;
-      }
-      83% {
-        transform: translate3d(0, -110px, 0) rotateY(-5deg) scale(0.42);
-        opacity: 0.55;
-      }
-
-      /* ── F. CTA approach (83-93%) ──────────────────────────────
-         Cube STAYS at top-right corner. Slight grow 0.42 → 0.46 +
-         Y lift hint = "approaching attention" without blocking the
-         CTA buttons in viewport center. */
-      88% {
-        transform: translate3d(0, -100px, 0) rotateY(8deg) scale(0.46);
-        opacity: 0.65;
-      }
-
-      /* ── G. CTA whisper (93-100%) ──────────────────────────────
-         Returns to face-on (rotateY 0°), receded to scale 0.4,
-         opacity 0.3 - whisper-level brand mark at corner. CTA
-         buttons own the conversion focal point. */
-      100% {
-        transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.4);
-        opacity: 0.3;
-      }
-    }
-  }
-}
+  /* ghost-parallax @supports block removed — ghost watermark stripped */
 
 /* ─────── Cube skeleton - premium "loading" placeholder ───────
    While three.js is downloading, the SVG illustration is HIDDEN (HeroCube
@@ -1325,7 +1171,6 @@ img, iframe { color-scheme: light; }
 .wireframe-cube .wf-left  { animation-delay: 2.2s;  transform-origin: center; }
 
 @keyframes wf-draw {
-  to { stroke-dashoffset: 0; }
 }
 @keyframes wf-pulse {
   0%, 100% { opacity: 0.62; }
@@ -1528,11 +1373,6 @@ img, iframe { color-scheme: light; }
   60% {
     opacity: 1;
     filter: blur(0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: none;
   }
 }
 
@@ -2408,7 +2248,7 @@ html.lenis-smooth { scroll-behavior: auto; }
 .mag-pf-hero {
   display: block;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
   background: var(--surface);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -2417,7 +2257,7 @@ html.lenis-smooth { scroll-behavior: auto; }
   text-decoration: none;
 }
 .mag-pf-hero:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   border-color: var(--accent);
   box-shadow: 0 8px 24px -8px rgba(37, 99, 235, 0.18);
 }
@@ -2569,7 +2409,7 @@ html.lenis-smooth { scroll-behavior: auto; }
   margin-top: 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 6px;
   text-decoration: none;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
@@ -2624,24 +2464,8 @@ html.lenis-smooth { scroll-behavior: auto; }
   /* Contain the ghost number during parallax so it never bleeds into adjacent sections */
   overflow: clip;
 }
-.mag-section::after {
-  content: counter(mag-section, decimal-leading-zero);
-  position: absolute;
-  right: 2.5rem;
-  top: 2rem;
-  font-size: clamp(5rem, 8vw, 8rem);
-  font-weight: 900;
-  color: var(--foreground);
-  opacity: 0.04;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-  font-variant-numeric: tabular-nums;
-}
-[data-theme=dark] .mag-section::after {
-  opacity: 0.08; /* more visible on dark bg */
-}
+.mag-section::after { display: none; /* ghost watermark removed May 2026 — editorial flair stripped */ }
+
 
 /* ── Ghost number soft parallax (CSS Scroll-Driven Animations) ──
    The large ghost counter drifts ~18px vertically as the section scrolls
@@ -2649,15 +2473,8 @@ html.lenis-smooth { scroll-behavior: auto; }
    animation-timeline: view() scopes to the element's own scroll range.
    Only activated when the API is supported (progressive enhancement). ── */
 @supports (animation-timeline: scroll()) {
-  @keyframes ghost-parallax {
-    from { transform: translateY(-18px); }
-    to   { transform: translateY(18px); }
   }
-  .mag-section::after {
-    animation: ghost-parallax linear both;
-    animation-timeline: view();
-    animation-range: contain 0% contain 100%;
-  }
+  
 }
 
 /* ── Grain texture overlay (lusion-grade film grain) ──
@@ -2761,15 +2578,12 @@ html.lenis-smooth { scroll-behavior: auto; }
 /* ── 1b. Stagger keyframes ── */
 @keyframes stagger-up {
   from { opacity: 0; transform: translateY(18px); filter: blur(4px); }
-  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
 }
 @keyframes stagger-row {
   from { opacity: 0; transform: translateX(-16px); filter: blur(3px); }
-  to   { opacity: 1; transform: translateX(0);     filter: blur(0); }
 }
 @keyframes stagger-stat {
   from { opacity: 0; transform: scale(0.78) translateY(10px); filter: blur(4px); }
-  to   { opacity: 1; transform: scale(1) translateY(0);       filter: blur(0); }
 }
 
 /* ── 1c. Stagger reveal - fires when JS adds .section-entered ── */
@@ -2844,10 +2658,9 @@ html.lenis-smooth { scroll-behavior: auto; }
 
 /* Display headline - more impactful section titles for editorial rhythm */
 .mag-section-head {
-  /* Tighter scale May 2026: content area inside magazine layout
-     is ~620px (after 280px rail). Was clamp(30px→44px), now
-     clamp(26px→36px) - proportional to narrower column width. */
-  font-size: clamp(1.625rem, 2.6vw, 2.25rem);
+  /* De-styled May 2026: smaller scale, less dramatic editorial drama.
+     Was clamp(26→36px), now clamp(22→28px) — conventional B2B H2. */
+  font-size: clamp(1.375rem, 1.8vw, 1.75rem);
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--foreground);
@@ -3176,7 +2989,7 @@ html.lenis-smooth { scroll-behavior: auto; }
 .ds-mac-lid {
   width: 620px;
   background: #1d1d1f;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 8px 5px 5px;
   box-sizing: border-box;
   position: relative;
@@ -3880,7 +3693,7 @@ html.lenis-smooth { scroll-behavior: auto; }
   justify-content: center;
   width: 38px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 6px;
   background: var(--paper, #fdfaf5);
   color: var(--brand-strong, var(--brand-strong, #2563eb));
   border: 1px solid var(--border);
@@ -4025,7 +3838,7 @@ html.lenis-smooth { scroll-behavior: auto; }
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 6px;
   background: var(--surface);
   overflow: hidden;
   text-decoration: none;
@@ -4035,7 +3848,7 @@ html.lenis-smooth { scroll-behavior: auto; }
   position: relative;
 }
 .mag-pf-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   border-color: var(--accent);
   box-shadow: 0 14px 30px -12px rgba(37, 99, 235, 0.22);
 }
