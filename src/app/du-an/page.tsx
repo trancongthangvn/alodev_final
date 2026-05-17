@@ -283,17 +283,37 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <article className="lift spotlight rounded-3xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700">
       <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr]">
-        {/* Thumbnail */}
-        <div className={`relative aspect-[16/10] lg:aspect-auto bg-gradient-to-br ${project.colorClass} flex items-center justify-center overflow-hidden`}>
-          <div className="relative text-center px-6">
-            <div className="tabular text-xs font-mono text-gray-500 dark:text-ink-400 mb-2">#{String(index).padStart(2, '0')}</div>
-            <div className="text-2xl font-bold text-gray-700 dark:text-ink-200 dark:opacity-90">{project.name}</div>
-            <div className="mt-1 text-xs text-gray-600 dark:text-ink-400 font-mono">{project.domain}</div>
+        {/* Device-mockup thumbnail — browser chrome + abstract UI shapes */}
+        <div className={`relative aspect-[16/10] lg:aspect-auto bg-gradient-to-br ${project.colorClass} overflow-hidden`}>
+          <div className="mag-pf-chrome">
+            <div className="mag-pf-chrome-dots">
+              <span className="mag-pf-chrome-dot" />
+              <span className="mag-pf-chrome-dot" />
+              <span className="mag-pf-chrome-dot" />
+            </div>
+            <span className="mag-pf-chrome-url">{project.domain}</span>
           </div>
-          <span className="absolute top-3 left-3 text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-200 font-bold">
+          <div className="mag-pf-mockup-body">
+            <div className="mag-pf-row">
+              <div className="mag-pf-block mag-pf-block--header" />
+              <div className="mag-pf-block" style={{ flex: 0, minWidth: '8%' }} />
+              <div className="mag-pf-block mag-pf-block--accent mag-pf-block--narrow" />
+            </div>
+            <div className="mag-pf-row mag-pf-row--tall">
+              <div className="mag-pf-block mag-pf-block--tall" />
+              <div className="mag-pf-block mag-pf-block--tall mag-pf-block--accent" />
+              <div className="mag-pf-block mag-pf-block--tall" />
+            </div>
+            <div className="mag-pf-row">
+              <div className="mag-pf-block" style={{ flex: 3 }} />
+              <div className="mag-pf-block mag-pf-block--accent" style={{ flex: 1, maxWidth: '24%' }} />
+            </div>
+          </div>
+          <span aria-hidden="true" className="absolute bottom-3 right-4 tabular text-3xl font-mono font-black text-black/10 dark:text-white/10 leading-none">#{String(index).padStart(2, '0')}</span>
+          <span className="absolute top-9 left-3 text-[10px] uppercase tracking-widest px-2 py-1 rounded-full bg-white/85 dark:bg-ink-900/80 backdrop-blur text-gray-700 dark:text-ink-200 font-bold">
             {project.category}
           </span>
-          <span className={`absolute top-3 right-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-200 ring-1 ${badge.ring}`}>
+          <span className={`absolute top-9 right-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full bg-white/85 dark:bg-ink-900/80 backdrop-blur text-gray-700 dark:text-ink-200 ring-1 ${badge.ring}`}>
             <span className={`w-1.5 h-1.5 rounded-full ${badge.dot} ${status === 'live' ? 'animate-pulse' : ''}`} />
             {badge.label}
           </span>

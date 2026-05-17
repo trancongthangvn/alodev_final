@@ -19,25 +19,6 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-// Featured projects for homepage — 1 hero + 3 grid. Pull full Project
-// objects from projects.ts so cards can surface code.stack, metrics,
-// publishedAt etc without redefining.
-const featuredSlugs = ['onthi365', 'maxmin', 'vietnamid', 'shopaccgame'] as const
-const featured = featuredSlugs
-  .map((slug) => projects.find((p) => p.slug === slug))
-  .filter((p): p is NonNullable<typeof p> => Boolean(p))
-
-// Extract first available metric across code/design/seo sections.
-function pickMetric(p: typeof projects[number]): { value: string; label: string } | null {
-  const m = p.code?.metrics?.[0] || p.design?.metrics?.[0] || p.seo?.metrics?.[0]
-  return m ? { value: m.value, label: m.label } : null
-}
-
-// Friendly year from publishedAt (YYYY) or fallback.
-function pickYear(p: typeof projects[number]): string {
-  return p.publishedAt?.slice(0, 4) || '2024'
-}
-
 const capabilities = [
   { label: 'Website',           note: 'Landing, doanh nghiệp, e-commerce',    anchor: '/dich-vu#website' },
   { label: 'App mobile',        note: 'iOS, Android, cross-platform',          anchor: '/dich-vu#mobile' },
@@ -54,12 +35,11 @@ const process = [
 
 const toc = [
   { num: '01', name: 'Studio',        hash: '#gioi-thieu' },
-  { num: '02', name: 'Dự án',         hash: '#du-an' },
-  { num: '03', name: 'Dịch vụ',       hash: '#dich-vu' },
-  { num: '04', name: 'Về Alodev',     hash: '#ve-alodev' },
-  { num: '05', name: 'Cách làm việc', hash: '#quy-trinh' },
-  { num: '06', name: 'Câu hỏi',       hash: '#cau-hoi' },
-  { num: '07', name: 'Liên hệ',       hash: '#lien-he' },
+  { num: '02', name: 'Dịch vụ',       hash: '#dich-vu' },
+  { num: '03', name: 'Về Alodev',     hash: '#ve-alodev' },
+  { num: '04', name: 'Cách làm việc', hash: '#quy-trinh' },
+  { num: '05', name: 'Câu hỏi',       hash: '#cau-hoi' },
+  { num: '06', name: 'Liên hệ',       hash: '#lien-he' },
 ]
 
 const stats = [
@@ -232,120 +212,6 @@ export default function Home() {
           {/* DEVICE SHOWCASE */}
           <DeviceShowcase />
 
-          {/* PORTFOLIO PREVIEW - peek, not full listing */}
-          <section id="du-an" className="mag-section mag-bg-tint" data-section-name="Portfolio">
-            <div className="mag-section-inner">
-              <p className="mag-section-index">02</p>
-              <h2 className="mag-section-head">Portfolio.</h2>
-              <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-lg">
-                11+ sản phẩm vận hành thật - giáo dục, SaaS, social commerce, tin tức.
-              </p>
-
-              {/* Portfolio cards — device-mockup pattern, metric pulled from project data */}
-              <div className="mag-pf">
-                {featured.map((p, idx) => {
-                  const isHero = idx === 0
-                  const metric = pickMetric(p)
-                  const year = pickYear(p)
-                  return (
-                    <Link
-                      key={p.slug}
-                      href={`/du-an/${p.slug}`}
-                      className={`mag-pf-card group ${isHero ? 'mag-pf-card--hero' : ''}`}
-                      data-stagger="up"
-                      aria-label={`Dự án ${p.name}`}
-                    >
-                      <div className={`mag-pf-mockup bg-gradient-to-br ${p.colorClass}`} aria-hidden="true">
-                        <div className="mag-pf-chrome">
-                          <div className="mag-pf-chrome-dots">
-                            <span className="mag-pf-chrome-dot" />
-                            <span className="mag-pf-chrome-dot" />
-                            <span className="mag-pf-chrome-dot" />
-                          </div>
-                          <span className="mag-pf-chrome-url">{p.domain}</span>
-                        </div>
-                        {(p.status ?? 'live') === 'live' && (
-                          <span className="mag-pf-live-pill">Live</span>
-                        )}
-                        <div className="mag-pf-mockup-body">
-                          <div className="mag-pf-row">
-                            <div className="mag-pf-block mag-pf-block--header" />
-                            <div className="mag-pf-block" style={{ flex: 0, minWidth: '8%' }} />
-                            <div className="mag-pf-block mag-pf-block--accent mag-pf-block--narrow" />
-                          </div>
-                          <div className="mag-pf-row mag-pf-row--tall">
-                            <div className="mag-pf-block mag-pf-block--tall" />
-                            <div className="mag-pf-block mag-pf-block--tall mag-pf-block--accent" />
-                            <div className="mag-pf-block mag-pf-block--tall" />
-                          </div>
-                          <div className="mag-pf-row">
-                            <div className="mag-pf-block" style={{ flex: 3 }} />
-                            <div className="mag-pf-block mag-pf-block--accent" style={{ flex: 1, maxWidth: '24%' }} />
-                          </div>
-                        </div>
-                        {isHero && (
-                          <span className="mag-pf-mockup-num" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</span>
-                        )}
-                      </div>
-
-                      <div className="mag-pf-meta">
-                        <div className="mag-pf-meta-main">
-                          <div className="mag-pf-row-head">
-                            <span className="mag-pf-num">{String(idx + 1).padStart(2, '0')}</span>
-                            <span className="mag-pf-name">{p.name}</span>
-                            {!isHero && <span className="mag-pf-arrow" aria-hidden="true">→</span>}
-                          </div>
-                          <div className="mag-pf-sub">
-                            <span className="mag-pf-sub-tag">{p.category}</span>
-                            <span className="mag-pf-sub-dot" aria-hidden="true">·</span>
-                            <span className="mag-pf-sub-domain">{p.domain}</span>
-                            <span className="mag-pf-sub-dot" aria-hidden="true">·</span>
-                            <span>{year}</span>
-                          </div>
-                          {isHero && p.shortDesc && (
-                            <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-2xl line-clamp-2 leading-relaxed">
-                              {p.shortDesc}
-                            </p>
-                          )}
-                          {p.code?.stack && (
-                            <div className="mag-pf-stack">
-                              {p.code.stack.slice(0, isHero ? 6 : 3).map((tech) => (
-                                <span key={tech} className="mag-pf-stack-chip">{tech}</span>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        {metric && (
-                          <div className="mag-pf-meta-side">
-                            <div className="mag-pf-metric">
-                              <span className="mag-pf-metric-value">{metric.value}</span>
-                              <span className="mag-pf-metric-label">{metric.label}</span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  )
-                })}
-              </div>
-
-              <Link href="/du-an" className="mag-pf-cta-new">
-                <span>Xem portfolio đầy đủ →</span>
-                <span className="mag-pf-cta-new-meta">11+ dự án · case study · metric</span>
-              </Link>
-
-              {/* Stats strip */}
-              <div className="mag-stats mt-6" aria-label="Studio thống kê">
-                {stats.map((s) => (
-                  <div key={s.label} className="mag-stat" data-stagger="stat">
-                    <div className="mag-stat-num" data-count={s.num}>{s.num}</div>
-                    <div className="mag-stat-label">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
           {/* SERVICE TICKER - editorial marquee strip */}
           <div className="mag-ticker" aria-hidden="true">
             <Marquee speed={42} className="py-3">
@@ -366,7 +232,7 @@ export default function Home() {
           <section className="mag-section mag-bg-paper" id="dich-vu" data-section-name="Dịch vụ">
             <div className="mag-section-inner">
               <p className="mag-section-label">
-                <span className="num">03</span>
+                <span className="num">02</span>
                 <span aria-hidden="true">/</span>
                 <span>Dịch vụ</span>
               </p>
@@ -403,7 +269,7 @@ export default function Home() {
           <section id="ve-alodev" className="mag-section mag-bg-tint mag-about-led" data-section-name="Về Alodev">
             <div className="mag-section-inner">
               <p className="mag-section-label">
-                <span className="num">04</span>
+                <span className="num">03</span>
                 <span aria-hidden="true">/</span>
                 <span>Về Alodev</span>
               </p>
@@ -459,7 +325,7 @@ export default function Home() {
           <section id="quy-trinh" className="mag-section mag-bg-paper" data-section-name="Cách làm việc">
             <div className="mag-section-inner">
               <p className="mag-section-label">
-                <span className="num">05</span>
+                <span className="num">04</span>
                 <span aria-hidden="true">/</span>
                 <span>Cách làm việc</span>
               </p>
@@ -495,7 +361,7 @@ export default function Home() {
           <section id="cau-hoi" className="mag-section mag-bg-tint" data-section-name="Câu hỏi">
             <div className="mag-section-inner">
               <p className="mag-section-label">
-                <span className="num">06</span>
+                <span className="num">05</span>
                 <span aria-hidden="true">/</span>
                 <span>FAQ</span>
               </p>
@@ -522,7 +388,7 @@ export default function Home() {
           {/* CONTACT - closing CTA, theme-adaptive */}
           <section id="lien-he" className="mag-section mag-section--dark" data-section-name="Liên hệ">
             <div className="mag-section-inner">
-              <p className="mag-section-index">07</p>
+              <p className="mag-section-index">06</p>
               <h2 className="mag-section-head">
                 Có dự án<br className="hidden sm:block" /> cần triển khai?
               </h2>
