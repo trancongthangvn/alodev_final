@@ -2809,6 +2809,8 @@ html.lenis-smooth { scroll-behavior: auto; }
     filter   0.52s ease;
 }
 
+.motion-ready .mag-hw { opacity: 1 !important; transform: none !important; filter: none !important; }
+
 /* ── 3. Live TOC active state ── */
 .mag-toc-link[data-toc-active] {
   color: var(--foreground) !important;

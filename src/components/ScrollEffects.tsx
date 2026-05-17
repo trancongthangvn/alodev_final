@@ -31,32 +31,13 @@ export default function ScrollEffects() {
     const scroll = document.querySelector<HTMLElement>('.mag-scroll')
     if (!scroll) return
 
-    // ─────────────────────────────────────────────
-    // 1. WORD-SPLIT HEADINGS
-    // ─────────────────────────────────────────────
-    const heads = Array.from(
-      scroll.querySelectorAll<HTMLElement>('.mag-section-head')
-    )
-
-    heads.forEach(h => {
-      // Preserve accessible text - SR reads textContent of inline spans naturally
-      const raw = h.textContent?.trim() ?? ''
-      if (!raw) return
-
-      const frag = document.createDocumentFragment()
-      raw.split(/\s+/).forEach((word, i, arr) => {
-        const span = document.createElement('span')
-        span.className = 'mag-hw'
-        span.textContent = word
-        // Stagger delay stamped inline so CSS needs zero nth-child rules
-        span.style.transitionDelay = `${i * 68}ms`
-        frag.appendChild(span)
-        // Preserve inter-word spacing as text node
-        if (i < arr.length - 1) frag.appendChild(document.createTextNode(' '))
-      })
-      h.innerHTML = ''
-      h.appendChild(frag)
-    })
+    // 1. WORD-SPLIT HEADINGS — REMOVED May 2026 (founder feedback "AI vibe").
+    //    Headings now render whole, immediately. Same family as the
+    //    previously-stripped MotionLayer / IntroAnimation / SmoothScroll —
+    //    those were removed for "designer trying" feel, word-by-word reveal
+    //    is the same template effect. Bug: per-word transitionDelay caused
+    //    the hero H1 to appear blank/partial during the 400ms+ stagger,
+    //    confusing first-paint visitors.
 
     // ─────────────────────────────────────────────
     // 2. STAGGER + STATS COUNTER
@@ -126,19 +107,7 @@ export default function ScrollEffects() {
     )
     sections.forEach(s => sectionObs.observe(s))
 
-    // ─────────────────────────────────────────────
-    // 3. HEADING WORD REVEAL TRIGGER
-    // ─────────────────────────────────────────────
-    const headObs = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('head-visible')
-          headObs.unobserve(e.target)
-        }
-      }),
-      { root: scroll, threshold: 0.2 }
-    )
-    heads.forEach(h => headObs.observe(h))
+    // 3. HEADING WORD REVEAL TRIGGER — REMOVED (word-split removed above).
 
     // ─────────────────────────────────────────────
     // 4. LIVE TOC
@@ -187,7 +156,7 @@ export default function ScrollEffects() {
 
     return () => {
       sectionObs.disconnect()
-      headObs.disconnect()
+      // headObs removed with word-split — no cleanup needed
       tocObs.disconnect()
       if (darkSection) darkSection.removeEventListener('mousemove', onSpotMove)
     }
