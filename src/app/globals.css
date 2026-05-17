@@ -3522,3 +3522,289 @@ html.lenis-smooth { scroll-behavior: auto; }
   section, .mag-section { padding: 1rem 0 !important; }
   .mag-section-head { font-size: 1.5rem !important; }
 }
+
+/* ============================================================
+   MAG — SECTION VARIATIONS (May 2026)
+   Phá lặp template số-lớn-trên-headline bằng 4 dạng layout khác:
+   - Inline label thay vì big number (.mag-section-label)
+   - Services 2x2 card grid (.mag-services-grid)
+   - Horizontal process timeline (.mag-timeline)
+   - Full-bleed pull-quote band (.mag-pullquote-band)
+   - Quote-led about section (.mag-about-led)
+   ============================================================ */
+
+/* ── Inline mono label: [03 / Dịch vụ] thay cho số outline lớn ── */
+.mag-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.mag-section-label::before {
+  content: '[';
+  opacity: 0.5;
+}
+.mag-section-label::after {
+  content: ']';
+  opacity: 0.5;
+}
+.mag-section-label .num {
+  color: var(--brand-strong, #b85a14);
+}
+[data-theme='dark'] .mag-section-label .num {
+  color: var(--brand-soft, #f4811a);
+}
+
+/* ── Services: 2x2 card grid (section 03) ── */
+.mag-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+@media (min-width: 600px) {
+  .mag-services-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.mag-service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.25rem 1.25rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  background: transparent;
+  transition: background 200ms ease;
+  min-height: 9rem;
+}
+.mag-service-card:hover {
+  background: rgba(0,0,0,0.02);
+}
+[data-theme='dark'] .mag-service-card:hover {
+  background: rgba(255,255,255,0.025);
+}
+.mag-service-card-num {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  opacity: 0.55;
+  margin-bottom: 0.6rem;
+}
+.mag-service-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+.mag-service-card-note {
+  margin-top: 0.4rem;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.mag-service-card-arrow {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  font-size: 13px;
+  color: var(--brand-strong, #b85a14);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+[data-theme='dark'] .mag-service-card-arrow {
+  color: var(--brand-soft, #f4811a);
+}
+.mag-service-card:hover .mag-service-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Process: horizontal timeline (section 05) ── */
+.mag-timeline {
+  margin-top: 1.5rem;
+  position: relative;
+}
+.mag-timeline-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  position: relative;
+}
+.mag-timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  right: 11px;
+  height: 1px;
+  background: linear-gradient(to right, var(--border) 0%, var(--border) 100%);
+}
+.mag-timeline-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 28px;
+}
+.mag-timeline-step::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 4px;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--paper, #fdfaf5);
+  box-shadow: 0 0 0 4px var(--paper, #fdfaf5);
+  transition: border-color 180ms ease, background 180ms ease;
+}
+[data-theme='dark'] .mag-timeline-step::before {
+  background: var(--ink-bg, #0c0f15);
+  box-shadow: 0 0 0 4px var(--ink-bg, #0c0f15);
+}
+.mag-timeline-step:hover::before {
+  border-color: var(--brand-strong, #b85a14);
+  background: var(--brand-strong, #b85a14);
+}
+[data-theme='dark'] .mag-timeline-step:hover::before {
+  border-color: var(--brand-soft, #f4811a);
+  background: var(--brand-soft, #f4811a);
+}
+.mag-timeline-time {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.7;
+  margin-bottom: 0.35rem;
+}
+.mag-timeline-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.mag-timeline-desc {
+  margin-top: 0.3rem;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+@media (max-width: 599px) {
+  .mag-timeline-track {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .mag-timeline-track::before { display: none; }
+  .mag-timeline-step {
+    padding-top: 0;
+    padding-left: 28px;
+  }
+  .mag-timeline-step::before {
+    top: 4px;
+    left: 0;
+  }
+}
+
+/* ── Pull-quote band — full-bleed interstitial, no number, no head ── */
+.mag-pullquote-band {
+  position: relative;
+  padding: 2.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+}
+.mag-pullquote-band::before {
+  content: '"';
+  position: absolute;
+  top: 0.5rem;
+  left: 2rem;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 84px;
+  line-height: 1;
+  color: var(--brand-strong, #b85a14);
+  opacity: 0.18;
+  font-style: italic;
+}
+[data-theme='dark'] .mag-pullquote-band::before {
+  color: var(--brand-soft, #f4811a);
+  opacity: 0.22;
+}
+.mag-pullquote-text {
+  position: relative;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(18px, 3.2vw, 28px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  max-width: 42rem;
+}
+.mag-pullquote-text em {
+  font-style: normal;
+  color: var(--brand-strong, #b85a14);
+}
+[data-theme='dark'] .mag-pullquote-text em {
+  color: var(--brand-soft, #f4811a);
+}
+.mag-pullquote-attr {
+  margin-top: 0.75rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── About section: quote-led layout (section 04) ── */
+.mag-about-led {
+  position: relative;
+}
+.mag-about-led-quote {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(20px, 3.4vw, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  margin-top: 0;
+  position: relative;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--brand-strong, #b85a14);
+}
+[data-theme='dark'] .mag-about-led-quote {
+  border-left-color: var(--brand-soft, #f4811a);
+}
+.mag-about-led-attr {
+  margin-top: 1rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* FAQ first-open variant — no special class needed; we use the open attr in TSX. */

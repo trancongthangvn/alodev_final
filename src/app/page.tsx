@@ -316,27 +316,28 @@ export default function Home() {
             </Marquee>
           </div>
 
-          {/* SERVICES - what we do, before "who we are" */}
+          {/* SERVICES - 2x2 card grid (was vertical list — varied to break "01+head" template) */}
           <section className="mag-section mag-bg-paper" id="dich-vu" data-section-name="Dịch vụ">
             <div className="mag-section-inner">
-              <p className="mag-section-index">03</p>
+              <p className="mag-section-label">
+                <span className="num">03</span>
+                <span aria-hidden="true">/</span>
+                <span>Dịch vụ</span>
+              </p>
               <h2 className="mag-section-head">Việc Alodev nhận làm.</h2>
-              <ul className="mt-4 divide-y divide-slate-100 dark:divide-ink-800/60">
+
+              <div className="mag-services-grid">
                 {capabilities.map((c, i) => (
-                  <li key={c.label} data-stagger="up">
-                    <Link href={c.anchor}
-                      className="group flex items-center gap-4 py-3.5 -mx-1 px-1 rounded hover:bg-slate-50 dark:hover:bg-white/[0.03] transition">
-                      <span className="text-xs font-mono font-bold text-gray-200 dark:text-ink-700 w-5 shrink-0 tabular-nums">0{i + 1}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-gray-900 dark:text-white text-sm leading-tight group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{c.label}</div>
-                        <div className="text-xs text-gray-400 dark:text-ink-600 mt-0.5">{c.note}</div>
-                      </div>
-                      <span className="text-brand-600 dark:text-brand-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity inline-block">→</span>
-                    </Link>
-                  </li>
+                  <Link key={c.label} href={c.anchor} className="mag-service-card group" data-stagger="up">
+                    <span className="mag-service-card-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="mag-service-card-name">{c.label}</span>
+                    <span className="mag-service-card-note">{c.note}</span>
+                    <span className="mag-service-card-arrow" aria-hidden="true">→</span>
+                  </Link>
                 ))}
-              </ul>
-              <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-[10px]">
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-x-3 gap-y-1 text-[10px]">
                 <Link href="/quy-trinh" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">Quy trình →</Link>
                 <Link href="/dich-vu" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">Bảng giá →</Link>
                 <Link href="/bao-gia" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">Báo giá →</Link>
@@ -344,21 +345,24 @@ export default function Home() {
             </div>
           </section>
 
-          {/* ABOUT - who we are, after proof and offer */}
-          <section id="ve-alodev" className="mag-section mag-bg-tint" data-section-name="Về Alodev">
+          {/* ABOUT - quote-led layout (no big number — lead with the strongest line) */}
+          <section id="ve-alodev" className="mag-section mag-bg-tint mag-about-led" data-section-name="Về Alodev">
             <div className="mag-section-inner">
-              <p className="mag-section-index">04</p>
-              <h2 className="mag-section-head">Về Alodev.</h2>
-              <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
-                Hà Nội · 03/2025. Website, app, hệ thống quản trị cho SME scale 5–10 → 30–50 người.
+              <p className="mag-section-label">
+                <span className="num">04</span>
+                <span aria-hidden="true">/</span>
+                <span>Về Alodev</span>
               </p>
 
-              {/* Callout - brand voice moment */}
-              <blockquote className="mt-5 pl-4 border-l-2 border-brand-500 dark:border-brand-400">
-                <p className="text-sm font-semibold leading-snug text-gray-800 dark:text-ink-200">
-                  11 sản phẩm Alodev đang chạy trên domain riêng - không phải demo.
-                </p>
+              {/* Lead with the strongest line — drop big head, let the quote breathe */}
+              <blockquote className="mag-about-led-quote">
+                11 sản phẩm đang chạy trên domain riêng <em>—</em> không phải demo.
               </blockquote>
+              <p className="mag-about-led-attr">Hà Nội · 03/2025 · SME 5–50 người</p>
+
+              <p className="mt-6 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
+                Studio Hà Nội nhận thiết kế website, app mobile và hệ thống quản trị nội bộ cho doanh nghiệp đang scale từ 5–10 lên 30–50 người.
+              </p>
 
               {/* Cam kết - B2B trust signals */}
               <div className="mt-6 pt-5 border-t border-slate-200 dark:border-ink-800">
@@ -386,28 +390,38 @@ export default function Home() {
             </div>
           </section>
 
-          {/* PROCESS - how we work */}
+          {/* PULL-QUOTE INTERSTITIAL — full-bleed band, no number, no head.
+              Editorial rhythm break between two information-heavy sections. */}
+          <aside className="mag-pullquote-band" aria-hidden="false">
+            <p className="mag-pullquote-text">
+              Demo hàng tuần. Trễ <em>→ giảm 5%/tuần.</em> Source code <em>thuộc về bạn.</em>
+            </p>
+            <p className="mag-pullquote-attr">Cam kết hợp đồng · alodev.vn</p>
+          </aside>
+
+          {/* PROCESS - horizontal timeline (was vertical list — A/B variation) */}
           <section id="quy-trinh" className="mag-section mag-bg-paper" data-section-name="Cách làm việc">
             <div className="mag-section-inner">
-              <p className="mag-section-index">05</p>
-              <h2 className="mag-section-head">Cách Alodev làm việc.</h2>
-              <ol className="mt-5 space-y-0 divide-y divide-slate-200 dark:divide-ink-800">
-                {process.map((p, i) => (
-                  <li key={p.step} className="group flex items-start gap-5 py-4" data-stagger="up">
-                    <span className="shrink-0 mt-0.5 w-8 h-8 rounded-full border border-slate-200 dark:border-ink-700 flex items-center justify-center text-[10px] font-mono font-bold text-gray-400 dark:text-ink-500 group-hover:border-brand-400 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline justify-between gap-3">
-                        <span className="font-semibold text-sm text-gray-900 dark:text-white">{p.step}</span>
-                        <span className="text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-wide shrink-0">{p.time}</span>
-                      </div>
-                      <p className="mt-1 text-sm text-gray-500 dark:text-ink-400 leading-relaxed">{p.desc}</p>
+              <p className="mag-section-label">
+                <span className="num">05</span>
+                <span aria-hidden="true">/</span>
+                <span>Cách làm việc</span>
+              </p>
+              <h2 className="mag-section-head">4 phase. 1 timeline.</h2>
+
+              <div className="mag-timeline">
+                <div className="mag-timeline-track">
+                  {process.map((p, i) => (
+                    <div key={p.step} className="mag-timeline-step group" data-stagger="up">
+                      <span className="mag-timeline-time">{p.time}</span>
+                      <span className="mag-timeline-name">{String(i + 1).padStart(2, '0')} · {p.step}</span>
+                      <p className="mag-timeline-desc">{p.desc}</p>
                     </div>
-                  </li>
-                ))}
-              </ol>
-              <div className="mt-5 text-[10px]">
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 text-[10px]">
                 <Link href="/quy-trinh" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">
                   Quy trình đầy đủ 8 giai đoạn →
                 </Link>
@@ -415,14 +429,18 @@ export default function Home() {
             </div>
           </section>
 
-          {/* FAQ - common questions */}
+          {/* FAQ - common questions (first item pre-opened, label instead of big number) */}
           <section id="cau-hoi" className="mag-section mag-bg-tint" data-section-name="Câu hỏi">
             <div className="mag-section-inner">
-              <p className="mag-section-index">06</p>
+              <p className="mag-section-label">
+                <span className="num">06</span>
+                <span aria-hidden="true">/</span>
+                <span>FAQ</span>
+              </p>
               <h2 className="mag-section-head">Câu hỏi thường gặp.</h2>
               <div className="mt-5 divide-y divide-slate-200 dark:divide-ink-800">
                 {faq.map((item, i) => (
-                  <details key={i} className="mag-faq group" data-stagger="up">
+                  <details key={i} className="mag-faq group" data-stagger="up" {...(i === 0 ? { open: true } : {})}>
                     <summary className="mag-faq-q">
                       <span className="text-[10px] font-mono text-gray-300 dark:text-ink-700 w-5 shrink-0">
                         {String(i + 1).padStart(2, '0')}
