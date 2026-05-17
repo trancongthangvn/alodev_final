@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 
 /**
- * Privacy-friendly analytics beacon — sends pageview + duration events
+ * Privacy-friendly analytics beacon - sends pageview + duration events
  * to /api/track. No cookies; session ID lives in sessionStorage and
  * dies when the tab closes.
  *
@@ -27,7 +27,7 @@ function sessionId(): string {
     if (!id) { id = rand(); sessionStorage.setItem('al_sid', id) }
     return id
   } catch {
-    // Private mode / SSR — fall back to per-call random (no session continuity)
+    // Private mode / SSR - fall back to per-call random (no session continuity)
     return rand()
   }
 }
@@ -44,7 +44,7 @@ function track(payload: object): void {
       // Fallback: fire-and-forget fetch (won't block unload but might miss)
       fetch('/api/track', { method: 'POST', body: blob, keepalive: true }).catch(() => {})
     }
-  } catch { /* swallow — analytics never breaks the page */ }
+  } catch { /* swallow - analytics never breaks the page */ }
 }
 
 function flushDuration() {

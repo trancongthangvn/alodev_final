@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRef, useState, type ReactNode } from 'react'
 
 /**
- * Brand assets — designer-pro card collection. 7 distinct compositions
+ * Brand assets - designer-pro card collection. 7 distinct compositions
  * across 3 social-export aspect ratios. Each card carries a theme
  * toggle (Tối/Sáng) and a one-click download button that captures the
  * card preview at the canonical export resolution.
@@ -15,7 +15,7 @@ import { useRef, useState, type ReactNode } from 'react'
  *   • Group  16:9  → 1920×1080  · FB group / LinkedIn org / YouTube
  *
  * Contact integrated on cover/group cards: hello@alodev.vn ·
- * 0587 789 456 · @alodevvn (avatars stay clean — they're profile pics).
+ * 0364 234 936 · @alodevvn (avatars stay clean - they're profile pics).
  */
 
 type Theme = 'dark' | 'light'
@@ -48,7 +48,7 @@ export default function BrandAssets() {
           <p className="mt-4 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed">
             Mỗi card có toggle <strong>Tối / Sáng</strong> để khớp page Facebook của bạn,
             và nút <strong>Tải</strong> xuất PNG đúng resolution chuẩn social.
-            Contact: <span className="font-mono">hello@alodev.vn · 0587 789 456 · @alodevvn</span>.
+            Contact: <span className="font-mono">hello@alodev.vn · 0364 234 936 · @alodevvn</span>.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function BrandAssets() {
           <BrandCard
             id="brand-avatar-mono"
             label="Avatar Mono"
-            sublabel="Logo trung tâm — clean, kỷ luật brand"
+            sublabel="Logo trung tâm - clean, kỷ luật brand"
             aspect="aspect-square"
             exportW={EXPORT_W.avatar}
             renderDesign={(t) => <AvatarMono theme={t} />}
@@ -65,7 +65,7 @@ export default function BrandAssets() {
           <BrandCard
             id="brand-avatar-seal"
             label="Avatar Seal"
-            sublabel="Notary seal — concentric rings + cardinal marks"
+            sublabel="Notary seal - concentric rings + cardinal marks"
             aspect="aspect-square"
             exportW={EXPORT_W.avatar}
             renderDesign={(t) => <AvatarBracket theme={t} />}
@@ -76,7 +76,7 @@ export default function BrandAssets() {
         <div className="grid grid-cols-1 gap-6 lg:gap-8 mb-12 lg:mb-16">
           <BrandCard
             id="brand-cover-editorial"
-            label="Cover A — Editorial"
+            label="Cover A - Editorial"
             sublabel="Oversized wordmark, logo làm initial accent"
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
@@ -84,7 +84,7 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-cover-riso"
-            label="Cover B — Riso 2-color"
+            label="Cover B - Riso 2-color"
             sublabel="Risograph print, halftone, saffron block accent"
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
@@ -92,7 +92,7 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-cover-code"
-            label="Cover C — Code Snippet"
+            label="Cover C - Code Snippet"
             sublabel="Code-glyph wallpaper, kỹ sư-forward"
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
@@ -100,16 +100,16 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-cover-split"
-            label="Cover D — Split Panel"
-            sublabel="2 cột bất đối xứng — brand block + value props"
+            label="Cover D - Split Panel"
+            sublabel="2 cột bất đối xứng - brand block + value props"
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
             renderDesign={(t) => <CoverSplit theme={t} />}
           />
           <BrandCard
             id="brand-cover-masthead"
-            label="Cover E — Newspaper Masthead"
-            sublabel="Editorial print — masthead + ruled lines + serial"
+            label="Cover E - Newspaper Masthead"
+            sublabel="Editorial print - masthead + ruled lines + serial"
             aspect="aspect-[820/428]"
             exportW={EXPORT_W.cover}
             renderDesign={(t) => <CoverMasthead theme={t} />}
@@ -120,7 +120,7 @@ export default function BrandAssets() {
         <div className="grid grid-cols-1 gap-6 lg:gap-8">
           <BrandCard
             id="brand-group-manifesto"
-            label="Group A — Manifesto"
+            label="Group A - Manifesto"
             sublabel="Bold statement chiếm sân"
             aspect="aspect-video"
             exportW={EXPORT_W.group}
@@ -128,7 +128,7 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-group-stats"
-            label="Group B — Stats Grid"
+            label="Group B - Stats Grid"
             sublabel="Số khổng lồ làm wallpaper, brand block overlay"
             aspect="aspect-video"
             exportW={EXPORT_W.group}
@@ -136,7 +136,7 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-group-monogram"
-            label="Group C — Monogram Repeat"
+            label="Group C - Monogram Repeat"
             sublabel="Logo lặp tiled, brand block trung tâm"
             aspect="aspect-video"
             exportW={EXPORT_W.group}
@@ -144,17 +144,17 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-group-blueprint"
-            label="Group D — Blueprint Technical"
-            sublabel="ISO drawing — fine grid, dimension labels, sheet borders"
+            label="Group D - Blueprint Technical"
+            sublabel="ISO drawing - fine grid, dimension labels, sheet borders"
             aspect="aspect-video"
             exportW={EXPORT_W.group}
             renderDesign={(t) => <GroupBlueprint theme={t} />}
           />
         </div>
 
-        {/* ═══ OG IMAGE CANDIDATES ═══ — pick 1, then apply to opengraph-image.tsx */}
+        {/* ═══ OG IMAGE CANDIDATES ═══ - pick 1, then apply to opengraph-image.tsx */}
         <div className="mt-12 lg:mt-20 mb-4 lg:mb-6">
-          <SubHead label="OG image · 1200×630" hint="Bản preview khi share alodev.vn lên FB/X/LinkedIn — pick 1 concept duyệt rồi áp dụng" />
+          <SubHead label="OG image · 1200×630" hint="Bản preview khi share alodev.vn lên FB/X/LinkedIn - pick 1 concept duyệt rồi áp dụng" />
           <p className="text-xs text-gray-500 dark:text-ink-500 max-w-2xl">
             3 phương án dưới đây <strong>chưa</strong> active. Bạn pick concept nào,
             tôi áp dụng vào <code className="font-mono text-[11px]">/opengraph-image</code> route
@@ -164,7 +164,7 @@ export default function BrandAssets() {
         <div className="grid grid-cols-1 gap-6 lg:gap-8">
           <BrandCard
             id="brand-og-editorial"
-            label="OG A — Editorial Bold"
+            label="OG A - Editorial Bold"
             sublabel="Type-as-hero, oversized statement, restrained palette"
             aspect="aspect-[1200/630]"
             exportW={EXPORT_W.og}
@@ -172,7 +172,7 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-og-split"
-            label="OG B — Split + Saffron Block"
+            label="OG B - Split + Saffron Block"
             sublabel="Brand block left, bold saffron geometry right"
             aspect="aspect-[1200/630]"
             exportW={EXPORT_W.og}
@@ -180,7 +180,7 @@ export default function BrandAssets() {
           />
           <BrandCard
             id="brand-og-monogram"
-            label="OG C — Monogram Center"
+            label="OG C - Monogram Center"
             sublabel="Logo monumental, minimal type, brand identity focus"
             aspect="aspect-[1200/630]"
             exportW={EXPORT_W.og}
@@ -193,7 +193,7 @@ export default function BrandAssets() {
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   BRAND CARD FRAME — toggle + download + caption
+   BRAND CARD FRAME - toggle + download + caption
    ════════════════════════════════════════════════════════════════════ */
 
 function BrandCard({
@@ -484,7 +484,7 @@ function CodeGlyphs({ color = 'rgba(255,255,255,1)' }: { color?: string }) {
   )
 }
 
-/* Contact strip — adapts to theme. */
+/* Contact strip - adapts to theme. */
 function ContactStrip({
   theme,
   layout = 'inline',
@@ -496,7 +496,7 @@ function ContactStrip({
 }) {
   const items = [
     { icon: <IconMail />, label: 'hello@alodev.vn' },
-    { icon: <IconPhone />, label: '0587 789 456' },
+    { icon: <IconPhone />, label: '0364 234 936' },
     { icon: <IconTelegram />, label: '@alodevvn' },
   ]
   const isDark = theme === 'dark'
@@ -581,7 +581,7 @@ function AvatarMono({ theme }: { theme: Theme }) {
   )
 }
 
-/* Avatar Bracket — RE-CONCEIVED as a NOTARY SEAL.
+/* Avatar Bracket - RE-CONCEIVED as a NOTARY SEAL.
    No glow, no AI-vibe halo. Concentric solid rings + tight dotted
    border + circular text path = official-document feel. Restrained
    2-color palette (cream + navy on light, ink-black + saffron on dark). */
@@ -682,7 +682,7 @@ function CoverEditorial({ theme }: { theme: Theme }) {
   )
 }
 
-/* Cover B — RE-CONCEIVED as RISOGRAPH 2-COLOR PRINT.
+/* Cover B - RE-CONCEIVED as RISOGRAPH 2-COLOR PRINT.
    Drops the multi-bloom mesh (read as AI-synthwave). Now a print-grade
    2-color riso poster: cream paper + halftone dot texture + navy-on-
    cream typography + saffron stamp accent. Restrained palette discipline. */
@@ -707,7 +707,7 @@ function CoverMesh({ theme }: { theme: Theme }) {
           WebkitMaskImage: 'radial-gradient(ellipse at 30% 50%, #000 30%, transparent 80%)',
         }}
       />
-      {/* Saffron offset block — left edge accent (riso print signature) */}
+      {/* Saffron offset block - left edge accent (riso print signature) */}
       <div
         className="absolute left-0 top-0 bottom-0 w-[14%]"
         style={{ background: accent }}
@@ -777,7 +777,7 @@ function CoverCode({ theme }: { theme: Theme }) {
           <div>
             <div className={`${t.text} text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
             <div className={`mt-3 ${t.textHigh} text-sm lg:text-base font-mono`}>
-              <span className="text-brand-500">{'<>'}</span> code is craft —{' '}
+              <span className="text-brand-500">{'<>'}</span> code is craft -{' '}
               <span className={isDark ? 'text-emerald-400' : 'text-emerald-600'}>{'/* shipped */'}</span>
             </div>
             <div className="mt-4">
@@ -794,7 +794,7 @@ function CoverCode({ theme }: { theme: Theme }) {
   )
 }
 
-/* Cover D — Split Panel: 60/40 asymmetric split. Left side bold dark
+/* Cover D - Split Panel: 60/40 asymmetric split. Left side bold dark
    brand block (always dark for accent contrast); right side adapts to
    theme, holding 3 quick value props + contact. The split itself is the
    design gesture. */
@@ -803,7 +803,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
   const t = tokens(theme)
   return (
     <div className="absolute inset-0 flex">
-      {/* LEFT 60% — always dark brand panel */}
+      {/* LEFT 60% - always dark brand panel */}
       <div className="relative w-[58%] h-full overflow-hidden" style={{ background: '#06091a' }}>
         <Bloom color="rgba(95,148,247,0.45)" x="35%" y="55%" size="80%" blur={70} />
         <Bloom color="rgba(244,129,26,0.18)" x="85%" y="20%" size="50%" blur={60} />
@@ -837,7 +837,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
             </span>
           </div>
         </div>
-        {/* Slanted divider — brand color stripe */}
+        {/* Slanted divider - brand color stripe */}
         <div
           className="absolute right-0 top-0 bottom-0 w-[6%]"
           style={{
@@ -847,7 +847,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
         />
       </div>
 
-      {/* RIGHT 42% — theme-adaptive panel */}
+      {/* RIGHT 42% - theme-adaptive panel */}
       <div
         className="relative w-[42%] h-full overflow-hidden flex flex-col justify-between p-[5%]"
         style={{ background: isDark ? '#10172e' : '#f3f6fc' }}
@@ -890,7 +890,7 @@ function CoverSplit({ theme }: { theme: Theme }) {
   )
 }
 
-/* Cover E — Newspaper Masthead.
+/* Cover E - Newspaper Masthead.
    Editorial print: serif-mood masthead bar, dateline, columns. Real
    designers use newsprint references for tech publications (Wired,
    MIT Tech Review, Monocle). Off-cream paper + ink + saffron reserve. */
@@ -905,7 +905,7 @@ function CoverMasthead({ theme }: { theme: Theme }) {
       {/* Top masthead bar */}
       <div className="absolute top-[6%] inset-x-[5%] flex items-center justify-between border-y" style={{ borderColor: ink }}>
         <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
-          Year 02 — Q2/2026
+          Year 02 - Q2/2026
         </div>
         <div className="py-1.5 text-[9px] font-mono uppercase tracking-[0.32em]" style={{ color: inkDim }}>
           Est. 31·03·2025
@@ -963,7 +963,7 @@ function CoverMasthead({ theme }: { theme: Theme }) {
             hello@alodev.vn
           </div>
           <div className="text-xs font-mono" style={{ color: ink }}>
-            0587 789 456
+            0364 234 936
           </div>
         </div>
       </div>
@@ -1011,7 +1011,7 @@ function GroupManifesto({ theme }: { theme: Theme }) {
 function GroupStats({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
   const t = tokens(theme)
-  // English-only labels for international scan-readability — Vietnamese
+  // English-only labels for international scan-readability - Vietnamese
   // labels were dropped per design feedback. Each label is a short,
   // industry-standard term so the figure parses across languages.
   const stats = [
@@ -1106,7 +1106,7 @@ function GroupMonogram({ theme }: { theme: Theme }) {
           <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={108} height={131} className={t.logoShadow} />
           <div className={`${t.text} text-5xl lg:text-7xl font-bold tracking-tight leading-[0.9]`}>alodev</div>
           <div className={`${t.textHigh} text-sm lg:text-base text-center max-w-md`}>
-            Web · App · CRM/ERP · Tự động hoá AI — source code thuộc về bạn.
+            Web · App · CRM/ERP · Tự động hoá AI - source code thuộc về bạn.
           </div>
           <div className={`pt-3 border-t ${t.borderLine} w-full flex justify-center`}>
             <ContactStrip theme={theme} />
@@ -1117,7 +1117,7 @@ function GroupMonogram({ theme }: { theme: Theme }) {
   )
 }
 
-/* Group D — Blueprint Technical.
+/* Group D - Blueprint Technical.
    ISO drawing aesthetic: fine grid + dimension labels + sheet border +
    serial number. Print-design influence (NASA tech specs, architecture
    sheets). 2-color discipline: ink + saffron only. */
@@ -1182,7 +1182,7 @@ function GroupBlueprint({ theme }: { theme: Theme }) {
         </div>
       </div>
 
-      {/* Center — large statement with dimension lines */}
+      {/* Center - large statement with dimension lines */}
       <div className="absolute inset-x-[10%] top-[40%] -translate-y-1/2">
         <div className="flex items-center gap-3 mb-2">
           <span className="w-12 h-px" style={{ background: ink }} />
@@ -1204,7 +1204,7 @@ function GroupBlueprint({ theme }: { theme: Theme }) {
         </div>
       </div>
 
-      {/* Bottom-left — title block (engineering drawing convention) */}
+      {/* Bottom-left - title block (engineering drawing convention) */}
       <div
         className="absolute bottom-[7%] left-[6%] right-[6%] flex items-center justify-between gap-6 pt-3 border-t"
         style={{ borderColor: ink }}
@@ -1219,7 +1219,7 @@ function GroupBlueprint({ theme }: { theme: Theme }) {
           <div>
             <div style={{ color: inkDim }}>Phone</div>
             <div className="font-sans normal-case tracking-normal text-xs" style={{ color: ink }}>
-              0587 789 456
+              0364 234 936
             </div>
           </div>
           <div>
@@ -1241,12 +1241,12 @@ function GroupBlueprint({ theme }: { theme: Theme }) {
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   OG IMAGE CANDIDATES — 1200×630
+   OG IMAGE CANDIDATES - 1200×630
    These are previews. Once user approves one, port the chosen design
    to src/app/opengraph-image.tsx (Next.js OG image route).
    ════════════════════════════════════════════════════════════════════ */
 
-/* OG A — Editorial Bold.
+/* OG A - Editorial Bold.
    Single-page magazine cover. Off-cream paper or deep navy, oversized
    wordmark + brand statement, restrained 2-color palette. Reads at
    thumbnail (300×157) without losing the brand. */
@@ -1304,17 +1304,17 @@ function OgEditorial({ theme }: { theme: Theme }) {
   )
 }
 
-/* OG B — Split + Saffron Block.
+/* OG B - Split + Saffron Block.
    Left: deep ink with logo + brand statement. Right: bold saffron
    geometric block with white wordmark + service keywords.
    Pure 2-color discipline, no gradients. */
 function OgSplit({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
   const bgL = isDark ? '#0a0a0a' : '#0a1226'
-  const bgR = '#d96b09' // saffron block — same in both themes for brand consistency
+  const bgR = '#d96b09' // saffron block - same in both themes for brand consistency
   return (
     <div className="absolute inset-0 flex">
-      {/* LEFT 58% — ink panel */}
+      {/* LEFT 58% - ink panel */}
       <div className="relative w-[58%] h-full overflow-hidden flex flex-col justify-between p-[5%]" style={{ background: bgL }}>
         <div className="flex items-center gap-3">
           <Image src="/brand/logo-symbol.svg" alt="Alodev logo" width={56} height={68} />
@@ -1348,7 +1348,7 @@ function OgSplit({ theme }: { theme: Theme }) {
           clipPath: 'polygon(80% 0, 100% 0, 20% 100%, 0% 100%)',
         }}
       />
-      {/* RIGHT 42% — saffron block with reversed brand */}
+      {/* RIGHT 42% - saffron block with reversed brand */}
       <div className="relative w-[42%] h-full overflow-hidden flex flex-col justify-between p-[6%]" style={{ background: bgR }}>
         <div className="flex justify-end">
           <span className="text-white/85 text-[11px] font-mono uppercase tracking-[0.32em]">
@@ -1377,9 +1377,9 @@ function OgSplit({ theme }: { theme: Theme }) {
   )
 }
 
-/* OG C — Monogram Center.
+/* OG C - Monogram Center.
    Logo monumental in middle of canvas, sparse type around. Most
-   "iconic" feel — works extra well at very small thumbnail sizes
+   "iconic" feel - works extra well at very small thumbnail sizes
    because the logo dominates. */
 function OgMonogram({ theme }: { theme: Theme }) {
   const isDark = theme === 'dark'
@@ -1404,7 +1404,7 @@ function OgMonogram({ theme }: { theme: Theme }) {
       {/* Inner hairline frame */}
       <div className="absolute inset-[3.5%]" style={{ border: `1px solid ${inkXDim}` }} />
 
-      {/* Slim saffron accent bar — left edge, runs vertically inside the
+      {/* Slim saffron accent bar - left edge, runs vertically inside the
           frame. Single brand color signal, very thin (3px) so it reads
           as a print-bound spine, not decoration. */}
       <div
@@ -1440,7 +1440,7 @@ function OgMonogram({ theme }: { theme: Theme }) {
         </div>
       ))}
 
-      {/* Top eyebrow line — single source of dateline truth */}
+      {/* Top eyebrow line - single source of dateline truth */}
       <div className="absolute top-[12%] inset-x-0 flex items-center justify-center gap-4">
         <span className="w-8 h-px" style={{ background: ink, opacity: 0.45 }} />
         <span className="text-[10px] lg:text-[11px] font-mono uppercase tracking-[0.42em]" style={{ color: inkDim }}>
@@ -1449,7 +1449,7 @@ function OgMonogram({ theme }: { theme: Theme }) {
         <span className="w-8 h-px" style={{ background: ink, opacity: 0.45 }} />
       </div>
 
-      {/* Center brand block — logo + wordmark + tagline.
+      {/* Center brand block - logo + wordmark + tagline.
           International-standard restraint: no ornament rules, no diamond
           marks. Brand mark breathes. Reference: Vercel, Linear, Stripe,
           Pentagram, Aesop. */}
@@ -1473,8 +1473,8 @@ function OgMonogram({ theme }: { theme: Theme }) {
         </div>
       </div>
 
-      {/* Bottom — URL only, no contact / edition / serial.
-          OG image is a "knock on the door" — its job is to make viewers
+      {/* Bottom - URL only, no contact / edition / serial.
+          OG image is a "knock on the door" - its job is to make viewers
           click. Contact lives on the website, not on the share thumbnail
           (Vercel/Linear/Stripe convention). */}
       <div className="absolute bottom-[12%] inset-x-0 flex items-center justify-center">

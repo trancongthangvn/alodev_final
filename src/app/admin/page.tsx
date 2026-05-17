@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import AdminInbox from './AdminInbox'
 
 /**
- * /admin — lead inbox (Tier 1). Static page; data fetched client-side
+ * /admin - lead inbox (Tier 1). Static page; data fetched client-side
  * from /api/admin/leads which lives behind Basic Auth (browser sends the
  * same Authorization header automatically once the user is authenticated
  * for /admin via the middleware).
@@ -13,7 +13,7 @@ import AdminInbox from './AdminInbox'
  */
 
 export const metadata: Metadata = {
-  title: { absolute: 'Admin — Alodev Leads' },
+  title: { absolute: 'Admin - Alodev Leads' },
   robots: { index: false, follow: false, noarchive: true, nocache: true },
 }
 

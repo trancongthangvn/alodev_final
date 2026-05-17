@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 /**
  * Animated number counter that fires on intersection.
- * Accepts strings like "50+", "99.94%", "180ms", "2,400" — extracts the
+ * Accepts strings like "50+", "99.94%", "180ms", "2,400" - extracts the
  * numeric portion to animate, keeps the surrounding chars static.
  */
 export default function Counter({

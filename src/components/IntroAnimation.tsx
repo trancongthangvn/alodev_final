@@ -13,7 +13,7 @@ const FADE_DELAY = 880                     // when fade-out starts
  * Choreography (1.7s total):
  *  0–250    grid pattern fades in + 3 loading dots pulse in centre
  *  250–600  loading dots fade out, saffron orb pulses behind
- *  300–800  logo "alodev" — each letter cascades in with subtle blur clearing (60ms stagger)
+ *  300–800  logo "alodev" - each letter cascades in with subtle blur clearing (60ms stagger)
  *  650–1100 underline shimmer draws + sweep highlight
  *  900–1300 tagline letter-cascade (40ms stagger)
  *  1100–1500 version + locale chips fade in (corners)
@@ -79,7 +79,7 @@ export default function IntroAnimation() {
 
   if (!visible) return null
 
-  // Letter cascade for logo + tagline — theme-adaptive (saffron + black/white)
+  // Letter cascade for logo + tagline - theme-adaptive (saffron + black/white)
   const logoChars = [
     { ch: 'a', class: 'text-brand-600 dark:text-brand-400' },
     { ch: 'l', class: 'text-brand-600 dark:text-brand-400' },
@@ -93,11 +93,11 @@ export default function IntroAnimation() {
   return (
     <div
       aria-hidden="true"
-      // Theme-adaptive — bg matches the hero behind it (light cream in day,
+      // Theme-adaptive - bg matches the hero behind it (light cream in day,
       // Resend-style #07080c at night) so intro→hero transition is seamless.
       className={`intro-overlay fixed inset-0 z-[200] flex items-center justify-center text-ink-900 dark:text-white ${exiting ? 'intro-exit' : 'intro-enter'}`}
     >
-      {/* Subtle animated grid background — theme-adaptive grid lines */}
+      {/* Subtle animated grid background - theme-adaptive grid lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="intro-grid absolute inset-0 opacity-50 grid-bg" />
       </div>
@@ -130,7 +130,7 @@ export default function IntroAnimation() {
 
       {/* Center stack */}
       <div className="relative text-center px-6">
-        {/* Logo with letter cascade — starts immediately */}
+        {/* Logo with letter cascade - starts immediately */}
         <div className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight leading-none flex justify-center" aria-label="alodev">
           {logoChars.map((c, i) => (
             <span
@@ -212,7 +212,7 @@ export default function IntroAnimation() {
           100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
         }
 
-        /* ── Logo letter cascade — fade-up + blur clearing ── */
+        /* ── Logo letter cascade - fade-up + blur clearing ── */
         .intro-letter {
           display: inline-block;
           opacity: 0;
@@ -222,7 +222,7 @@ export default function IntroAnimation() {
           will-change: opacity, transform, filter;
         }
         @keyframes introLetter {
-          /* filter: none — Lightning CSS strips blur(0) and blur(0px) to invalid blur() */
+          /* filter: none - Lightning CSS strips blur(0) and blur(0px) to invalid blur() */
           to { opacity: 1; transform: translateY(0); filter: none; }
         }
 
@@ -256,7 +256,7 @@ export default function IntroAnimation() {
           will-change: opacity, transform, filter;
         }
         @keyframes introTagChar {
-          /* filter: none — Lightning CSS strips blur(0) and blur(0px) to invalid blur() */
+          /* filter: none - Lightning CSS strips blur(0) and blur(0px) to invalid blur() */
           to { opacity: 1; transform: translateY(0); filter: none; }
         }
 

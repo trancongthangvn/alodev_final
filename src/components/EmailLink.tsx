@@ -1,20 +1,20 @@
 'use client'
 
 /**
- * EmailLink — renders email + mailto link CLIENT-SIDE only.
+ * EmailLink - renders email + mailto link CLIENT-SIDE only.
  *
  * Why: Cloudflare Email Obfuscation rewrites any email-looking string in
  * server-rendered HTML into <a href="/cdn-cgi/l/email-protection#hash">
  * [email&#160;protected]</a>. That mutated DOM doesn't match React's
  * tree, throwing hydration error #418, which makes React fall back to
- * full client-side re-render — wiping the inline theme script's
+ * full client-side re-render - wiping the inline theme script's
  * data-theme attribute on <html> in the process.
  *
  * Fix: don't ship the email in server HTML. Render a stable placeholder
  * server-side, then swap to the real email after mount. Cloudflare's
  * obfuscator only acts on the static HTML, so it leaves us alone.
  *
- * The user/domain split + post-mount join is also a defense-in-depth —
+ * The user/domain split + post-mount join is also a defense-in-depth -
  * even if a future build path leaks the props, Cloudflare's pattern
  * match needs a contiguous email string and won't find one here.
  */

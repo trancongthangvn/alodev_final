@@ -94,6 +94,13 @@ async function notifyEmail(entry) {
 
 router.post('/', limiter, async (req, res) => {
   const body = req.body || {}
+  // Honeypot — frontend ships a hidden 'website' field; real users never
+  // see it and leave it empty, bots fill every field. Silent-accept (200)
+  // so the bot thinks the submission worked without retrying.
+  if (body.website && String(body.website).trim()) {
+    return res.json({ ok: true })
+  }
+
   const name = String(body.name || '').trim().slice(0, 120)
   const email = String(body.email || '').trim().slice(0, 200)
   const phone = String(body.phone || '').replace(/\s/g, '').slice(0, 32)

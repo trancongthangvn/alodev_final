@@ -1,4 +1,4 @@
-// Single-file icon library — line-style, stroke 1.75, 24×24 grid (Lucide-derived).
+// Single-file icon library - line-style, stroke 1.75, 24×24 grid (Lucide-derived).
 // All icons inherit `currentColor` and resize via Tailwind `w-/h-` classes.
 //
 // Usage: <Icon name="code" className="w-5 h-5" />
@@ -13,6 +13,8 @@ export type IconName =
   | 'home' | 'briefcase' | 'folder' | 'file-text' | 'newspaper' | 'rocket'
   | 'shield-check' | 'package' | 'gauge' | 'target' | 'handshake' | 'life-buoy'
   | 'corner-down-left' | 'arrow-down-up' | 'wand' | 'star'
+  | 'receipt' | 'shield' | 'calendar'
+  | 'copy' | 'share-2' | 'printer'
 
 interface IconProps extends SVGProps<SVGSVGElement> {
   name: IconName
@@ -93,4 +95,10 @@ const paths: Record<IconName, React.ReactNode> = {
   'arrow-down-up': <><path d="m3 16 4 4 4-4" /><path d="M7 20V4" /><path d="m21 8-4-4-4 4" /><path d="M17 4v16" /></>,
   wand: <><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8 19 13M15 9h0M17.8 6.2 19 5M3 21l9-9M12.2 6.2 11 5" /></>,
   star: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />,
+  receipt: <><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z" /><path d="M16 8H8M16 12H8M12 16H8" /></>,
+  shield: <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />,
+  calendar: <><path d="M8 2v4M16 2v4M3 10h18M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></>,
+  copy: <><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></>,
+  'share-2': <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></>,
+  printer: <><polyline points="6 9 6 2 18 2 18 9" /><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><rect width="12" height="8" x="6" y="14" /></>,
 }

@@ -4,25 +4,26 @@ import JsonLd from '@/components/JsonLd'
 import Icon, { type IconName } from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
 import { itemListSchema, breadcrumbSchema, collectionPageSchema } from '@/lib/schema'
+import MagazineLayout from '@/components/layout/MagazineLayout'
 
 export const metadata = {
-  title: 'Portfolio — 11 sản phẩm vận hành + 4 studio lab',
+  title: 'Portfolio - 11 sản phẩm vận hành + 4 studio lab',
   description: '11 sản phẩm Alodev đang vận hành thực tế (giáo dục, livestream, social commerce, tin tức, e-commerce) cộng với 4 studio lab. Mỗi case study có metric đo được.',
   alternates: { canonical: '/du-an' },
-  openGraph: { url: '/du-an', title: 'Portfolio Alodev — 11 sản phẩm vận hành + 4 studio lab', description: 'Toàn bộ fleet sản phẩm Alodev đang chạy thật. Lập trình · Thiết kế · SEO — đo bằng metric, không slogan.' },
+  openGraph: { url: '/du-an', title: 'Portfolio Alodev - 11 sản phẩm vận hành + 4 studio lab', description: 'Toàn bộ fleet sản phẩm Alodev đang chạy thật. Lập trình · Thiết kế · SEO - đo bằng metric, không slogan.' },
 }
 
 const capabilities: Array<{ icon: IconName; num: string; title: string; desc: string; points: string[] }> = [
   { icon: 'code',    num: '01', title: 'Lập trình', desc: 'Stack hiện đại, kiến trúc scale được, monitoring + CI/CD triển khai ngay từ ngày deploy đầu tiên.', points: ['Next.js · Vue · Node · Postgres', 'Edge deploy + multi-region', 'CI/CD + monitoring 24/7'] },
   { icon: 'palette', num: '02', title: 'Thiết kế', desc: 'Design system thiết kế từ đầu, không ráp từ UI kit có sẵn. Mobile-first, dark mode, motion tinh tế.', points: ['Custom design system', 'Mobile-first + dark mode', 'Micro-interaction tinh tế'] },
-  { icon: 'search',  num: '03', title: 'SEO', desc: 'SEO kỹ thuật triển khai chuẩn từ deploy đầu tiên — Schema.org, sitemap, OG, canonical đầy đủ, không khắc phục muộn.', points: ['Schema.org đầy đủ', 'PageSpeed 90+', 'Sitemap + Search Console'] },
+  { icon: 'search',  num: '03', title: 'SEO', desc: 'SEO kỹ thuật triển khai chuẩn từ deploy đầu tiên - Schema.org, sitemap, OG, canonical đầy đủ, không khắc phục muộn.', points: ['Schema.org đầy đủ', 'PageSpeed 90+', 'Sitemap + Search Console'] },
 ]
 
 const liveProjects = projects.filter((p) => (p.status ?? 'live') === 'live' || p.status === 'internal')
 const labProjects = projects.filter((p) => p.status === 'lab')
 
 /**
- * Phân nhóm theo "thị trường" thay vì flat list — visitor scan nhanh hơn,
+ * Phân nhóm theo "thị trường" thay vì flat list - visitor scan nhanh hơn,
  * mỗi nhóm có narrative riêng (sản phẩm có user khác mạng tin tức khác ops).
  * Slug nào thiếu trong groups sẽ rơi xuống nhóm cuối "ops" để không lọt.
  */
@@ -30,19 +31,19 @@ const projectGroups: Array<{ id: string; label: string; sub: string; slugs: stri
   {
     id: 'flagship',
     label: 'Sản phẩm có user',
-    sub: 'SaaS, giáo dục, social commerce — có sign-up, có billing, có cộng đồng. Đây là phần fleet đang tạo doanh thu thực.',
+    sub: 'SaaS, giáo dục, social commerce - có sign-up, có billing, có cộng đồng. Đây là phần fleet đang tạo doanh thu thực.',
     slugs: ['maxmin', 'onthi365', 'vietnamid'],
   },
   {
     id: 'media',
     label: 'Mạng tin tức',
-    sub: '4 site nội dung dùng chung CMS multi-site — News schema chuẩn Google News, edge deploy, canonical sạch giữa các site.',
+    sub: '4 site nội dung dùng chung CMS multi-site - News schema chuẩn Google News, edge deploy, canonical sạch giữa các site.',
     slugs: ['ganday', 'vn247', 'thitruongkinhte', 'hongbienduongpho'],
   },
   {
     id: 'commerce',
     label: 'E-commerce & tools',
-    sub: 'Marketplace số đa-tenant + bộ công cụ vận hành Facebook. Anti-fraud, payment escrow, rate-limit retry — vận hành 24/7.',
+    sub: 'Marketplace số đa-tenant + bộ công cụ vận hành Facebook. Anti-fraud, payment escrow, rate-limit retry - vận hành 24/7.',
     slugs: ['shopaccgame', 'lammmo'],
   },
   {
@@ -66,19 +67,31 @@ const statusBadge: Record<NonNullable<Project['status']>, { label: string; dot: 
   lab:      { label: 'LAB',     dot: 'bg-stone-400',    ring: 'ring-stone-400/30' },
 }
 
+const toc = [
+  { num: '01', name: 'Tổng quan',     hash: '#hero' },
+  { num: '02', name: 'Năng lực',      hash: '#capabilities' },
+  { num: '03', name: 'Nhóm dự án',   hash: '#groups' },
+  { num: '04', name: 'Flagship',      hash: '#flagship' },
+  { num: '05', name: 'Media',         hash: '#media' },
+  { num: '06', name: 'Commerce',      hash: '#commerce' },
+  { num: '07', name: 'Ops',           hash: '#ops' },
+  { num: '08', name: 'Studio Lab',    hash: '#lab' },
+  { num: '09', name: 'Liên hệ',       hash: '#cta' },
+]
+
 export default function DuAnPage() {
   return (
-    <>
+    <MagazineLayout toc={toc} tagline={<>Một fleet -<br />không phải showreel.</>}>
       <JsonLd data={[
         breadcrumbSchema([
           { name: 'Trang chủ', url: '/' },
           { name: 'Dự án', url: '/du-an' },
         ]),
-        // CollectionPage wraps the ItemList — same data twice in different
+        // CollectionPage wraps the ItemList - same data twice in different
         // entity types maximises rich-result eligibility (Google's docs
         // recommend both for portfolio/listing pages).
         collectionPageSchema({
-          name: 'Portfolio Alodev — 11+ sản phẩm đang vận hành',
+          name: 'Portfolio Alodev - 11+ sản phẩm đang vận hành',
           description: 'Danh mục case study Alodev đã thiết kế, phát triển và đang vận hành thực tế.',
           url: '/du-an',
           items: projects.map((p) => ({
@@ -95,22 +108,20 @@ export default function DuAnPage() {
       ]} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white dark:bg-ink-950">
-        <div className="aurora opacity-60" />
-        <div className="absolute inset-0 grid-bg grid-bg-fade opacity-50" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10 lg:pt-28 lg:pb-16">
+      <section id="hero" className="mag-section mag-bg-paper relative overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-24">
           <div className="hero-rise max-w-3xl">
-            <Eyebrow>Portfolio</Eyebrow>
-            <h1 className="h-display mt-4 text-gray-900 dark:text-white">
-              Một fleet sản phẩm thật —<br />
+            <p className="mag-section-index">Portfolio</p>
+            <h1 className="mag-section-head !mt-4">
+              Một fleet sản phẩm thật -<br />
               <span className="bg-gradient-to-r from-brand-600 to-brand-700 dark:from-brand-400 dark:to-brand-300 bg-clip-text text-transparent">không phải showreel.</span>
             </h1>
-            <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-ink-400 max-w-2xl leading-relaxed">
-              Tất cả dưới đây đang vận hành thật trên domain riêng. Mỗi case study là một quyết định kỹ thuật cụ thể: stack, kiến trúc, đánh đổi — đo bằng metric, không slogan.
+            <p className="mag-body-lead mt-4 max-w-xl">
+              Tất cả dưới đây đang vận hành thật trên domain riêng. Mỗi case study là một quyết định kỹ thuật cụ thể: stack, kiến trúc, đánh đổi - đo bằng metric, không slogan.
             </p>
           </div>
 
-          {/* Fleet stats — concrete numbers, founder voice */}
+          {/* Fleet stats - concrete numbers, founder voice */}
           <div className="mt-10 lg:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
             {fleetStats.map((s) => (
               <div key={s.label} className="bg-white dark:bg-ink-950 p-5 lg:p-6">
@@ -124,7 +135,7 @@ export default function DuAnPage() {
       </section>
 
       {/* Capabilities */}
-      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800">
+      <section id="capabilities" className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
             {capabilities.map((c) => (
@@ -135,7 +146,7 @@ export default function DuAnPage() {
                   </div>
                   <span className="tabular text-xs font-mono text-ink-300 dark:text-ink-600">{c.num}</span>
                 </div>
-                <h3 className="mt-5 text-lg font-bold text-ink-900 dark:text-white">{c.title}</h3>
+                <h3 className="mt-5 mag-card-head">{c.title}</h3>
                 <p className="mt-2 text-sm text-ink-500 dark:text-ink-300 leading-relaxed">{c.desc}</p>
                 <ul className="mt-4 space-y-1.5">
                   {c.points.map((p) => (
@@ -151,8 +162,8 @@ export default function DuAnPage() {
         </div>
       </section>
 
-      {/* Chip rail — quick jump giữa 4 nhóm */}
-      <nav aria-label="Nhóm dự án" className="bg-white dark:bg-ink-950 border-b border-gray-200 dark:border-ink-800">
+      {/* Chip rail - quick jump giữa 4 nhóm */}
+      <nav id="groups" aria-label="Nhóm dự án" className="mag-bg-paper border-b border-gray-200 dark:border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <ol className="flex flex-wrap gap-2 text-sm">
             {projectGroups.map((g, i) => {
@@ -186,7 +197,7 @@ export default function DuAnPage() {
         </div>
       </nav>
 
-      {/* Sản phẩm vận hành — chia 4 nhóm */}
+      {/* Sản phẩm vận hành - chia 4 nhóm */}
       {projectGroups.map((g, gi) => {
         const items = g.slugs.map((s) => liveProjects.find((p) => p.slug === s)).filter(Boolean) as Project[]
         if (items.length === 0) return null
@@ -194,7 +205,7 @@ export default function DuAnPage() {
           <section
             key={g.id}
             id={g.id}
-            className={`scroll-mt-20 py-10 lg:py-20 ${gi % 2 === 0 ? 'bg-white dark:bg-ink-950' : 'bg-cream-50/50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800'}`}
+            className={`mag-section scroll-mt-20 py-12 lg:py-20 ${gi % 2 === 0 ? 'mag-bg-paper' : 'mag-bg-tint'}`}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <SectionHeader
@@ -213,15 +224,15 @@ export default function DuAnPage() {
         )
       })}
 
-      {/* Bất kỳ live project nào không nằm trong nhóm nào — fallback */}
+      {/* Bất kỳ live project nào không nằm trong nhóm nào - fallback */}
       {(() => {
         const grouped = new Set(projectGroups.flatMap((g) => g.slugs))
         const orphans = liveProjects.filter((p) => !grouped.has(p.slug))
         if (orphans.length === 0) return null
         return (
-          <section className="py-10 lg:py-20 bg-white dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
+          <section className="mag-section mag-bg-paper py-12 lg:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <SectionHeader eyebrow="Khác" title="Dự án khác" sub="Chưa được phân nhóm rõ — sẽ cập nhật sau." count={orphans.length} />
+              <SectionHeader eyebrow="Khác" title="Dự án khác" sub="Chưa được phân nhóm rõ - sẽ cập nhật sau." count={orphans.length} />
               <div className="reveal-stagger mt-10 space-y-6">
                 {orphans.map((p, i) => (
                   <ProjectCard key={p.slug} project={p} index={i + 1} />
@@ -234,12 +245,12 @@ export default function DuAnPage() {
 
       {/* Studio Lab */}
       {labProjects.length > 0 && (
-        <section id="lab" className="scroll-mt-20 py-12 lg:py-20 bg-cream-50 dark:bg-ink-900/40 border-t border-gray-200 dark:border-ink-800">
+        <section id="lab" className="mag-section mag-bg-tint scroll-mt-20 py-12 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="+ / Lab"
               title="Studio Lab"
-              sub="Thí nghiệm, sub-tool, design study — không phải sản phẩm thương mại, là phạm vi kỹ thuật mở rộng: browser extension MV3, AI gateway, OBS overlay, Three.js."
+              sub="Thí nghiệm, sub-tool, design study - không phải sản phẩm thương mại, là phạm vi kỹ thuật mở rộng: browser extension MV3, AI gateway, OBS overlay, Three.js."
               count={labProjects.length}
             />
             <div className="reveal-stagger mt-10 lg:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-5">
@@ -252,17 +263,17 @@ export default function DuAnPage() {
       )}
 
       {/* CTA */}
-      <section className="py-10 lg:py-24 bg-cream-50 dark:bg-ink-950 border-t border-gray-200 dark:border-ink-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="h-section text-gray-900 dark:text-white">Bạn cũng muốn xuất hiện ở đây?</h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-ink-400">Gửi yêu cầu — Alodev biến ý tưởng của bạn thành sản phẩm thật.</p>
-          <div className="mt-8 flex flex-wrap gap-3 justify-center">
+      <section id="cta" className="mag-section mag-bg-tint py-10 lg:py-24">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="mag-section-head">Bạn cũng muốn xuất hiện ở đây?</h2>
+          <p className="mt-4 text-lg text-gray-600 dark:text-ink-400">Gửi yêu cầu - Alodev biến ý tưởng của bạn thành sản phẩm thật.</p>
+          <div className="mt-8 flex flex-wrap gap-3">
             <QuoteCTA size="md">Yêu cầu báo giá</QuoteCTA>
             <Link href="/dich-vu" className="rounded-xl bg-white border border-ink-100 px-6 py-3 text-ink-900 font-semibold hover:bg-cream-50 dark:bg-ink-900 dark:border-ink-800 dark:text-white dark:hover:bg-ink-800 transition">Xem bảng giá</Link>
           </div>
         </div>
       </section>
-    </>
+    </MagazineLayout>
   )
 }
 
@@ -274,7 +285,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr]">
         {/* Thumbnail */}
         <div className={`relative aspect-[16/10] lg:aspect-auto bg-gradient-to-br ${project.colorClass} flex items-center justify-center overflow-hidden`}>
-          <div className="absolute inset-0 grid-bg opacity-30" />
           <div className="relative text-center px-6">
             <div className="tabular text-xs font-mono text-gray-500 dark:text-ink-400 mb-2">#{String(index).padStart(2, '0')}</div>
             <div className="text-2xl font-bold text-gray-700 dark:text-ink-200 dark:opacity-90">{project.name}</div>
@@ -293,7 +303,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="p-5 sm:p-6 lg:p-7 flex flex-col">
           <div className="flex items-start justify-between gap-3 flex-wrap">
             <div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.name}</h3>
+              <h3 className="mag-card-head">{project.name}</h3>
               <a href={`https://${project.domain}`} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-500 dark:text-ink-500 hover:text-brand-600 dark:hover:text-brand-400 transition inline-flex items-center gap-1 font-mono">
                 {project.domain}
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
@@ -369,23 +379,14 @@ function CapabilityBlock({
   )
 }
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-2">
-      <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-      <span className="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400">{children}</span>
-    </div>
-  )
-}
-
 function SectionHeader({ eyebrow, title, sub, count }: { eyebrow: string; title: string; sub: string; count?: number }) {
   return (
     <div className="max-w-3xl">
-      <Eyebrow>{eyebrow}</Eyebrow>
-      <div className="mt-4 flex items-baseline gap-3 flex-wrap">
-        <h2 className="h-section text-gray-900 dark:text-white">{title}</h2>
+      <p className="mag-section-index">{eyebrow}</p>
+      <div className="mt-3 flex items-baseline gap-3 flex-wrap">
+        <h2 className="mag-section-head">{title}</h2>
         {typeof count === 'number' && (
-          <span className="tabular text-sm font-mono text-ink-400 dark:text-ink-500">— {count} dự án</span>
+          <span className="tabular text-sm font-mono text-ink-400 dark:text-ink-500">- {count} dự án</span>
         )}
       </div>
       <p className="mt-3 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed">{sub}</p>
@@ -401,7 +402,6 @@ function LabCard({ project }: { project: Project }) {
       className="group lift block rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700"
     >
       <div className={`relative h-24 bg-gradient-to-br ${project.colorClass} overflow-hidden`}>
-        <div className="absolute inset-0 grid-bg opacity-30" />
         <span className={`absolute top-3 right-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-200 ring-1 ${badge.ring}`}>
           <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`} />
           {badge.label}
@@ -412,7 +412,7 @@ function LabCard({ project }: { project: Project }) {
       </div>
       <div className="p-5">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{project.name}</h3>
+          <h3 className="mag-card-head group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{project.name}</h3>
           <span className="text-xs font-mono text-gray-500 dark:text-ink-500 truncate">{project.domain}</span>
         </div>
         <p className="mt-2 text-sm text-gray-600 dark:text-ink-400 leading-relaxed line-clamp-3">{project.shortDesc}</p>

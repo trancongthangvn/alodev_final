@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react'
 
 /**
- * SectionIndicator — fixed bottom-right "you are here" pin.
+ * SectionIndicator - fixed bottom-right "you are here" pin.
  *
  * Tracks which homepage section the user is currently in and shows
- * "01 / 04 — STATEMENT" style indicator. Updates as scroll progresses.
+ * "01 / 04 - STATEMENT" style indicator. Updates as scroll progresses.
  * Reference: Apple feature pages, lusion case studies, Stripe launches
- * — sites that show navigation context as you read.
+ * - sites that show navigation context as you read.
  *
  * Sections enumerated by [data-section-name] attribute on each
  * <section>. Active = section whose center is closest to viewport mid.

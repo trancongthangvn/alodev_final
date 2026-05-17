@@ -3,7 +3,7 @@
  * which is produced by `scripts/sync-blog-from-d1.mjs` before next build.
  *
  * If the JSON doesn't exist (fresh checkout, no D1 sync), returns empty
- * arrays — pages render "no posts yet" instead of crashing the build.
+ * arrays - pages render "no posts yet" instead of crashing the build.
  */
 
 import generated from '@/data/blog.generated.json'

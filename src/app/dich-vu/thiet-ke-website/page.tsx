@@ -7,9 +7,9 @@ import RelatedServices from '@/components/RelatedServices'
 import { breadcrumbSchema, serviceWithOffersSchema, faqPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Thiết kế website chuyên nghiệp — Báo giá từ 8 triệu',
-  // 150 chars (Vietnamese diacritics — Google SERP cap ~160 visible)
-  description: 'Thiết kế website doanh nghiệp, landing, e-commerce, blog — chuẩn SEO, responsive, tốc độ tải <1s. Founder-led tại Hà Nội. Từ 8 triệu.',
+  title: 'Thiết kế website chuyên nghiệp - Báo giá từ 8 triệu',
+  // 150 chars (Vietnamese diacritics - Google SERP cap ~160 visible)
+  description: 'Thiết kế website doanh nghiệp, landing, e-commerce, blog - chuẩn SEO, responsive, tốc độ tải <1s. Founder-led tại Hà Nội. Từ 8 triệu.',
   alternates: { canonical: '/dich-vu/thiet-ke-website' },
   keywords: [
     'thiết kế website chuyên nghiệp',
@@ -23,34 +23,34 @@ export const metadata = {
   ],
   openGraph: {
     url: '/dich-vu/thiet-ke-website',
-    title: 'Thiết kế website chuyên nghiệp — Alodev',
+    title: 'Thiết kế website chuyên nghiệp - Alodev',
     description: 'Thiết kế website doanh nghiệp, landing page, e-commerce. Báo giá rõ ràng từ 8 triệu, bàn giao đúng hạn, source code thuộc về bạn.',
   },
 }
 
 const types = [
   { name: 'Landing page bán hàng', desc: '1 trang dài tập trung 1 sản phẩm/dịch vụ, tối ưu chuyển đổi khi chạy ads Facebook / Google.', price: 'Từ 8 triệu' },
-  { name: 'Website giới thiệu công ty', desc: 'Trang chủ, Giới thiệu, Dịch vụ, Sản phẩm, Tin tức, Liên hệ — chuẩn doanh nghiệp.', price: 'Từ 14 triệu' },
-  { name: 'Website thương mại điện tử', desc: 'Sản phẩm, giỏ hàng, thanh toán VNPay/MoMo, quản lý đơn — như Shopee mini.', price: 'Từ 25 triệu' },
+  { name: 'Website giới thiệu công ty', desc: 'Trang chủ, Giới thiệu, Dịch vụ, Sản phẩm, Tin tức, Liên hệ - chuẩn doanh nghiệp.', price: 'Từ 14 triệu' },
+  { name: 'Website thương mại điện tử', desc: 'Sản phẩm, giỏ hàng, thanh toán VNPay/MoMo, quản lý đơn - như Shopee mini.', price: 'Từ 25 triệu' },
   { name: 'Blog / Trang tin tức', desc: 'CMS đăng bài, chuyên mục, SEO, đăng ký nhận tin email.', price: 'Từ 12 triệu' },
-  { name: 'Hệ thống đa site (multi-site)', desc: '1 backend phân phối nội dung tới nhiều domain — như mạng tin tức.', price: 'Báo giá theo scope' },
+  { name: 'Hệ thống đa site (multi-site)', desc: '1 backend phân phối nội dung tới nhiều domain - như mạng tin tức.', price: 'Báo giá theo scope' },
 ]
 
 const features = [
-  { icon: 'gauge', title: 'Tốc độ tải dưới 1 giây', desc: 'Static export + CDN edge — Core Web Vitals 90+ điểm Google.' },
+  { icon: 'gauge', title: 'Tốc độ tải dưới 1 giây', desc: 'Static export + CDN edge - Core Web Vitals 90+ điểm Google.' },
   { icon: 'search', title: 'Chuẩn SEO từ ngày deploy', desc: 'Schema.org đầy đủ, sitemap auto, OG, canonical, breadcrumb. Không phải "fix sau".' },
-  { icon: 'phone', title: 'Responsive mọi kích thước', desc: 'Mobile-first design — 70% traffic VN từ điện thoại.' },
+  { icon: 'phone', title: 'Responsive mọi kích thước', desc: 'Mobile-first design - 70% traffic VN từ điện thoại.' },
   { icon: 'shield-check', title: 'Bảo mật từ ngày deploy', desc: 'HTTPS, HSTS, CSP, security headers, DDoS protection qua Cloudflare.' },
-  { icon: 'package', title: 'Source code thuộc về bạn', desc: 'Repo Git, database, domain, hosting — đứng tên bạn. Không vendor lock-in.' },
-  { icon: 'wrench', title: 'Bảo hành 6–12 tháng', desc: 'Mọi bug do Alodev gây ra đều fix miễn phí trong thời gian bảo hành.' },
+  { icon: 'package', title: 'Source code thuộc về bạn', desc: 'Repo Git, database, domain, hosting - đứng tên bạn. Không vendor lock-in.' },
+  { icon: 'wrench', title: 'Bảo hành 6–12 tháng', desc: 'Bug do code Alodev → fix trong hạn bảo hành.' },
 ]
 
 const faq = [
-  { q: 'Thiết kế website giá rẻ có chất lượng không?', a: 'Tuỳ định nghĩa "rẻ". Alodev báo giá từ 8 triệu cho landing page — đó là mức rẻ với một website code riêng (không template), responsive, SEO chuẩn, hosting + domain năm đầu inclusive. Rẻ hơn nữa thường là template Wordpress lắp ghép — chạy được nhưng khó scale, khó SEO, khó bảo trì sau 1-2 năm.' },
-  { q: 'Có nên dùng Wordpress hay code riêng (Next.js)?', a: 'Wordpress phù hợp khi bạn cần cms blog đơn giản, ngân sách hạn chế và không quan tâm tốc độ. Next.js / code riêng phù hợp khi bạn cần tốc độ tải nhanh (SEO, conversion), tính năng custom (e-commerce phức tạp, hệ thống), dài hạn dễ scale. Alodev khuyến nghị Next.js cho 90% trường hợp doanh nghiệp.' },
+  { q: 'Thiết kế website giá rẻ có chất lượng không?', a: 'Tuỳ định nghĩa "rẻ". Alodev báo giá từ 8 triệu cho landing page - đó là mức rẻ với một website code riêng (không template), responsive, SEO chuẩn, hosting + domain năm đầu inclusive. Rẻ hơn nữa thường là template Wordpress lắp ghép - chạy được nhưng khó scale, khó SEO, khó bảo trì sau 1-2 năm.' },
+  { q: 'Có nên dùng Wordpress hay code riêng (Next.js)?', a: 'Wordpress hợp khi: cms blog đơn giản, ngân sách hạn chế. Next.js hợp khi: load nhanh (SEO/conversion), tính năng custom, scale dài hạn. 90% case doanh nghiệp dùng Next.js.' },
   { q: 'Thiết kế website mất bao lâu?', a: 'Landing page 1 trang: 7-10 ngày. Website doanh nghiệp 5-10 trang: 3-4 tuần. Website thương mại điện tử: 6-8 tuần. Hệ thống multi-site: 8-12 tuần. Cam kết deadline ghi rõ trong hợp đồng.' },
-  { q: 'Sau khi bàn giao có hỗ trợ tiếp không?', a: 'Có. Bảo hành lỗi miễn phí 6–12 tháng tuỳ gói. Hỗ trợ thêm tính năng / sửa nội dung theo gói tháng từ 1 triệu — không bắt buộc renew.' },
-  { q: 'Tôi đã có website cũ — Alodev có nhận nâng cấp không?', a: 'Có. Đây là dịch vụ "Bảo trì & nâng cấp" — Alodev audit miễn phí hiện trạng website, đề xuất kế hoạch nâng cấp / migrate sang stack mới. Có thể giữ domain + nội dung hiện tại.' },
+  { q: 'Sau khi bàn giao có hỗ trợ tiếp không?', a: 'Có. Bảo hành lỗi miễn phí 6–12 tháng tuỳ gói. Hỗ trợ thêm tính năng / sửa nội dung theo gói tháng từ 1 triệu - không bắt buộc renew.' },
+  { q: 'Tôi đã có website cũ - Alodev có nhận nâng cấp không?', a: 'Có. Đây là dịch vụ "Bảo trì & nâng cấp" - Alodev audit miễn phí hiện trạng website, đề xuất kế hoạch nâng cấp / migrate sang stack mới. Có thể giữ domain + nội dung hiện tại.' },
 ]
 
 export default function ThietKeWebsitePage() {
@@ -64,7 +64,7 @@ export default function ThietKeWebsitePage() {
         ]),
         serviceWithOffersSchema({
           name: 'Thiết kế website doanh nghiệp',
-          description: 'Dịch vụ thiết kế website chuyên nghiệp — landing page, website công ty, e-commerce, blog. Chuẩn SEO, tốc độ tải <1s, responsive, bảo hành 6-12 tháng.',
+          description: 'Dịch vụ thiết kế website chuyên nghiệp - landing page, website công ty, e-commerce, blog. Chuẩn SEO, tốc độ tải <1s, responsive, bảo hành 6-12 tháng.',
           url: '/dich-vu/thiet-ke-website',
           serviceType: 'Web design and development',
           tiers: [
@@ -77,24 +77,20 @@ export default function ThietKeWebsitePage() {
         faqPageSchema(faq),
       ]} />
 
-      <section className="relative overflow-hidden bg-cream-50 dark:bg-ink-950 border-b border-ink-100 dark:border-ink-800">
-        <div className="aurora opacity-50" />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 lg:pt-20 lg:pb-16">
+      <section id="hero" className="mag-section mag-bg-paper relative overflow-hidden">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-24">
           <Breadcrumbs items={[
             { name: 'Trang chủ', href: '/' },
             { name: 'Dịch vụ', href: '/dich-vu' },
             { name: 'Thiết kế website', href: '/dich-vu/thiet-ke-website' },
           ]} />
           <div className="mt-6">
-            <div className="inline-flex items-center gap-2">
-              <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Dịch vụ · Web</span>
-            </div>
-            <h1 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink-900 dark:text-white leading-tight">
+            <p className="mag-section-index">Dịch vụ · Web</p>
+            <h1 className="mag-section-head !mt-3">
               Thiết kế website chuyên nghiệp<br />
               <span className="text-brand-700 dark:text-brand-400">cho doanh nghiệp Việt</span>
             </h1>
-            <p className="mt-5 text-lg text-ink-500 dark:text-ink-300 max-w-3xl leading-relaxed">
+            <p className="mag-body-lead mt-4 max-w-3xl leading-relaxed">
               Alodev thiết kế website doanh nghiệp, landing page bán hàng, website thương mại điện tử và blog tin tức.
               Code riêng bằng <b className="text-ink-700 dark:text-ink-200">Next.js</b> (không template Wordpress lắp ghép),
               tốc độ tải dưới 1 giây, SEO chuẩn từ ngày deploy đầu tiên, source code thuộc sở hữu của bạn.
@@ -110,14 +106,11 @@ export default function ThietKeWebsitePage() {
       </section>
 
       {/* Why */}
-      <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
+      <section className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2">
-              <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Tại sao Alodev</span>
-            </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">
+            <p className="mag-section-index">Tại sao Alodev</p>
+            <h2 className="mag-section-head !mt-3">
               Sáu cam kết Alodev áp dụng cho mọi website
             </h2>
           </div>
@@ -136,14 +129,11 @@ export default function ThietKeWebsitePage() {
       </section>
 
       {/* Types */}
-      <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-y border-ink-100 dark:border-ink-800">
+      <section className="mag-section mag-bg-tint py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2">
-              <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">Loại website</span>
-            </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">
+            <p className="mag-section-index">Loại website</p>
+            <h2 className="mag-section-head !mt-3">
               Năm loại website Alodev triển khai
             </h2>
           </div>
@@ -165,14 +155,11 @@ export default function ThietKeWebsitePage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-8 lg:py-20 bg-white dark:bg-ink-950">
+      <section className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2">
-              <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-700 dark:text-brand-400">FAQ</span>
-            </div>
-            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Câu hỏi thường gặp về thiết kế website</h2>
+          <div className="mb-10">
+            <p className="mag-section-index">FAQ</p>
+            <h2 className="mag-section-head !mt-3">Câu hỏi thường gặp về thiết kế website</h2>
           </div>
           <div className="space-y-2">
             {faq.map((f, i) => (
@@ -191,11 +178,11 @@ export default function ThietKeWebsitePage() {
       <RelatedServices exclude="thiet-ke-website" />
 
       {/* CTA */}
-      <section className="py-8 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-ink-100 dark:border-ink-800">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-ink-900 dark:text-white">Sẵn sàng thiết kế website?</h2>
-          <p className="mt-3 text-ink-500 dark:text-ink-300">Gửi yêu cầu — Alodev báo giá chi tiết trong 24h kèm timeline cụ thể.</p>
-          <div className="mt-6 flex flex-wrap gap-3 justify-center">
+      <section id="cta" className="mag-section mag-bg-tint py-12 lg:py-24">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="mag-section-head">Sẵn sàng thiết kế website?</h2>
+          <p className="mt-3 text-ink-500 dark:text-ink-300">Gửi yêu cầu - Alodev báo giá chi tiết trong 24h kèm timeline cụ thể.</p>
+          <div className="mt-6 flex flex-wrap gap-3">
             <QuoteCTA size="md">Yêu cầu báo giá</QuoteCTA>
             <Link href="/dich-vu" className="rounded-xl bg-white border border-ink-100 px-6 py-3 text-ink-900 font-semibold hover:bg-cream-50 dark:bg-ink-900 dark:border-ink-800 dark:text-white dark:hover:bg-ink-800 transition">Xem các dịch vụ khác</Link>
           </div>

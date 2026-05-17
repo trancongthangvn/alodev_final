@@ -9,7 +9,7 @@ export const dynamic = 'force-static'
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://alodev.vn'
 
 /**
- * Real `lastModified` from filesystem mtimes — Google, Bing and AI crawlers
+ * Real `lastModified` from filesystem mtimes - Google, Bing and AI crawlers
  * use this signal to decide re-crawl priority. The default `new Date()` on
  * every page lies (every page is "modified today") and gets discounted.
  *
@@ -18,7 +18,7 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://alodev.vn'
  *   • Project pages → max(mtime of [slug]/page.tsx, mtime of projects.ts)
  *     so portfolio additions/edits in projects.ts propagate even when the
  *     route file hasn't changed.
- *   • Build time as the floor — never report a date BEFORE deploy time
+ *   • Build time as the floor - never report a date BEFORE deploy time
  *     (otherwise a brand-new deploy of un-edited content looks stale).
  */
 const APP_DIR = join(process.cwd(), 'src', 'app')
@@ -63,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // Blog posts — sourced from D1 sync at build time. lastmod = post's
+  // Blog posts - sourced from D1 sync at build time. lastmod = post's
   // updated_at (real edit signal, not deploy time).
   const blogPages: MetadataRoute.Sitemap = getAllPosts().map((p) => ({
     url: `${BASE}/blog/${p.slug}`,

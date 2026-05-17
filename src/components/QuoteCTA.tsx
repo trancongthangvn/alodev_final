@@ -14,13 +14,13 @@ type Variant = 'solid' | 'outline' | 'ghost' | 'inverted'
 type Size = 'sm' | 'md' | 'lg'
 
 const VARIANT_CLASS: Record<Variant, string> = {
-  // Solid: black on light, white on dark — the primary CTA style
+  // Solid: black on light, white on dark - the primary CTA style
   solid:    'bg-ink-900 dark:bg-white text-white dark:text-ink-900 hover:bg-ink-800 dark:hover:bg-ink-100 shadow-lg shadow-ink-900/10',
   // Outline: light border ink card, secondary
   outline:  'bg-white dark:bg-ink-900 border border-ink-200 dark:border-ink-800 text-ink-900 dark:text-white hover:border-ink-300 dark:hover:border-ink-700',
   // Ghost: text-only with hover bg
   ghost:    'text-ink-700 dark:text-ink-200 hover:bg-cream-100 dark:hover:bg-ink-800/60',
-  // Inverted: for use on dark sections (bg gradient blue/saffron) — white solid
+  // Inverted: for use on dark sections (bg gradient blue/saffron) - white solid
   inverted: 'bg-white text-ink-900 hover:bg-ink-100 shadow-lg',
 }
 

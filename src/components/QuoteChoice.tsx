@@ -88,7 +88,7 @@ export default function QuoteChoice() {
             </div>
             <h3 className="text-base font-bold text-ink-900 dark:text-white">Gửi yêu cầu nhanh</h3>
             <p className="mt-1.5 text-sm text-ink-500 dark:text-ink-300 leading-relaxed">
-              Mô tả ngắn nhu cầu — Alodev gọi lại để tư vấn scope &amp; báo giá phù hợp.
+              Mô tả ngắn nhu cầu - Alodev gọi lại để tư vấn scope &amp; báo giá phù hợp.
             </p>
             <ul className="mt-4 space-y-1.5 text-xs text-ink-600 dark:text-ink-300">
               <li className="flex gap-1.5"><Icon name="check" className="w-3.5 h-3.5 mt-0.5 text-brand-700 dark:text-brand-400 shrink-0" strokeWidth={2.25} /> Phù hợp khi chưa rõ scope</li>
@@ -117,7 +117,7 @@ export default function QuoteChoice() {
             </div>
             <h3 className="text-base font-bold text-white dark:text-ink-900">Tự cấu hình &amp; xem giá ngay</h3>
             <p className="mt-1.5 text-sm text-white/70 dark:text-ink-600 leading-relaxed">
-              Tick tính năng — giá update real-time. Gửi cấu hình kèm form.
+              Tick tính năng - giá update real-time. Gửi cấu hình kèm form.
             </p>
             <ul className="mt-4 space-y-1.5 text-xs text-white/80 dark:text-ink-700">
               <li className="flex gap-1.5"><Icon name="check" className="w-3.5 h-3.5 mt-0.5 text-brand-300 dark:text-brand-600 shrink-0" strokeWidth={2.25} /> Biết giá ngay không cần chờ</li>
@@ -138,10 +138,7 @@ export default function QuoteChoice() {
         </div>
       </div>
 
-      <style>{`
-        @keyframes qcFade { from { opacity: 0 } to { opacity: 1 } }
-        @keyframes qcSlide { from { opacity: 0; transform: translateY(12px) scale(0.98) } to { opacity: 1; transform: translateY(0) scale(1) } }
-      `}</style>
+      {/* qcFade + qcSlide keyframes live in globals.css */}
     </div>
   )
 }

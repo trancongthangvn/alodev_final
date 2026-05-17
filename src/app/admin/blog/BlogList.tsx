@@ -27,7 +27,7 @@ const STATUS_COLOR: Record<string, string> = {
 }
 
 function formatDate(iso: string | null): string {
-  if (!iso) return '—'
+  if (!iso) return '-'
   try { return new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short', hour12: false }) }
   catch { return iso }
 }

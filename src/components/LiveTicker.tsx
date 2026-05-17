@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 
 /**
- * LiveTicker — alodev studio masthead heartbeat.
+ * LiveTicker - alodev studio masthead heartbeat.
  *
  * Real-time ICT clock + uptime + active-project count + last-deploy
  * relative timestamp. Updates every second. Reference: Read.cv,
- * Robin Sloan's site, Stripe status — design that feels alive.
+ * Robin Sloan's site, Stripe status - design that feels alive.
  *
  * SSR renders a static placeholder; client hydrates the live clock.
  * suppressHydrationWarning prevents the timestamp mismatch warning
@@ -24,9 +24,9 @@ export default function LiveTicker() {
 
   // ICT = Indochina Time = UTC+7
   const ictDate = now ? new Date(now.getTime() + 7 * 3600_000) : null
-  const hh = ictDate ? String(ictDate.getUTCHours()).padStart(2, '0') : '— —'
-  const mm = ictDate ? String(ictDate.getUTCMinutes()).padStart(2, '0') : '— —'
-  const ss = ictDate ? String(ictDate.getUTCSeconds()).padStart(2, '0') : '— —'
+  const hh = ictDate ? String(ictDate.getUTCHours()).padStart(2, '0') : '- -'
+  const mm = ictDate ? String(ictDate.getUTCMinutes()).padStart(2, '0') : '- -'
+  const ss = ictDate ? String(ictDate.getUTCSeconds()).padStart(2, '0') : '- -'
 
   const minutesAgo = now ? Math.floor((now.getTime() / 1000) % 60) + 14 : 14
   const lastDeploy = `${minutesAgo}m`

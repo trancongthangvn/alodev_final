@@ -76,7 +76,7 @@ function formatVnDate(iso: string): string {
 }
 
 /**
- * Minimal markdown renderer — handles the subset Alodev posts will actually
+ * Minimal markdown renderer - handles the subset Alodev posts will actually
  * use: headings, paragraphs, bold, italic, code (inline + block), links,
  * lists, blockquotes. Avoids pulling react-markdown (~30KB) which is overkill
  * for founder-led blog volume. If posts get longer or more complex, swap
@@ -91,7 +91,7 @@ function renderMarkdown(md: string): string {
 
   // Code blocks ```lang\n...\n```
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, body) =>
-    `<pre class="bg-ink-950 dark:bg-ink-900 border border-ink-100 dark:border-ink-800 rounded-xl p-4 overflow-x-auto my-6"><code class="text-sm text-zinc-100 ${lang ? `language-${lang}` : ''}">${body.trim()}</code></pre>`)
+    `<pre class="bg-ink-950 dark:bg-ink-900 border border-ink-100 dark:border-ink-800 rounded-xl p-4 overflow-x-auto my-6"><code class="text-sm text-ink-100 ${lang ? `language-${lang}` : ''}">${body.trim()}</code></pre>`)
 
   // Inline code `x`
   html = html.replace(/`([^`\n]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-cream-100 dark:bg-ink-800 text-sm">$1</code>')
@@ -99,13 +99,13 @@ function renderMarkdown(md: string): string {
   // Headings (#, ##, ###, ####)
   html = html.replace(/^####\s+(.+)$/gm, '<h4 class="text-lg font-bold text-gray-900 dark:text-white mt-8 mb-3">$1</h4>')
   html = html.replace(/^###\s+(.+)$/gm, '<h3 class="text-xl font-bold text-gray-900 dark:text-white mt-10 mb-4">$1</h3>')
-  html = html.replace(/^##\s+(.+)$/gm, '<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-12 mb-5">$1</h2>')
-  html = html.replace(/^#\s+(.+)$/gm, '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-5">$1</h1>')
+  html = html.replace(/^##\s+(.+)$/gm, '<h2 class="mag-section-head !mt-12 !mb-5">$1</h2>')
+  html = html.replace(/^#\s+(.+)$/gm, '<h1 class="mag-section-head !mt-12 !mb-5">$1</h1>')
 
   // Blockquote >
-  html = html.replace(/^>\s+(.+)$/gm, '<blockquote class="border-l-4 border-brand-500 pl-5 italic text-gray-700 dark:text-zinc-300 my-6">$1</blockquote>')
+  html = html.replace(/^>\s+(.+)$/gm, '<blockquote class="border-l-4 border-brand-500 pl-5 italic text-gray-700 dark:text-ink-300 my-6">$1</blockquote>')
 
-  // Lists — collapse consecutive `- ` lines
+  // Lists - collapse consecutive `- ` lines
   html = html.replace(/(?:^- .+(?:\n|$))+/gm, (block) => {
     const items = block.trim().split('\n').map((l) => `<li class="ml-6 list-disc my-1.5">${l.replace(/^- /, '')}</li>`).join('')
     return `<ul class="my-5 space-y-1">${items}</ul>`
@@ -122,12 +122,12 @@ function renderMarkdown(md: string): string {
   // Links [text](url)
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-brand-700 dark:text-brand-400 hover:underline">$1</a>')
 
-  // Paragraphs — wrap remaining double-newline-separated text
+  // Paragraphs - wrap remaining double-newline-separated text
   html = html.split(/\n{2,}/).map((block) => {
     const trimmed = block.trim()
     if (!trimmed) return ''
     if (/^<(h[1-6]|ul|ol|pre|blockquote|p|div)/.test(trimmed)) return trimmed
-    return `<p class="text-gray-700 dark:text-zinc-300 leading-relaxed my-5">${trimmed.replace(/\n/g, '<br>')}</p>`
+    return `<p class="text-gray-700 dark:text-ink-300 leading-relaxed my-5">${trimmed.replace(/\n/g, '<br>')}</p>`
   }).join('\n')
 
   return html
@@ -147,7 +147,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ? post.content_html
     : renderMarkdown(post.content)
 
-  // Word count for schema (rough — strips tags, splits on whitespace)
+  // Word count for schema (rough - strips tags, splits on whitespace)
   const plain = (post.content_html || post.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
   const wordCount = plain ? plain.split(' ').filter(Boolean).length : 0
 
@@ -212,7 +212,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <JsonLd data={schemas} />
 
       <header className="bg-cream-50 dark:bg-ink-950 border-b border-gray-100 dark:border-ink-800">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
           <Breadcrumbs items={[
             { name: 'Trang chủ', href: '/' },
             { name: 'Blog', href: '/blog' },
@@ -221,21 +221,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {post.tags && post.tags.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-1.5">
               {post.tags.map((t) => (
-                <span key={t} className="text-[11px] uppercase tracking-wider font-semibold text-brand-700 dark:text-brand-400 bg-brand-50 dark:bg-brand-500/10 border border-brand-100 dark:border-brand-500/20 px-2 py-0.5 rounded-full">
+                <span key={t} className="text-xs uppercase tracking-wider font-semibold text-brand-700 dark:text-brand-400 bg-brand-50 dark:bg-brand-500/10 border border-brand-100 dark:border-brand-500/20 px-2 py-0.5 rounded-full">
                   {t}
                 </span>
               ))}
             </div>
           )}
-          <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight" itemProp="headline">
+          <h1 className="mt-4 mag-display" itemProp="headline">
             {post.title}
           </h1>
           {post.description && (
-            <p className="mt-5 text-lg text-gray-700 dark:text-zinc-300 leading-relaxed" itemProp="description">{post.description}</p>
+            <p className="mt-5 text-lg text-gray-700 dark:text-ink-300 leading-relaxed" itemProp="description">{post.description}</p>
           )}
-          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-zinc-400">
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-ink-400">
             <span itemProp="author" itemScope itemType="https://schema.org/Person" className="inline-flex items-center gap-2">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-[11px] font-bold">TT</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-xs font-bold">TT</span>
               <span>Bởi <Link href="/ve-chung-toi#founder" className="font-semibold text-gray-900 dark:text-white hover:text-brand-700 dark:hover:text-brand-400" itemProp="name">{post.author_name}</Link></span>
             </span>
             <span aria-hidden="true" className="text-gray-300 dark:text-ink-700">·</span>
@@ -261,21 +261,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </header>
 
-      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
+      <section className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose-content" itemProp="articleBody" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </section>
 
       {related.length > 0 && (
-        <section className="py-10 lg:py-16 bg-cream-50 dark:bg-ink-950 border-t border-gray-100 dark:border-ink-800">
+        <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-950 border-t border-gray-100 dark:border-ink-800">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Bài viết khác</h2>
+            <h2 className="mag-section-head !mb-6">Bài viết khác</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {related.map((r) => (
                 <Link key={r.id} href={`/blog/${r.slug}`} className="group rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 hover:border-brand-300 dark:hover:border-brand-500/40 p-5 transition">
                   <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 leading-snug">{r.title}</h3>
-                  {r.description && <p className="mt-2 text-xs text-gray-600 dark:text-zinc-400 line-clamp-2">{r.description}</p>}
+                  {r.description && <p className="mt-2 text-xs text-gray-600 dark:text-ink-400 line-clamp-2">{r.description}</p>}
                 </Link>
               ))}
             </div>

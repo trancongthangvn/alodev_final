@@ -21,7 +21,7 @@ const tabs: Tab[] = [
     name: 'OnThi365',
     domain: 'onthi365.com',
     tag: 'Live · PvP · Mobile',
-    blurb: 'OnThi365 — nền tảng ôn thi THPT',
+    blurb: 'OnThi365 - nền tảng ôn thi THPT',
     pitch:
       'Yêu cầu cả 3 chiều: live stream HLS đa nền tảng, đấu trường PvP real-time, mobile app + web. Build full stack từ infra đến animation đếm ngược.',
     metrics: [
@@ -38,7 +38,7 @@ const tabs: Tab[] = [
     tag: 'Internal · Fleet ops',
     blurb: 'Dashboard vận hành 11 site cùng lúc',
     pitch:
-      'Connection pool tới 11 Postgres database khác nhau, health check song song, YouTube uploader, cron scheduler — một dashboard cho toàn fleet.',
+      'Connection pool tới 11 Postgres database khác nhau, health check song song, YouTube uploader, cron scheduler - một dashboard cho toàn fleet.',
     metrics: [
       { v: '11', l: 'Site quản lý' },
       { v: '11', l: 'DB song song' },
@@ -67,7 +67,7 @@ export default function FeaturedTabs() {
   const [active, setActive] = useState(0)
   const t = tabs[active]
 
-  // Touch swipe handlers — swipe-left advances to next tab, swipe-right
+  // Touch swipe handlers - swipe-left advances to next tab, swipe-right
   // goes back. 50px minimum delta filters out scroll/tap noise.
   const touchStartX = useRef<number | null>(null)
   const touchStartY = useRef<number | null>(null)
@@ -81,7 +81,7 @@ export default function FeaturedTabs() {
     const dy = e.changedTouches[0].clientY - touchStartY.current
     touchStartX.current = null
     touchStartY.current = null
-    // Reject diagonal / vertical swipes — only horizontal counts. dy <
+    // Reject diagonal / vertical swipes - only horizontal counts. dy <
     // |dx|/2 keeps the page-scroll gesture intact.
     if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx) / 2) return
     if (dx < 0)      setActive((i) => Math.min(tabs.length - 1, i + 1))
@@ -103,7 +103,7 @@ export default function FeaturedTabs() {
             <p className="mt-5 text-lg text-gray-600 dark:text-ink-400 leading-relaxed">{t.pitch}</p>
           </div>
 
-          {/* Tab selector — pill row. Horizontally scrollable on mobile so the
+          {/* Tab selector - pill row. Horizontally scrollable on mobile so the
               6 project names don't overflow the 390px viewport edge with no
               way to reach hidden tabs. -mx- pulls the scroll edges out to the
               page edge so swipes still feel natural near the screen border. */}
@@ -127,7 +127,7 @@ export default function FeaturedTabs() {
           </div>
         </div>
 
-        {/* Mobile-only tab indicator — small dots below the pill row so the
+        {/* Mobile-only tab indicator - small dots below the pill row so the
             user has a clear count of tabs + which one is active. Lets them
             know there's more content even when the pill row is partially
             hidden by horizontal scroll. */}

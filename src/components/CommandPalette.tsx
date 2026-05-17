@@ -30,7 +30,7 @@ export default function CommandPalette() {
     { id: 'bao-gia',  group: 'Trang', icon: 'gauge',      label: 'Tự cấu hình & xem báo giá', keywords: 'calculator quote bao gia tu cau hinh', action: () => router.push('/bao-gia') },
     { id: 'du-an',    group: 'Trang', icon: 'folder',     label: 'Portfolio dự án',          keywords: 'portfolio projects',   action: () => router.push('/du-an') },
     { id: 've',       group: 'Trang', icon: 'handshake',  label: 'Về chúng tôi',             keywords: 'about ve chung toi',   action: () => router.push('/ve-chung-toi') },
-    { id: 'lien-he',  group: 'Trang', icon: 'mail',       label: 'Liên hệ — Yêu cầu báo giá', keywords: 'contact bao gia quote',action: () => router.push('/lien-he') },
+    { id: 'lien-he',  group: 'Trang', icon: 'mail',       label: 'Liên hệ - Yêu cầu báo giá', keywords: 'contact bao gia quote',action: () => router.push('/lien-he') },
 
     // Services anchors
     { id: 'svc-web',      group: 'Dịch vụ', icon: 'globe',  label: 'Website doanh nghiệp',           keywords: 'web landing ecommerce',         action: () => router.push('/dich-vu#website') },
@@ -122,7 +122,7 @@ export default function CommandPalette() {
     }
   }, [open])
 
-  // Reset active when query changes — intended pattern, derived state would over-complicate keyboard nav
+  // Reset active when query changes - intended pattern, derived state would over-complicate keyboard nav
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setActive(0) }, [query])
 

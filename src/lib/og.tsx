@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 /**
- * Shared OG card template for alodev.vn — used by every route's
+ * Shared OG card template for alodev.vn - used by every route's
  * `opengraph-image.tsx`. Vietnamese diacritics render correctly because
  * we ship the Be Vietnam Pro TTF (full VN coverage) at build time;
  * Satori's default Inter has limited diacritic support.
@@ -70,7 +70,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
           position: 'relative',
         }}
       >
-        {/* Subtle 3×3 grid mark top-right — visual nod to Rubik metaphor */}
+        {/* Subtle 3×3 grid mark top-right - visual nod to Rubik metaphor */}
         <div
           style={{
             position: 'absolute',
@@ -99,7 +99,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
           ))}
         </div>
 
-        {/* TOP — wordmark + saffron accent line */}
+        {/* TOP - wordmark + saffron accent line */}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
@@ -122,7 +122,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
           />
         </div>
 
-        {/* MIDDLE — eyebrow + title + tagline */}
+        {/* MIDDLE - eyebrow + title + tagline */}
         <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 980 }}>
           <div
             style={{
@@ -163,7 +163,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
           )}
         </div>
 
-        {/* BOTTOM — domain + optional badge */}
+        {/* BOTTOM - domain + optional badge */}
         <div
           style={{
             display: 'flex',
@@ -212,7 +212,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
 }
 
 /**
- * renderOgHome — homepage OG image (Monogram Center / Studio Plate).
+ * renderOgHome - homepage OG image (Monogram Center / Studio Plate).
  *
  * International-standard restraint: logo + wordmark + tagline + URL.
  * Print-craft refinements: 4 corner registration marks, inner hairline
@@ -252,7 +252,7 @@ export async function renderOgHome(theme: 'light' | 'dark' = 'light') {
           position: 'relative',
         }}
       >
-        {/* Halftone dot paper texture — subtle riso warmth */}
+        {/* Halftone dot paper texture - subtle riso warmth */}
         <div
           style={{
             display: 'flex',
@@ -279,7 +279,7 @@ export async function renderOgHome(theme: 'light' | 'dark' = 'light') {
           }}
         />
 
-        {/* Slim saffron stripe — left edge, mid-section */}
+        {/* Slim saffron stripe - left edge, mid-section */}
         <div
           style={{
             display: 'flex',
@@ -349,7 +349,7 @@ export async function renderOgHome(theme: 'light' | 'dark' = 'light') {
           <div style={{ display: 'flex', width: 50, height: 1, background: ink, opacity: 0.45 }} />
         </div>
 
-        {/* Center brand block — logo + wordmark + tagline */}
+        {/* Center brand block - logo + wordmark + tagline */}
         <div
           style={{
             position: 'absolute',

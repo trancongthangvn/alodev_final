@@ -35,14 +35,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const published = p.publishedAt || FALLBACK_DATE_ISO
   const modified = p.updatedAt || published
   return {
-    title: `${p.name} — Case study ${p.category}`,
+    title: `${p.name} - Case study ${p.category}`,
     description: p.shortDesc,
     keywords: p.code.stack,
     authors: [{ name: 'Trần Công Thắng', url: '/ve-chung-toi#founder' }],
     alternates: { canonical: url },
     openGraph: {
       url,
-      title: `${p.name} — Case study Alodev`,
+      title: `${p.name} - Case study Alodev`,
       description: p.shortDesc,
       type: 'article',
       publishedTime: `${published}T00:00:00+07:00`,
@@ -76,7 +76,7 @@ function CaseStudy({ project }: { project: Project }) {
         projectSchema(project),
         articleSchema({
           url,
-          headline: `${project.name} — Case study ${project.category}`,
+          headline: `${project.name} - Case study ${project.category}`,
           description: project.longDesc || project.shortDesc,
           datePublished: published,
           dateModified: modified,
@@ -93,7 +93,7 @@ function CaseStudy({ project }: { project: Project }) {
 
       {/* Hero */}
       <header className={`relative overflow-hidden bg-gradient-to-br ${project.colorClass} border-b border-gray-100 dark:border-ink-800`}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
           <Breadcrumbs items={[
             { name: 'Trang chủ', href: '/' },
             { name: 'Dự án', href: '/du-an' },
@@ -101,20 +101,20 @@ function CaseStudy({ project }: { project: Project }) {
           ]} />
           <div className="mt-6">
             <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/80 dark:bg-ink-900/70 text-gray-700 dark:text-ink-200" itemProp="articleSection">{project.category}</span>
-            <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight" itemProp="headline">{project.name}</h1>
+            <h1 className="mt-3 mag-display" itemProp="headline">{project.name}</h1>
             <a href={`https://${project.domain}`} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm text-gray-700 dark:text-ink-300 hover:text-brand-700 dark:hover:text-brand-400">
               {project.domain}
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
             </a>
             <p className="mt-5 text-lg text-gray-700 dark:text-ink-300 max-w-3xl leading-relaxed" itemProp="description">{project.longDesc || project.shortDesc}</p>
 
-            {/* Byline — author + dates. Visible E-E-A-T signal that mirrors
+            {/* Byline - author + dates. Visible E-E-A-T signal that mirrors
                 the JSON-LD Article schema. The microdata `itemProp` attributes
                 give crawlers a second route to the same fields if JSON-LD is
                 ignored or stripped by intermediaries. */}
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-ink-400">
               <span itemProp="author" itemScope itemType="https://schema.org/Person" className="inline-flex items-center gap-2">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-[11px] font-bold">TT</span>
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-ink-900 dark:bg-white text-white dark:text-ink-900 text-xs font-bold">TT</span>
                 <span>
                   Bởi <Link href="/ve-chung-toi#founder" className="font-semibold text-gray-900 dark:text-white hover:text-brand-700 dark:hover:text-brand-400" itemProp="name">Trần Công Thắng</Link>
                 </span>
@@ -140,7 +140,7 @@ function CaseStudy({ project }: { project: Project }) {
       </header>
 
       {/* Three capability sections */}
-      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
+      <section className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <CapabilitySection
             icon="code"
@@ -188,14 +188,14 @@ function CaseStudy({ project }: { project: Project }) {
         </section>
       ) : (
         <section className="py-8 lg:py-16 bg-cream-50 dark:bg-ink-950">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="rounded-2xl border-2 border-dashed border-ink-200 dark:border-ink-700 p-10 lg:p-14 bg-white/50 dark:bg-ink-900/40">
               <Icon name="file-text" className="w-9 h-9 mb-3 text-ink-400 dark:text-ink-500 mx-auto" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Case study đang được biên soạn</h2>
               <p className="mt-3 text-gray-600 dark:text-ink-400 max-w-xl mx-auto">
-                Bài chi tiết về quá trình xây dựng dự án này — context kinh doanh, vấn đề kỹ thuật, lựa chọn công nghệ, kết quả đo được — sẽ được cập nhật sớm.
+                Bài chi tiết về quá trình xây dựng dự án này - context kinh doanh, vấn đề kỹ thuật, lựa chọn công nghệ, kết quả đo được - sẽ được cập nhật sớm.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3 justify-center">
+              <div className="mt-6 flex flex-wrap gap-3">
                 <a href={`https://${project.domain}`} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-ink-900 hover:bg-ink-800 dark:bg-white dark:text-ink-900 dark:hover:bg-ink-100 px-5 py-2.5 text-white text-sm font-semibold transition">
                   Xem trực tiếp sản phẩm
                 </a>
@@ -207,7 +207,7 @@ function CaseStudy({ project }: { project: Project }) {
       )}
 
       {/* Related */}
-      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
+      <section className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Dự án khác</h2>

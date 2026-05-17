@@ -4,58 +4,73 @@ import { projects } from '@/data/projects'
 import JsonLd from '@/components/JsonLd'
 import HeroCube from '@/components/HeroCube'
 import QuoteCTA from '@/components/QuoteCTA'
-import Icon from '@/components/Icon'
+import ScrollEffects from '@/components/ScrollEffects'
+import HideGlobalFooter from '@/components/HideGlobalFooter'
+// CustomCursor disabled May 2026 - spring physics intentionally laggy
+// "mềm như nước" feel made cursor read as delayed. Real pro studios
+// (Linear, Vercel, Stripe, Apple, Pentagram) all use native cursor.
+// import CustomCursor from '@/components/CustomCursor'
+import Marquee from '@/components/Marquee'
+import DeviceShowcase from '@/components/DeviceShowcase'
 import { faqPageSchema, breadcrumbSchema, organizationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-/* B2B Vietnamese — describe function, do NOT self-claim partnership.
-   Voice principles (Linear / Vercel / Stripe / Resend):
-   - State what we DO ("Website, app & hệ thống") not what we ARE
-     ("đối tác công nghệ"). The latter is a customer's verdict, not ours.
-   - Subtitle ≤ 20 words. Section headlines ≤ 4 words where possible.
-   - Each service description = one phrase, no compound sentences.
-   - Trust comes from contract terms + real numbers, not adjectives.
-*/
-
-const services = [
-  { num: '01', title: 'Website',          desc: 'Landing, doanh nghiệp, e-commerce.', anchor: '/dich-vu#website' },
-  { num: '02', title: 'App mobile',       desc: 'Native iOS/Android hoặc cross-platform.', anchor: '/dich-vu#mobile' },
-  { num: '03', title: 'Hệ thống quản trị', desc: 'CRM, ERP, dashboard viết riêng theo nghiệp vụ.', anchor: '/dich-vu#system' },
-  { num: '04', title: 'Tự động hoá & AI',  desc: 'Chatbot Zalo, workflow, tích hợp LLM.', anchor: '/dich-vu#automation' },
-]
-
-// Featured projects with REAL specific metrics (not vague descriptions).
-// Numbers hand-curated from each project's actual operational data.
 const featured = [
-  { slug: 'onthi365',    name: 'OnThi365',    domain: 'onthi365.vn',    color: 'from-orange-200 to-red-300 dark:from-orange-700 dark:to-red-800', metric: '120k+ học viên', tag: 'Edtech · Livestream HLS' },
-  { slug: 'shopaccgame', name: 'Shop Acc Game', domain: 'shopaccgame.com', color: 'from-violet-200 to-fuchsia-300 dark:from-violet-700 dark:to-fuchsia-800', metric: '5+ năm vận hành', tag: 'E-commerce · Multi-tenant' },
-  { slug: 'ganday',      name: 'Gần Đây',     domain: 'ganday.com',     color: 'from-sky-200 to-blue-300 dark:from-sky-700 dark:to-blue-800', metric: '4 site con · 1 CMS', tag: 'Multi-site CMS' },
+  { slug: 'onthi365',        name: 'OnThi365',           domain: 'onthi365.com',        tag: 'Edtech · Livestream HLS',      year: '2024' },
+  { slug: 'maxmin',          name: 'MAXMIN',             domain: 'maxmin.vn',           tag: 'SaaS · Cloud restream',        year: '2025' },
+  { slug: 'vietnamid',       name: 'VietnamID',          domain: 'vietnamid.vn',        tag: 'Social commerce · PWA',        year: '2024' },
+  { slug: 'shopaccgame',     name: 'Shop Acc Game',      domain: 'shopaccgame.net',     tag: 'E-commerce · Multi-tenant',    year: '2023' },
+  { slug: 'ganday',          name: 'Gần Đây',            domain: 'ganday.com.vn',       tag: 'Multi-site CMS',               year: '2024' },
+  { slug: 'thitruongkinhte', name: 'Thị trường Kinh tế', domain: 'thitruongkinhte.net', tag: 'Tin tức · Realtime',           year: '2024' },
 ].filter((f) => projects.some((p) => p.slug === f.slug))
 
-const phaseTicks = [
-  { i: '01', d: '24h',  l: 'Tư vấn' },
-  { i: '02', d: '48h',  l: 'Báo giá' },
-  { i: '03', d: '7d',   l: 'Đặc tả' },
-  { i: '04', d: '3w',   l: 'UI/UX' },
-  { i: '05', d: '12w',  l: 'Phát triển' },
-  { i: '06', d: '7d',   l: 'QA' },
-  { i: '07', d: '3d',   l: 'Bàn giao' },
-  { i: '08', d: '12m',  l: 'Bảo hành' },
+const capabilities = [
+  { label: 'Website',           note: 'Landing, doanh nghiệp, e-commerce',    anchor: '/dich-vu#website' },
+  { label: 'App mobile',        note: 'iOS, Android, cross-platform',          anchor: '/dich-vu#mobile' },
+  { label: 'Hệ thống quản trị', note: 'CRM, ERP, dashboard nội bộ',            anchor: '/dich-vu#system' },
+  { label: 'Tự động hoá & AI',  note: 'Chatbot Zalo, workflow, tích hợp LLM', anchor: '/dich-vu#automation' },
 ]
 
-const reasons = [
-  { title: 'Source code thuộc về bạn',    desc: 'Repo, database, domain, hosting đứng tên khách hàng. Không vendor lock-in.' },
-  { title: 'Bàn giao đúng hạn',           desc: 'Deadline ràng buộc hợp đồng. Trễ → giảm 5%/tuần, capped 30%.' },
-  { title: 'Bảo hành 6–12 tháng',         desc: 'Bug do code Alodev — fix miễn phí. Critical ≤ 24h, minor ≤ 7 ngày.' },
-  { title: 'Đo lường minh bạch',          desc: 'PageSpeed ≥ 90, P95 < 200ms, uptime ≥ 99.9% — cam kết hợp đồng.' },
+const process = [
+  { step: 'Brief',     desc: 'Nghe nghiệp vụ, đề xuất scope',     time: '2–3 ngày' },
+  { step: 'Design',    desc: 'Wireframe, báo giá rõ ràng',         time: '1–2 tuần' },
+  { step: 'Build',     desc: 'Code theo milestone, demo hàng tuần', time: '4–12 tuần' },
+  { step: 'Handover',  desc: 'Bàn giao + bảo hành',                 time: '6–12 tháng' },
+]
+
+const toc = [
+  { num: '01', name: 'Studio',        hash: '#gioi-thieu' },
+  { num: '02', name: 'Dự án',         hash: '#du-an' },
+  { num: '03', name: 'Dịch vụ',       hash: '#dich-vu' },
+  { num: '04', name: 'Về Alodev',     hash: '#ve-alodev' },
+  { num: '05', name: 'Cách làm việc', hash: '#quy-trinh' },
+  { num: '06', name: 'Câu hỏi',       hash: '#cau-hoi' },
+  { num: '07', name: 'Liên hệ',       hash: '#lien-he' },
+]
+
+const stats = [
+  { num: '11+',  label: 'Dự án đã triển khai' },
+  { num: '6+',   label: 'Ngành dọc phục vụ' },
+  { num: '100%', label: 'Source code thuộc khách hàng' },
+  { num: '24h',  label: 'Phản hồi yêu cầu báo giá' },
+]
+
+const commitments = [
+  'Source code, database, domain đứng tên khách hàng',
+  'Bảo hành 6–12 tháng',
+  'Demo định kỳ hàng tuần theo milestone',
+  'Trễ hạn → giảm 5% / tuần',
+  'Không vendor lock-in, không phí license ẩn',
 ]
 
 const faq = [
-  { q: 'Chi phí thiết kế website doanh nghiệp khoảng bao nhiêu?', a: 'Website giới thiệu công ty cơ bản từ 8 triệu, e-commerce từ 25 triệu, app mobile từ 60 triệu, hệ thống quản trị tuỳ chỉnh báo giá theo scope. Cấu hình tính năng để xem báo giá ngay tại /bao-gia, hoặc gửi yêu cầu — phản hồi trong 24h.' },
-  { q: 'Source code và data có thuộc về tôi không?', a: 'Có. Source code, database, domain, hosting đều đứng tên và thuộc sở hữu của bạn. Không vendor lock-in, không phí license, không khoá kỹ thuật. Tài liệu bàn giao đầy đủ để chuyển đội bất cứ lúc nào.' },
+  { q: 'Chi phí thiết kế website doanh nghiệp khoảng bao nhiêu?', a: 'Website giới thiệu từ 8tr, e-commerce từ 25tr, app mobile từ 60tr, hệ thống quản trị báo theo scope. Cấu hình tại /bao-gia.' },
+  { q: 'Source code và data có thuộc về tôi không?', a: 'Có. Source code, database, domain, hosting đứng tên bạn. Không vendor lock-in, không phí license.' },
+  { q: 'Thời gian triển khai một dự án mất bao lâu?', a: 'Website 3–5 tuần. E-commerce 6–10 tuần. App mobile 10–16 tuần. Hệ thống quản trị 8–20 tuần. Demo hàng tuần.' },
+  { q: 'Sau bàn giao có hỗ trợ tiếp không?', a: 'Bảo hành 6–12 tháng tuỳ hợp đồng. Phát triển thêm tính theo gói retainer hoặc giờ.' },
 ]
 
 export default function Home() {
@@ -68,286 +83,455 @@ export default function Home() {
         breadcrumbSchema([{ name: 'Trang chủ', url: '/' }]),
       ]} />
 
-      <div className="rubik-journey relative">
+      {/*
+        Magazine spread on atmospheric backdrop (v7)
+        ─────────────────────────────────────────────────────
+        Fixed bg layer fills the viewport → soft blue depth pools.
+        Card centered max-w 1400px with elevation → "tạp chí trên bàn".
+        Sticky rail still works via overflow:clip (not :hidden).
+      */}
+      <HideGlobalFooter />
+      <ScrollEffects />
+      <div className="mag-page-bg" aria-hidden="true" />
+      {/* Grain texture overlay - lusion-grade film grain, z-index 9998 */}
+      <div className="mag-grain" aria-hidden="true" />
 
-        {/* HERO */}
-        <section className="hero-resend relative text-ink-900 dark:text-white overflow-hidden" data-section-name="Trang chủ">
-          <div className="hero-resend-grid absolute inset-0" />
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 lg:pt-24 lg:pb-32">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
-              <div className="hero-rise lg:col-span-7">
-                <span
-                  className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/70 backdrop-blur px-3 py-1 text-[11px] font-mono uppercase tracking-[0.18em] text-gray-600 dark:text-zinc-400 shadow-sm"
-                >
-                  <span className="h-1 w-1 rounded-full bg-emerald-500" />
-                  Since 2025
-                </span>
+      <div className="mag-wrap">
+        {/* ── IDENTITY COLUMN ── */}
+        <aside className="mag-rail" aria-label="Alodev studio identity">
 
-                <h1
-                  className="mt-7 lg:mt-9 text-gray-900 dark:text-white font-bold tracking-[-0.025em] leading-[1.1]"
-                  style={{ fontSize: 'clamp(2.25rem, 5.2vw, 4.5rem)' }}
-                >
-                  Website, app &amp; hệ thống —{' '}
-                  <span className="text-brand-600 dark:text-brand-400">cho doanh nghiệp Việt</span>.
-                </h1>
-
-                <p className="mt-6 lg:mt-7 text-base lg:text-lg text-gray-600 dark:text-zinc-400 max-w-xl leading-relaxed">
-                  Studio Hà Nội, 11+ sản phẩm đang vận hành.
-                  Bàn giao source code, bảo hành 6–12 tháng.
-                </p>
-
-                <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                  <span className="magnetic w-full sm:w-auto">
-                    <QuoteCTA size="lg" variant="solid" className="w-full sm:w-auto justify-center">Yêu cầu báo giá</QuoteCTA>
-                  </span>
-                  <Link href="/du-an" className="ghost-dark inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold transition w-full sm:w-auto">
-                    Xem dự án
-                  </Link>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5">
-                <div className="lg:hidden"><HeroCube /></div>
-                <div aria-hidden="true" className="hidden lg:block lg:aspect-[700/550] lg:max-w-[700px] lg:ml-auto" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── DỊCH VỤ — numbered editorial list (NOT card grid) ─── */}
-        <section
-          id="dich-vu"
-          data-section-name="Dịch vụ"
-          className="py-16 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800"
-        >
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-8 lg:mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Dịch vụ.
-              </h2>
-              <Link href="/dich-vu" className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 inline-flex items-center gap-1.5">
-                Xem chi tiết &amp; bảng giá
-                <Icon name="arrow-right" className="w-4 h-4" />
-              </Link>
-            </div>
-
-            <ol className="reveal-stagger divide-y divide-gray-200 dark:divide-ink-800">
-              {services.map((s) => (
-                <li key={s.num}>
-                  <Link
-                    href={s.anchor}
-                    className="group grid grid-cols-12 gap-4 lg:gap-6 py-5 lg:py-7 hover:bg-white dark:hover:bg-ink-900/40 transition px-2 -mx-2 rounded items-baseline"
-                  >
-                    <span className="col-span-2 lg:col-span-1 text-sm lg:text-base font-mono tabular text-gray-400 dark:text-ink-600">
-                      {s.num}
-                    </span>
-                    <div className="col-span-10 lg:col-span-4">
-                      <h3 className="text-lg lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">
-                        {s.title}
-                      </h3>
-                    </div>
-                    <p className="col-span-12 lg:col-span-6 text-sm lg:text-base text-gray-600 dark:text-ink-400 leading-relaxed">
-                      {s.desc}
-                    </p>
-                    <span className="hidden lg:inline-block col-span-1 text-brand-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 -translate-x-1 transition text-right">
-                      →
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        {/* ─── FOUNDER'S NOTE — distinctive, no agency does this ─── */}
-        <section
-          data-section-name="Founder note"
-          className="py-16 lg:py-24 bg-white dark:bg-ink-950"
-        >
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal">
-              <div className="text-[11px] font-mono uppercase tracking-[0.18em] text-gray-500 dark:text-ink-500 mb-5">
-                Ghi chú · Q2 / 2026
-              </div>
-              <div className="space-y-4 text-base lg:text-lg leading-[1.75] text-gray-700 dark:text-ink-300">
-                <p>
-                  Quý này đội Alodev nhận thêm dự án <strong className="text-gray-900 dark:text-white">hệ thống quản trị cho SME</strong> —
-                  giai đoạn doanh nghiệp scale từ 5–10 lên 30–50 nhân viên.
-                </p>
-                <p>
-                  Mỗi dự án cần có nghiệp vụ cụ thể và người chịu trách nhiệm bên khách.
-                  Gửi 1–2 dòng mô tả + range ngân sách, phản hồi fit / no-fit trong 24h.
-                </p>
-              </div>
-              <div className="mt-7 pt-6 border-t border-gray-200 dark:border-ink-800 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-500/20 flex items-center justify-center text-brand-700 dark:text-brand-400 font-bold text-sm">
-                  TCT
-                </div>
-                <div>
-                  <div className="font-semibold text-gray-900 dark:text-white">Trần Công Thắng</div>
-                  <div className="text-xs text-gray-500 dark:text-ink-500">Founder · alodev studio</div>
-                </div>
-                <Link
-                  href="/lien-he"
-                  className="ml-auto text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300"
-                >
-                  Gửi mô tả →
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── SẢN PHẨM TIÊU BIỂU — with REAL specific numbers ─── */}
-        <section
-          id="du-an"
-          data-section-name="Sản phẩm"
-          className="py-16 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800"
-        >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal flex items-end justify-between flex-wrap gap-4 mb-10 lg:mb-14">
-              <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Sản phẩm tiêu biểu.
-              </h2>
-              <Link href="/du-an" className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 inline-flex items-center gap-1.5">
-                Xem 11+ dự án
-                <Icon name="arrow-right" className="w-4 h-4" />
-              </Link>
-            </div>
-
-            <div className="reveal-stagger grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-              {featured.map((p) => (
-                <Link
-                  key={p.slug}
-                  href={`/du-an/${p.slug}`}
-                  className="lift spotlight group rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 overflow-hidden hover:border-gray-300 dark:hover:border-ink-700 transition"
-                >
-                  <div className={`relative aspect-[16/10] bg-gradient-to-br ${p.color} flex flex-col justify-between p-5 overflow-hidden`}>
-                    <div className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 dark:bg-ink-900/70 backdrop-blur text-gray-700 dark:text-ink-300 font-semibold inline-flex w-max">
-                      {p.tag}
-                    </div>
-                    <div>
-                      <div className="text-2xl lg:text-3xl font-bold text-gray-800 dark:text-ink-100">{p.name}</div>
-                      <div className="mt-1 text-xs text-gray-700 dark:text-ink-300">{p.domain}</div>
-                    </div>
-                  </div>
-                  <div className="p-5 flex items-baseline justify-between gap-3">
-                    <span className="text-base lg:text-lg font-bold text-gray-900 dark:text-white tabular">
-                      {p.metric}
-                    </span>
-                    <span className="text-brand-600 dark:text-brand-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition">
-                      Xem →
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── INLINE QUY TRÌNH STRIP — single line, link to full page ─── */}
-        <section
-          data-section-name="Quy trình"
-          className="py-12 lg:py-16 bg-white dark:bg-ink-950"
-        >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal flex items-center justify-between gap-6 flex-wrap">
-              <h3 className="text-xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Quy trình — 8 giai đoạn.
-              </h3>
-              <Link
-                href="/quy-trinh"
-                className="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 inline-flex items-center gap-1.5"
-              >
-                Xem chi tiết
-                <Icon name="arrow-right" className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="reveal-stagger mt-6 lg:mt-8 grid grid-cols-4 lg:grid-cols-8 gap-2 lg:gap-3">
-              {phaseTicks.map((p) => (
-                <div
-                  key={p.i}
-                  className="flex flex-col items-center gap-1 rounded-lg border border-gray-200 dark:border-ink-800 bg-cream-50 dark:bg-ink-900/40 py-2.5 lg:py-3"
-                >
-                  <span className="text-sm lg:text-base font-mono tabular font-bold text-gray-900 dark:text-white">{p.i}</span>
-                  <span className="text-[10px] text-gray-500 dark:text-ink-500 font-mono">{p.d}</span>
-                  <span className="text-[10px] lg:text-xs text-gray-700 dark:text-ink-400 font-medium">{p.l}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── VÌ SAO — long-form trust copy with real contract terms ─── */}
-        <section
-          data-section-name="Vì sao Alodev"
-          className="py-16 lg:py-24 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800"
-        >
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="reveal max-w-2xl mb-10 lg:mb-14">
-              <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Bốn cam kết hợp đồng.
-              </h2>
-            </div>
-            <div className="reveal-stagger grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-              {reasons.map((r, i) => (
-                <div key={r.title} className="flex gap-4">
-                  <div className="shrink-0 w-9 h-9 rounded-full border-2 border-brand-300 dark:border-brand-500/40 bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 flex items-center justify-center font-mono text-sm font-bold tabular">
-                    {String(i + 1).padStart(2, '0')}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">{r.title}</h3>
-                    <p className="mt-2 text-sm lg:text-base text-gray-600 dark:text-ink-400 leading-relaxed">{r.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* LIÊN HỆ */}
-        <section data-section-name="Liên hệ" className="relative py-16 lg:py-24 bg-white dark:bg-ink-950 overflow-hidden">
-          <div className="aurora opacity-40" />
-          <div className="reveal relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Bắt đầu dự án.
-            </h2>
-            <p className="mt-4 text-base lg:text-lg text-gray-600 dark:text-ink-400">
-              Phản hồi trong 24h kèm báo giá sơ bộ.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-              <span className="magnetic w-full sm:w-auto">
-                <QuoteCTA size="lg" className="px-8 py-4 w-full sm:w-auto justify-center">Yêu cầu báo giá</QuoteCTA>
+          {/* Top: logo */}
+          <div className="mag-rail-top">
+            <Link href="/" className="inline-block">
+              <span className="text-sm font-bold tracking-tighter text-gray-900 dark:text-white">
+                alodev<span className="text-brand-600 dark:text-brand-400">.vn</span>
               </span>
-              <a
-                href="https://zalo.me/0364234936"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-ink-800 px-8 py-4 text-gray-900 dark:text-white font-semibold hover:border-gray-300 dark:hover:border-ink-700 transition w-full sm:w-auto"
-              >
-                Chat Zalo
+            </Link>
+            <p className="mt-1 text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-wide">
+              Studio · Hà Nội · 2025
+            </p>
+          </div>
+
+          {/* Middle: cube - small, breathing room */}
+          <div className="mag-rail-cube">
+            <HeroCube />
+          </div>
+
+          {/* Bottom: TOC nav + contact + CTA */}
+          <div className="mag-rail-bottom">
+            {/* Tagline */}
+            <p className="text-sm font-bold leading-snug tracking-tight text-gray-900 dark:text-white">
+              Phần mềm cho<br />doanh nghiệp Việt.
+            </p>
+
+            {/* Table of contents - magazine nav */}
+            <nav className="mt-5 pt-4 border-t border-slate-200 dark:border-ink-800" aria-label="Mục lục">
+              <ul className="space-y-1.5">
+                {toc.map((t) => (
+                  <li key={t.hash}>
+                    <a href={t.hash}
+                       className="mag-toc-link group flex items-baseline gap-2 text-xs font-mono text-gray-400 dark:text-ink-600 hover:text-gray-900 dark:hover:text-white transition">
+                      <span className="opacity-70 group-hover:opacity-100">{t.num}</span>
+                      <span className="mag-toc-name">{t.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            {/* Contact */}
+            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-ink-800 space-y-0.5">
+              <a href="tel:0364234936"
+                 className="block text-xs font-semibold text-gray-700 dark:text-ink-300 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                0364 234 936
+              </a>
+              <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer"
+                 className="block text-xs text-gray-400 dark:text-ink-600 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                Zalo →
               </a>
             </div>
-            <p className="mt-8 text-sm text-gray-500 dark:text-ink-500">
-              hello@alodev.vn  ·  0587 789 456  ·  Telegram @alodevvn
-            </p>
-          </div>
-        </section>
 
-        {/* DESKTOP STICKY CUBE OVERLAY */}
-        <div className="cube-sticky-overlay absolute inset-0 hidden lg:block pointer-events-none">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-            <div className="grid grid-cols-12 h-full">
-              <div className="col-span-7" />
-              <div className="col-span-5 pointer-events-auto">
-                <div className="sticky top-24 pt-12 lg:pt-24">
-                  <HeroCube />
-                </div>
+            <div className="magnetic mt-3">
+              <QuoteCTA size="sm" variant="solid" className="w-full justify-center text-xs">
+                Yêu cầu báo giá
+              </QuoteCTA>
+            </div>
+          </div>
+        </aside>
+
+        {/* ── CONTENT COLUMN ── */}
+        <div className="mag-scroll">
+
+          {/* Mobile-only identity (rail hidden on mobile) */}
+          <div className="lg:hidden border-b border-gray-200 dark:border-ink-800">
+            <HeroCube />
+            <div className="px-5 pb-7 pt-2">
+              <p className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+                Phần mềm do <span className="text-brand-600 dark:text-brand-400">người làm ra</span>.
+              </p>
+              <p className="mt-2 text-xs font-mono text-gray-400 dark:text-ink-600">Studio Hà Nội · Est. 2025</p>
+              <div className="mt-4 flex gap-2.5">
+                <QuoteCTA size="md" variant="solid" className="flex-1 justify-center">Báo giá</QuoteCTA>
+                <Link href="/du-an"
+                  className="flex-1 inline-flex items-center justify-center rounded-xl border border-gray-200 dark:border-ink-800 px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white hover:border-gray-300 transition">
+                  Dự án →
+                </Link>
               </div>
             </div>
           </div>
-        </div>
 
+          {/* INTRO / MANIFESTO - hook: who we are and what we do, before any proof */}
+          <section id="gioi-thieu" className="mag-section mag-bg-paper" data-section-name="Studio">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">01</p>
+              <h1 className="mag-section-head">Phần mềm do <br />người làm ra.</h1>
+              <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
+                Studio Hà Nội - website, app mobile và hệ thống quản trị cho SME 5–50 người.
+              </p>
+
+              {/* Differentiators - compact, scannable */}
+              <div className="mt-6 space-y-2">
+                {[
+                  { title: 'Founder-led',          desc: 'Không qua sales/PM' },
+                  { title: 'Source code của bạn', desc: 'Không vendor lock-in' },
+                  { title: 'Demo hàng tuần',       desc: 'Trễ → giảm 5%/tuần' },
+                  { title: 'Bảo hành 6–12 tháng', desc: 'Sửa bug miễn phí' },
+                ].map((d) => (
+                  <div key={d.title} className="flex items-start gap-3" data-stagger="up">
+                    <span className="mt-1 w-4 h-4 shrink-0 rounded-full border border-brand-400/50 dark:border-brand-400/40 flex items-center justify-center">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400" />
+                    </span>
+                    <div>
+                      <span className="text-xs font-semibold text-gray-900 dark:text-white">{d.title}</span>
+                      <span className="text-xs text-gray-500 dark:text-ink-500"> - {d.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-2.5">
+                <div className="magnetic">
+                  <QuoteCTA size="sm" variant="solid" className="justify-center">Báo giá</QuoteCTA>
+                </div>
+                <a href="#du-an"
+                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-ink-400 hover:text-gray-900 dark:hover:text-white transition">
+                  Xem dự án ↓
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* DEVICE SHOWCASE */}
+          <DeviceShowcase />
+
+          {/* PORTFOLIO PREVIEW - peek, not full listing */}
+          <section id="du-an" className="mag-section mag-bg-tint" data-section-name="Portfolio">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">02</p>
+              <h2 className="mag-section-head">Portfolio.</h2>
+              <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-lg">
+                11+ sản phẩm vận hành thật - giáo dục, SaaS, social commerce, tin tức.
+              </p>
+
+              {/* Hero featured project - biggest visual statement */}
+              {featured[0] && (
+                <Link href={`/du-an/${featured[0].slug}`}
+                  className="mag-pf-hero group mt-6"
+                  data-stagger="up"
+                  aria-label={`Dự án ${featured[0].name}`}>
+                  <div className="mag-pf-hero-art" aria-hidden="true">
+                    <div className="mag-pf-hero-grid">
+                      <span /><span /><span /><span /><span /><span />
+                    </div>
+                  </div>
+                  <div className="mag-pf-hero-meta">
+                    <div className="mag-pf-hero-row">
+                      <span className="mag-pf-hero-num">01</span>
+                      <span className="mag-pf-hero-name">{featured[0].name}</span>
+                      <span className="mag-pf-hero-arrow">→</span>
+                    </div>
+                    <div className="mag-pf-hero-sub">
+                      <span>{featured[0].tag}</span>
+                      <span className="opacity-50">·</span>
+                      <span className="font-mono">{featured[0].domain}</span>
+                      <span className="opacity-50">·</span>
+                      <span className="font-mono">{featured[0].year}</span>
+                    </div>
+                  </div>
+                </Link>
+              )}
+
+              {/* Compact list - next 3 */}
+              <div className="mt-2 mag-pf-list">
+                {featured.slice(1, 4).map((p, i) => (
+                  <Link key={p.slug} href={`/du-an/${p.slug}`}
+                    className="mag-pf-row group"
+                    data-stagger="row"
+                    aria-label={`Dự án ${p.name}`}>
+                    <span className="mag-pf-num">{String(i + 2).padStart(2, '0')}</span>
+                    <span className="mag-pf-name">{p.name}</span>
+                    <span className="mag-pf-tag">{p.tag}</span>
+                    <span className="mag-pf-year">{p.year}</span>
+                    <span className="mag-pf-arrow" aria-hidden="true">→</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Strong CTA to full portfolio page */}
+              <Link href="/du-an" className="mag-pf-cta group mt-5">
+                <span className="mag-pf-cta-label">
+                  Xem portfolio đầy đủ
+                </span>
+                <span className="mag-pf-cta-meta">
+                  11+ dự án · case study · metric
+                </span>
+                <span className="mag-pf-cta-arrow" aria-hidden="true">→</span>
+              </Link>
+
+              {/* Stats strip */}
+              <div className="mag-stats mt-6" aria-label="Studio thống kê">
+                {stats.map((s) => (
+                  <div key={s.label} className="mag-stat" data-stagger="stat">
+                    <div className="mag-stat-num" data-count={s.num}>{s.num}</div>
+                    <div className="mag-stat-label">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* SERVICE TICKER - editorial marquee strip */}
+          <div className="mag-ticker" aria-hidden="true">
+            <Marquee speed={42} className="py-3">
+              {[
+                'WEBSITE', 'APP MOBILE', 'HỆ THỐNG QUẢN TRỊ',
+                'TỰ ĐỘNG HOÁ', 'UI/UX DESIGN', 'FOUNDER-LED',
+                'SOURCE CODE BẠN SỞ HỮU', 'BẢO HÀNH 12 THÁNG',
+              ].map((item) => (
+                <span key={item} className="mag-ticker-item">
+                  {item}
+                  <span className="mag-ticker-sep" aria-hidden="true">·</span>
+                </span>
+              ))}
+            </Marquee>
+          </div>
+
+          {/* SERVICES - what we do, before "who we are" */}
+          <section className="mag-section mag-bg-paper" id="dich-vu" data-section-name="Dịch vụ">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">03</p>
+              <h2 className="mag-section-head">Việc Alodev nhận làm.</h2>
+              <ul className="mt-4 divide-y divide-slate-100 dark:divide-ink-800/60">
+                {capabilities.map((c, i) => (
+                  <li key={c.label} data-stagger="up">
+                    <Link href={c.anchor}
+                      className="group flex items-center gap-4 py-3.5 -mx-1 px-1 rounded hover:bg-slate-50 dark:hover:bg-white/[0.03] transition">
+                      <span className="text-xs font-mono font-bold text-gray-200 dark:text-ink-700 w-5 shrink-0 tabular-nums">0{i + 1}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-gray-900 dark:text-white text-sm leading-tight group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{c.label}</div>
+                        <div className="text-xs text-gray-400 dark:text-ink-600 mt-0.5">{c.note}</div>
+                      </div>
+                      <span className="text-brand-600 dark:text-brand-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity inline-block">→</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-[10px]">
+                <Link href="/quy-trinh" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">Quy trình →</Link>
+                <Link href="/dich-vu" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">Bảng giá →</Link>
+                <Link href="/bao-gia" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">Báo giá →</Link>
+              </div>
+            </div>
+          </section>
+
+          {/* ABOUT - who we are, after proof and offer */}
+          <section id="ve-alodev" className="mag-section mag-bg-tint" data-section-name="Về Alodev">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">04</p>
+              <h2 className="mag-section-head">Về Alodev.</h2>
+              <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
+                Hà Nội · 03/2025. Website, app, hệ thống quản trị cho SME scale 5–10 → 30–50 người.
+              </p>
+
+              {/* Callout - brand voice moment */}
+              <blockquote className="mt-5 pl-4 border-l-2 border-brand-500 dark:border-brand-400">
+                <p className="text-sm font-semibold leading-snug text-gray-800 dark:text-ink-200">
+                  11 sản phẩm Alodev đang chạy trên domain riêng - không phải demo.
+                </p>
+              </blockquote>
+
+              {/* Cam kết - B2B trust signals */}
+              <div className="mt-6 pt-5 border-t border-slate-200 dark:border-ink-800">
+                <p className="text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-widest mb-3">CAM KẾT</p>
+                <ul className="space-y-2">
+                  {commitments.map((c) => (
+                    <li key={c} className="flex items-start gap-2.5 text-sm text-gray-700 dark:text-ink-300" data-stagger="up">
+                      <span className="mt-1.5 inline-block w-1 h-1 rounded-full bg-brand-600 dark:bg-brand-400 shrink-0" />
+                      <span>{c}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-6 flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-ink-800">
+                <div className="w-7 h-7 rounded-full bg-brand-100 dark:bg-brand-500/20 flex items-center justify-center text-brand-700 dark:text-brand-400 font-bold text-[10px] shrink-0">TCT</div>
+                <div>
+                  <div className="font-semibold text-xs text-gray-900 dark:text-white">Trần Công Thắng</div>
+                  <div className="text-[10px] text-gray-400 dark:text-ink-600">Founder · alodev studio</div>
+                </div>
+                <Link href="/ve-chung-toi" className="ml-auto text-[10px] font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 whitespace-nowrap">
+                  Về chúng tôi →
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* PROCESS - how we work */}
+          <section id="quy-trinh" className="mag-section mag-bg-paper" data-section-name="Cách làm việc">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">05</p>
+              <h2 className="mag-section-head">Cách Alodev làm việc.</h2>
+              <ol className="mt-5 space-y-0 divide-y divide-slate-200 dark:divide-ink-800">
+                {process.map((p, i) => (
+                  <li key={p.step} className="group flex items-start gap-5 py-4" data-stagger="up">
+                    <span className="shrink-0 mt-0.5 w-8 h-8 rounded-full border border-slate-200 dark:border-ink-700 flex items-center justify-center text-[10px] font-mono font-bold text-gray-400 dark:text-ink-500 group-hover:border-brand-400 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="font-semibold text-sm text-gray-900 dark:text-white">{p.step}</span>
+                        <span className="text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-wide shrink-0">{p.time}</span>
+                      </div>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-ink-400 leading-relaxed">{p.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-5 text-[10px]">
+                <Link href="/quy-trinh" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">
+                  Quy trình đầy đủ 8 giai đoạn →
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ - common questions */}
+          <section id="cau-hoi" className="mag-section mag-bg-tint" data-section-name="Câu hỏi">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">06</p>
+              <h2 className="mag-section-head">Câu hỏi thường gặp.</h2>
+              <div className="mt-5 divide-y divide-slate-200 dark:divide-ink-800">
+                {faq.map((item, i) => (
+                  <details key={i} className="mag-faq group" data-stagger="up">
+                    <summary className="mag-faq-q">
+                      <span className="text-[10px] font-mono text-gray-300 dark:text-ink-700 w-5 shrink-0">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="flex-1 font-semibold text-gray-900 dark:text-white text-sm">
+                        {item.q}
+                      </span>
+                      <span className="mag-faq-toggle" aria-hidden="true">+</span>
+                    </summary>
+                    <p className="mag-faq-a">{item.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CONTACT - closing CTA, theme-adaptive */}
+          <section id="lien-he" className="mag-section mag-section--dark" data-section-name="Liên hệ">
+            <div className="mag-section-inner">
+              <p className="mag-section-index">07</p>
+              <h2 className="mag-section-head">
+                Có dự án<br className="hidden sm:block" /> cần triển khai?
+              </h2>
+              <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-sm leading-relaxed">
+                Mô tả ngắn + ngân sách dự kiến → phản hồi trong <span className="text-gray-900 dark:text-white font-medium">24h</span>.
+                Không mất phí tư vấn.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2.5">
+                <div className="magnetic">
+                  <QuoteCTA size="md" variant="solid" className="justify-center">Báo giá</QuoteCTA>
+                </div>
+                <div className="magnetic">
+                  <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer"
+                     className="inline-flex items-center gap-2 rounded-xl border border-gray-200 dark:border-ink-700 hover:border-gray-300 dark:hover:border-ink-500 hover:bg-gray-50 dark:hover:bg-ink-800 px-5 py-3 text-sm font-semibold text-gray-900 dark:text-white transition">
+                    Chat Zalo →
+                  </a>
+                </div>
+              </div>
+
+              {/* Trust signals */}
+              <div className="mt-8 pt-5 border-t border-gray-200 dark:border-ink-800 grid grid-cols-3 gap-4">
+                {[
+                  { v: '24h', l: 'Phản hồi' },
+                  { v: '100%', l: 'Ownership' },
+                  { v: '6–12th', l: 'Bảo hành' },
+                ].map(s => (
+                  <div key={s.l}>
+                    <div className="text-lg font-bold tracking-tight text-gray-900 dark:text-white tabular-nums">{s.v}</div>
+                    <div className="text-[10px] font-mono text-gray-400 dark:text-ink-500 mt-0.5 uppercase tracking-widest">{s.l}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-ink-600">
+                <a href="mailto:hello@alodev.vn" className="hover:text-gray-900 dark:hover:text-white transition">hello@alodev.vn</a>
+                <a href="tel:0364234936" className="hover:text-gray-900 dark:hover:text-white transition">0364 234 936</a>
+                <a href="https://t.me/alodevvn" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition">Telegram @alodevvn</a>
+              </div>
+            </div>
+          </section>
+
+          {/* COMPACT FOOTER - in-column, closes the magazine spread */}
+          <div className="mag-footer" role="contentinfo">
+            <div className="mag-footer-inner">
+
+              {/* Top: brand + nav */}
+              <div className="flex flex-wrap items-start justify-between gap-6">
+                <div className="mag-footer-brand">
+                  <Link href="/">
+                    alodev<span className="text-brand-600 dark:text-brand-400">.vn</span>
+                  </Link>
+                  <p className="mt-1 text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-wide">
+                    Founder-led studio · Hà Nội · Est. 2025
+                  </p>
+                </div>
+                <nav aria-label="Footer navigation">
+                  <ul className="mag-footer-nav">
+                    {[
+                      { href: '/dich-vu',       label: 'Dịch vụ' },
+                      { href: '/du-an',         label: 'Dự án' },
+                      { href: '/blog',          label: 'Blog' },
+                      { href: '/quy-trinh',     label: 'Quy trình' },
+                      { href: '/ve-chung-toi',  label: 'Về Alodev' },
+                      { href: '/lien-he',       label: 'Liên hệ' },
+                      { href: '/bao-gia',       label: 'Báo giá →' },
+                    ].map(l => (
+                      <li key={l.href}>
+                        <Link href={l.href}>{l.label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+
+              {/* Bottom bar: copyright + contact */}
+              <div className="mag-footer-bar">
+                <p className="mag-footer-copy">© 2026 alodev.vn - All rights reserved.</p>
+                <div className="mag-footer-contact">
+                  <a href="tel:0364234936">0364 234 936</a>
+                  <a href="mailto:hello@alodev.vn">hello@alodev.vn</a>
+                  <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer">Zalo</a>
+                  <a href="https://t.me/alodevvn" target="_blank" rel="noopener noreferrer">Telegram</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
       </div>
     </>
   )

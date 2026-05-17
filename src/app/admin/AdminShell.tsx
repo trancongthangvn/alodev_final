@@ -30,7 +30,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       const r = await fetch('/api/admin/deploy', { method: 'POST', credentials: 'same-origin' })
       const j = await r.json()
       if (!r.ok) throw new Error(j.error || `HTTP ${r.status}`)
-      setDeployMsg('Đã queue deploy — site cập nhật trong ~60s.')
+      setDeployMsg('Đã queue deploy - site cập nhật trong ~60s.')
       setTimeout(() => setDeployMsg(null), 8000)
     } catch (e) {
       setDeployMsg('Lỗi: ' + (e as Error).message)

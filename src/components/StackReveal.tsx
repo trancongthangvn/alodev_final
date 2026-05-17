@@ -20,7 +20,7 @@ type Props = {
 }
 
 /**
- * Stack-reveal — cards stack on top of each other while the wrapper is
+ * Stack-reveal - cards stack on top of each other while the wrapper is
  * sticky-pinned. Each card scales-in + fades-in with a small offset; once
  * fully revealed, the next overlays. Pattern: Apple Vision Pro feature
  * stack, lusion sliders.
@@ -53,7 +53,7 @@ export default function StackReveal({ cards, className = '' }: Props) {
           className="stack-reveal-card"
           style={{
             // Each card sticks ~24px lower than the previous so the stack
-            // shows a peek of the underlying card's edge — readable
+            // shows a peek of the underlying card's edge - readable
             // hierarchy. With max ~6 cards the visible offset stays small.
             top: `calc(80px + ${i * 24}px)`,
             zIndex: i + 1,

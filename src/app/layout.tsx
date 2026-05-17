@@ -7,17 +7,14 @@ import Analytics from "@/components/Analytics"
 import AnalyticsBeacon from "@/components/AnalyticsBeacon"
 import { organizationSchema, websiteSchema } from "@/lib/schema"
 
-// SVN-Gilroy — bản Vietnamese-extended của Gilroy (đã subset xuống latin + vietnamese,
-// đủ tổ hợp dấu ế/ử/ợ/ặ/ờ/ẫ...). 4 file × ~20KB.
-// Source: github.com/trancongthangvn/font-svn-giroy
-// Split-preload: Regular (body) + Bold (heading hero) preload với priority cao
-// vì xuất hiện above-the-fold. Medium + SemiBold KHÔNG preload — browser tự
-// fetch khi gặp text cần weight đó. Tiết kiệm ~40KB priority bandwidth trên
-// mobile (LCP win).
+// SVN-Gilroy - Vietnamese-extended Gilroy, converted from OTF (full set, không subset).
+// Source: github.com/trancongthangvn/font-svn-gilroy - 7 weights × ~43KB/file.
 //
-// Phải gọi localFont() 2 lần vì option `preload` áp dụng cho cả call,
-// không thể set per-src. Cả 2 cùng map vào --font-sans variable → CSS không
-// đổi, hệ font-family `font-sans` vẫn hoạt động bình thường.
+// Split-preload pattern (Next.js localFont chỉ cho preload per-call):
+//   Preload:  400 Regular + 700 Bold - xuất hiện above-the-fold → priority fetch.
+//   On-demand: 500/600/800/900 + italic - browser fetch khi CSS yêu cầu weight đó.
+//
+// Cả 3 call map vào --font-sans → Tailwind `font-sans` dùng 1 family duy nhất.
 const sansFontPreload = localFont({
   src: [
     { path: "./fonts/SVN-Gilroy-Regular.woff2", weight: "400", style: "normal" },
@@ -30,8 +27,7 @@ const sansFontPreload = localFont({
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
 })
 
-// Medium + SemiBold: same family, no preload. Khi CSS yêu cầu font-weight 500/600,
-// browser fetch on-demand từ /_next/static/media/. Không block LCP.
+// Mid weights - on-demand, không block LCP.
 const sansFontLazy = localFont({
   src: [
     { path: "./fonts/SVN-Gilroy-Medium.woff2",   weight: "500", style: "normal" },
@@ -43,17 +39,30 @@ const sansFontLazy = localFont({
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
 })
 
+// Heavy + Black + Bold Italic - display weights, on-demand.
+const sansFontDisplay = localFont({
+  src: [
+    { path: "./fonts/SVN-Gilroy-Heavy.woff2",      weight: "800", style: "normal" },
+    { path: "./fonts/SVN-Gilroy-Black.woff2",      weight: "900", style: "normal" },
+    { path: "./fonts/SVN-Gilroy-Bold-Italic.woff2", weight: "700", style: "italic" },
+  ],
+  variable: "--font-sans-display",
+  display: "swap",
+  preload: false,
+  fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+})
+
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://alodev.vn"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: "Alodev",
   title: {
-    default: "Alodev — Studio thiết kế & phát triển Web/App",
-    template: "%s — Alodev",
+    default: "Alodev - Studio thiết kế & phát triển Web/App",
+    template: "%s - Alodev",
   },
-  // 154 chars — fits Google SERP cap (~160), keeps three primary services + USP.
-  description: "Founder-led studio thiết kế website, lập trình app mobile, xây dựng hệ thống CRM/ERP cho doanh nghiệp Việt. 11+ sản phẩm đang vận hành — source code thuộc về bạn.",
+  // 154 chars - fits Google SERP cap (~160), keeps three primary services + USP.
+  description: "Founder-led studio thiết kế website, lập trình app mobile, xây dựng hệ thống CRM/ERP cho doanh nghiệp Việt. 11+ sản phẩm đang vận hành - source code thuộc về bạn.",
   keywords: [
     "thiết kế website", "lập trình website", "thiết kế web doanh nghiệp",
     "lập trình app mobile", "lập trình app ios android", "thiết kế app",
@@ -67,7 +76,7 @@ export const metadata: Metadata = {
   category: "Web design and development",
   formatDetection: {
     // Stop iOS Safari auto-linking strings that look like phone numbers /
-    // email / dates — they get wrapped in <a> with default link styles, which
+    // email / dates - they get wrapped in <a> with default link styles, which
     // breaks brand-styled CTAs and inline copy that mentions "0364 234 936".
     telephone: false,
     email: false,
@@ -78,25 +87,25 @@ export const metadata: Metadata = {
     locale: "vi_VN",
     url: siteUrl,
     siteName: "Alodev",
-    title: "Alodev — Studio thiết kế & phát triển Web/App",
+    title: "Alodev - Studio thiết kế & phát triển Web/App",
     description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị. 11+ sản phẩm đang vận hành.",
     // Next 16 quirk: openGraph.images with object form ({url, width, height})
     // silently fails to emit <meta property="og:image"/> in some build configs
-    // (verified locally — twitter.images with string form worked, og did not).
+    // (verified locally - twitter.images with string form worked, og did not).
     // Using mixed format below: string for the URL emission + width/height
     // metadata in a separate string entry. Simplest reliable shape is just
-    // the string URL — Facebook/LinkedIn/Slack only need the URL anyway,
+    // the string URL - Facebook/LinkedIn/Slack only need the URL anyway,
     // they probe the image dimensions themselves.
     // Points to the dynamic /opengraph-image route (Cloudflare Pages
     // Function intercepts and serves light or dark variant by ICT time:
     // day → light cream Studio Plate, night → dark ink variant). Per-
-    // route opengraph-image.tsx files were removed — every page on
+    // route opengraph-image.tsx files were removed - every page on
     // alodev.vn inherits this single time-aware OG.
     images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alodev — Studio thiết kế & phát triển Web/App",
+    title: "Alodev - Studio thiết kế & phát triển Web/App",
     description: "Founder-led studio chuyên thiết kế & phát triển website, app mobile, hệ thống quản trị.",
     images: ["/opengraph-image"],
   },
@@ -110,9 +119,9 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
-  // theme-color is now in the dedicated `viewport` export below — Next 16
+  // theme-color is now in the dedicated `viewport` export below - Next 16
   // moved it out of metadata for proper Lighthouse PWA detection.
-  // (verification stays below — themeColor handled in viewport export)
+  // (verification stays below - themeColor handled in viewport export)
   verification: {
     // Đặt giá trị thật khi nhận được từ GSC / Bing Webmaster.
     // Lý tưởng nhất là verify qua DNS TXT (đã set trong Cloudflare) thay vì meta tag.
@@ -149,15 +158,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    // No className on <html> — when React's expected className differs from
-    // what the inline theme script wrote (e.g. 'dark' added by script vs
-    // empty in JSX), React hydration RESETS html.classList, stripping our
-    // 'dark' class. suppressHydrationWarning only silences the warning,
-    // not the reconciliation. Moving the font variable + base utilities
-    // to <body> (which IS rendered with className from JSX) keeps React
-    // happy AND lets the inline script own html.classList for theme.
-    <html lang="vi" suppressHydrationWarning>
-      {/* Resource hints — Plausible đã loại bỏ (không dùng trong code).
+    // Font variable classes MUST be on <html> (= :root) so that
+    // --default-font-family in @theme can reference var(--font-sans) at the
+    // :root level. CSS custom properties only cascade DOWN - if --font-sans
+    // were only on <body>, :root's --default-font-family var() would be
+    // undefined and Tailwind's preflight would fall back to ui-sans-serif.
+    //
+    // Theme safety: the inline script uses setAttribute('data-theme', ...)
+    // only - no classList ops on <html>. React's suppressHydrationWarning
+    // suppresses the data-theme mismatch. The font variable className comes
+    // from JSX on both server and client, so no hydration conflict.
+    <html lang="vi"
+      className={`${sansFontPreload.variable} ${sansFontLazy.variable} ${sansFontDisplay.variable}`}
+      suppressHydrationWarning>
+      {/* Resource hints - Plausible đã loại bỏ (không dùng trong code).
           GA gtag.js bây giờ load lazyOnload (sau window load), nên KHÔNG cần
           preload/preconnect early. dns-prefetch đủ rẻ (~1 lookup) để tận dụng
           khi gtag finally fire. */}
@@ -170,7 +184,7 @@ export default function RootLayout({
             the page-specific title rendered in Be Vietnam Pro (full VN
             diacritic coverage). The static /og.png remains the layout-level
             fallback for routes that don't declare their own opengraph-image
-            (e.g. /lien-he, /bao-gia — low share-traffic surfaces). */}
+            (e.g. /lien-he, /bao-gia - low share-traffic surfaces). */}
 
         {/* Apply theme before paint to prevent FOUC.
 
@@ -178,7 +192,7 @@ export default function RootLayout({
             1. Version-based migration (alodev-theme-ver). Bumping THEME_VER
                forces a one-time wipe of ALL theme keys for every user on
                next visit. Used here to clear values left over from earlier
-               testing where ThemeToggle was triggered programmatically —
+               testing where ThemeToggle was triggered programmatically -
                those values look identical to real user toggles, so the only
                way to clear them is a forced migration.
             2. Two-key contract: alodev-theme-v2 + alodev-theme-explicit.
@@ -195,8 +209,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${sansFontPreload.variable} ${sansFontLazy.variable} h-full antialiased min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors`}>
-        {/* Skip-to-content for keyboard users — visually hidden until focus
+      <body className={`${sansFontPreload.variable} ${sansFontLazy.variable} ${sansFontDisplay.variable} h-full antialiased min-h-full flex flex-col bg-white text-gray-900 dark:bg-ink-950 dark:text-ink-200 font-sans transition-colors`}>
+        {/* Skip-to-content for keyboard users - visually hidden until focus
             lands on it. Lets screen readers / keyboard navigators jump past
             the navbar in a single tab. */}
         <a

@@ -7,7 +7,7 @@ import AdminShell from '../AdminShell'
  * Self-hosted analytics dashboard. Polls /api/admin/analytics every 30s
  * for fresh numbers (realtime card shows last-5-min visitor count).
  *
- * Charts: pure CSS bars + SVG sparkline. No chart library — keeps the
+ * Charts: pure CSS bars + SVG sparkline. No chart library - keeps the
  * admin bundle small and stays maintenance-free.
  */
 
@@ -33,7 +33,7 @@ const RANGES = ['7d', '30d', '90d'] as const
 type Range = typeof RANGES[number]
 
 function formatDuration(ms: number | null | undefined): string {
-  if (!ms || ms < 1000) return '—'
+  if (!ms || ms < 1000) return '-'
   const s = Math.round(ms / 1000)
   if (s < 60) return `${s}s`
   const m = Math.floor(s / 60); const rs = s % 60
@@ -200,7 +200,7 @@ function Kpi({ label, value, hint, loading }: { label: string; value: string; hi
     <div className="rounded-xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-4">
       <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-zinc-500">{label}</div>
       <div className={`mt-1 text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tabular-nums ${loading ? 'opacity-40' : ''}`}>{value}</div>
-      {hint && <div className="mt-0.5 text-[11px] text-gray-400 dark:text-zinc-500">{hint}</div>}
+      {hint && <div className="mt-0.5 text-xs text-gray-400 dark:text-zinc-500">{hint}</div>}
     </div>
   )
 }
@@ -291,7 +291,7 @@ function DailyChart({ daily }: { daily: Daily[] }) {
   return (
     <div className="rounded-2xl border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-900 p-5 lg:p-6">
       <h2 className="text-base font-bold text-gray-900 dark:text-white mb-1">Lượt xem theo ngày</h2>
-      <p className="text-xs text-gray-500 dark:text-zinc-500 mb-4">{daily.length} ngày — peak {formatNum(maxPv)} views</p>
+      <p className="text-xs text-gray-500 dark:text-zinc-500 mb-4">{daily.length} ngày - peak {formatNum(maxPv)} views</p>
       <svg viewBox={`0 0 ${W} ${H + 8}`} className="w-full h-32" preserveAspectRatio="none">
         <path d={fill} className="fill-brand-500/15" />
         <path d={path} className="stroke-brand-600 dark:stroke-brand-400" strokeWidth={0.5} fill="none" vectorEffect="non-scaling-stroke" />

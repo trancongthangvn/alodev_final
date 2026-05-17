@@ -1,5 +1,5 @@
 /**
- * articleImport.ts — orchestrator for parsing "YAML frontmatter + HTML body"
+ * articleImport.ts - orchestrator for parsing "YAML frontmatter + HTML body"
  * blocks (Hugo/Jekyll/Astro) into a fully-enriched, SEO-ready article object.
  *
  * Pipeline:
@@ -12,7 +12,7 @@
  *   7. compute stats from enriched body (word count, density, H2/H3, links, …)
  *   8. validate against SEO heuristics (density, length, missing fields, …)
  *
- * All pure functions — no React / DOM deps. Works in browser (admin PasteImport),
+ * All pure functions - no React / DOM deps. Works in browser (admin PasteImport),
  * Node (tests / CI), and could be wrapped in a backend endpoint.
  */
 
@@ -123,7 +123,7 @@ export interface ParsedArticle {
   external_links: ParsedLink[];
   related_entities: ParsedEntity[];
   faq: ParsedFAQ[];
-  warning?: string; // from YAML — echoes "Claude couldn't search"
+  warning?: string; // from YAML - echoes "Claude couldn't search"
 
   // --- Auto-derived ---
   canonical_url: string;
@@ -271,10 +271,10 @@ function parseArticleBlockInner(input: string, opts: ParseOptions): ParseResult 
   const rawBody = (fm.content || '').trim();
 
   if (!Object.keys(meta).length) {
-    errors.push('Thiếu YAML frontmatter — cần --- ... --- ở đầu');
+    errors.push('Thiếu YAML frontmatter - cần --- ... --- ở đầu');
   }
   if (!rawBody) {
-    errors.push('Thiếu HTML body — phần sau --- rỗng');
+    errors.push('Thiếu HTML body - phần sau --- rỗng');
   }
 
   // Required fields check
@@ -348,7 +348,7 @@ function parseArticleBlockInner(input: string, opts: ParseOptions): ParseResult 
   const plain = stripTags(sanitized);
   const word_count = countWords(plain);
   const reading_time_minutes = word_count > 0 ? Math.max(1, Math.ceil(word_count / wpm)) : 0;
-  const reading_time = reading_time_minutes > 0 ? `${reading_time_minutes} phút đọc` : '—';
+  const reading_time = reading_time_minutes > 0 ? `${reading_time_minutes} phút đọc` : '-';
 
   // full author (merge Claude + defaults)
   const author: ParsedAuthorFull = {
@@ -449,7 +449,7 @@ function parseArticleBlockInner(input: string, opts: ParseOptions): ParseResult 
   };
   const schemas = buildAllSchemas(schemaInput);
 
-  // 8) Stats — counted from SANITIZED body (pre-enrichment) so that injected TOC
+  // 8) Stats - counted from SANITIZED body (pre-enrichment) so that injected TOC
   // and meta banner don't inflate h2_count / paragraph_count.
   const keyword_occurrences = focus_keyword ? countOccurrences(plain, focus_keyword) : 0;
   const keyword_density = word_count > 0 ? (keyword_occurrences / word_count) * 100 : 0;
@@ -613,7 +613,7 @@ function splitFrontmatter(src: string): { data: Record<string, unknown>; content
     raw = yaml.load(yamlStr) ?? {};
   } catch {
     // Retry with prose-colon sanitization (handles BOTH list items and
-    // FAQ-style mapping values with embedded ": " — see sanitizer comment).
+    // FAQ-style mapping values with embedded ": " - see sanitizer comment).
     raw = yaml.load(sanitizeYamlListItems(yamlStr)) ?? {};
   }
   if (typeof raw !== 'object' || Array.isArray(raw)) return { data: {}, content };
@@ -840,7 +840,7 @@ function countWords(text: string): number {
   } catch {
     /* fallthrough */
   }
-  return t.split(/[\s\u00A0,.;:!?()\[\]{}"“”‘’'—–\-/\\|]+/u).filter(Boolean).length;
+  return t.split(/[\s\u00A0,.;:!?()\[\]{}"“”‘’'-–\-/\\|]+/u).filter(Boolean).length;
 }
 
 function countTag(html: string, tag: string): number {
@@ -903,43 +903,43 @@ interface ValidationInput {
 
 function runValidation(v: ValidationInput, warnings: string[]): void {
   // Title length
-  if (v.seo_title.length > 60) warnings.push(`SEO title ${v.seo_title.length} ký tự (>60) — sẽ bị Google truncate`);
-  if (v.seo_title.length < 30) warnings.push(`SEO title ${v.seo_title.length} ký tự — hơi ngắn, nên 30-60`);
+  if (v.seo_title.length > 60) warnings.push(`SEO title ${v.seo_title.length} ký tự (>60) - sẽ bị Google truncate`);
+  if (v.seo_title.length < 30) warnings.push(`SEO title ${v.seo_title.length} ký tự - hơi ngắn, nên 30-60`);
 
   // Meta description
   if (v.meta_description.length < 140 || v.meta_description.length > 160) {
-    warnings.push(`Meta description ${v.meta_description.length} ký tự — nên 140-160`);
+    warnings.push(`Meta description ${v.meta_description.length} ký tự - nên 140-160`);
   }
 
   // Word count
   if (v.word_count > 0 && v.word_count < 1000) {
-    warnings.push(`Bài ${v.word_count} từ (<1000) — thin content, khó rank`);
+    warnings.push(`Bài ${v.word_count} từ (<1000) - thin content, khó rank`);
   }
   if (v.word_count > 2500) {
-    warnings.push(`Bài ${v.word_count} từ (>2500) — có thể quá dài, chia thành series`);
+    warnings.push(`Bài ${v.word_count} từ (>2500) - có thể quá dài, chia thành series`);
   }
 
   // Keyword density
   if (v.keyword_density < 0.5) {
-    warnings.push(`Keyword density ${v.keyword_density.toFixed(2)}% (<0.5%) — focus keyword quá loãng`);
+    warnings.push(`Keyword density ${v.keyword_density.toFixed(2)}% (<0.5%) - focus keyword quá loãng`);
   }
   if (v.keyword_density > 2) {
-    warnings.push(`Keyword density ${v.keyword_density.toFixed(2)}% (>2%) — over-optimization`);
+    warnings.push(`Keyword density ${v.keyword_density.toFixed(2)}% (>2%) - over-optimization`);
   }
 
   // Heading structure
   if (v.h2_count < 3) {
-    warnings.push(`Chỉ ${v.h2_count} H2 (<3) — nên có ≥3 H2 để dễ scan + Featured Snippet`);
+    warnings.push(`Chỉ ${v.h2_count} H2 (<3) - nên có ≥3 H2 để dễ scan + Featured Snippet`);
   }
 
   // FAQ
   if (v.faq_count < 3) {
-    warnings.push(`FAQ ${v.faq_count} (<3) — nên ≥3 để có FAQPage schema đầy đủ`);
+    warnings.push(`FAQ ${v.faq_count} (<3) - nên ≥3 để có FAQPage schema đầy đủ`);
   }
 
   // Key takeaways
   if (v.key_takeaways_count < 3) {
-    warnings.push(`Key takeaways ${v.key_takeaways_count} (<3) — cần 3-5 để AI Overviews pick up`);
+    warnings.push(`Key takeaways ${v.key_takeaways_count} (<3) - cần 3-5 để AI Overviews pick up`);
   }
   if (v.focus_keyword && v.key_takeaways.length > 0) {
     const needle = stripVietnameseAccents(v.focus_keyword).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -953,7 +953,7 @@ function runValidation(v: ValidationInput, warnings: string[]): void {
   // External links
   for (const l of v.external_links) {
     if (l.is_verify_manually) {
-      warnings.push(`External link "${l.anchor_text}" có URL = VERIFY_MANUALLY — cần verify tay`);
+      warnings.push(`External link "${l.anchor_text}" có URL = VERIFY_MANUALLY - cần verify tay`);
     }
   }
 
@@ -968,12 +968,12 @@ function runValidation(v: ValidationInput, warnings: string[]): void {
 
   // Related entities
   if (v.related_entities.length < 2) {
-    warnings.push(`Related entities ${v.related_entities.length} (<2) — giảm E-E-A-T signals`);
+    warnings.push(`Related entities ${v.related_entities.length} (<2) - giảm E-E-A-T signals`);
   }
 
   // YAML warning field (Claude couldn't search)
   if (v.warning) {
-    warnings.push(`YAML có field warning: "${v.warning}" — verify dữ liệu thực tế`);
+    warnings.push(`YAML có field warning: "${v.warning}" - verify dữ liệu thực tế`);
   }
 
   // Content type validity

@@ -25,7 +25,7 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
   function toggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
     document.documentElement.setAttribute('data-theme', next)
-    // Atomic two-key write — both required for the inline script to honor
+    // Atomic two-key write - both required for the inline script to honor
     // this preference. The 'explicit' flag is the authoritative signal that
     // this value came from a real UI click (not DevTools, not testing, not
     // a browser extension), so the preference persists forever. Without

@@ -28,7 +28,7 @@ export const DEFAULT_AUTHOR: AuthorDefaults = {
   social_profiles: ['https://alodev.vn/ve-chung-toi#founder'],
   avatar: 'https://alodev.vn/og-image.png',
   bio_fallback:
-    'Trần Công Thắng — founder Alodev, studio thiết kế web & lập trình app với 11+ sản phẩm vận hành thật cho doanh nghiệp Việt.',
+    'Trần Công Thắng - founder Alodev, studio thiết kế web & lập trình app với 11+ sản phẩm vận hành thật cho doanh nghiệp Việt.',
 };
 
 export const DEFAULT_ROBOTS =

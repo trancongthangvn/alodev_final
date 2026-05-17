@@ -3,7 +3,7 @@
  *
  * Renders a draft (or any-status) post as it will appear on /blog/<slug>.
  * Fetches via the same /api/admin/blog/:id endpoint the editor uses, so the
- * preview always reflects the latest D1 row — no rebuild required.
+ * preview always reflects the latest D1 row - no rebuild required.
  *
  * Auth gated by ../../_middleware.ts (admin cookie).
  */
@@ -102,11 +102,11 @@ function PreviewInner() {
       <div className={`border-b ${bannerCls}`}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-sm flex flex-wrap gap-3 items-center justify-between">
           <span className="font-medium">
-            {isDraft && <>🟡 <strong>Bản nháp</strong> — chưa hiển thị trên site công khai.</>}
-            {isArchived && <>🗄️ <strong>Đã lưu trữ</strong> — không hiển thị trên site công khai.</>}
+            {isDraft && <>🟡 <strong>Bản nháp</strong> - chưa hiển thị trên site công khai.</>}
+            {isArchived && <>🗄️ <strong>Đã lưu trữ</strong> - không hiển thị trên site công khai.</>}
             {isPublished && (
               <>
-                ✅ <strong>Đã publish</strong> — bản công khai:&nbsp;
+                ✅ <strong>Đã publish</strong> - bản công khai:&nbsp;
                 <a href={`/blog/${post.slug}`} target="_blank" rel="noopener" className="underline font-semibold">/blog/{post.slug}</a>
               </>
             )}

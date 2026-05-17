@@ -47,7 +47,7 @@ function formatVnDateTime(iso: string): string {
   catch { return iso }
 }
 function formatVND(n: number | null): string {
-  if (!n) return '—'
+  if (!n) return '-'
   if (n >= 1_000_000) return `${Math.round(n / 1_000_000)}tr`
   return n.toLocaleString('vi-VN')
 }
@@ -81,7 +81,7 @@ export default function AdminInbox() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Lead Inbox</h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
-            {loading ? 'Đang tải…' : data ? `${data.total} lead${data.total === 1 ? '' : 's'} tổng — hiển thị ${data.results.length}` : ''}
+            {loading ? 'Đang tải…' : data ? `${data.total} lead${data.total === 1 ? '' : 's'} tổng - hiển thị ${data.results.length}` : ''}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -133,8 +133,8 @@ export default function AdminInbox() {
                     {l.country && <span className="ml-2 text-xs text-gray-400">{l.country}</span>}
                   </td>
                   <td className="px-4 py-3 text-gray-700 dark:text-zinc-300">
-                    {l.service || '—'}
-                    <div className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">{l.budget || '—'}{l.budget_vnd ? ` (${formatVND(l.budget_vnd)})` : ''}</div>
+                    {l.service || '-'}
+                    <div className="text-xs text-gray-500 dark:text-zinc-500 mt-0.5">{l.budget || '-'}{l.budget_vnd ? ` (${formatVND(l.budget_vnd)})` : ''}</div>
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full border ${STATUS_COLOR[l.status] || STATUS_COLOR.new}`}>{STATUS_LABEL[l.status] || l.status}</span>
@@ -171,8 +171,8 @@ function LeadDetail({ lead, onClose }: { lead: Lead; onClose: () => void }) {
           </Row>
           {lead.company && <Row label="Công ty">{lead.company}</Row>}
           <Row label="Nguồn">{lead.source}{lead.country ? ` · ${lead.country}` : ''}</Row>
-          <Row label="Dịch vụ">{lead.service || '—'}</Row>
-          <Row label="Ngân sách">{lead.budget || '—'}{lead.budget_vnd ? ` (${formatVND(lead.budget_vnd)})` : ''}</Row>
+          <Row label="Dịch vụ">{lead.service || '-'}</Row>
+          <Row label="Ngân sách">{lead.budget || '-'}{lead.budget_vnd ? ` (${formatVND(lead.budget_vnd)})` : ''}</Row>
           <Row label="Trạng thái">
             <span className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full border ${STATUS_COLOR[lead.status] || STATUS_COLOR.new}`}>{STATUS_LABEL[lead.status] || lead.status}</span>
           </Row>

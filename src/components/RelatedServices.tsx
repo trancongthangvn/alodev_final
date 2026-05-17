@@ -10,7 +10,7 @@ import Icon, { type IconName } from './Icon'
  * between siblings, helps Google understand the topical cluster, and gives
  * users a clear next-step that isn't "back to /dich-vu hub".
  *
- * Anchor text uses the FULL service name + price-anchored sub-line — never
+ * Anchor text uses the FULL service name + price-anchored sub-line - never
  * "click here" / "xem thêm" without context (Google explicitly downweights
  * generic anchors).
  */
@@ -53,7 +53,7 @@ export default function RelatedServices({ exclude }: { exclude: ServiceId }) {
             Alodev cũng nhận triển khai
           </h2>
           <p className="mt-3 text-ink-500 dark:text-ink-300 max-w-xl mx-auto">
-            Một số dự án kết hợp nhiều dịch vụ — Alodev báo giá tổng thể tốt hơn
+            Một số dự án kết hợp nhiều dịch vụ - Alodev báo giá tổng thể tốt hơn
             khi gộp gói.
           </p>
         </div>

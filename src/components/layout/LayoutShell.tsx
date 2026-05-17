@@ -1,18 +1,22 @@
-// Server component — renders synchronously, no Suspense boundary, so the
+// Server component - renders synchronously, no Suspense boundary, so the
 // page content lands BEFORE the footer in the static HTML (critical for SEO).
-// Client interactivity (palette, motion) is opt-in via inner client components.
+//
+// Stripped (May 2026, founder feedback "skill UX UI promax → AI VIBE"):
+//   - SmoothScroll (Lenis): added scroll lag, signaled "designer trying"
+//   - CustomCursor: peripheral cursor swap = pure decoration
+//   - MotionLayer: managed reveal/stagger fade-ins → AI-template flair
+//   - SectionFrame: section-edge flourish overlay
+//   - IntroAnimation: page-load curtain reveal
+// Kept (functional, not decorative):
+//   - CommandPalette + QuoteChoice (interactive controls users actually use)
+//   - MobileStickyCTA (conversion utility)
+//   - BackToTop (utility)
 import Navbar from './Navbar'
 import Footer from './Footer'
 import BackToTop from '@/components/BackToTop'
 import CommandPalette from '@/components/CommandPalette'
-import MotionLayer from '@/components/MotionLayer'
-import SmoothScroll from '@/components/SmoothScroll'
-import CustomCursor from '@/components/CustomCursor'
 import MobileStickyCTA from '@/components/MobileStickyCTA'
-import PaletteHint from '@/components/PaletteHint'
 import QuoteChoice from '@/components/QuoteChoice'
-import IntroAnimation from '@/components/IntroAnimation'
-import SectionFrame from '@/components/SectionFrame'
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   return (
@@ -24,13 +28,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       <main id="main" className="flex-1">{children}</main>
       <Footer />
       <CommandPalette />
-      <PaletteHint />
       <QuoteChoice />
-      <SmoothScroll />
-      <CustomCursor />
-      <MotionLayer />
-      <SectionFrame />
-      <IntroAnimation />
       <MobileStickyCTA />
       <BackToTop />
     </>

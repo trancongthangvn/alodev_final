@@ -8,7 +8,7 @@ export default function Footer() {
   // pb-24 on mobile so the sticky bottom CTA bar (~76px + safe-area)
   // doesn't overlap the © line. md:pb-0 since the sticky bar is md:hidden.
   return (
-    <footer className="bg-slate-950 text-slate-300 pb-24 md:pb-0">
+    <footer id="global-footer" className="bg-slate-950 text-slate-300 pb-24 md:pb-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
           <div className="sm:col-span-2">
@@ -24,10 +24,10 @@ export default function Footer() {
               <span>Hà Nội · Việt Nam · Phục vụ toàn quốc qua remote</span>
             </div>
             <div className="mt-5 flex gap-2 flex-wrap">
-              <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 min-h-11 rounded-lg bg-white text-ink-900 px-4 py-2.5 text-sm font-semibold hover:bg-ink-100 transition">
+              <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 min-h-11 rounded-xl bg-white text-ink-900 px-4 py-2.5 text-sm font-semibold hover:bg-ink-100 transition">
                 <Icon name="message-circle" className="w-4 h-4" /> Chat Zalo
               </a>
-              <Link href="/lien-he" className="inline-flex items-center justify-center gap-2 min-h-11 rounded-lg bg-slate-800 border border-slate-700 px-4 py-2.5 text-white text-sm font-semibold hover:bg-slate-700 transition">
+              <Link href="/lien-he" className="inline-flex items-center justify-center gap-2 min-h-11 rounded-xl bg-slate-800 border border-slate-700 px-4 py-2.5 text-white text-sm font-semibold hover:bg-slate-700 transition">
                 Yêu cầu báo giá
               </Link>
             </div>
@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* SEO inline links — natural prose, not keyword stuffing */}
+        {/* SEO inline links - natural prose, not keyword stuffing */}
         <div className="mt-10 pt-6 border-t border-slate-800/60 max-w-3xl">
           <p className="text-xs text-slate-500 leading-relaxed">
             Alodev nhận{' '}
@@ -87,12 +87,12 @@ export default function Footer() {
             <Link href="/dich-vu/lap-trinh-app-mobile" className="text-slate-400 hover:text-slate-200 underline decoration-slate-700 underline-offset-2 hover:decoration-slate-400">lập trình app mobile iOS/Android</Link>{' '}
             và xây dựng{' '}
             <Link href="/dich-vu/he-thong-quan-tri" className="text-slate-400 hover:text-slate-200 underline decoration-slate-700 underline-offset-2 hover:decoration-slate-400">hệ thống quản trị CRM/ERP</Link>{' '}
-            cho doanh nghiệp tại Hà Nội và toàn quốc. Studio founder-led — bạn chat trực tiếp với người code, không qua sales.
+            cho doanh nghiệp tại Hà Nội và toàn quốc. Studio founder-led - bạn chat trực tiếp với người code, không qua sales.
           </p>
         </div>
 
         <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center justify-between gap-3 text-xs text-slate-500">
-          <div>© {year} alodev.vn — Founder-led studio Hà Nội. All rights reserved.</div>
+          <div>© {year} alodev.vn - Founder-led studio Hà Nội. All rights reserved.</div>
           <div className="flex items-center gap-3 sm:gap-4">
             <EmailLink user="hello" domain="alodev.vn" className="hover:text-slate-300 transition" />
             <span className="text-slate-700">·</span>

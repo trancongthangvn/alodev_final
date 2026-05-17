@@ -5,13 +5,13 @@ import { usePathname } from 'next/navigation'
 import Icon from '@/components/Icon'
 
 /**
- * MobileStickyCTA — fixed bottom bar on mobile only with two primary
+ * MobileStickyCTA - fixed bottom bar on mobile only with two primary
  * actions: "Yêu cầu báo giá" (opens the QuoteChoice modal via the same
  * `alodev:open-quote` event the QuoteCTA button dispatches) and a Zalo
  * deep-link.
  *
  * Hides itself when:
- *   - the route is itself a conversion flow (/bao-gia, /lien-he) — those
+ *   - the route is itself a conversion flow (/bao-gia, /lien-he) - those
  *     pages have their own primary CTA buttons; a duplicate sticky bar
  *     would compete for attention and cover form fields
  *   - the IntroAnimation overlay is still on screen (the bar would float
@@ -43,14 +43,14 @@ export default function MobileStickyCTA() {
         setVisible(false)
         return
       }
-      // 2. Hide while mobile drawer is open (Navbar uses no body class —
+      // 2. Hide while mobile drawer is open (Navbar uses no body class -
       //    detect via the `Menu` button's aria-expanded).
       const menuBtn = document.querySelector('header [aria-label=Menu]') as HTMLElement | null
       if (menuBtn?.getAttribute('aria-expanded') === 'true') {
         setVisible(false)
         return
       }
-      // 3. Hide when the final-CTA section OR the footer is in view —
+      // 3. Hide when the final-CTA section OR the footer is in view -
       //    duplicating the CTAs in the final section would be visual
       //    noise; the footer has its own contact links and the white
       //    bar would clash with the dark slate footer bg.

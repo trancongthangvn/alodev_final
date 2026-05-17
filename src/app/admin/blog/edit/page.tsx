@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 /**
  * Static page; reads ?id= from URL at runtime (BlogEditor is client component).
  * Avoids dynamic route segment which would force `dynamicParams: false` /
- * `generateStaticParams` returning all known IDs at build time — but blog
+ * `generateStaticParams` returning all known IDs at build time - but blog
  * IDs come from D1 and are unknown to the admin shell.
  */
 export default function EditBlogPostPage() {

@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
-/* Theme variant — uses data attribute on <html> instead of class.
+/* Theme variant - uses data attribute on <html> instead of class.
    React 19 hydration strips foreign className from <html> even with
    suppressHydrationWarning, but it doesn't track unknown DOM attributes
    like data-theme, so the inline theme script can write it freely. */
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 @theme {
-  --default-font-family: var(--font-sans);
+  /* All weights of SVN Gilroy as the site-wide font family.
+     --font-sans / --font-sans-extra / --font-sans-display are set on <html>
+     by Next.js localFont, so these vars are available at :root level. */
+  --default-font-family: var(--font-sans), var(--font-sans-extra), var(--font-sans-display);
+  /* Override Tailwind's mono stack → Gilroy everywhere (no system fallback mono) */
+  --font-mono: var(--font-sans), var(--font-sans-extra), var(--font-sans-display);
+  --default-mono-font-family: var(--font-sans), var(--font-sans-extra), var(--font-sans-display);
 
-  /* ── Tech-vibe palette — cool slate base + warm saffron accent + cool tech accent ── */
-  /* Ink — cool slate scale (was warm ink). Tech UIs use cool tones. */
+  /* ── Tech-vibe palette - cool slate base + warm saffron accent + cool tech accent ── */
+  /* Ink - cool slate scale (was warm ink). Tech UIs use cool tones. */
   --color-ink-50:  #f8fafc;
   --color-ink-100: #eef1f5;
   --color-ink-200: #dde2ea;
@@ -23,31 +29,31 @@
   --color-ink-900: #111827;
   --color-ink-950: #0b0e14;
 
-  /* Cream — soft cool surface (was warm). Renders as subtle off-white. */
+  /* Cream - soft cool surface (was warm). Renders as subtle off-white. */
   --color-cream-50:  #f6f7f9;
   --color-cream-100: #eef1f5;
   --color-cream-200: #e2e6ec;
 
-  /* Brand saffron — primary warm accent. Hue shifted 35° → 28° (Apr 2026)
-     to land between Cloudflare orange (23°) and the previous yellow-saffron
-     (35°). Old hue read as 90s/2000s tech orange + Asian-craft saffron;
-     the redder shift moves it into Cloudflare/Tailwind-tier "modern tech
-     orange" while keeping enough warmth that the brand DNA + cultural
-     resonance survive. Saturation/lightness profile preserved per-stop.
-     Reserve this color for brand moments: CTAs, eyebrows, hero atmospheric
-     blobs, cube flash + breath, hover/border accents, pingdots. */
-  --color-brand-50:  #fef4ec;
-  --color-brand-100: #fcdfc4;
-  --color-brand-200: #f9c187;
-  --color-brand-300: #f59c48;
-  --color-brand-400: #f4811a;
-  --color-brand-500: #d96b09;
-  --color-brand-600: #ab5407;
-  --color-brand-700: #8a4209;
-  --color-brand-800: #71370c;
-  --color-brand-900: #471c03;
+  /* Brand blue - primary tech accent (May 2026, shifted from saffron).
+     Tailwind blue ramp, matching erpcloud.vn / Stripe / Linear / Vercel
+     "tech B2B SaaS" register. Reason for shift: founder feedback that
+     saffron orange read as "creative/craft studio" rather than
+     "technical software company". Blue is the corporate-tech default -
+     it fades into the work instead of competing for attention.
+     Reserve for: CTAs, links, focus rings, brand moments (hero accent,
+     cube flash). NEVER use for body text or backgrounds. */
+  --color-brand-50:  #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
 
-  /* Tech cyan — secondary cool accent (Apr 2026). Tailwind cyan ramp,
+  /* Tech cyan - secondary cool accent (Apr 2026). Tailwind cyan ramp,
      hue 188° = pure complement to brand saffron's 28° on the color
      wheel. Reserved for tech-coded UI elements that should signal
      "kỹ thuật, code, kết nối": kbd chips, font-mono stack badges,
@@ -67,59 +73,53 @@
 }
 
 :root {
-  --background: #f8fafc;       /* cool slate-50, less harsh than pure cream */
-  --foreground: #1e293b;       /* slate-800 — softer than pure black, easier on eyes */
-  --surface: #ffffff;
-  --surface-2: #eef1f5;
-  --border: #e4e7ec;
+  /* Pro-studio palette refined May 2026.
+     Editorial neutral whites - not pure white (too clinical),
+     not warm cream (too Anthropic-AI). Slate base with subtle warmth. */
+  --background: #f6f7f9;       /* neutral editorial off-white */
+  --foreground: #0f172a;       /* slate-900 - deeper, more authoritative ink */
+  --surface: #ffffff;          /* card white - pops against off-white bg */
+  --surface-2: #eef0f3;        /* nested surface - slightly cooler than bg */
+  --border: #e2e5ea;           /* hairline - neutral, not blue */
   --muted: #64748b;
-  --accent: #ab5407;           /* desaturated saffron — brand-600 */
-  --accent-soft: #d96b09;      /* brand-500 */
+  --accent: #2563eb;           /* blue-600 - brand-600 */
+  --accent-soft: #3b82f6;      /* blue-500 - brand-500 */
   color-scheme: light;
 }
 
 [data-theme=dark] {
-  --background: #0b0e14;       /* elevated charcoal w/ subtle blue tint — like GitHub Dark */
-  --foreground: #e6e9ee;       /* slate-200 — softer than pure white */
-  --surface: #13171f;          /* lifted surface */
-  --surface-2: #1a1f2c;        /* nested surface */
-  --border: #1f2330;
+  /* Pro-studio dark refined May 2026: deeper neutral base,
+     less blue cast → reads as "premium studio dark" instead of
+     "GitHub clone". Linear (#08090a) is the reference. */
+  --background: #0a0b10;       /* deep neutral with hint of blue */
+  --foreground: #e6e9ee;       /* slate-200 - softer than pure white */
+  --surface: #12141a;          /* lifted surface */
+  --surface-2: #181a22;        /* nested surface */
+  --border: #1d212a;
   --muted: #8590a1;
 
-  /* ── Brand ramp dark-tuned override (Apr 2026) ──
-     Light theme keeps the punchy 91% sat saffron — on cream bg the
-     vibrancy is needed to read. On near-black bg (#0b0e14, lum ~9),
-     that same vibrancy creates "halation": pure-saturation warm color
-     beside dark surface bleeds into surrounding pixels and reads as
-     "rực/chói". Anthropic dark uses coral #cc785c (50% sat), Linear
-     and Stripe drop accent saturation 15-30% in dark for the same
-     reason.
-     Strategy: keep hue 28° (brand identity preserved), drop sat
-     ~91% → ~75%, lift L ~53% → ~63%. Result reads as "warm glow"
-     instead of "neon orange". Contrast on #0b0e14 still 8.2:1 (AAA
-     for normal text, dư for headline). All `dark:text-brand-400`,
-     `dark:bg-brand-500/10`, `dark:hover:border-brand-500/40` etc.
-     auto-cascade via these CSS vars. Only stops 300-600 are
-     overridden — 50/100/200 are pale tints, 700-900 are deep shades
-     rarely used on saturated dark surfaces.
+  /* ── Brand blue dark-tuned override (May 2026) ──
+     Pure Tailwind blue stops (50% sat) on near-black surface read fine
+     without halation. Lift main stops slightly so hover states and
+     :focus rings remain visible against #0b0e14. Standard SaaS
+     practice (Linear, Vercel, Stripe all keep blue mostly unchanged
+     in dark - the hue itself sits closer to surface neutral than
+     warm accents).
+       Stop  Light    Dark
+       400   #60a5fa  #93c5fd  ← main link/eyebrow color in dark
+       500   #3b82f6  #60a5fa
+       600   #2563eb  #3b82f6  */
+  --color-brand-400: #93c5fd;
+  --color-brand-500: #60a5fa;
+  --color-brand-600: #3b82f6;
 
-       Stop  Light (cream bg)  Dark (near-black bg)  Δ
-       300   #f59c48 (89,64)   #efb780 (65,71)       sat-24, L+7
-       400   #f4811a (91,53)   #eb9a55 (75,63)       sat-16, L+10  ← main
-       500   #d96b09 (92,44)   #d27c2c (68,50)       sat-24, L+6
-       600   #ab5407 (92,35)   #a76529 (62,41)       sat-30, L+6 */
-  --color-brand-300: #efb780;
-  --color-brand-400: #eb9a55;
-  --color-brand-500: #d27c2c;
-  --color-brand-600: #a76529;
-
-  --accent: #eb9a55;           /* brand-400 dark */
-  --accent-soft: #efb780;      /* brand-300 dark */
+  --accent: #60a5fa;           /* brand-500 dark */
+  --accent-soft: #93c5fd;      /* brand-400 dark */
   color-scheme: dark;
 }
 
 html {
-  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans), var(--font-sans-extra), var(--font-sans-display), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background: var(--background);
   /* Prevent horizontal scroll from any rogue overflow */
   overflow-x: hidden;
@@ -135,6 +135,31 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Subtle letter-spacing on body - editorial polish.
+     -0.005em is imperceptible per-character but cumulatively
+     tightens body copy to feel more "set" rather than "typed". */
+  letter-spacing: -0.005em;
+}
+
+/* ── Smooth theme transitions ──
+   When user toggles dark/light, all bg + color + border values
+   cross-fade over 200ms instead of snapping. Studio-grade detail
+   that signals "this was designed" not "this was generated". */
+html, body, .mag-wrap, .mag-rail, .mag-section,
+.mag-bg-paper, .mag-bg-tint, .mag-page-bg,
+.mag-footer, .mag-ticker {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+/* Disable transitions during initial paint to avoid FOUC */
+@media (prefers-reduced-motion: reduce) {
+  html, body, .mag-wrap, .mag-rail, .mag-section,
+  .mag-bg-paper, .mag-bg-tint, .mag-page-bg,
+  .mag-footer, .mag-ticker {
+    transition: none;
+  }
 }
 
 /* Hide root Navbar and Footer on admin pages */
@@ -147,30 +172,47 @@ body.admin-page {
   background: #0F0F23;
 }
 
-/* Custom scrollbar in dark mode — match new ink palette */
+/* Hide global full-width footer on homepage magazine layout.
+   The homepage uses a fixed-frame magazine layout - the full footer
+   breaks the structure. A compact in-column footer inside .mag-scroll
+   takes its place. Only #global-footer is targeted so mobile sticky CTA,
+   back-to-top etc. aren't affected. */
+body.home-mag-page #global-footer {
+  display: none !important;
+}
+
+/* Desktop: body non-scrollable - .mag-wrap is a fixed viewport frame */
+@media (min-width: 1024px) {
+  body.home-mag-page {
+    overflow: hidden;
+    height: 100dvh;
+  }
+}
+
+/* Custom scrollbar in dark mode - match new ink palette */
 [data-theme=dark] ::-webkit-scrollbar { width: 10px; height: 10px; }
-[data-theme=dark] ::-webkit-scrollbar-track { background: #0b0e14; }
-[data-theme=dark] ::-webkit-scrollbar-thumb { background: #1f2330; border-radius: 5px; }
+[data-theme=dark] ::-webkit-scrollbar-track { background: #0a0b10; }
+[data-theme=dark] ::-webkit-scrollbar-thumb { background: #1d212a; border-radius: 5px; }
 [data-theme=dark] ::-webkit-scrollbar-thumb:hover { background: #334155; }
 [data-theme=dark] ::selection { background: rgba(235, 154, 85, 0.22); color: inherit; }
 
 /* ─── Motion / decoration utilities (Linear/Vercel/Stripe vibe) ─── */
 
-/* Massive responsive headline — clamp scales between mobile and ultra-wide */
+/* Massive responsive headline - clamp scales between mobile and ultra-wide */
+/* DEPRECATED May 2026 - kept as aliases for any stray references.
+   New code uses .mag-display / .mag-section-head / .mag-card-head
+   defined further down in this file. Both legacy classes now match
+   the canonical scale to prevent visual drift if used. */
 .h-display {
-  font-size: clamp(2.125rem, 6.5vw, 5.5rem);
-  /* line-height bumped from 1.05 -> 1.18: at 1.05 Vietnamese diacritics
-     (ế, ấ, ậ, ằ, ổ, ỗ, ự…) on the next line clip the ones on the line
-     above. 1.18 gives the marks room to breathe without making the
-     headline feel airy. */
-  line-height: 1.18;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
   font-weight: 700;
 }
 .h-section {
-  font-size: clamp(1.625rem, 3.5vw, 3rem);
+  font-size: clamp(1.625rem, 2.6vw, 2.25rem);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   font-weight: 700;
 }
 
@@ -197,28 +239,67 @@ body.admin-page {
 .hairline { border-color: rgba(0, 0, 0, 0.08); }
 [data-theme=dark] .hairline { border-color: rgba(255, 255, 255, 0.08); }
 
-/* Single-tone wash behind hero — replaces multi-stop AI-vibe aurora */
-.aurora {
+/* Aurora neutralized (May 2026) - gradient orb behind hero was a
+   2022-era SaaS template signal. Pages still reference `.aurora` in
+   markup; the class now does nothing. */
+.aurora,
+.aurora::before { display: none; }
+
+/* ─── Hero glow - resend.com-style atmospheric depth ────────────────
+   Multi-layer radial gradients placed at strategic corners create
+   "loang mấy nét có chiều sâu" - soft smears suggesting light source
+   beyond the frame. Ellipses are stretched (90% × 30%, etc.) to read
+   as "streaks" rather than spots, which is the resend hero signature.
+   Light theme: very subtle (5-10% alpha) - depth without distraction.
+   Dark theme: more visible (12-22% alpha) - atmosphere fills the void.
+   All gradients use the brand blue palette so the hero has a single
+   tonal language with the rest of the site. */
+.hero-glow {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  background:
+    /* Wide horizontal streak upper-third - blue-500 soft */
+    radial-gradient(ellipse 90% 30% at 50% 18%,
+      rgba(59, 130, 246, 0.10), transparent 70%),
+    /* Diagonal blob top-right - indigo accent */
+    radial-gradient(ellipse 50% 45% at 88% 12%,
+      rgba(99, 102, 241, 0.08), transparent 65%),
+    /* Lower-left blue glow - anchor + balance */
+    radial-gradient(ellipse 55% 40% at 12% 88%,
+      rgba(96, 165, 250, 0.07), transparent 70%),
+    /* Subtle bottom-right wash */
+    radial-gradient(ellipse 40% 35% at 92% 78%,
+      rgba(59, 130, 246, 0.05), transparent 75%);
 }
-.aurora::before {
+[data-theme=dark] .hero-glow {
+  background:
+    radial-gradient(ellipse 90% 30% at 50% 18%,
+      rgba(59, 130, 246, 0.22), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 88% 12%,
+      rgba(129, 140, 248, 0.18), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 12% 88%,
+      rgba(96, 165, 250, 0.14), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 92% 78%,
+      rgba(99, 102, 241, 0.12), transparent 75%),
+    /* Dark base - slate-950 fade for added depth */
+    linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.4) 100%);
+}
+
+/* Light fine-grain noise overlay - adds the "film texture" depth
+   resend uses. SVG-encoded turbulence is GPU-cheap (no extra request). */
+.hero-glow::after {
   content: "";
   position: absolute;
-  top: -200px;
-  right: -200px;
-  width: min(700px, 110vw);
-  height: min(700px, 110vw);
-  border-radius: 50%;
-  filter: blur(min(110px, 18vw));
-  opacity: 0.18;
-  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 65%);
-  animation: orb-float 18s ease-in-out infinite;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
-[data-theme=dark] .aurora::before { opacity: 0.12; }
+[data-theme=dark] .hero-glow::after { opacity: 0.5; }
 
 @keyframes orb-float {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -242,33 +323,17 @@ body.admin-page {
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
-/* Card hover glow — Linear style */
+/* Card hover - border brightens only, no conic sweep (too flashy) */
 .glow-card {
   position: relative;
   isolation: isolate;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.18s ease;
 }
-.glow-card::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  /* Warm saffron sweep — single-tone, no rainbow */
-  background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(217, 119, 6, 0.35) 90deg, transparent 180deg, rgba(241, 153, 42, 0.25) 270deg, transparent 360deg);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-.glow-card:hover::before { opacity: 1; }
 
 /* Mono number proof points */
 .tabular { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
 
-/* kbd-style chips (Raycast feel) — tinted with the new tech-cyan
+/* kbd-style chips (Raycast feel) - tinted with the new tech-cyan
    secondary so monospace UI elements signal "kỹ thuật, code, terminal"
    rather than reading as plain neutral grey. Hue is restrained on
    light theme (tech-700 text on a faint tech-50 bg) so the chip still
@@ -281,7 +346,7 @@ body.admin-page {
   gap: 0.25rem;
   padding: 0.125rem 0.4rem;
   border-radius: 0.375rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
   font-size: 0.7rem;
   background: #eaf6f9;
   border: 1px solid #b8d8de;
@@ -295,10 +360,70 @@ body.admin-page {
   box-shadow: 0 1px 0 0 #0d1f25;
 }
 
+/* ─── Shared form input - used across lien-he, admin, anywhere else.
+   Single source of truth so brand color changes don't leave stale rings
+   in inline styles. Brand blue focus ring, rose error ring. ─── */
+.input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e4e7ec;
+  background: white;
+  padding: 0.75rem 1rem;
+  font-size: 16px;
+  color: #1e293b;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  min-height: 44px;
+}
+@media (min-width: 768px) { .input { font-size: 0.95rem; } }
+.input::placeholder { color: #94a3b8; }
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+.input-error {
+  border-color: #f43f5e;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
+}
+.input-error:focus {
+  border-color: #f43f5e;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.28);
+}
+[data-theme=dark] .input {
+  background: #13171f;
+  border-color: #1f2330;
+  color: #e6e9ee;
+}
+[data-theme=dark] .input::placeholder { color: #64748b; }
+[data-theme=dark] .input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.22);
+}
+[data-theme=dark] .input-error {
+  border-color: #f87171;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.18);
+}
+
+/* Banner enter animation - used by status banners on /lien-he and elsewhere. */
+@keyframes banner-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* QuoteChoice modal animations - extracted from inline <style>. */
+@keyframes qcFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes qcSlide {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* Smooth scroll for anchor links */
 html { scroll-behavior: smooth; }
 
-/* Anchor target offset — when a hash link scrolls a section into view,
+/* Anchor target offset - when a hash link scrolls a section into view,
    the sticky navbar (h-14 + safe-area on iOS) would otherwise eat the
    first 56px of the section. scroll-margin-top pushes the anchor target
    down by the navbar height + small padding so the section heading is
@@ -323,7 +448,7 @@ section[id], [data-section-name], [id^="cap-"], [id^="proc-"], [id^="why-"] {
 
 /* ─── Tasteful motion layer (Linear/Stripe/Vercel) ─── */
 
-/* Custom focus ring — tighter, brand-tinted */
+/* Custom focus ring - tighter, brand-tinted */
 :focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
@@ -333,74 +458,48 @@ section[id], [data-section-name], [id^="cap-"], [id^="proc-"], [id^="why-"] {
   outline-color: #60a5fa;
 }
 
-/* Buttons / links: smooth color transitions everywhere */
+/* Buttons / links: smooth color transitions - no transform (each component
+   manages its own if needed so we don't accidentally animate things). */
 a, button, [role="button"] {
-  transition-property: color, background-color, border-color, opacity, transform, box-shadow;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-property: color, background-color, border-color, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
 }
 
-/* Reveal-on-scroll: starts hidden, fades + slides up when [data-revealed] */
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-.reveal[data-revealed] {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Stagger children of a `.reveal-stagger` once parent is revealed */
+/* Reveal classes neutralized (May 2026 - promax animation strip).
+   MotionLayer was removed; these classes still appear in markup as
+   anchors for future motion work, but render as plain visible content.
+   Do NOT re-add opacity:0 here - it would hide everything. */
+.reveal,
 .reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-stagger[data-revealed] > * {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
-.reveal-stagger[data-revealed] > *:nth-child(1) { transition-delay: 0ms; }
-.reveal-stagger[data-revealed] > *:nth-child(2) { transition-delay: 60ms; }
-.reveal-stagger[data-revealed] > *:nth-child(3) { transition-delay: 120ms; }
-.reveal-stagger[data-revealed] > *:nth-child(4) { transition-delay: 180ms; }
-.reveal-stagger[data-revealed] > *:nth-child(5) { transition-delay: 240ms; }
-.reveal-stagger[data-revealed] > *:nth-child(6) { transition-delay: 300ms; }
-.reveal-stagger[data-revealed] > *:nth-child(7) { transition-delay: 360ms; }
-.reveal-stagger[data-revealed] > *:nth-child(8) { transition-delay: 420ms; }
-.reveal-stagger[data-revealed] > *:nth-child(n+9) { transition-delay: 480ms; }
 
 /* Hero entry: page load sequential cascade */
 @keyframes hero-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero-rise > * {
-  opacity: 0;
-  animation: hero-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.hero-rise > *:nth-child(1) { animation-delay: 50ms; }
-.hero-rise > *:nth-child(2) { animation-delay: 150ms; }
-.hero-rise > *:nth-child(3) { animation-delay: 280ms; }
-.hero-rise > *:nth-child(4) { animation-delay: 410ms; }
-.hero-rise > *:nth-child(5) { animation-delay: 540ms; }
+/* hero-rise neutralized - was a sequential page-load cascade.
+   The cascade signaled "designer demo reel" rather than "professional
+   software studio". Static content from the first paint reads more
+   confident; the cube already provides motion energy. */
+.hero-rise > * { opacity: 1; animation: none; }
 
-/* Hover lift — subtle, 1.5px only (Linear style) */
+/* Hover lift - only border/shadow, no translate. translateY on large cards
+   looks like the card is floating off the page; border-color alone signals
+   interactivity without spatial noise. */
 .lift {
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.25s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
-.lift:hover {
-  transform: translateY(-1.5px);
-}
+.lift:hover { /* no transform - let border do the work */ }
 
-/* Spotlight — cursor-aware soft radial highlight on cards */
-.spotlight {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-.spotlight::after {
+/* Spotlight neutralized (May 2026) - cursor-aware radial highlight was
+   peripheral flair, drew attention away from project cover artwork. */
+.spotlight { position: relative; }
+.spotlight::after { display: none; }
+.spotlight-disabled-original::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -425,7 +524,7 @@ a, button, [role="button"] {
 .spotlight-grid:hover .spotlight::after { opacity: 1; }
 .spotlight > * { position: relative; z-index: 1; }
 
-/* Scroll progress bar — Stripe doc style */
+/* Scroll progress bar - Stripe doc style */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -438,34 +537,18 @@ a, button, [role="button"] {
   pointer-events: none;
 }
 
-/* Subtle nav link underline on hover (Vercel style) */
-.nav-link {
-  position: relative;
-}
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0.75rem;
-  right: 0.75rem;
-  bottom: 0.4rem;
-  height: 1.5px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 0.5;
-}
-.nav-link:hover::after { transform: scaleX(1); }
+/* Nav link - bg + text color change is sufficient. No underline on top. */
+.nav-link { position: relative; }
 
-/* Press-down on click — tactile (Raycast feel) */
-button:active, [role="button"]:active, a.lift:active {
-  transform: translateY(0);
+/* Press-down on click - very slight opacity dip, tactile without spatial noise */
+button:active, [role="button"]:active {
+  opacity: 0.85;
 }
 
 /* Smooth image / iframe loading */
 img, iframe { color-scheme: light; }
 
-/* Reduced-motion overrides — kill all keyframe + transitions */
+/* Reduced-motion overrides - kill all keyframe + transitions */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -478,14 +561,24 @@ img, iframe { color-scheme: light; }
   .hero-rise > * { opacity: 1 !important; animation: none !important; }
 }
 
+/* Mobile menu fade-in (extracted from Navbar inline style) */
+@keyframes mfade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* Grid background pattern (Vercel-style) */
-.grid-bg {
+/* grid-bg neutralized (May 2026, founder feedback "bỏ hết caro").
+   Vercel-style dotted grid background was a SaaS template cliché.
+   Pages still reference `.grid-bg` in markup; class is a no-op now. */
+.grid-bg, [data-theme=dark] .grid-bg { background-image: none; }
+.grid-bg-disabled-original {
   background-image:
     linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
   background-size: 64px 64px;
 }
-[data-theme=dark] .grid-bg {
+[data-theme=dark] .grid-bg-disabled-original {
   background-image:
     linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
@@ -538,7 +631,7 @@ img, iframe { color-scheme: light; }
   border: 1px solid rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -572,13 +665,13 @@ img, iframe { color-scheme: light; }
   text-transform: none;
 }
 
-/* hide frame on small screens — too cramped */
+/* hide frame on small screens - too cramped */
 @media (max-width: 768px) {
   .section-frame .ch { display: none; }
   .section-frame .ind { top: 8px; right: 8px; padding: 0.2rem 0.5rem; font-size: 9px; }
 }
 
-/* ─── Hero word cascade — replaces hero-rise on the headline ─── */
+/* ─── Hero word cascade - replaces hero-rise on the headline ─── */
 .word-cascade > span {
   display: inline-block;
   opacity: 0;
@@ -599,7 +692,7 @@ img, iframe { color-scheme: light; }
   margin-bottom: -0.22em;
 }
 @keyframes wordCascade {
-  /* `filter: none` — Lightning CSS strips both blur(0) and blur(0px) to the
+  /* `filter: none` - Lightning CSS strips both blur(0) and blur(0px) to the
      invalid blur(), so we use `none` instead. CSS spec interpolates between
      blur(8px) and none by treating none as blur(0), so the animation still
      smoothly clears the blur. */
@@ -624,7 +717,7 @@ img, iframe { color-scheme: light; }
   width: calc(var(--fill, 0) * 100%);
   background: linear-gradient(90deg, var(--accent), var(--accent-soft));
   transition: width 0.15s linear;
-  /* Light theme: vibrant saffron glow on cream — looks punchy.
+  /* Light theme: vibrant saffron glow on cream - looks punchy.
      Dark theme: softer base (rgba 235,154,85 = brand-400 dark) +
      reduced alpha so the scroll-progress line doesn't read as
      "neon halation" against near-black bg. */
@@ -641,10 +734,12 @@ img, iframe { color-scheme: light; }
 /* ─── Magnetic primary CTA ─── */
 /* Wrapper translates; child inherits its existing transitions (including the
    global a/button transform 200ms rule), so scale() reads in smoothly. */
+/* Magnetic neutralized (May 2026) - cursor-tracking CTA pull was
+   peripheral flair. Restored to plain inline-flex wrapper. */
 .magnetic {
   display: inline-flex;
-  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+  transition: none;
+  transform: none !important;
 }
 
 /* ─── Tabbed showcase: fade between panels ─── */
@@ -684,20 +779,20 @@ img, iframe { color-scheme: light; }
    Resend-style #07080c. Time-of-day script picks the default theme,
    user toggle in Navbar overrides. The rest of the homepage already
    theme-adapts via Tailwind dark: variants. */
-/* Hero background — coordinated palette across themes.
+/* Hero background - coordinated palette across themes.
    Light: cream base + subtle saffron blob upper-right (matches the cube
    area + brand DNA) + slate-cool blob lower-left for depth. Both blobs
    are barely-there so they don't compete with content but lift the bg
    from "flat cream" to "atmospheric pocket".
    Dark: same atmospheric idea against #07080c base, but the warm/cool
-   roles SWAP — cool-silver blob upper-right gives the cube a "lit
+   roles SWAP - cool-silver blob upper-right gives the cube a "lit
    pocket" to silhouette against (the dark cube body + dark tile
    textures sat ~9-30 lum on a 9-lum bg, so the cube was sinking into
    the page). Saffron stays as the lower-left brand accent. Alphas are
    half the light-theme values: dark surfaces take less lift to read. */
 .hero-resend,
 .dark-strip {
-  /* Cube stands alone — atmospheric blob upper-right was reading as a
+  /* Cube stands alone - atmospheric blob upper-right was reading as a
      dirty smudge behind the cube. Lower-left brand accent stays for
      bg ambience away from the cube area. */
   background:
@@ -711,10 +806,14 @@ img, iframe { color-scheme: light; }
     #07080c;
 }
 
-/* Subtle grid bg with radial mask — Resend's signature backdrop.
+/* Subtle grid bg with radial mask - Resend's signature backdrop.
    Grid lines flip to dark-on-light in light theme. */
+/* hero-resend-grid + dark-strip-grid neutralized (May 2026 - caro strip).
+   The 56px-grid faded into the hero center was the most visible "caro"
+   pattern on the site. Disabled per founder mandate. */
 .hero-resend-grid,
-.dark-strip-grid {
+.dark-strip-grid { background-image: none; pointer-events: none; }
+.hero-resend-grid-disabled-original {
   background-image:
     linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px);
@@ -730,7 +829,7 @@ img, iframe { color-scheme: light; }
     linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
 }
 
-/* Headline color — coordinated tonal gradient on BOTH themes.
+/* Headline color - coordinated tonal gradient on BOTH themes.
    The headline applies a 3-stop vertical gradient on each word span so
    the text reads as "premium ink / polished metal" rather than a flat
    solid block. Both themes use the same technique with theme-tuned
@@ -741,24 +840,24 @@ img, iframe { color-scheme: light; }
      Dark:  pure white → cool silver → cool grey
             (polished-metal feel, matches the cube's Resend-style finish)
 
-   The gradient must be applied to each span (not the .hero-h parent) —
+   The gradient must be applied to each span (not the .hero-h parent) -
    the word-cascade animation gives each span its own compositing layer
    via transform + filter, and background-clip: text does NOT inherit
    through composited layers. Per-span clip works because each span
    becomes its own backdrop for its own glyphs. */
 .hero-h {
-  /* Fallback midpoint of the light gradient — text-node spaces (literal
+  /* Fallback midpoint of the light gradient - text-node spaces (literal
      " " between spans) inherit this color, so it should sit visually
      between the top + bottom stops, not match either extreme. */
   color: #25272d;
 }
 .hero-h span {
-  /* "Polished anthracite" gradient — light-theme structural mirror of
+  /* "Polished anthracite" gradient - light-theme structural mirror of
      the dark theme's polished silver.
 
      Earlier attempts diagnosed wrong: low-sat cool-slate (sat 25% mid)
      read muddy, so the next iteration pushed saturation to ~60% indigo
-     — but that made the gradient feel "creative ink", not "tech
+     - but that made the gradient feel "creative ink", not "tech
      polished". The dark-silver vibe doesn't come from chroma at all;
      it comes from RESTRAINT: dark stops sit at sat 12-14% with a barely
      perceptible cool tint, lightness travels ~30% of the available
@@ -773,7 +872,7 @@ img, iframe { color-scheme: light; }
 
      Lightness travel Δ82 ≈ dark Δ77. Saturation matches dark's 12-14%.
      Hue stays in the same cool-slate family. Reads as "polished
-     anthracite" — same restrained metallic character as the dark
+     anthracite" - same restrained metallic character as the dark
      silver but inverted to the dark side of the spectrum.
 
      `in oklch` interpolation is the path that keeps two near-neutral
@@ -781,7 +880,7 @@ img, iframe { color-scheme: light; }
      warm at the mid). Browser: Chrome 111+, Safari 16.2+, FF 113+.
 
      Contrast bottom #54585f on cream #f6f7f9: ~5.5:1 (proper WCAG
-     relative-luminance calc, not naive sum/3) — comfortably AAA. */
+     relative-luminance calc, not naive sum/3) - comfortably AAA. */
   background-image: linear-gradient(in oklch 180deg, #050507 0%, #25272d 50%, #54585f 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -795,18 +894,18 @@ img, iframe { color-scheme: light; }
 }
 [data-theme=dark] .hero-h span {
   /* OKLCH-interpolated "polished silver" gradient (added Apr 2026 to
-     match the new light theme's OKLCH-interpolated navy ink — same
+     match the new light theme's OKLCH-interpolated navy ink - same
      perceptually-uniform descent technique on both themes keeps the
      two visually balanced as siblings). */
   background-image: linear-gradient(in oklch 180deg, #ffffff 0%, #d6d9e0 55%, #aab0bd 100%);
 }
 
-/* Cube canvas viewport — modeled on Resend's 700×550 (1.27:1) container.
+/* Cube canvas viewport - modeled on Resend's 700×550 (1.27:1) container.
    We use aspect-ratio + max-width instead of a fixed pixel height because
    the hero column width changes with viewport, and a fixed height creates
    a stretched canvas at narrower widths. The grandparent column is
    col-span-5 of a max-w-7xl grid, so the cube settles around 480×380 at
-   typical desktop and 700×550 at full ultrawide — both faithful to the
+   typical desktop and 700×550 at full ultrawide - both faithful to the
    reference frame. */
 .hero-cube-wrap {
   position: relative;
@@ -818,7 +917,7 @@ img, iframe { color-scheme: light; }
   width: 100%;
   max-width: 700px;
   margin-left: auto;       /* nudge right like Resend's md:ml-10 offset */
-  /* Filter dropped — grayscale was desaturating the warm rim highlights
+  /* Filter dropped - grayscale was desaturating the warm rim highlights
      that give the cube its three-dimensional feel, and contrast(1.05) was
      crushing the lifted tile mids back into the body color. Three.js does
      all colour work in linear space already; CSS post-processing fights
@@ -834,18 +933,18 @@ img, iframe { color-scheme: light; }
    radial directly on the wrap so the cube's outline reads against a
    ~lum 28 local pocket instead of the lum 9 page bg. WebGL canvas has
    alpha clear (renderer.setClearColor(.., 0)), so the wrap bg shows
-   through everywhere geometry isn't drawn — including the soft halo
+   through everywhere geometry isn't drawn - including the soft halo
    region where the three.js sprite already gradients into transparent.
    Light theme stays untouched: cream bg already has plenty of contrast
    with the cube. */
-/* Local lit pocket REMOVED 2026-05-09 — user feedback: cube standalone
+/* Local lit pocket REMOVED 2026-05-09 - user feedback: cube standalone
    reads cleaner; the radial glow behind it was registering as a smudge.
    Three.js's own shadow plane handles ground anchoring; no atmospheric
    halo needed behind the wrap.
 [data-theme=dark] .hero-cube-wrap::after { ...removed... } */
 
 /* No stage backdrop. The earlier `::before` ellipse pool with alpha 0.92
-   in light theme read as a rectangular dark panel behind the cube — the
+   in light theme read as a rectangular dark panel behind the cube - the
    wrap is rectangular (700/550 aspect), so even with `border-radius: 50%`
    on a non-square element + heavy blur, the visual extent matched the
    wrap rectangle and the cube looked contained inside its own panel.
@@ -862,14 +961,14 @@ img, iframe { color-scheme: light; }
 @media (max-width: 640px) {
   .hero-cube-wrap[data-variant="hero"] {
     /* Phone: cube was eating 70%+ of the fold under the hero copy, with
-       no animation (mobile deliberately skips the WebGL canvas — see
+       no animation (mobile deliberately skips the WebGL canvas - see
        HeroCube.tsx). Shrink to 280px so the eye reads it as a hero
        *icon* rather than the page's main visual. */
     max-width: 280px;
   }
 }
 
-/* Inline variant — kept for potential future ornament use, currently
+/* Inline variant - kept for potential future ornament use, currently
    unused on the homepage (the single cube travels via the sticky
    overlay below). */
 .hero-cube-wrap[data-variant="inline"] {
@@ -882,7 +981,7 @@ img, iframe { color-scheme: light; }
    The Rubik cube lives once on the homepage but travels with the user's
    scroll across the hero + Triết lý sections. Implementation is a
    `position: absolute` overlay layered over both sections (inside the
-   `.rubik-narrative` wrapper which is `position: relative`) — the
+   `.rubik-narrative` wrapper which is `position: relative`) - the
    overlay's child is `position: sticky; top: <offset>;` so the cube
    pins to the top-right of the viewport during the entire hero +
    Triết lý scroll range, then unsticks at the bottom of the philosophy
@@ -890,19 +989,19 @@ img, iframe { color-scheme: light; }
    This is the Apple-AirPods-Max / Stripe-Press / Linear-changelog
    pattern: a signature visual element that anchors a multi-section
    narrative without duplication. Section bgs (hero saffron blob,
-   Triết lý cream + grid) stay full-width on their own sections — the
+   Triết lý cream + grid) stay full-width on their own sections - the
    cube floats independently above them.
    `pointer-events: none` on the overlay lets click-throughs work for
    the hero CTAs + philosophy cards underneath; `pointer-events: auto`
    on the sticky child re-enables mouse interactivity (parallax,
    spotlight) on the cube itself.
    Mobile (<lg): overlay is `display: none`, cube renders inline in
-   the hero `col-span-5` (the `lg:hidden` block) — there's no scroll
+   the hero `col-span-5` (the `lg:hidden` block) - there's no scroll
    range across both sections on mobile because the philosophy section
    stacks below the hero, so the sticky travel pattern doesn't add
    value. The width-check guard in `HeroCube.isWrapNearViewport`
    ensures whichever cube DOM node is currently `display: none` at
-   the active breakpoint never boots WebGL — net 1 alive cube. */
+   the active breakpoint never boots WebGL - net 1 alive cube. */
 @media (min-width: 1024px) {
   .cube-sticky-overlay {
     /* CSS 3D context for the rotateY/rotateX in the keyframes below.
@@ -920,7 +1019,7 @@ img, iframe { color-scheme: light; }
        --cube-x: FINAL X translate to land cube at the LEFT edge of
        max-w-7xl content area. max() caps leftward distance so wide
        viewports (V > 1344, max-w-7xl centered with side margin)
-       don't send the cube off-screen — without the cap, calc(440-100vw)
+       don't send the cube off-screen - without the cap, calc(440-100vw)
        on a 2576px screen gives -2136px (cube ~450px past viewport left
        edge). The -880px cap lands the cube at LEFT edge of centered
        max-w-7xl content regardless of viewport width.
@@ -937,7 +1036,7 @@ img, iframe { color-scheme: light; }
     /* --cube-y-mid: cube vertical position for the Triết lý focal
        anchor. Lands the cube center near the upper-mid of viewport
        (~35-45% from viewport top) so it visually sits alongside the
-       h2 "Sáu mặt — Một sản phẩm" rather than below the 3-axis card
+       h2 "Sáu mặt - Một sản phẩm" rather than below the 3-axis card
        grid. clamp keeps the value reasonable on short / very tall
        viewports. */
     --cube-y-mid: clamp(20px, calc(40vh - 290px), 220px);
@@ -949,13 +1048,13 @@ img, iframe { color-scheme: light; }
 
   /* ─── Apple-style anchored travel ───
      Reference: Apple AirPods Pro 3 / iPhone Pro / Vision Pro product
-     pages. The signature visual element is NOT just sticky-pinned —
+     pages. The signature visual element is NOT just sticky-pinned -
      it has DESIGNED ANCHOR POSITIONS per scroll milestone, with
      premium easing between them. The cube has two anchors:
 
        1. Hero anchor (scroll 0 → ~30vh)
           Held at full size + opacity. The cube does nothing while the
-          user reads the hero copy — restraint is the Apple move.
+          user reads the hero copy - restraint is the Apple move.
 
        2. Philosophy anchor (scroll ~130vh and beyond)
           Cube settled at the top-right corner: scale 0.5 (dramatic
@@ -964,12 +1063,12 @@ img, iframe { color-scheme: light; }
           0.85 (visible "companion" presence, not over-faded).
 
      Between anchors the cube interpolates with cubic-bezier
-     (0.32, 0.72, 0.24, 1) — the Apple/Material premium curve: slow
+     (0.32, 0.72, 0.24, 1) - the Apple/Material premium curve: slow
      start, smooth middle, gentle settle. Linear interpolation feels
      mechanical; this curve gives the "designed deliberate motion"
      feel of Apple product showcases.
 
-     `transform-origin: top right` is critical — without it scale would
+     `transform-origin: top right` is critical - without it scale would
      shrink toward the cube's centroid and the cube would visually
      drift left. With top-right origin the cube shrinks INTO the
      corner, reinforcing the "settling into its corner anchor" intent.
@@ -980,12 +1079,12 @@ img, iframe { color-scheme: light; }
 
      Browser support: Chrome 115+, Edge 115+, Safari 26+ (or 17.5
      behind flag), Firefox 132+. Older browsers see a static cube at
-     420px — functional fallback. */
+     420px - functional fallback. */
   @supports (animation-timeline: scroll()) {
     .cube-sticky-overlay .sticky {
       animation: cube-apple-travel cubic-bezier(0.32, 0.72, 0.24, 1) both;
       animation-timeline: scroll();
-      /* No animation-range — defaults to "cover" the full timeline,
+      /* No animation-range - defaults to "cover" the full timeline,
          so animation 0% → 100% maps to scroll 0% → 100% of the
          document. Since `.cube-sticky-overlay` is absolute inset-0
          of `.rubik-journey` which now wraps the entire homepage, the
@@ -1001,7 +1100,7 @@ img, iframe { color-scheme: light; }
        PHASE PERCENTAGES are calibrated to actual section scroll
        positions: Triết lý (section 2) lives at ~12-25% scroll on
        desktop, so the cube must SETTLE at LEFT before 13% and HOLD
-       through 26% — the entire reading window.
+       through 26% - the entire reading window.
 
          A. Hero focal       (0-10%)   → right column, scale 1, opacity 1
                                          the brand introduction moment.
@@ -1009,9 +1108,9 @@ img, iframe { color-scheme: light; }
                                          (Y peak -80, Z forward 60)
                                          right → left, settling early.
          C. Triết lý focal   (13-26%)  → LEFT side, scale 0.65, opacity
-                                         0.92 — brand metaphor anchor.
+                                         0.92 - brand metaphor anchor.
                                          Long hold so user reading
-                                         "Sáu mặt — Một sản phẩm"
+                                         "Sáu mặt - Một sản phẩm"
                                          literally sees the rubik beside
                                          the copy.
          D. Demote transit   (26-32%)  → curved retreat from LEFT-mid
@@ -1036,7 +1135,7 @@ img, iframe { color-scheme: light; }
       /* CRITICAL CONSTRAINT: rotateY stays in ±8° range only.
          CSS rotateY rotates the WRAPPER (which contains a 2D-rendered
          WebGL canvas), NOT the 3D cube inside the canvas. At rotateY
-         90°/270° the canvas goes EDGE-ON to viewer — appears as a
+         90°/270° the canvas goes EDGE-ON to viewer - appears as a
          thin foreshortened sliver = visual distortion. The brand
          metaphor "show all faces" is already realised by Three.js's
          internal cube tumbling (the cube rotates on its own layers
@@ -1120,7 +1219,7 @@ img, iframe { color-scheme: light; }
 
       /* ── G. CTA whisper (93-100%) ──────────────────────────────
          Returns to face-on (rotateY 0°), receded to scale 0.4,
-         opacity 0.3 — whisper-level brand mark at corner. CTA
+         opacity 0.3 - whisper-level brand mark at corner. CTA
          buttons own the conversion focal point. */
       100% {
         transform: translate3d(0, -110px, 0) rotateY(0deg) scale(0.4);
@@ -1130,15 +1229,15 @@ img, iframe { color-scheme: light; }
   }
 }
 
-/* ─────── Cube skeleton — premium "loading" placeholder ───────
+/* ─────── Cube skeleton - premium "loading" placeholder ───────
    While three.js is downloading, the SVG illustration is HIDDEN (HeroCube
    keeps state='loading' until either setupCube succeeds or 1.8s passes).
    This skeleton fills the cube area with two pure-CSS effects so the user
    never sees the literal SVG flash:
 
-     1. Saffron breath — soft brand-tinted glow centered in the wrap, 2.4s
+     1. Saffron breath - soft brand-tinted glow centered in the wrap, 2.4s
         cycle. Tells the user "premium content is materializing here."
-     2. Diagonal sheen sweep — light passing across the area every 4s,
+     2. Diagonal sheen sweep - light passing across the area every 4s,
         like the highlight on a polished surface being prepared.
 
    The skeleton is absolute, pointer-events-none, and parented by
@@ -1150,7 +1249,7 @@ img, iframe { color-scheme: light; }
   border-radius: 18px;
 }
 
-/* ─── WireframeCube — loading-state structural anchor ───
+/* ─── WireframeCube - loading-state structural anchor ───
    3-face isometric Rubik wireframe rendered as outline paths. The
    stroke-dashoffset animation traces each face over 1.0s with 250ms
    stagger between faces, total draw time ~1.5s. After the draw
@@ -1159,9 +1258,9 @@ img, iframe { color-scheme: light; }
 
    Stacking inside .hero-cube-skeleton (which is a stacking context via
    isolation: isolate above):
-     ::after  (saffron breath)   z: 0 — atmospheric glow behind.
-     wireframe                   z: 1 — structure on top of glow.
-     ::before (sheen sweep)      z: 2 — polish stroke over both via
+     ::after  (saffron breath)   z: 0 - atmospheric glow behind.
+     wireframe                   z: 1 - structure on top of glow.
+     ::before (sheen sweep)      z: 2 - polish stroke over both via
                                         mix-blend-mode.
 
    currentColor lets the stroke pick up the theme via the [data-theme]
@@ -1180,7 +1279,7 @@ img, iframe { color-scheme: light; }
   color: rgba(244, 129, 26, 0.55);
 }
 [data-theme=dark] .wireframe-cube {
-  /* tech-400 (#22d3ee) at alpha 0.55 — gives the loading wireframe the
+  /* tech-400 (#22d3ee) at alpha 0.55 - gives the loading wireframe the
      "dev terminal grid" feel that pairs with the kbd chip + monospace
      stack badges, and contrasts against the saffron breath glow behind
      it (warm/cool layering = clear "structure on top of ambience"). */
@@ -1198,7 +1297,7 @@ img, iframe { color-scheme: light; }
   /* pathLength={1} on the path normalizes total length to 1, so
      dashoffset 1 → 0 produces a complete trace regardless of which
      subpath segment we're on. Eased so the stroke decelerates into
-     the seat — matches the Resend cube reveal's settled feel. */
+     the seat - matches the Resend cube reveal's settled feel. */
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: wf-draw 1.0s cubic-bezier(0.4, 0, 0.2, 1) both;
@@ -1209,7 +1308,7 @@ img, iframe { color-scheme: light; }
 
 /* Per-face opacity pulse begins after the draw lands (delay >
    draw-in finish time). Stagger so the three faces don't pulse in
-   lockstep — uneven cycle reads as "alive" rather than "metronomic". */
+   lockstep - uneven cycle reads as "alive" rather than "metronomic". */
 .wireframe-cube .wf-face {
   animation: wf-pulse 3.2s ease-in-out infinite;
 }
@@ -1331,7 +1430,7 @@ img, iframe { color-scheme: light; }
      • scale     0.55 → 1.045 → 1 (bounces past target, settles)
 
    Selector targets data-cube-state on the wrap so the animation only
-   fires at the moment of transition — never re-runs once interactive. */
+   fires at the moment of transition - never re-runs once interactive. */
 @keyframes hero-cube-canvas-reveal {
   0% {
     opacity: 0;
@@ -1359,7 +1458,7 @@ img, iframe { color-scheme: light; }
 
 /* ─────── Saffron flash burst ───────
    A single brief expanding glow at the loading→interactive moment.
-   Reads as the "click" / "snap" of materialization — the cube didn't
+   Reads as the "click" / "snap" of materialization - the cube didn't
    just fade in, it ARRIVED. ::before runs once because the animation
    has 'both' so the final keyframe (opacity 0, scale 2.2) is held;
    re-running would require state to flip away from interactive and
@@ -1401,7 +1500,7 @@ img, iframe { color-scheme: light; }
   100% { opacity: 0;   transform: translate(-50%, -50%) scale(2.2); }
 }
 
-/* Skeleton exit — synchronized with the canvas reveal start. Instead of
+/* Skeleton exit - synchronized with the canvas reveal start. Instead of
    the basic opacity fade, the skeleton scales outward and blurs as the
    cube emerges, like a placeholder dissolving into the real artifact. */
 [data-cube-state="interactive"] .hero-cube-skeleton {
@@ -1625,7 +1724,7 @@ img, iframe { color-scheme: light; }
   .section-frame .ind { transition: none !important; }
   .magnetic, .magnetic > * { transition: none !important; transform: none !important; }
   /* Cube wrapper: skip the dramatic scale-in-fade for vestibular comfort,
-     but keep the cube visible (opacity 1) — the JS-side cube also honors
+     but keep the cube visible (opacity 1) - the JS-side cube also honors
      reduced-motion by skipping abrupt face twists while keeping the slow
      auto-spin and gentle parallax (matching Resend's actual behavior). */
   .hero-cube-wrap { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
@@ -1644,69 +1743,61 @@ img, iframe { color-scheme: light; }
    See feedback_protect_cube.md memory for the full constraint set.
    ───────────────────────────────────────────────────────────────────── */
 
-/* Lenis sets html.lenis-smooth — disable native CSS scroll-behavior so
+/* Lenis sets html.lenis-smooth - disable native CSS scroll-behavior so
    the browser's instant smooth doesn't fight Lenis' own easing. */
 html.lenis-smooth { scroll-behavior: auto; }
 
-/* ─── Custom cursor (CustomCursor.tsx) ───
-   Two-layer pointer with mix-blend-mode difference for auto-contrast.
-   Disabled on coarse pointers / reduced-motion at the JS level. */
+/* ─── Custom cursor v4 (CustomCursor.tsx) ───────────────────────────
+   Single white orb, mix-blend-mode:difference - auto-inverts on any bg.
+   ALL motion (position, scale, squish, rotation) driven by JS RAF.
+   CSS owns: size declaration, blend mode, opacity fade only.
+   Duplicate cursor:none rule removed - only one block needed. ── */
 @media (hover: hover) and (pointer: fine) {
   body.has-custom-cursor,
   body.has-custom-cursor * { cursor: none !important; }
+  /* Restore text cursor inside inputs so usability isn't broken */
   body.has-custom-cursor input,
   body.has-custom-cursor textarea,
-  body.has-custom-cursor [contenteditable=true] { cursor: text !important; }
+  body.has-custom-cursor [contenteditable] { cursor: text !important; }
 }
-.cursor-dot,
-.cursor-ring {
+
+/* ── cur-orb: tiny dot, instant tracking, velocity squish ──
+   Opacity managed entirely by JS (show/hide + hover state).
+   Only will-change: transform - nothing else changes. */
+.cur-orb {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: difference;
-  will-change: transform, width, height, border-radius;
-  transition:
-    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    border-radius 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    background 0.2s ease,
-    opacity 0.2s ease,
-    border-color 0.25s ease;
+  will-change: transform;
+  /* CSS transition on opacity only - does not fight RAF transform */
+  transition: opacity 0.22s ease;
 }
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  margin-left: -3px;
-  margin-top: -3px;
-  background: #fff;
-  border-radius: 50%;
-}
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid #fff;
+
+/* ── cur-wrap: button-outline ring ──
+   Size set ONCE on button enter (JS), never changed per-frame.
+   RAF only lerps: scale (bloom/shrink) + opacity (fade).
+   transform + opacity = GPU composited = zero layout cost.
+   NO transition on any property - JS RAF is sole owner. */
+.cur-wrap {
+  position: fixed;
+  top: 0; left: 0;
+  border: 1px solid #fff;
   background: transparent;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  /* transform + opacity only in will-change - size changes are driven by JS
+     setting style.width/height directly (once per button enter, not per frame) */
+  will-change: transform, opacity;
 }
-body.cursor-hover .cursor-ring { width: 56px; height: 56px; }
-body.cursor-hover .cursor-dot  { width: 0; height: 0; opacity: 0; }
-body.cursor-magnetic .cursor-ring {
-  width: var(--cw, 56px);
-  height: var(--ch, 56px);
-  border-radius: var(--cr, 28px);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.85);
-}
-body.cursor-magnetic .cursor-dot { opacity: 0; }
-body.cursor-press .cursor-ring  { filter: brightness(1.15); }
-body.cursor-text .cursor-dot {
-  width: 2px; height: 18px;
-  margin-left: -1px; margin-top: -9px;
-  border-radius: 1px;
-}
-body.cursor-text .cursor-ring { opacity: 0; }
 
 /* ─── Kinetic marquee (Marquee.tsx, .kmq-* class prefix) ───
    Class-prefixed to avoid the legacy `.marquee` CSS-only rule above. */
@@ -1825,15 +1916,1609 @@ body.cursor-text .cursor-ring { opacity: 0; }
   margin-bottom: 1.25rem;
 }
 
-/* ─── Studio Live — homepage breakthrough effects (2026-05-10) ───
+/* ─── Studio Live - homepage breakthrough effects (2026-05-10) ───
    Minimal but distinctive. Letter-by-letter scramble reveal on the
    hero statement; horizontal-rule "draw-in" on section dividers;
    hover-row reveal on the index. Pure CSS, no JS framework. */
 
 /* All Studio-Live signature rules (.letter-cascade, .draw-rule,
    .log-row, .rubik-journey::before mesh-drift bg, log-fresh-pulse,
-   terminal cursor) were removed 2026-05-10 — they read as AI-generated
+   terminal cursor) were removed 2026-05-10 - they read as AI-generated
    showcase aesthetic and clashed with the Vietnamese B2B audience.
    Homepage now uses standard .reveal / .reveal-stagger / .lift /
    .spotlight utilities (already defined elsewhere) for tasteful motion
    without the performative AI-flagship signals. */
+
+/* ─── Asymmetric Magazine Layout (May 2026 v2) ───────────────────────
+   Left 28% sticky identity rail (cube + logo + spine + contact)
+   + Right 72% scrolling work showcase with per-case accent colors.
+   Reference: Locomotive / Akaru studio / Pentagram portfolio.
+   Mobile (<1024px): left rail hidden; right column full-width. */
+
+/*
+  Magazine spread on atmospheric backdrop (v7)
+  ─────────────────────────────────────────────────────────
+  Page bg  fixed full-viewport, soft blue depth pools
+  Card     max-w 1400px centered, hairline border, shadow,
+           overflow:clip (sticky-safe)
+  Layout   2-column: 280px identity + 1fr content
+  ─────────────────────────────────────────────────────────
+*/
+
+/* ── ATMOSPHERIC PAGE BACKGROUND ──
+   Refined May 2026: bỏ 3 vũng blue radial → SINGLE rất nhẹ
+   ambient pool. Pro studios (Pentagram, Linear, Apple) dùng
+   ánh sáng môi trường rất kiềm chế, không phải tech demo blue. */
+.mag-page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* Single subtle warm-cool ambient - top-left key light */
+    radial-gradient(ellipse 65% 55% at 18% 22%,
+      rgba(99, 102, 241, 0.035), transparent 75%),
+    /* Editorial neutral base - slightly warmer than slate-100 */
+    #eef0f3;
+}
+[data-theme=dark] .mag-page-bg {
+  background:
+    /* Single rất subtle blue ambient pool */
+    radial-gradient(ellipse 65% 55% at 18% 22%,
+      rgba(99, 102, 241, 0.09), transparent 75%),
+    /* Deep neutral dark - less blue tint than before, more studio-grade */
+    #07080b;
+}
+
+/* Subtle grain - film texture for depth */
+.mag-page-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+[data-theme=dark] .mag-page-bg::after { opacity: 0.4; }
+
+/* ── CARD WRAP ──
+   No grid here. Rail is `position: fixed` (truly locked to viewport),
+   so the wrap just contains the scrolling right column with
+   padding-left reserved for the fixed rail's footprint.
+   Sharp rectangular card on atmospheric bg = editorial B2B
+   (Stripe Press, NYT, Bain Reports). */
+.mag-wrap {
+  /* Desktop: fixed viewport frame - stays centred, never scrolls with page */
+  position: fixed;
+  top: calc(56px + 1.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);   /* 1rem gutter each side */
+  max-width: 1400px;
+  height: calc(100dvh - 56px - 3rem);  /* navbar + top margin + bottom margin */
+  z-index: 1;
+  display: flex;
+  overflow: hidden;            /* clips both columns to card bounds */
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 10px 30px -10px rgba(15, 23, 42, 0.10),
+    0 30px 60px -20px rgba(15, 23, 42, 0.14);
+}
+[data-theme=dark] .mag-wrap {
+  background: #0a0b10;
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 10px 30px -10px rgba(0, 0, 0, 0.5),
+    0 30px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+/* ── IDENTITY COLUMN ──
+   Simple relative column inside the fixed card.
+   height: 100% fills the card - both columns share the same bounds. */
+.mag-rail {
+  position: relative;
+  flex-shrink: 0;
+  width: 280px;
+  height: 100%;
+  z-index: 5;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.75rem 1.75rem 1.5rem;
+  overflow: hidden;
+}
+[data-theme=dark] .mag-rail {
+  background: #0a0b10;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Top region - logo + studio meta */
+.mag-rail-top {
+  flex-shrink: 0;
+}
+
+/* Middle region - cube centred, generous whitespace */
+.mag-rail-cube {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+/* Info-block variant - fills width, top-aligned for sub-page rails.
+   Replaces cube on /dich-vu, /quy-trinh, /du-an, /ve-chung-toi, etc.
+   Content is informational (status, stats, current work), not decorative. */
+.mag-rail-cube--info {
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 1.25rem 0 0.75rem;
+}
+.mag-rail-cube--info > * {
+  width: 100%;
+}
+
+/* CONSTRAIN cube size - column is 280px, but cube maxes at 180px.
+   Leaves ~50px of horizontal whitespace each side. Aspect-ratio
+   700/550 means a 180px-wide cube is ~142px tall. */
+.mag-rail-cube .hero-cube-wrap {
+  max-width: 180px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+/* ── Scroll-driven cube tilt ──
+   As the user scrolls the page, the cube wrapper gets a subtle
+   ±5° tilt in Y/X axes. Three.js still does its own internal
+   tumble; this CSS layer adds a scroll-tied "alive" quality that
+   ties the brand mark to the reader's journey. Chrome 115+,
+   Safari 26 / 17.5 (flag), Firefox 132+. Older browsers see the
+   cube without tilt - pure progressive enhancement. */
+@supports (animation-timeline: scroll()) {
+  .mag-rail-cube .hero-cube-wrap {
+    animation: mag-cube-tilt linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes mag-cube-tilt {
+  0%   { transform: perspective(1200px) rotateY(0deg)  rotateX(0deg); }
+  25%  { transform: perspective(1200px) rotateY(5deg)  rotateX(-2deg); }
+  50%  { transform: perspective(1200px) rotateY(0deg)  rotateX(0deg); }
+  75%  { transform: perspective(1200px) rotateY(-5deg) rotateX(2deg); }
+  100% { transform: perspective(1200px) rotateY(0deg)  rotateX(0deg); }
+}
+
+
+/* ── TOC link hover/active state - color only, no position shift ── */
+.mag-toc-link {
+  position: relative;
+}
+
+/* TOC :target state - when section is anchored, highlight its TOC link.
+   :target applies to the element whose id matches the URL hash, so we
+   use :has() at the body level to mark which TOC link points to it. */
+@supports selector(:has(*)) {
+  body:has(#du-an:target)     .mag-toc-link[href="#du-an"],
+  body:has(#ve-alodev:target) .mag-toc-link[href="#ve-alodev"],
+  body:has(#dich-vu:target)   .mag-toc-link[href="#dich-vu"],
+  body:has(#quy-trinh:target) .mag-toc-link[href="#quy-trinh"],
+  body:has(#cau-hoi:target)   .mag-toc-link[href="#cau-hoi"],
+  body:has(#lien-he:target)   .mag-toc-link[href="#lien-he"] {
+    color: var(--accent);
+  }
+  body:has(#du-an:target)     .mag-toc-link[href="#du-an"]::before,
+  body:has(#ve-alodev:target) .mag-toc-link[href="#ve-alodev"]::before,
+  body:has(#dich-vu:target)   .mag-toc-link[href="#dich-vu"]::before,
+  body:has(#quy-trinh:target) .mag-toc-link[href="#quy-trinh"]::before,
+  body:has(#cau-hoi:target)   .mag-toc-link[href="#cau-hoi"]::before,
+  body:has(#lien-he:target)   .mag-toc-link[href="#lien-he"]::before {
+    opacity: 1;
+    transform: translateY(-50%) scaleX(1);
+  }
+}
+
+/* Reduced motion: kill scroll animations */
+@media (prefers-reduced-motion: reduce) {
+  .mag-rail-cube .hero-cube-wrap { animation: none !important; }
+}
+
+/* Bottom region - tagline + contact + CTA */
+.mag-rail-bottom {
+  flex-shrink: 0;
+}
+
+/* ── PROJECT INDEX - editorial list, Pentagram/Instrument pattern ── */
+.mag-index-wrap {
+  /* Sections handle border-bottom; index wraps padding only */
+}
+
+.mag-index-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 2.5rem 3rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mag-index-header-label {
+  font-size: 11px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Project row - B2B editorial, single accent, no per-case colors */
+.mag-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2.5rem;
+  height: 76px;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  /* Only background tints - no layout-affecting changes */
+  transition: background 0.15s ease;
+  overflow: hidden;
+  text-decoration: none;
+}
+.mag-row:hover {
+  background: rgba(0,0,0,0.025);
+}
+[data-theme=dark] .mag-row:hover {
+  background: rgba(255,255,255,0.035);
+}
+
+.mag-row-num {
+  font-size: 11px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  color: var(--muted);
+  opacity: 0.45;
+  width: 1.5rem;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+/* Project name - single style, no per-case color shift */
+.mag-row-name {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  flex-shrink: 0;
+}
+
+/* Tag - grows to fill space between name and meta */
+.mag-row-tag {
+  flex: 1;
+  font-size: 12px;
+  color: var(--muted);
+  padding-left: 1rem;
+  /* ellipsis on narrow viewports */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right-side meta: domain + year */
+.mag-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.mag-row-domain {
+  font-size: 11px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.mag-row-year {
+  font-size: 11px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  color: var(--muted);
+  opacity: 0.45;
+  width: 2.5rem;
+  text-align: right;
+}
+
+.mag-row-arrow {
+  font-size: 12px;
+  color: var(--muted);
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+}
+.mag-row:hover .mag-row-arrow {
+  opacity: 0.7;
+}
+
+/* Footer row ("+8 dự án khác") */
+.mag-row--more {
+  height: 56px;
+}
+
+.mag-index-footer {
+  /* no extra padding - row handles its own */
+}
+
+/* ── STATS STRIP ── */
+.mag-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.015);
+}
+[data-theme=dark] .mag-stats {
+  background: rgba(255,255,255,0.02);
+}
+.mag-stat {
+  padding: 1.75rem 1.5rem 1.75rem 1.75rem;
+  border-right: 1px solid var(--border);
+}
+.mag-stat:last-child {
+  border-right: none;
+}
+.mag-stat-num {
+  font-size: clamp(2rem, 2.8vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.mag-stat-label {
+  margin-top: 0.5rem;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ── FAQ ── */
+.mag-faq {
+  position: relative;
+}
+.mag-faq-q {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0.25rem 1rem 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+.mag-faq-q::-webkit-details-marker {
+  display: none;
+}
+.mag-faq-q:hover {
+  color: var(--accent);
+}
+.mag-faq-toggle {
+  font-size: 14px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  color: var(--muted);
+  width: 16px;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mag-faq[open] .mag-faq-toggle {
+  transform: rotate(45deg);
+  color: var(--accent);
+}
+.mag-faq-a {
+  padding: 0 0 1.25rem 2.25rem;   /* aligns with question text after number */
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 36rem;
+}
+
+/* ── CONTENT SECTIONS ── */
+.mag-section {
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Section background utilities (May 2026)
+   Centralize section bg through CSS variables instead of Tailwind
+   `bg-white dark:bg-ink-950` pairs. This lets palette tuning happen
+   in ONE place and produces subtler tonal alternation than slate-50
+   vs white - closer to how editorial magazines lay out pages. ── */
+.mag-bg-paper {
+  background: var(--surface);
+}
+.mag-bg-tint {
+  background: var(--surface-2);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CANONICAL TYPE SCALE (May 2026 - CEO designer audit)
+   ═══════════════════════════════════════════════════════════
+   Limited to 4 heading sizes + 3 body sizes. Every page uses
+   these tokens - no more inline text-2xl/3xl/4xl scattering.
+   Rationale: B2B editorial = restraint. Same scale across
+   every page lets reader brain stop re-calibrating per section.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Display - page-level hero h1. Used 1× per page max.
+   Bigger than section-head, responsive clamp.            */
+.mag-display {
+  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  color: var(--foreground);
+}
+
+/* (.mag-section-head already defined above for section h2) */
+
+/* Card heading - h3 for cards, sub-sections, list items */
+.mag-card-head {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--foreground);
+}
+@media (min-width: 640px) {
+  .mag-card-head { font-size: 1.25rem; }
+}
+
+/* Body lead - first paragraph after a heading.
+   Slightly larger + softer color than default body.     */
+.mag-body-lead {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgb(75 85 99);  /* gray-600 */
+}
+[data-theme=dark] .mag-body-lead { color: rgb(156 163 175); /* ink-400 */ }
+@media (min-width: 640px) {
+  .mag-body-lead { font-size: 1.0625rem; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PORTFOLIO PREVIEW (homepage section 02)
+   Editorial peek - hero + list + strong CTA to /du-an
+═══════════════════════════════════════════════════════ */
+
+/* Hero featured project - generous visual block */
+.mag-pf-hero {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              box-shadow 0.3s ease;
+  text-decoration: none;
+}
+.mag-pf-hero:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px -8px rgba(37, 99, 235, 0.18);
+}
+
+/* Art area - abstract geometric peek using accent gradient */
+.mag-pf-hero-art {
+  position: relative;
+  height: 120px;
+  background:
+    linear-gradient(135deg,
+      rgba(99, 102, 241, 0.10) 0%,
+      rgba(59, 130, 246, 0.06) 50%,
+      rgba(14, 165, 233, 0.08) 100%);
+  overflow: hidden;
+}
+[data-theme=dark] .mag-pf-hero-art {
+  background:
+    linear-gradient(135deg,
+      rgba(99, 102, 241, 0.18) 0%,
+      rgba(59, 130, 246, 0.12) 50%,
+      rgba(14, 165, 233, 0.14) 100%);
+}
+.mag-pf-hero-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px) 0 0 / calc(100%/6) 100%,
+    linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px) 0 0 / 100% 25%;
+  mask-image: radial-gradient(ellipse 80% 70% at 30% 50%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 50%, #000 30%, transparent 80%);
+}
+[data-theme=dark] .mag-pf-hero-grid {
+  background:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / calc(100%/6) 100%,
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 100% 25%;
+}
+
+.mag-pf-hero-meta {
+  padding: 0.875rem 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
+.mag-pf-hero-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.mag-pf-hero-num {
+  font: 700 10px/1 var(--font-mono, monospace);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 0.5;
+}
+.mag-pf-hero-name {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  transition: color 0.15s ease;
+}
+.mag-pf-hero:hover .mag-pf-hero-name {
+  color: var(--accent);
+}
+.mag-pf-hero-arrow {
+  color: var(--accent);
+  font-size: 0.95rem;
+  transform: translateX(-3px);
+  opacity: 0.6;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.mag-pf-hero:hover .mag-pf-hero-arrow {
+  transform: translateX(0);
+  opacity: 1;
+}
+.mag-pf-hero-sub {
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+/* Compact list rows - 3 items below hero */
+.mag-pf-list {
+  border-top: 1px solid var(--border);
+  margin-top: 0.75rem;
+}
+.mag-pf-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: padding-left 0.2s ease;
+}
+.mag-pf-row:hover {
+  padding-left: 0.5rem;
+}
+.mag-pf-num {
+  font: 700 10px/1 var(--font-mono, monospace);
+  color: var(--muted);
+  opacity: 0.4;
+  min-width: 18px;
+}
+.mag-pf-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
+}
+.mag-pf-row:hover .mag-pf-name {
+  color: var(--accent);
+}
+.mag-pf-tag {
+  flex: 1;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.mag-pf-year {
+  font: 600 10px/1 var(--font-mono, monospace);
+  color: var(--muted);
+  opacity: 0.7;
+}
+.mag-pf-arrow {
+  color: var(--muted);
+  opacity: 0.3;
+  font-size: 0.85rem;
+  transition: opacity 0.2s ease, color 0.15s ease;
+}
+.mag-pf-row:hover .mag-pf-arrow {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* CTA block - primary route to /du-an */
+.mag-pf-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  margin-top: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.mag-pf-cta:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+[data-theme=dark] .mag-pf-cta:hover {
+  background: rgba(59, 130, 246, 0.04);
+}
+.mag-pf-cta-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+.mag-pf-cta-meta {
+  font: 500 10px/1 var(--font-mono, monospace);
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  flex: 1;
+  text-align: right;
+}
+.mag-pf-cta-arrow {
+  color: var(--accent);
+  font-size: 0.95rem;
+  transform: translateX(-3px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mag-pf-cta:hover .mag-pf-cta-arrow {
+  transform: translateX(2px);
+}
+
+/* Ghost section number - large typographic anchor behind heading.
+   CSS counter increments automatically per .mag-section; decimal-leading-zero
+   produces "01", "02", etc. without touching HTML. */
+.mag-scroll {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;            /* all scrolling happens inside the card */
+  scroll-behavior: smooth;
+  counter-reset: mag-section;
+}
+/* Anchor targets inside the scroll container need no top offset
+   (no fixed header inside) - override the global 5rem value */
+.mag-scroll [id] {
+  scroll-margin-top: 0.5rem;
+}
+.mag-section {
+  counter-increment: mag-section;
+  /* Contain the ghost number during parallax so it never bleeds into adjacent sections */
+  overflow: clip;
+}
+.mag-section::after {
+  content: counter(mag-section, decimal-leading-zero);
+  position: absolute;
+  right: 2.5rem;
+  top: 2rem;
+  font-size: clamp(5rem, 8vw, 8rem);
+  font-weight: 900;
+  color: var(--foreground);
+  opacity: 0.04;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+[data-theme=dark] .mag-section::after {
+  opacity: 0.08; /* more visible on dark bg */
+}
+
+/* ── Ghost number soft parallax (CSS Scroll-Driven Animations) ──
+   The large ghost counter drifts ~18px vertically as the section scrolls
+   through the viewport - Apple product-page depth feel.
+   animation-timeline: view() scopes to the element's own scroll range.
+   Only activated when the API is supported (progressive enhancement). ── */
+@supports (animation-timeline: scroll()) {
+  @keyframes ghost-parallax {
+    from { transform: translateY(-18px); }
+    to   { transform: translateY(18px); }
+  }
+  .mag-section::after {
+    animation: ghost-parallax linear both;
+    animation-timeline: view();
+    animation-range: contain 0% contain 100%;
+  }
+}
+
+/* ── Grain texture overlay (lusion-grade film grain) ──
+   SVG feTurbulence noise at 3.2% opacity with overlay blending adds
+   tactile depth without GPU cost - same technique as lusion.co, Vercel. ── */
+.mag-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.032;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+@media (prefers-reduced-motion: reduce) { .mag-grain { display: none; } }
+
+
+/* ── Dark section spotlight - lusion mouse-tracking radial glow ──
+   ScrollEffects.tsx stamps --spot-x/--spot-y on mousemove.
+   Content sits above via z-index: 1 on .mag-section-inner. ── */
+.mag-section--dark {
+  --spot-x: 50%;
+  --spot-y: 40%;
+}
+.mag-section--dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--spot-x) var(--spot-y),
+    rgba(124, 58, 237, 0.09),
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.mag-section--dark:hover::before { opacity: 1; }
+.mag-section--dark > .mag-section-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Service ticker - editorial marquee between sections ── */
+.mag-ticker {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+}
+[data-theme=dark] .mag-ticker { background: var(--surface-2, #161b27); }
+.mag-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9.5px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0.6rem;
+  white-space: nowrap;
+  user-select: none;
+}
+.mag-ticker-sep {
+  display: inline-block;
+  margin: 0 0.8rem;
+  color: #7c3aed;
+  opacity: 0.55;
+}
+
+/* ── SCROLL CHOREOGRAPHY (ScrollEffects.tsx drives this) ──────────────
+   Three-layer progressive enhancement:
+   1. Stagger: .motion-ready hides [data-stagger] items; JS adds
+      .section-entered + per-item animation-delay when section enters view.
+   2. Heading wipe: clip-path reveal (Linear-style upward wipe) for
+      .mag-section-head; JS adds .head-visible when heading is in view.
+   3. Live TOC: JS stamps data-toc-active on the active .mag-toc-link.
+   Without JS everything is visible (no motion-ready class). ── */
+
+/* ── 1a. Stagger - hidden initial states (JS-gated via .motion-ready) ── */
+.motion-ready [data-stagger="up"] {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(4px);
+}
+.motion-ready [data-stagger="row"] {
+  opacity: 0;
+  transform: translateX(-16px);
+  filter: blur(3px);
+}
+.motion-ready [data-stagger="stat"] {
+  opacity: 0;
+  transform: scale(0.78) translateY(10px);
+  filter: blur(4px);
+}
+
+/* ── 1b. Stagger keyframes ── */
+@keyframes stagger-up {
+  from { opacity: 0; transform: translateY(18px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+@keyframes stagger-row {
+  from { opacity: 0; transform: translateX(-16px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateX(0);     filter: blur(0); }
+}
+@keyframes stagger-stat {
+  from { opacity: 0; transform: scale(0.78) translateY(10px); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0);       filter: blur(0); }
+}
+
+/* ── 1c. Stagger reveal - fires when JS adds .section-entered ── */
+.section-entered [data-stagger="up"] {
+  animation: stagger-up 0.56s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.section-entered [data-stagger="row"] {
+  animation: stagger-row 0.44s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.section-entered [data-stagger="stat"] {
+  animation: stagger-stat 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── 2. Word-split heading reveal (Apple/Linear grade) ──
+   JS splits .mag-section-head text into .mag-hw <span> elements.
+   Each word rises + unblurs with a per-word transitionDelay stamped inline.
+   .motion-ready hides all words; .head-visible triggers the cascade.
+   Without JS: no .motion-ready class → all text immediately visible. ── */
+.motion-ready .mag-hw {
+  display: inline-block;
+  opacity: 0;
+  /* 3D fold-down reveal - each word "falls" from behind the plane.
+     perspective() on the element itself (not parent) so each word has
+     its own vanishing point - more organic than shared perspective. */
+  transform: perspective(600px) rotateX(24deg) translateY(0.2em);
+  filter: blur(4px);
+  transform-origin: top center;
+  /* transitionDelay is stamped inline by JS; transition fires on .head-visible */
+}
+.head-visible .mag-hw {
+  opacity: 1;
+  transform: perspective(600px) rotateX(0deg) translateY(0);
+  filter: blur(0);
+  transition:
+    opacity  0.62s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.78s cubic-bezier(0.16, 1, 0.3, 1),
+    filter   0.52s ease;
+}
+
+/* ── 3. Live TOC active state ── */
+.mag-toc-link[data-toc-active] {
+  color: var(--foreground) !important;
+  padding-left: 8px !important;
+}
+.mag-toc-link[data-toc-active] .mag-toc-name {
+  font-weight: 600;
+}
+.mag-toc-link[data-toc-active]::before {
+  opacity: 1 !important;
+  transform: translateY(-50%) scaleX(1) !important;
+}
+
+.mag-section-inner {
+  padding: 3.5rem 3rem;
+  max-width: 48rem;
+}
+
+.mag-section-index {
+  font-size: 10px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  color: var(--muted);
+  letter-spacing: 0.14em;
+  margin-bottom: 0.6rem;
+  opacity: 0.5;
+}
+.mag-section-index--dark {
+  color: #64748b;
+  opacity: 0.6;
+}
+
+/* Display headline - more impactful section titles for editorial rhythm */
+.mag-section-head {
+  /* Tighter scale May 2026: content area inside magazine layout
+     is ~620px (after 280px rail). Was clamp(30px→44px), now
+     clamp(26px→36px) - proportional to narrower column width. */
+  font-size: clamp(1.625rem, 2.6vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+  line-height: 1.1;
+}
+
+/* CTA closing section - theme-adaptive (renamed concept May 2026).
+   Light mode: tinted surface (matches alternating section pattern).
+   Dark mode: deep neutral for premium closing.                   */
+.mag-section--dark {
+  background: var(--surface-2);
+  border-bottom: none;
+}
+[data-theme=dark] .mag-section--dark {
+  background: #0a0b10 !important;
+}
+
+/* ── Compact in-column footer (homepage magazine only) ── */
+.mag-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+[data-theme=dark] .mag-footer {
+  background: var(--surface-2);  /* #1a1f2c - slightly lifted from ink-950 */
+}
+.mag-footer-inner {
+  padding: 2.5rem 3rem 2rem;
+  max-width: 48rem;
+}
+.mag-footer-brand a {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  text-decoration: none;
+}
+.mag-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mag-footer-nav a {
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.mag-footer-nav a:hover {
+  color: var(--foreground);
+}
+.mag-footer-bar {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.mag-footer-copy {
+  font-size: 10px;
+  font-family: var(--font-sans), var(--font-sans-extra), system-ui, sans-serif;
+  color: var(--muted);
+  opacity: 0.6;
+}
+.mag-footer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.mag-footer-contact a {
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.mag-footer-contact a:hover {
+  opacity: 1;
+  color: var(--foreground);
+}
+
+@media (max-width: 1023px) {
+  .mag-footer-inner { padding: 2rem 1.5rem 1.5rem; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   DEVICE SHOWCASE - Apple product page aesthetic
+   Real interactive iframes. Ultra-thin bezels. Zero clutter.
+═══════════════════════════════════════════════════════ */
+
+.ds-sec {
+  /* Light mode: neutral paper with subtle key light - devices float on canvas */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 70%, #ffffff 0%, #f5f6f9 50%, #eef0f3 100%);
+  position: relative;
+  overflow: hidden;
+}
+[data-theme=dark] .ds-sec {
+  /* Dark mode: near-black cinematic void */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 70%, #16161a 0%, #0a0a0c 50%, #000 100%);
+}
+/* Subtle key light from upper-left - simulates studio lighting */
+.ds-sec::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(120,140,180,0.06) 0%, transparent 60%);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.ds-wrap {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 3rem 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4rem;
+}
+
+/* Headline block - left-aligned to match homepage editorial system */
+.ds-hd {
+  text-align: left;
+  max-width: 520px;
+}
+
+/* Text colors theme-aware: dark text on light bg, light text on dark bg */
+.ds-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(15, 23, 42, 0.45);
+  margin-bottom: 1.1rem;
+  font-family: var(--font-mono, monospace);
+}
+[data-theme=dark] .ds-label { color: rgba(255,255,255,0.3); }
+
+.ds-h2 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: var(--foreground);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+.ds-p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.5);
+  line-height: 1.75;
+}
+[data-theme=dark] .ds-p { color: rgba(255,255,255,0.35); }
+
+/* ── device row - bottom-aligned ── */
+.ds-scene {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.ds-fig {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  /* NO permanent will-change - frees GPU memory for Three.js WebGL.
+     Layer is promoted only while hover transition is active. */
+}
+.ds-fig:hover {
+  will-change: transform;
+}
+
+/* Floor halo - adapts to bg: light bg uses subtle shadow, dark uses subtle glow */
+.ds-fig::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -16px;
+  width: 90%;
+  height: 24px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(15, 23, 42, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+[data-theme=dark] .ds-fig::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,0.07) 0%,
+    transparent 70%
+  );
+}
+
+/* Hover lift - simple translateY, no rotation */
+.ds-ipad:hover,
+.ds-iphone:hover,
+.ds-browser:hover { transform: translateY(-5px); }
+
+/* ════════════════════════════════
+   iPAD PRO M4 (portrait)
+   Real ratio 1032:1380 → 1:1.337
+   Ultra-thin 5 px uniform bezel
+════════════════════════════════ */
+.ds-ipad-body {
+  width: 212px;
+  background:
+    linear-gradient(135deg,
+      #6a6a6e 0%,
+      #3c3c40 30%,
+      #4c4c50 60%,
+      #3c3c40 85%,
+      #6a6a6e 100%);
+  border-radius: 11px;
+  padding: 5px;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow:
+    inset 0 1px 0.5px rgba(255,255,255,0.3),
+    inset 0 -1px 0.5px rgba(0,0,0,0.4),
+    0 0 0 0.5px rgba(0,0,0,0.12),
+    0 8px 16px -4px rgba(15,23,42,0.12),
+    0 22px 36px -10px rgba(15,23,42,0.10);
+}
+[data-theme=dark] .ds-ipad-body {
+  box-shadow:
+    inset 0 1px 0.5px rgba(255,255,255,0.32),
+    inset 0 -1px 0.5px rgba(0,0,0,0.5),
+    0 0 0 0.5px rgba(255,255,255,0.18),
+    0 10px 20px -4px rgba(0,0,0,0.5),
+    0 34px 60px -14px rgba(0,0,0,0.5);
+}
+
+/* Front camera + ambient light sensor - top center of portrait bezel
+   Visible as a small pill (camera lens + sensor side by side)          */
+.ds-ipad-cam {
+  position: absolute;
+  top: 1.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 3.5px;
+  background: #080808;
+  border-radius: 2px;
+  z-index: 5;
+  /* Subtle lens reflection */
+  box-shadow:
+    0 0 0 0.5px rgba(255,255,255,0.06),
+    inset 0 0.5px 0 rgba(255,255,255,0.08);
+}
+/* Lens dot inside pill */
+.ds-ipad-cam::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 3px;
+  background: #111118;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.5px rgba(100,120,180,0.15);
+}
+
+/* iPad Pro M4 display corner: 18pt on 834pt logical = 2.16%
+   For 202px screen: ~4.4px → 5px                           */
+.ds-ipad-screen {
+  border-radius: 5px;
+  overflow: hidden;
+  background: #000;
+  position: relative;
+}
+
+/* Power button + Touch ID - top-right edge of iPad body */
+.ds-ipad-pwr {
+  position: absolute;
+  top: -1.5px;
+  right: 22px;
+  width: 22px;
+  height: 2px;
+  background: linear-gradient(to bottom, #6a6a6e 0%, #3c3c40 100%);
+  border-radius: 1px;
+  box-shadow:
+    inset 0 0.5px 0 rgba(255,255,255,0.3),
+    0 0 0 0.5px rgba(0,0,0,0.4);
+}
+
+/* USB-C port - bottom center */
+.ds-ipad-usbc {
+  position: absolute;
+  bottom: -1.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 2px;
+  background: #0a0a0c;
+  border-radius: 1.5px;
+  box-shadow:
+    0 0 0 0.5px rgba(255,255,255,0.1),
+    inset 0 0.5px 0 rgba(255,255,255,0.05);
+}
+
+/* ════════════════════════════════
+   MacBOOK PRO M4 - Display lid
+   Space Black aluminum chassis
+   Camera notch: 7.6% of width
+════════════════════════════════ */
+.ds-mac-lid {
+  width: 620px;
+  background: #1d1d1f;
+  border-radius: 10px;
+  padding: 8px 5px 5px;
+  box-sizing: border-box;
+  position: relative;
+  /* Light shadow */
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 0.5px rgba(0,0,0,0.15),
+    0 10px 20px -4px rgba(15,23,42,0.12),
+    0 30px 50px -14px rgba(15,23,42,0.10);
+}
+[data-theme=dark] .ds-mac-lid {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 0.5px rgba(0,0,0,0.9),
+    0 12px 24px -4px rgba(0,0,0,0.4),
+    0 48px 80px -16px rgba(0,0,0,0.5);
+}
+
+/* Notch: 7.6% of 610px display = 46px wide
+   Sits at top of lid, extends 9px down into screen area */
+.ds-mac-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46px;
+  height: 9px;
+  background: #1d1d1f;   /* matches lid exactly - seamless */
+  border-radius: 0 0 7px 7px;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2px;
+}
+
+/* TrueHD camera inside notch */
+.ds-mac-cam {
+  width: 4px;
+  height: 4px;
+  background: #0a0a0c;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 0.5px rgba(255,255,255,0.07),
+    inset 0 0 0 1px rgba(0,0,0,0.6);
+}
+
+/* Display area (screen) */
+.ds-mac-screen {
+  background: #000;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ds-chrome {
+  height: 28px;
+  background: #2c2c2e;
+  border-bottom: 0.5px solid rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  padding: 0 11px;
+  gap: 0;
+}
+
+/* Traffic lights - exact Apple macOS dimensions */
+.ds-tl {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+.ds-tl i {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  font-style: normal;
+}
+.ds-tl i:nth-child(1) { background: #ff5f57; }
+.ds-tl i:nth-child(2) { background: #febc2e; }
+.ds-tl i:nth-child(3) { background: #28c840; }
+
+/* URL bar */
+.ds-url {
+  flex: 1;
+  height: 18px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.56rem;
+  font-family: var(--font-mono, monospace);
+  color: rgba(255,255,255,0.38);
+  letter-spacing: 0.01em;
+  border: 0.5px solid rgba(255,255,255,0.05);
+}
+
+/* Toolbar right icons */
+.ds-chrome-r {
+  display: flex;
+  gap: 4px;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+.ds-chrome-r i {
+  display: block;
+  width: 11px;
+  height: 11px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2.5px;
+  font-style: normal;
+}
+
+.ds-browser-screen {
+  background: #000;
+  position: relative;
+}
+
+/* ── Glass screen reflection - all 3 devices ──────────────────
+   Simulates studio key light (upper-left) catching the display
+   glass. Same technique Apple uses in product renders.
+   Max opacity 4% - present but not distracting.
+─────────────────────────────────────────────────────────────── */
+.ds-iphone-screen::after,
+.ds-ipad-screen::after,
+.ds-mac-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    158deg,
+    rgba(255,255,255,0.045) 0%,
+    rgba(255,255,255,0.01)  35%,
+    transparent             60%
+  );
+  pointer-events: none;
+  z-index: 8;
+  border-radius: inherit;
+}
+
+/* ════════════════════════════════
+   iPHONE 16 PRO - Black Titanium
+   Real ratio 393:852 → 1:2.168
+   Ultra-thin 3 px bezels · Continuous-curve corners
+   Action Button + Camera Control (signature 16 Pro)
+════════════════════════════════ */
+.ds-iphone-body {
+  width: 158px;
+  height: 335px;
+  background:
+    linear-gradient(135deg,
+      #6a6a6e 0%,
+      #3c3c40 22%,
+      #4c4c50 50%,
+      #3c3c40 78%,
+      #6a6a6e 100%);
+  border-radius: 26px;
+  padding: 3px;
+  box-sizing: border-box;
+  position: relative;
+  /* Light shadow - 2 layers max, subtle on light bg */
+  box-shadow:
+    inset 0 1px 0.5px rgba(255,255,255,0.3),
+    inset 0 -1px 0.5px rgba(0,0,0,0.4),
+    0 0 0 0.5px rgba(0,0,0,0.12),
+    0 8px 16px -4px rgba(15,23,42,0.12),
+    0 24px 40px -10px rgba(15,23,42,0.10);
+}
+[data-theme=dark] .ds-iphone-body {
+  box-shadow:
+    inset 0 1px 0.5px rgba(255,255,255,0.35),
+    inset 0 -1px 0.5px rgba(0,0,0,0.5),
+    0 0 0 0.5px rgba(255,255,255,0.18),
+    0 12px 24px -4px rgba(0,0,0,0.5),
+    0 40px 80px -16px rgba(0,0,0,0.6);
+}
+
+.ds-iphone-screen {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 23px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dynamic Island - 126pt × 37pt on 402pt screen = 31.3% wide × 9.2% tall
+   Scaled to our 152px screen: 47.6px × 14px                              */
+.ds-di {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 14px;
+  background: #000;
+  border-radius: 7px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Side button base - titanium with subtle sheen */
+.ds-act, .ds-vol1, .ds-vol2, .ds-pwr, .ds-cam-ctrl {
+  position: absolute;
+  background: linear-gradient(to right, #7a7a7e 0%, #444448 100%);
+  border-radius: 1px;
+  box-shadow:
+    inset 0 0.5px 0 rgba(255,255,255,0.3),
+    0 0 0 0.5px rgba(0,0,0,0.4);
+}
+.ds-pwr, .ds-cam-ctrl {
+  background: linear-gradient(to left, #7a7a7e 0%, #444448 100%);
+}
+
+/* LEFT side - Action Button (top), Volume Up, Volume Down */
+.ds-act  { top: 48px;  left: -1.5px; width: 2px; height: 20px; }
+.ds-vol1 { top: 82px;  left: -1.5px; width: 2px; height: 24px; }
+.ds-vol2 { top: 112px; left: -1.5px; width: 2px; height: 24px; }
+
+/* RIGHT side - Side Button (power), Camera Control (NEW 16 Pro) */
+.ds-pwr      { top:  86px; right: -1.5px; width: 2px; height: 38px; }
+.ds-cam-ctrl {
+  top: 146px; right: -1.5px; width: 2px; height: 20px;
+  /* Camera Control has a sapphire crystal cap - slight reflectivity */
+  background: linear-gradient(to left, #8a8a8e 0%, #444448 60%, #444448 100%);
+  box-shadow:
+    inset 0 0.5px 0 rgba(255,255,255,0.4),
+    inset 0.5px 0 0 rgba(200,220,240,0.25),
+    0 0 0 0.5px rgba(0,0,0,0.4);
+}
+
+/* ── Drag-to-scroll overlay ── */
+.ds-overlay {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ds-overlay[data-drag] {
+  cursor: grabbing;
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 1023px) {
+  .ds-wrap  { padding: 3rem 1.5rem 4rem; gap: 2.5rem; }
+  .ds-scene { overflow-x: auto; gap: 1rem; justify-content: flex-start; padding-bottom: 1rem; }
+  .ds-ipad  { display: none; }
+  .ds-mac-lid { width: 340px; }
+  .ds-chrome { height: 32px; }
+}
+
+
+/* ── Mobile responsive ── */
+@media (max-width: 1023px) {
+  .mag-page-bg { display: none; }
+  .mag-wrap {
+    /* Reset fixed-frame to normal document flow on mobile */
+    position: static;
+    transform: none;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    max-width: none;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    display: block;
+  }
+  .mag-scroll {
+    overflow-y: visible;
+    height: auto;
+  }
+  .mag-rail {
+    display: none;
+  }
+  .mag-index-header {
+    padding: 2rem 1.5rem 0.75rem;
+  }
+  .mag-row {
+    padding: 0 1.5rem;
+    height: 66px;
+    gap: 0.75rem;
+  }
+  .mag-row-tag { display: none; }
+  .mag-row-domain { display: none; }
+  .mag-section-inner {
+    padding: 3rem 1.5rem;
+  }
+  .mag-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mag-stat {
+    padding: 1rem 1.25rem;
+  }
+  .mag-stat:nth-child(2) { border-right: none; }
+  .mag-stat:nth-child(1),
+  .mag-stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .mag-row,
+  .mag-row-name,
+  .mag-row-arrow { transition: none; }
+  /* Kill stagger blur/translate effects */
+  .motion-ready [data-stagger="up"],
+  .motion-ready [data-stagger="row"],
+  .motion-ready [data-stagger="stat"] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .section-entered [data-stagger="up"],
+  .section-entered [data-stagger="row"],
+  .section-entered [data-stagger="stat"] { animation: none !important; }
+  /* Kill word-split 3D heading effect */
+  .motion-ready .mag-hw {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .head-visible .mag-hw { transition: none !important; }
+  /* Kill ghost number parallax */
+  .mag-section::after { animation: none !important; }
+  /* Kill spotlight transition */
+  .mag-section--dark::before { transition: none !important; }
+}
+
+/* ── Print stylesheet for /bao-gia self-service PDF export ──
+   When user hits "In / PDF" the page renders clean:
+   - Hide nav, sticky bar, footer, decorative bg
+   - Black text on white, full-width content
+   - Detail sections auto-expanded                            */
+@media print {
+  body { background: white !important; color: black !important; }
+  header, footer, .mag-page-bg, .mag-grain,
+  .sticky, .mag-section-index, button[aria-label],
+  /* Hide self-service action buttons + contact CTA in print */
+  .quote-no-print { display: none !important; }
+  /* Auto-expand collapsed details */
+  details, details > summary { display: block !important; }
+  details[open], details:not([open]) > div { display: block !important; }
+  details > summary::-webkit-details-marker { display: none; }
+  /* Print color in dark mode pricing card → invert to readable */
+  .mag-section--dark, .ds-sec { background: white !important; color: black !important; }
+  .bg-gray-900, .dark\:bg-white { background: white !important; color: black !important; }
+  .text-white { color: black !important; }
+  a { color: black !important; text-decoration: underline; }
+  /* Tighter margins for compact PDF */
+  section, .mag-section { padding: 1rem 0 !important; }
+  .mag-section-head { font-size: 1.5rem !important; }
+}

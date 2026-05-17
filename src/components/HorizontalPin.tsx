@@ -16,7 +16,7 @@ type Props = {
 }
 
 /**
- * Pinned horizontal scroll section — akaru/lusion/darkroom signature.
+ * Pinned horizontal scroll section - akaru/lusion/darkroom signature.
  *
  * Layout:
  *   .h-pin-wrap      tall outer wrapper, height = 100vh + (trackWidth - 100vw)
@@ -27,7 +27,7 @@ type Props = {
  * Behaviour:
  *   • As wrapper.top crosses from 0 to -(wrapper.height - 100vh), `progress`
  *     ramps 0 → 1, and the track translates accordingly.
- *   • Driven by `lenis-scroll` (preferred) or native `scroll` — same handler
+ *   • Driven by `lenis-scroll` (preferred) or native `scroll` - same handler
  *     for both, no double-fire risk because we recompute from scrollY each
  *     time.
  *   • Recomputes pin-height on resize + ResizeObserver of track (e.g. font
@@ -35,7 +35,7 @@ type Props = {
  *
  * Mobile / touch / reduced-motion: bypassed entirely. The wrapper renders
  * children directly with native horizontal overflow + scroll-snap so users
- * can swipe left-right naturally — pin patterns fight touch UX (no inertia
+ * can swipe left-right naturally - pin patterns fight touch UX (no inertia
  * to "scroll past" a pinned section, leads to confusion).
  */
 export default function HorizontalPin({

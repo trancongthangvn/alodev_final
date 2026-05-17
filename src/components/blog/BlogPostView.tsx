@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 /**
- * BlogPostView — shared visual rendering of a blog post body, used by:
+ * BlogPostView - shared visual rendering of a blog post body, used by:
  *   • /blog/<slug> (public, server, via wrapper page)
  *   • /admin/blog/preview?id=... (admin, client, fetches from D1)
  *
@@ -26,7 +26,7 @@ export type BlogPostViewData = {
 }
 
 function formatVnDate(iso: string | null): string {
-  if (!iso) return '—'
+  if (!iso) return '-'
   try {
     const d = new Date(iso)
     return d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })

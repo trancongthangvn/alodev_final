@@ -1,9 +1,9 @@
 /**
- * StackStrip — slim "Stack" section between Portfolio and WhyAlodev.
+ * StackStrip - slim "Stack" section between Portfolio and WhyAlodev.
  *
  * After moving the 3D cube to the hero, the standalone Craft section was
  * downgraded to a quiet stack-categories list. Same dark Resend-flavored
- * surface, no big copy block, no metrics — just the framework names.
+ * surface, no big copy block, no metrics - just the framework names.
  *
  * Justification for keeping this around: the 5×5 grid of framework names
  * carries real SEO weight for keyword discovery ("Next.js Việt Nam",
@@ -30,7 +30,7 @@ export default function StackStrip() {
         <div className="reveal text-center max-w-3xl mx-auto mb-10 lg:mb-14">
           <div className="text-xs font-mono font-semibold uppercase tracking-[0.2em] text-gray-500 dark:text-zinc-500">Stack</div>
           <h2 className="hero-h mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
-            Công nghệ chọn theo nghiệp vụ —<br className="hidden sm:inline" /> không chạy theo trend.
+            Công nghệ chọn theo nghiệp vụ -<br className="hidden sm:inline" /> không chạy theo trend.
           </h2>
         </div>
 
@@ -42,7 +42,7 @@ export default function StackStrip() {
               </div>
               <ul className="space-y-1.5">
                 {g.items.map((it) => (
-                  // Tech-cyan tint on the monospace stack names — pairs
+                  // Tech-cyan tint on the monospace stack names - pairs
                   // with the .kbd chip palette so all "code-y" text in
                   // the page reads as one coherent system. Section
                   // labels above stay neutral grey (they're meta, not

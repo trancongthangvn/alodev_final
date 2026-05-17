@@ -1,17 +1,17 @@
 /**
- * articleSchema.ts — JSON-LD (Schema.org) generators for parsed articles.
+ * articleSchema.ts - JSON-LD (Schema.org) generators for parsed articles.
  *
  * Outputs structured data Google Search, AI Overviews, Featured Snippets,
- * Rich Results consume. Builders are pure functions — given parsed article
+ * Rich Results consume. Builders are pure functions - given parsed article
  * input, return a plain object ready for `<script type="application/ld+json">`.
  *
  * Covered types:
- *   - Article           — always emitted
- *   - BreadcrumbList    — always emitted (3-level: home → category → article)
- *   - FAQPage           — when faq array present
- *   - HowTo             — when content_type="how-to" (steps from body H2s)
- *   - ItemList          — when content_type="listicle"|"comparison"
- *   - (Review/Product   — stubs, needs extra YAML fields to populate)
+ *   - Article           - always emitted
+ *   - BreadcrumbList    - always emitted (3-level: home → category → article)
+ *   - FAQPage           - when faq array present
+ *   - HowTo             - when content_type="how-to" (steps from body H2s)
+ *   - ItemList          - when content_type="listicle"|"comparison"
+ *   - (Review/Product   - stubs, needs extra YAML fields to populate)
  */
 
 import { PUBLISHER, DEFAULT_AUTHOR, CATEGORY_LABELS } from '@/config/publisher';
@@ -61,11 +61,11 @@ export interface SchemaArticleInput {
   faq?: SchemaFAQ[];
   key_takeaways?: string[];
   related_entities?: SchemaRelatedEntity[];
-  /** Raw HTML body — used to count list items / extract steps. */
+  /** Raw HTML body - used to count list items / extract steps. */
   html_body?: string;
-  /** Word count of body — emitted as schema.org/wordCount. */
+  /** Word count of body - emitted as schema.org/wordCount. */
   word_count?: number;
-  /** Reading time in minutes — emitted as schema.org/timeRequired ISO 8601. */
+  /** Reading time in minutes - emitted as schema.org/timeRequired ISO 8601. */
   reading_time_minutes?: number;
 }
 
@@ -251,7 +251,7 @@ export function buildHowToSchema(input: SchemaArticleInput): object | null {
       text: s.text,
       ...(s.url ? { url: s.url } : {}),
     })),
-    totalTime: undefined, // optional — YAML doesn't currently provide
+    totalTime: undefined, // optional - YAML doesn't currently provide
   };
 }
 
@@ -300,7 +300,7 @@ export function buildItemListSchema(input: SchemaArticleInput): object | null {
 }
 
 function extractListItems(html: string): string[] {
-  // Prefer H2 (listicle) — fall back to H3 if < 3 H2s
+  // Prefer H2 (listicle) - fall back to H3 if < 3 H2s
   let re = /<h2\b[^>]*>([\s\S]*?)<\/h2>/gi;
   let items: string[] = [];
   let m: RegExpExecArray | null;
@@ -327,7 +327,7 @@ export function buildAllSchemas(input: SchemaArticleInput): {
   faq: object | null;
   howto: object | null;
   itemList: object | null;
-  /** Array ready to embed — each element is one JSON-LD block. */
+  /** Array ready to embed - each element is one JSON-LD block. */
   all: object[];
 } {
   const article = buildArticleSchema(input);

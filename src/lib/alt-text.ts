@@ -1,5 +1,5 @@
 /**
- * Alt-text audit — find images in HTML that are missing or have empty `alt` attributes,
+ * Alt-text audit - find images in HTML that are missing or have empty `alt` attributes,
  * and helpers to update them in place. Used by the article editor and admin review panels.
  */
 

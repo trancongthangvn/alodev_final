@@ -4,9 +4,19 @@ import JsonLd from '@/components/JsonLd'
 import Icon, { type IconName } from '@/components/Icon'
 import QuoteCTA from '@/components/QuoteCTA'
 import { breadcrumbSchema, howToSchema, faqPageSchema } from '@/lib/schema'
+import MagazineLayout from '@/components/layout/MagazineLayout'
+
+const toc = [
+  { num: '01', name: 'Khởi điểm',  hash: '#hero' },
+  { num: '02', name: 'Phases',     hash: '#phases' },
+  { num: '03', name: 'Cadence',    hash: '#cadence' },
+  { num: '04', name: 'Công cụ',    hash: '#tools' },
+  { num: '05', name: 'Câu hỏi',    hash: '#faq' },
+  { num: '06', name: 'Bắt đầu',    hash: '#cta' },
+]
 
 export const metadata: Metadata = {
-  title: 'Quy trình triển khai dự án — 8 giai đoạn từ tư vấn đến bảo hành',
+  title: 'Quy trình triển khai dự án - 8 giai đoạn từ tư vấn đến bảo hành',
   description:
     'Quy trình 8 giai đoạn của Alodev: từ tư vấn miễn phí (24h) → báo giá (48h) → thiết kế UI/UX → phát triển sprint hàng tuần → kiểm thử → bàn giao → bảo hành 6–12 tháng. Minh bạch, có deadline ràng buộc.',
   alternates: { canonical: '/quy-trinh' },
@@ -19,7 +29,7 @@ export const metadata: Metadata = {
     'bảo hành website',
     'alodev quy trình',
   ],
-  openGraph: { url: '/quy-trinh', title: 'Quy trình 8 giai đoạn — Alodev', description: 'Tư vấn 24h → báo giá 48h → UI/UX → sprint demo hàng tuần → kiểm thử → bàn giao → bảo hành 6–12 tháng.' },
+  openGraph: { url: '/quy-trinh', title: 'Quy trình 8 giai đoạn - Alodev', description: 'Tư vấn 24h → báo giá 48h → UI/UX → sprint demo hàng tuần → kiểm thử → bàn giao → bảo hành 6–12 tháng.' },
 }
 
 type Phase = {
@@ -41,7 +51,7 @@ const phases: Phase[] = [
     icon: 'phone',
     title: 'Khám phá & tư vấn miễn phí',
     intro:
-      'Một cuộc Zalo / Google Meet 30 phút để hiểu nhu cầu thực, ngân sách, deadline. Không sales pitch, không bắt đăng ký — chỉ đánh giá xem Alodev có phù hợp.',
+      'Zalo/Meet 30 phút. Hiểu nhu cầu, ngân sách, deadline. Không sales pitch - kết luận fit/no-fit thẳng.',
     yourSide: [
       'Mô tả ngắn về dự án (1–2 câu)',
       'Range ngân sách dự kiến (nếu có)',
@@ -61,7 +71,7 @@ const phases: Phase[] = [
     icon: 'package',
     title: 'Báo giá chi tiết & ký hợp đồng',
     intro:
-      'Báo giá theo từng hạng mục — không có "tuỳ phát sinh", không phí ẩn. Hợp đồng ràng buộc deadline, scope, sở hữu source code, điều khoản trễ giảm 5%/tuần.',
+      'Báo giá theo từng hạng mục - không có "tuỳ phát sinh", không phí ẩn. Hợp đồng ràng buộc deadline, scope, sở hữu source code, điều khoản trễ giảm 5%/tuần.',
     yourSide: [
       'Confirm scope & milestones',
       'Ký hợp đồng + thanh toán đợt 1 (30%)',
@@ -110,7 +120,7 @@ const phases: Phase[] = [
     icon: 'brush',
     title: 'Thiết kế UI/UX (mockup duyệt từng màn)',
     intro:
-      'Figma mockup chi tiết từng màn. Design system trước (color, type, spacing), rồi component, rồi layout. Bạn duyệt từng màn — không bao giờ "code rồi chỉnh sửa giao diện sau".',
+      'Figma mockup chi tiết từng màn. Design system trước (color, type, spacing), rồi component, rồi layout. Bạn duyệt từng màn - không bao giờ "code rồi chỉnh sửa giao diện sau".',
     yourSide: [
       'Review từng màn trên Figma',
       'Comment trực tiếp trong file',
@@ -133,9 +143,9 @@ const phases: Phase[] = [
     index: '05',
     duration: '2–12 tuần',
     icon: 'rocket',
-    title: 'Phát triển — sprint hàng tuần + demo trên staging',
+    title: 'Phát triển - sprint hàng tuần + demo trên staging',
     intro:
-      'Code theo sprint 1 tuần. Cuối mỗi tuần: deploy lên staging URL, demo qua Zalo/Meet, bạn test + feedback, fix sang sprint kế. Tiến độ track real-time trên Linear board.',
+      'Sprint 1 tuần. Cuối tuần: deploy staging, demo Zalo/Meet, bạn test + feedback. Tiến độ trên Linear board.',
     yourSide: [
       'Tham gia demo cuối tuần (30–45 phút)',
       'Test trên staging + report bug qua Linear',
@@ -187,7 +197,7 @@ const phases: Phase[] = [
     icon: 'handshake',
     title: 'Bàn giao & training',
     intro:
-      'Deploy production. Transfer ownership: domain, hosting, repo, database, account admin tất cả đứng tên bạn. Training session 1–2 tiếng với team bạn. Tài liệu kỹ thuật bàn giao đầy đủ.',
+      'Deploy production. Transfer domain, hosting, repo, database, admin về tên bạn. Training 1–2 tiếng. Tài liệu kỹ thuật bàn giao.',
     yourSide: [
       'Tham gia training session',
       'Confirm transfer của các tài khoản',
@@ -215,7 +225,7 @@ const phases: Phase[] = [
     icon: 'wrench',
     title: 'Bảo hành & hỗ trợ vận hành',
     intro:
-      'Mọi bug do Alodev gây ra trong thời hạn bảo hành — fix MIỄN PHÍ. Sau bảo hành: gói hỗ trợ tháng từ 1 triệu (nếu cần), bạn cancel bất cứ lúc nào, không vendor lock-in.',
+      'Bug do code Alodev → fix không phí trong hạn bảo hành. Sau hạn: gói hỗ trợ từ 1tr/tháng, huỷ bất kỳ lúc nào.',
     yourSide: [
       'Báo bug qua email/Linear/Zalo',
       'Quyết định có gia hạn gói hỗ trợ tháng',
@@ -237,14 +247,14 @@ const phases: Phase[] = [
 const faq = [
   {
     q: 'Mỗi giai đoạn có bắt buộc theo đúng thứ tự không?',
-    a: 'Có. 8 giai đoạn được thiết kế tuyến tính, mỗi giai đoạn có quality gate phải duyệt mới sang giai đoạn kế. Cho phép rework trong cùng giai đoạn (vd: 2–3 vòng wireframe), nhưng không skip giai đoạn — tránh tình huống "code rồi sửa giao diện sau" gây phát sinh chi phí.',
+    a: 'Có. 8 giai đoạn được thiết kế tuyến tính, mỗi giai đoạn có quality gate phải duyệt mới sang giai đoạn kế. Cho phép rework trong cùng giai đoạn (vd: 2–3 vòng wireframe), nhưng không skip giai đoạn - tránh tình huống "code rồi sửa giao diện sau" gây phát sinh chi phí.',
   },
   {
     q: 'Nếu tôi muốn rút ngắn timeline, có được không?',
-    a: 'Có thể nén giai đoạn 03 (đặc tả) + 04 (UI/UX) song song nếu scope nhỏ — tiết kiệm 1–2 tuần. Riêng giai đoạn 05 (phát triển) và 06 (QA) không nén được vì tính chất sprint + test cần thời gian thực. Quote sẽ note rõ option fast-track.',
+    a: 'Có thể nén giai đoạn 03 (đặc tả) + 04 (UI/UX) song song nếu scope nhỏ - tiết kiệm 1–2 tuần. Riêng giai đoạn 05 (phát triển) và 06 (QA) không nén được vì tính chất sprint + test cần thời gian thực. Quote sẽ note rõ option fast-track.',
   },
   {
-    q: 'Tôi không có team kỹ thuật — có theo dõi tiến độ được không?',
+    q: 'Tôi không có team kỹ thuật - có theo dõi tiến độ được không?',
     a: 'Được. Linear board được setup mode UX-friendly cho non-tech (chỉ nhìn % done + milestones, không nhìn vào ticket detail). Demo cuối tuần qua Zalo/Meet bằng tiếng Việt thuần, không jargon. Bạn chỉ cần focus vào "đúng yêu cầu chưa" thay vì code.',
   },
   {
@@ -253,7 +263,7 @@ const faq = [
   },
   {
     q: 'Bảo hành 6–12 tháng cụ thể là gì?',
-    a: 'Bảo hành = fix MIỄN PHÍ mọi bug do code Alodev gây ra. Bao gồm: lỗi logic, lỗi UI, lỗi performance regression. Không bao gồm: feature request mới, thay đổi requirement, lỗi do bên 3 (Zalo API thay đổi, Stripe đổi pricing, etc.). Thời hạn 6 tháng cho web, 12 tháng cho mobile app + hệ thống quản trị.',
+    a: 'Fix không phí cho bug do code Alodev (logic, UI, perf regression). Không bao gồm: feature mới, đổi requirement, lỗi bên 3 (Zalo/Stripe đổi API). Thời hạn 6 tháng cho web, 12 tháng cho mobile app + hệ thống quản trị.',
   },
   {
     q: 'Tôi có thể đổi đội bảo trì sau bảo hành không?',
@@ -263,7 +273,7 @@ const faq = [
 
 export default function QuyTrinhPage() {
   return (
-    <>
+    <MagazineLayout toc={toc} tagline={<>8 giai đoạn,<br />minh bạch.</>}>
       <JsonLd
         data={[
           breadcrumbSchema([
@@ -282,15 +292,14 @@ export default function QuyTrinhPage() {
       />
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-white dark:bg-ink-950">
-        <div className="aurora opacity-30" />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-24 pb-10 lg:pb-16">
-          <Eyebrow>Quy trình</Eyebrow>
-          <h1 className="h-display mt-4 text-gray-900 dark:text-white max-w-3xl">
+      <section id="hero" className="mag-section mag-bg-paper relative overflow-hidden">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-24">
+          <p className="mag-section-index">Quy trình</p>
+          <h1 className="mag-section-head !mt-4 text-gray-900 dark:text-white max-w-3xl">
             Tám giai đoạn. Có deliverable. Có quality gate.
           </h1>
           <p className="mt-6 text-base lg:text-lg text-gray-600 dark:text-ink-400 leading-relaxed max-w-3xl">
-            Từ cuộc tư vấn miễn phí đầu tiên (≤ 24h) đến hết bảo hành (6–12 tháng) — quy trình minh bạch,
+            Từ cuộc tư vấn miễn phí đầu tiên (≤ 24h) đến hết bảo hành (6–12 tháng) - quy trình minh bạch,
             deadline ràng buộc trong hợp đồng, deliverable rõ cho từng giai đoạn. Bạn biết mình đang ở đâu, sắp ra cái gì,
             khi nào sang giai đoạn kế.
           </p>
@@ -312,7 +321,7 @@ export default function QuyTrinhPage() {
       </section>
 
       {/* TIMELINE STRIP */}
-      <section className="bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800 py-6 lg:py-8">
+      <section id="phases" className="mag-section mag-bg-tint py-6 lg:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-4 lg:grid-cols-8 gap-3 lg:gap-4">
             {phases.map((p) => (
@@ -337,7 +346,7 @@ export default function QuyTrinhPage() {
       </section>
 
       {/* PHASES */}
-      <section className="py-12 lg:py-20 bg-white dark:bg-ink-950">
+      <section id="tools" className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 lg:space-y-20">
           {phases.map((p, i) => (
             <article key={p.index} id={`phase-${p.index}`} className="reveal scroll-mt-24">
@@ -427,10 +436,10 @@ export default function QuyTrinhPage() {
       </section>
 
       {/* COMMUNICATION CADENCE */}
-      <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800">
+      <section id="cadence" className="mag-section mag-bg-tint py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Eyebrow>Cadence giao tiếp</Eyebrow>
-          <h2 className="h-section mt-3 text-gray-900 dark:text-white">
+          <p className="mag-section-index">02 · Cadence giao tiếp</p>
+          <h2 className="mag-section-head !mt-3">
             Khi nào và bằng kênh nào.
           </h2>
           <div className="reveal-stagger mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
@@ -453,12 +462,12 @@ export default function QuyTrinhPage() {
       </section>
 
       {/* TOOLS */}
-      <section className="py-12 lg:py-20 bg-white dark:bg-ink-950">
+      <section className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Eyebrow>Công cụ</Eyebrow>
-          <h2 className="h-section mt-3 text-gray-900 dark:text-white">Stack quy trình.</h2>
+          <p className="mag-section-index">03 · Công cụ</p>
+          <h2 className="mag-section-head !mt-3">Stack quy trình.</h2>
           <p className="mt-3 text-base text-gray-600 dark:text-ink-400 max-w-2xl">
-            Công cụ Alodev dùng để chạy dự án — bạn được invite full quyền view, không cần tài khoản trả phí.
+            Công cụ Alodev dùng để chạy dự án - bạn được invite full quyền view, không cần tài khoản trả phí.
           </p>
           <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
@@ -479,10 +488,10 @@ export default function QuyTrinhPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-12 lg:py-20 bg-cream-50 dark:bg-ink-950 border-y border-gray-200 dark:border-ink-800">
+      <section id="faq" className="mag-section mag-bg-tint py-12 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Eyebrow>Câu hỏi thường gặp</Eyebrow>
-          <h2 className="h-section mt-3 text-gray-900 dark:text-white">Về quy trình.</h2>
+          <p className="mag-section-index">04 · Câu hỏi thường gặp</p>
+          <h2 className="mag-section-head !mt-3">Về quy trình.</h2>
           <div className="mt-8 space-y-3">
             {faq.map((f) => (
               <details
@@ -503,15 +512,15 @@ export default function QuyTrinhPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative py-12 lg:py-24 bg-white dark:bg-ink-950 overflow-hidden">
+      <section id="cta" className="mag-section mag-bg-paper relative py-12 lg:py-24 overflow-hidden">
         <div className="aurora opacity-50" />
-        <div className="reveal relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Eyebrow>Bắt đầu</Eyebrow>
-          <h2 className="h-section mt-4 text-gray-900 dark:text-white">
+        <div className="reveal relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="mag-section-index">05 · Bắt đầu</p>
+          <h2 className="mag-section-head !mt-4">
             Sẵn sàng bước vào giai đoạn 01?
           </h2>
           <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-ink-400">
-            Cuộc tư vấn miễn phí 30 phút — không sales pitch, không ràng buộc. Chỉ đánh giá fit hay no-fit.
+            Cuộc tư vấn miễn phí 30 phút - không sales pitch, không ràng buộc. Chỉ đánh giá fit hay no-fit.
           </p>
           <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <span className="magnetic w-full sm:w-auto">
@@ -528,15 +537,6 @@ export default function QuyTrinhPage() {
           </div>
         </div>
       </section>
-    </>
-  )
-}
-
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-2">
-      <span className="w-6 h-px bg-brand-600 dark:bg-brand-400" />
-      <span className="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400">{children}</span>
-    </div>
+    </MagazineLayout>
   )
 }

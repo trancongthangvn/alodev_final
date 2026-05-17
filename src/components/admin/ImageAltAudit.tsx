@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { extractImages, findImagesMissingAlt, setImageAlt } from "@/lib/alt-text";
 
 /**
- * Inline "alt-text issues" panel — drops below a rich-text editor (or anywhere HTML is
+ * Inline "alt-text issues" panel - drops below a rich-text editor (or anywhere HTML is
  * authored) and lets the admin fill in missing alt attributes without diving into the HTML.
  *
  * Parent owns the HTML state and passes an `onChange(html)` callback.

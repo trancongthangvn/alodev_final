@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 
 /**
- * Google Analytics 4 — load on FIRST user interaction (not lazyOnload).
+ * Google Analytics 4 - load on FIRST user interaction (not lazyOnload).
  *
  * Why not Next's `<Script strategy="lazyOnload">`:
  * lazyOnload fires after `window.onload`, which on mobile happens within
@@ -12,11 +12,11 @@ import { useEffect } from 'react'
  * page) still gets billed against "unused JS" and "main-thread work".
  *
  * Loading on first interaction (scroll / click / keydown / touch / mouse-
- * move) means Lighthouse's headless test never triggers it — the audit
+ * move) means Lighthouse's headless test never triggers it - the audit
  * window completes before any synthetic interaction. Real users still get
  * GA exactly when they start engaging, which is when pageviews matter.
  *
- * Pageviews still tracked via /api/track beacon (AnalyticsBeacon.tsx) —
+ * Pageviews still tracked via /api/track beacon (AnalyticsBeacon.tsx) -
  * that's the source of truth for traffic. GA is supplementary (audience
  * data, GA4 reports). Losing the bounce-pageview from users who scroll
  * 0px and leave in <2s is acceptable: those are bots or mis-clicks.
@@ -45,14 +45,14 @@ export default function Analytics() {
       s.src = `https://www.googletagmanager.com/gtag/js?id=${id}`
       document.head.appendChild(s)
 
-      // gtag init — same shape as the Google snippet
+      // gtag init - same shape as the Google snippet
       const w = window as Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void }
       w.dataLayer = w.dataLayer || []
       w.gtag = function gtag(...args: unknown[]) { w.dataLayer!.push(args) }
       w.gtag('js', new Date())
       w.gtag('config', id, { anonymize_ip: true })
 
-      // Cleanup interaction listeners — only need one trigger
+      // Cleanup interaction listeners - only need one trigger
       events.forEach((ev) => window.removeEventListener(ev, loadGA))
     }
 

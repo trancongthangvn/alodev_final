@@ -46,7 +46,7 @@ export default function MotionLayer() {
       mo.observe(document.body, { childList: true, subtree: true })
 
       // ─── 2. Cursor spotlight + magnetic CTA pull ───
-      // Magnetic radius — within this many px, the .magnetic element drifts
+      // Magnetic radius - within this many px, the .magnetic element drifts
       // toward the cursor. Subtle (max 6px translate) so it doesn't feel
       // janky on misaim. Disabled on touch devices.
       const MAG_RADIUS = 90
@@ -138,7 +138,7 @@ export default function MotionLayer() {
         window.removeEventListener('scroll', onScroll)
       }
     } else {
-      // Reduced motion — just reveal everything immediately
+      // Reduced motion - just reveal everything immediately
       document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => el.setAttribute('data-revealed', ''))
       // Pre-fill process tracks
       document.querySelectorAll<HTMLElement>('.process-track').forEach((t) => t.style.setProperty('--fill', '1'))

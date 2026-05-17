@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 /**
- * BackToTop — floating circular button at the bottom-right that smooth-
+ * BackToTop - floating circular button at the bottom-right that smooth-
  * scrolls the page back to the top. Hidden until the user has scrolled
  * past 600px so it doesn't compete with above-the-fold UI.
  *

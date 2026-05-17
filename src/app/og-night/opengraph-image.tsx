@@ -4,7 +4,7 @@ import { renderOgHome, OG_SIZE, OG_CONTENT_TYPE } from '@/lib/og'
 // Pages Function (functions/opengraph-image.ts) when ICT hour falls in
 // the night window [18:00, 06:00). Otherwise the static light variant
 // at /opengraph-image is served directly.
-export const alt = 'Alodev — Studio thiết kế & phát triển Web/App (dark)'
+export const alt = 'Alodev - Studio thiết kế & phát triển Web/App (dark)'
 export const dynamic = 'force-static'
 export const size = OG_SIZE
 export const contentType = OG_CONTENT_TYPE

@@ -15,14 +15,14 @@ import AdminShell from '../AdminShell'
 type Settings = Record<string, unknown>
 
 const GROUPS: { title: string; prefix: string; description: string }[] = [
-  { title: 'Site identity',  prefix: 'site.',    description: 'Tiêu đề, mô tả, URL — hiển thị trên Google SERP và OG tags.' },
-  { title: 'Contact info',   prefix: 'contact.', description: 'Thông tin liên hệ public — số điện thoại, email, Zalo, địa chỉ.' },
+  { title: 'Site identity',  prefix: 'site.',    description: 'Tiêu đề, mô tả, URL - hiển thị trên Google SERP và OG tags.' },
+  { title: 'Contact info',   prefix: 'contact.', description: 'Thông tin liên hệ public - số điện thoại, email, Zalo, địa chỉ.' },
   { title: 'Blog',           prefix: 'blog.',    description: 'Bật/tắt blog, số bài / trang, etc.' },
 ]
 
 const FIELD_META: Record<string, { label: string; type: 'text' | 'textarea' | 'url' | 'tel' | 'email' | 'boolean' | 'number'; help?: string }> = {
   'site.title_default':    { label: 'Tiêu đề mặc định',  type: 'text', help: '40-60 ký tự, hiển thị khi page không override' },
-  'site.title_template':   { label: 'Title template',    type: 'text', help: "Phải có `%s`, ví dụ '%s — Alodev'" },
+  'site.title_template':   { label: 'Title template',    type: 'text', help: "Phải có `%s`, ví dụ '%s - Alodev'" },
   'site.description':      { label: 'Mô tả mặc định',    type: 'textarea', help: '120-160 ký tự (Google SERP cap)' },
   'site.url':              { label: 'Site URL',          type: 'url',  help: 'Canonical URL gốc, không trailing slash' },
   'site.locale':           { label: 'Locale',            type: 'text', help: 'vi_VN | en_US' },
@@ -87,7 +87,7 @@ export default function SettingsForm() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Cài đặt site</h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-zinc-400">
-            Sửa metadata, contact, blog config — apply qua Deploy.
+            Sửa metadata, contact, blog config - apply qua Deploy.
           </p>
         </div>
         <button
@@ -119,7 +119,7 @@ export default function SettingsForm() {
                       <label className="block">
                         <div className="text-sm font-semibold text-gray-700 dark:text-zinc-300 mb-2">
                           {meta.label}
-                          <span className="ml-2 text-[11px] font-mono text-gray-400 dark:text-zinc-600">{key}</span>
+                          <span className="ml-2 text-xs font-mono text-gray-400 dark:text-zinc-600">{key}</span>
                         </div>
                         {meta.type === 'textarea' ? (
                           <textarea

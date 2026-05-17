@@ -33,7 +33,7 @@ async function uploadBlogImage(file: File): Promise<{ url: string; key: string }
 }
 
 /**
- * BlogEditor — used by both /admin/blog/new and /admin/blog/edit?id=XXX.
+ * BlogEditor - used by both /admin/blog/new and /admin/blog/edit?id=XXX.
  * mode='new' shows blank form. mode='edit' fetches existing post by ?id= .
  *
  * Save flow:
@@ -45,7 +45,7 @@ async function uploadBlogImage(file: File): Promise<{ url: string; key: string }
  *   2. Trigger /api/admin/deploy → CF Pages rebuild
  *   3. New post live in /blog/<slug> after ~60s
  *
- * No rich text editor for now — markdown textarea + live preview pane.
+ * No rich text editor for now - markdown textarea + live preview pane.
  * Founder writes raw markdown which renders predictably and stays small.
  * Tier 2 can add Tiptap or Notion-style editor.
  */
@@ -173,7 +173,7 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
       }
       if (opts.publish) {
         setPost((p) => ({ ...p, status: 'published' }))
-        // Auto-trigger deploy on publish — admin shouldn't have to click two
+        // Auto-trigger deploy on publish - admin shouldn't have to click two
         // buttons.  If DEPLOY_HOOK_URL isn't set on the Pages project, the
         // function 503s and we surface the setup hint inline.
         setStatusMsg('Đã publish. Đang trigger deploy…')
@@ -212,7 +212,7 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
       title: a.h1 || a.seo_title || p.title,
       slug: a.slug || p.slug,
       description: a.meta_description || p.description,
-      content: p.content, // keep markdown body untouched — paste-import targets HTML body
+      content: p.content, // keep markdown body untouched - paste-import targets HTML body
       content_html: a.html_body || null,
       cover_image: a.featured_image?.url || p.cover_image,
       tags: Array.isArray(a.tags) && a.tags.length ? a.tags.join(',') : (p.tags ?? ''),
@@ -394,7 +394,7 @@ export default function BlogEditor({ mode }: { mode: 'new' | 'edit' }) {
                 value={post.description ?? ''}
                 onChange={(e) => setPost({ ...post, description: e.target.value })}
                 rows={3}
-                placeholder="Mô tả 120-160 ký tự — hiển thị trên Google SERP"
+                placeholder="Mô tả 120-160 ký tự - hiển thị trên Google SERP"
                 className="w-full rounded-lg border border-gray-200 dark:border-ink-800 bg-white dark:bg-ink-950 text-gray-900 dark:text-white px-4 py-2 text-sm focus:outline-none focus:border-brand-500"
               />
               <Counter value={post.description ?? ''} max={165} sweet={[120, 160]} hint="Khuyến nghị 120-160 ký tự" />
@@ -518,7 +518,7 @@ function Counter({ value, max, sweet, hint }: { value: string; max: number; swee
   const tooLong = len > max
   return (
     <div className={`mt-1 text-xs ${tooLong ? 'text-rose-600' : inSweet ? 'text-emerald-600' : 'text-gray-500 dark:text-zinc-500'}`}>
-      {len} ký tự — {hint}
+      {len} ký tự - {hint}
     </div>
   )
 }

@@ -95,6 +95,45 @@ router.post('/', async (req, res) => {
     return res.status(204).send()
   }
 
+  // Generic named events (cta_popup_shown, contact_submitted, etc).
+  // Schema-light: name + JSON meta. Bot-filter via UA.
+  if (body.type === 'event') {
+    const ua = req.headers['user-agent'] || ''
+    if (BOT_RE.test(ua)) return res.status(204).send()
+    const name = clean(body.name, 80)
+    if (!name) return res.status(204).send()
+    const meta = typeof body.meta === 'string' ? body.meta.slice(0, 1000) : null
+    const country = req.headers['cf-ipcountry'] || null
+    const ua_parsed = parseUA(ua)
+    try {
+      db.prepare(`
+        INSERT INTO analytics_events (id, ts, ts_date, session_id, name, path, meta, country, device)
+        VALUES (?,?,?,?,?,?,?,?,?)
+      `).run(ulid(), new Date().toISOString(), new Date().toISOString().slice(0,10),
+        sid, name, path, meta, country, ua_parsed.device)
+    } catch { /* swallow */ }
+    return res.status(204).send()
+  }
+
+  // Web Vitals (LCP / INP / CLS / FCP / TTFB). Bot-filter, store latest reading.
+  if (body.type === 'vital') {
+    const ua = req.headers['user-agent'] || ''
+    if (BOT_RE.test(ua)) return res.status(204).send()
+    const metric = clean(body.metric, 16)
+    const value = typeof body.value === 'number' && isFinite(body.value) ? body.value : null
+    if (!metric || value === null) return res.status(204).send()
+    const rating = clean(body.rating, 24)
+    const ua_parsed = parseUA(ua)
+    try {
+      db.prepare(`
+        INSERT INTO analytics_vitals (id, ts, ts_date, session_id, path, metric, value, rating, device)
+        VALUES (?,?,?,?,?,?,?,?,?)
+      `).run(ulid(), new Date().toISOString(), new Date().toISOString().slice(0,10),
+        sid, path, metric, value, rating, ua_parsed.device)
+    } catch { /* swallow */ }
+    return res.status(204).send()
+  }
+
   // CF-forwarded headers → country detection works via proxy
   const ip = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip || ''
   const ua = req.headers['user-agent'] || ''

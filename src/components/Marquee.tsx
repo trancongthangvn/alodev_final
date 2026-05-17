@@ -14,11 +14,11 @@ type Props = {
 }
 
 /**
- * Kinetic marquee — infinite horizontal scroll of children.
+ * Kinetic marquee - infinite horizontal scroll of children.
  *
  * Implementation: render children twice side-by-side, translateX from 0
  * to -50% in a CSS-driven RAF loop. When the offset reaches -50% (one
- * full copy travelled), reset to 0 — the swap is invisible because the
+ * full copy travelled), reset to 0 - the swap is invisible because the
  * second copy is now where the first was.
  *
  * Why JS instead of pure CSS @keyframes? Because we want:
@@ -54,14 +54,14 @@ export default function Marquee({
       last = now
       if (!paused && track) {
         // Pull global scroll velocity (set by SmoothScroll); when user
-        // scrolls fast, marquee briefly speeds up — kinetic feedback.
+        // scrolls fast, marquee briefly speeds up - kinetic feedback.
         const vel = (window as unknown as { __lenisVel?: number }).__lenisVel ?? 0
         const boost = 1 + Math.min(Math.abs(vel) / 600, 1.6)
         const dir = reverse ? 1 : -1
         offset += dir * speed * boost * dt
         const half = track.scrollWidth / 2
         if (half > 0) {
-          // Wrap into [-half, 0] — invisible because content is duplicated
+          // Wrap into [-half, 0] - invisible because content is duplicated
           offset = ((offset % half) + half) % half - half
           track.style.transform = `translate3d(${offset.toFixed(2)}px, 0, 0)`
         }

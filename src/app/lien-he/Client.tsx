@@ -1,4 +1,5 @@
 'use client'
+import MagazineLayout from '@/components/layout/MagazineLayout'
 
 import { useEffect, useState } from 'react'
 import Icon, { type IconName } from '@/components/Icon'
@@ -35,13 +36,18 @@ function validate(form: { name: string; email: string; phone: string; message: s
   if (!form.name.trim()) e.name = 'Vui lòng nhập họ tên.'
   else if (form.name.trim().length < 2) e.name = 'Họ tên quá ngắn.'
   if (!form.email.trim()) e.email = 'Vui lòng nhập email.'
-  else if (!EMAIL_RE.test(form.email.trim())) e.email = 'Email không hợp lệ — kiểm tra lại định dạng.'
+  else if (!EMAIL_RE.test(form.email.trim())) e.email = 'Email không hợp lệ - kiểm tra lại định dạng.'
   if (!form.phone.trim()) e.phone = 'Vui lòng nhập số điện thoại.'
   else if (!PHONE_RE.test(form.phone.replace(/[\s-]/g, ''))) e.phone = 'Số điện thoại không hợp lệ (cần 10 số, bắt đầu bằng 0).'
   if (!form.message.trim()) e.message = 'Vui lòng mô tả dự án.'
-  else if (form.message.trim().length < 10) e.message = 'Mô tả quá ngắn — tối thiểu 10 ký tự.'
+  else if (form.message.trim().length < 10) e.message = 'Mô tả quá ngắn - tối thiểu 10 ký tự.'
   return e
 }
+
+const toc = [
+  { num: '01', name: 'Yêu cầu',  hash: '#hero' },
+  { num: '02', name: 'Form',     hash: '#form' },
+]
 
 export default function LienHeClient() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: services[0], budget: budgets[0], message: '' })
@@ -60,7 +66,7 @@ export default function LienHeClient() {
       if (summary) {
         setForm((f) => ({
           ...f,
-          message: summary + '\n\n— Mô tả thêm về nhu cầu cụ thể (deadline, đặc thù nghiệp vụ…):\n',
+          message: summary + '\n\n- Mô tả thêm về nhu cầu cụ thể (deadline, đặc thù nghiệp vụ…):\n',
           service: (svc && SERVICE_MAP[svc]) || f.service,
           budget: (bud && budgets.includes(bud)) ? bud : f.budget,
         }))
@@ -129,18 +135,23 @@ export default function LienHeClient() {
   }
 
   return (
-    <>
-      <section className="bg-gradient-to-br from-cream-50 via-white to-cream-100 border-b border-gray-100 dark:from-ink-950 dark:via-ink-950 dark:to-ink-900 dark:border-ink-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20">
+    <MagazineLayout toc={toc} tagline={<>Gửi yêu cầu -<br />phản hồi trong 24h.</>}>
+      <section id="hero" className="mag-section mag-bg-paper relative overflow-hidden">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
           <div className="max-w-3xl">
-            <div className="text-sm font-semibold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Liên hệ</div>
-            <h1 className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">Gửi yêu cầu — chúng tôi gọi lại trong 24h</h1>
-            <p className="mt-5 text-lg text-gray-600 dark:text-ink-400">Mô tả ngắn ý tưởng, ngân sách dự kiến, deadline (nếu có). Alodev sẽ phản hồi kèm báo giá sơ bộ và đề xuất giải pháp.</p>
+            <p className="mag-section-index">Liên hệ</p>
+            <h1 className="mag-section-head">
+              Gửi yêu cầu -<br />
+              <span className="text-brand-600 dark:text-brand-400">phản hồi trong 24h.</span>
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-ink-400 max-w-xl leading-relaxed">
+              Mô tả ngắn ý tưởng + ngân sách + deadline. Alodev phản hồi kèm báo giá sơ bộ.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="py-10 lg:py-16 bg-white dark:bg-ink-950">
+      <section id="form" className="mag-section mag-bg-paper py-12 lg:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             {fromQuote && (
@@ -151,28 +162,34 @@ export default function LienHeClient() {
             )}
             <form onSubmit={handleSubmit} noValidate className="rounded-2xl border border-gray-200 bg-white p-5 sm:p-8 space-y-4 sm:space-y-5 dark:bg-ink-900 dark:border-ink-800">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Họ và tên" required error={touched.name ? fieldErrors.name : undefined}>
-                  <input data-field="name" required type="text" autoComplete="name"
+                <Field id="name" label="Họ và tên" required error={touched.name ? fieldErrors.name : undefined}>
+                  <input id="field-name" data-field="name" required type="text" autoComplete="name"
                     value={form.name}
                     onChange={(e) => onFieldChange('name', e.target.value)}
                     onBlur={() => onFieldBlur('name')}
+                    aria-invalid={!!(touched.name && fieldErrors.name)}
+                    aria-describedby={touched.name && fieldErrors.name ? 'name-err' : undefined}
                     className={`input ${touched.name && fieldErrors.name ? 'input-error' : ''}`}
                     placeholder="Nguyễn Văn A" />
                 </Field>
-                <Field label="Số điện thoại" required error={touched.phone ? fieldErrors.phone : undefined}>
-                  <input data-field="phone" required type="tel" autoComplete="tel" inputMode="numeric"
+                <Field id="phone" label="Số điện thoại" required error={touched.phone ? fieldErrors.phone : undefined}>
+                  <input id="field-phone" data-field="phone" required type="tel" autoComplete="tel" inputMode="numeric"
                     value={form.phone}
                     onChange={(e) => onFieldChange('phone', e.target.value)}
                     onBlur={() => onFieldBlur('phone')}
+                    aria-invalid={!!(touched.phone && fieldErrors.phone)}
+                    aria-describedby={touched.phone && fieldErrors.phone ? 'phone-err' : undefined}
                     className={`input ${touched.phone && fieldErrors.phone ? 'input-error' : ''}`}
                     placeholder="0364 xxx xxx" />
                 </Field>
               </div>
-              <Field label="Email" required error={touched.email ? fieldErrors.email : undefined}>
-                <input data-field="email" required type="email" autoComplete="email" inputMode="email"
+              <Field id="email" label="Email" required error={touched.email ? fieldErrors.email : undefined}>
+                <input id="field-email" data-field="email" required type="email" autoComplete="email" inputMode="email"
                   value={form.email}
                   onChange={(e) => onFieldChange('email', e.target.value)}
                   onBlur={() => onFieldBlur('email')}
+                  aria-invalid={!!(touched.email && fieldErrors.email)}
+                  aria-describedby={touched.email && fieldErrors.email ? 'email-err' : undefined}
                   className={`input ${touched.email && fieldErrors.email ? 'input-error' : ''}`}
                   placeholder="ban@congty.vn" />
               </Field>
@@ -188,11 +205,13 @@ export default function LienHeClient() {
                   </select>
                 </Field>
               </div>
-              <Field label="Mô tả dự án" required error={touched.message ? fieldErrors.message : undefined}>
-                <textarea data-field="message" required rows={4}
+              <Field id="message" label="Mô tả dự án" required error={touched.message ? fieldErrors.message : undefined}>
+                <textarea id="field-message" data-field="message" required rows={4}
                   value={form.message}
                   onChange={(e) => onFieldChange('message', e.target.value)}
                   onBlur={() => onFieldBlur('message')}
+                  aria-invalid={!!(touched.message && fieldErrors.message)}
+                  aria-describedby={touched.message && fieldErrors.message ? 'message-err' : undefined}
                   className={`input resize-y min-h-[96px] sm:min-h-[120px] ${touched.message && fieldErrors.message ? 'input-error' : ''}`}
                   placeholder="Mô tả ngắn về sản phẩm bạn muốn làm, mục tiêu, deadline mong muốn..." />
               </Field>
@@ -204,15 +223,34 @@ export default function LienHeClient() {
                 </div>
               )}
               {status === 'error' && (
-                <div data-status-banner className="flex items-start gap-2 rounded-xl bg-rose-50 border border-rose-200 p-4 text-sm text-rose-800 dark:bg-rose-500/10 dark:border-rose-500/30 dark:text-rose-300 animate-[banner-in_300ms_cubic-bezier(0.22,1,0.36,1)]">
+                <div data-status-banner role="alert" className="flex items-start gap-2 rounded-xl bg-rose-50 border border-rose-200 p-4 text-sm text-rose-800 dark:bg-rose-500/10 dark:border-rose-500/30 dark:text-rose-300 animate-[banner-in_300ms_cubic-bezier(0.22,1,0.36,1)]">
                   <Icon name="x" className="w-4 h-4 mt-0.5 shrink-0" strokeWidth={2.25} />
-                  <span>{errMsg}</span>
+                  <div className="flex-1">
+                    <div className="font-semibold">Không gửi được</div>
+                    <div className="mt-0.5 text-rose-700 dark:text-rose-300/90">{errMsg}</div>
+                    <div className="mt-2 text-xs text-rose-700/80 dark:text-rose-300/70">
+                      Nhấn lại nút <b>Gửi yêu cầu</b> để thử lại, hoặc{' '}
+                      <a href="https://zalo.me/0364234936" target="_blank" rel="noopener noreferrer" className="font-semibold underline">chat Zalo</a>.
+                    </div>
+                  </div>
                 </div>
               )}
 
               <button type="submit" disabled={status === 'sending'} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-12 rounded-xl bg-ink-900 dark:bg-white px-6 py-3.5 text-white dark:text-ink-900 font-semibold shadow-lg shadow-ink-900/10 hover:bg-ink-800 dark:hover:bg-ink-100 disabled:opacity-60 disabled:cursor-not-allowed transition">
-                {status === 'sending' ? 'Đang gửi...' : 'Gửi yêu cầu'}
-                <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.25} />
+                {status === 'sending' ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.25" strokeWidth="3" />
+                      <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                    </svg>
+                    Đang gửi...
+                  </>
+                ) : (
+                  <>
+                    Gửi yêu cầu
+                    <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.25} />
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -226,42 +264,33 @@ export default function LienHeClient() {
         </div>
       </section>
 
-      <style>{`
-        .input{width:100%;border-radius:0.75rem;border:1px solid #e4e7ec;background:white;padding:0.75rem 1rem;font-size:16px;color:#1e293b;transition:all 0.15s;min-height:44px}
-        @media(min-width:768px){.input{font-size:0.95rem}}
-        .input:focus{outline:none;border-color:#ab5407;box-shadow:0 0 0 3px rgba(171,84,7,0.15)}
-        .input-error{border-color:#f43f5e;box-shadow:0 0 0 3px rgba(244,63,94,0.15)}
-        .input-error:focus{border-color:#f43f5e;box-shadow:0 0 0 3px rgba(244,63,94,0.25)}
-        [data-theme=dark] .input{background:#13171f;border-color:#1f2330;color:#e6e9ee}
-        [data-theme=dark] .input::placeholder{color:#64748b}
-        [data-theme=dark] .input:focus{border-color:#f4811a;box-shadow:0 0 0 3px rgba(244,129,26,0.18)}
-        [data-theme=dark] .input-error{border-color:#f87171;box-shadow:0 0 0 3px rgba(248,113,113,0.18)}
-        @keyframes banner-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-      `}</style>
-    </>
+      {/* .input + banner-in keyframe live in globals.css - single source of truth */}
+    </MagazineLayout>
   )
 }
 
 function Field({
+  id,
   label,
   required,
   error,
   children,
 }: {
+  id?: string
   label: string
   required?: boolean
   error?: string
   children: React.ReactNode
 }) {
   return (
-    <label className="block">
+    <label className="block" htmlFor={id ? `field-${id}` : undefined}>
       <div className="text-sm font-medium text-gray-700 dark:text-ink-300 mb-1.5">
-        {label}{required && <span className="text-rose-500 ml-0.5">*</span>}
+        {label}{required && <span className="text-rose-500 ml-0.5" aria-hidden="true">*</span>}
       </div>
       {children}
       {error && (
-        <div role="alert" className="mt-1.5 text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1">
-          <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+        <div id={id ? `${id}-err` : undefined} role="alert" className="mt-1.5 text-xs text-rose-600 dark:text-rose-400 flex items-center gap-1">
+          <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
           </svg>
           {error}

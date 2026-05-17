@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
 import db from './db.js'
 import contactRoutes from './routes/contact.js'
 import deployWebhookRoutes from './routes/deploy-webhook.js'
@@ -14,7 +15,21 @@ const PORT = process.env.PORT || 3014
 
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',').map((s) => s.trim())
 
-app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }))
+// Minimal CSP — Express only returns JSON, so script-src/style-src can be empty.
+// HTML headers are set by nginx on the static export (see /etc/nginx/sites-available/alodev.vn).
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: false,
+    directives: {
+      defaultSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+  // API never needs to be framed.
+  xFrameOptions: { action: 'deny' },
+}))
+
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) return cb(null, true)
@@ -24,12 +39,37 @@ app.use(cors({
 }))
 app.use(express.json({ limit: '64kb' }))
 
+// CF Origin guard: requests reaching admin/deploy MUST come through Cloudflare
+// (api.alodev.vn tunnel). CF sets `cf-connecting-ip` on every edge request;
+// a raw request to the tunnel origin from a non-CF source won't have it.
+// Disable via SKIP_CF_GUARD=1 for local dev.
+function cfOriginOnly(req, res, next) {
+  if (process.env.SKIP_CF_GUARD === '1') return next()
+  if (!req.headers['cf-connecting-ip']) {
+    return res.status(403).json({ error: 'forbidden_non_cf_origin' })
+  }
+  next()
+}
+
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 60,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'too_many_requests' },
+})
+
+const deployLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 3,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'too_many_requests' },
+})
+
 // ─── Public routes ───────────────────────────────────────────────────────────
 
-// Contact form (public — rate-limited inside)
 app.use('/api/contact', contactRoutes)
-
-// Analytics beacon (public — accepts pageview + duration events)
 app.use('/api/track', trackRoutes)
 
 // Public blog API — used by sync-blog.mjs at build time to generate static JSON
@@ -69,18 +109,32 @@ app.get('/api/blog', (req, res) => {
   })
 })
 
-// ─── Admin API (Basic Auth enforced inside adminRoutes) ───────────────────────
-app.use('/api/admin', adminRoutes)
-
-// ─── Internal deploy webhook (called by CF Pages Function /api/admin/deploy) ──
-app.use('/api', deployWebhookRoutes)
-
 // ─── Health ──────────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({ ok: true, service: 'alodev-api', uptime: process.uptime() })
+  const out = { ok: true, service: 'alodev-api', uptime: process.uptime() }
+  try {
+    const blogStats = db.prepare(`
+      SELECT
+        COUNT(*) AS total,
+        SUM(CASE WHEN status='published' AND published_at IS NOT NULL THEN 1 ELSE 0 END) AS published,
+        MAX(updated_at) AS last_updated_at
+      FROM blog_posts
+    `).get()
+    out.db = { ok: true, ...blogStats }
+  } catch (err) {
+    out.ok = false
+    out.db = { ok: false, error: String(err).slice(0, 120) }
+  }
+  res.status(out.ok ? 200 : 503).json(out)
 })
 
-// 404 + global error handler
+// ─── Admin (CF-only + rate limit + Basic Auth inside) ────────────────────────
+app.use('/api/admin', cfOriginOnly, adminLimiter, adminRoutes)
+
+// ─── Internal deploy webhook (CF-only + rate limit + token inside) ───────────
+app.use('/api', cfOriginOnly, deployLimiter, deployWebhookRoutes)
+
+
 app.use('/api', (req, res) => res.status(404).json({ error: 'not_found' }))
 app.use((err, req, res, _next) => {
   console.error('Unhandled:', err)

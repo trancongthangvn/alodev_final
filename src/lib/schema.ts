@@ -15,10 +15,10 @@ export function organizationSchema() {
     logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg`, width: 512, height: 512 },
     image: `${SITE_URL}/og.png`,
     description: 'Founder-led studio chuyên thiết kế website doanh nghiệp, lập trình app mobile (iOS / Android), xây dựng hệ thống quản trị (CRM, ERP) và tự động hoá AI cho doanh nghiệp Việt Nam.',
-    slogan: 'Thiết kế website & lập trình app chuyên nghiệp — source code thuộc về bạn',
+    slogan: 'Thiết kế website & lập trình app chuyên nghiệp - source code thuộc về bạn',
     // Studio brand alodev.vn went public 2025-03-31 (the website launch
     // date). Founder's fleet operations pre-date the brand by ~4 years
-    // — those years live in the milestones timeline, not as the brand's
+    // - those years live in the milestones timeline, not as the brand's
     // foundingDate. Schema reflects the brand entity, not the founder.
     foundingDate: '2025-03-31',
     founder: { '@type': 'Person', name: 'Trần Công Thắng' },
@@ -81,12 +81,12 @@ export function organizationSchema() {
       '@type': 'OfferCatalog',
       name: 'Dịch vụ thiết kế & phát triển web/app',
       itemListElement: [
-        offerItem('Thiết kế website doanh nghiệp', 8_000_000, 'Landing page, website giới thiệu công ty, blog, e-commerce — chuẩn SEO, responsive, tốc độ tải nhanh.', '/dich-vu/thiet-ke-website'),
+        offerItem('Thiết kế website doanh nghiệp', 8_000_000, 'Landing page, website giới thiệu công ty, blog, e-commerce - chuẩn SEO, responsive, tốc độ tải nhanh.', '/dich-vu/thiet-ke-website'),
         offerItem('Lập trình app mobile (iOS / Android)', 60_000_000, 'Native (Swift/Kotlin) hoặc cross-platform (React Native, Flutter). Push, payment, analytics tích hợp đầy đủ.', '/dich-vu/lap-trinh-app-mobile'),
-        offerItem('Hệ thống quản trị (CRM / ERP)', 25_000_000, 'Dashboard, CRM, ERP, hệ thống đặt hàng — viết riêng theo nghiệp vụ thực tế của doanh nghiệp.', '/dich-vu/he-thong-quan-tri'),
+        offerItem('Hệ thống quản trị (CRM / ERP)', 25_000_000, 'Dashboard, CRM, ERP, hệ thống đặt hàng - viết riêng theo nghiệp vụ thực tế của doanh nghiệp.', '/dich-vu/he-thong-quan-tri'),
         offerItem('Tự động hoá & AI', 5_000_000, 'Bot Zalo/Telegram, tích hợp ChatGPT/Claude, scraping dữ liệu, workflow tự động.', '/dich-vu#automation'),
         offerItem('Bảo trì & nâng cấp website', 1_000_000, 'Tiếp nhận website cũ, khắc phục lỗi, tối ưu hiệu năng, chuyển host, hỗ trợ kỹ thuật theo gói tháng.', '/dich-vu#maintenance'),
-        offerItem('Thiết kế UI/UX', 3_000_000, 'Figma mockup, design system, prototype tương tác — bàn giao trọn gói hoặc kết hợp đội dev nội bộ.', '/dich-vu#design'),
+        offerItem('Thiết kế UI/UX', 3_000_000, 'Figma mockup, design system, prototype tương tác - bàn giao trọn gói hoặc kết hợp đội dev nội bộ.', '/dich-vu#design'),
       ],
     },
   }
@@ -207,7 +207,7 @@ export function projectSchema(p: {
 }
 
 /**
- * Article schema for case study pages — gives Google a clear E-E-A-T signal:
+ * Article schema for case study pages - gives Google a clear E-E-A-T signal:
  * named author with credentials, organization publisher, dated publication
  * with last-modified, scoped to a specific entity. Without Article schema a
  * case study reads to the crawler as just another marketing landing page.
@@ -273,7 +273,7 @@ export function founderPersonSchema(opts: {
     familyName: 'Trần',
     additionalName: 'Công',
     jobTitle: 'Founder & Software Architect',
-    description: 'Founder Alodev — kiến trúc sư phần mềm với 5+ năm xây dựng và vận hành sản phẩm thực tế: web doanh nghiệp, app mobile, hệ thống quản trị, hạ tầng cloud.',
+    description: 'Founder Alodev - kiến trúc sư phần mềm với 5+ năm xây dựng và vận hành sản phẩm thực tế: web doanh nghiệp, app mobile, hệ thống quản trị, hạ tầng cloud.',
     worksFor: { '@id': ORG_ID },
     url: `${SITE_URL}/ve-chung-toi`,
     knowsAbout: [
@@ -294,7 +294,7 @@ export function founderPersonSchema(opts: {
 
 /**
  * AboutPage schema for /ve-chung-toi. Wraps the page's body content as a
- * dedicated About entity — improves "About Alodev" / "Alodev hồ sơ năng lực"
+ * dedicated About entity - improves "About Alodev" / "Alodev hồ sơ năng lực"
  * intent matching.
  */
 export function aboutPageSchema(input: {
@@ -374,7 +374,7 @@ export function collectionPageSchema(input: {
 
 /**
  * Per-tier Offer schema for service detail pages. Vietnamese B2B buyers
- * search "[service] giá bao nhiêu" — emitting Offer with PriceSpecification
+ * search "[service] giá bao nhiêu" - emitting Offer with PriceSpecification
  * makes price eligible for SERP price snippets and AI answer engines.
  */
 export function serviceWithOffersSchema(input: {

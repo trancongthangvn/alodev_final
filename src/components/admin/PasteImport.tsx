@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { parseArticleBlock, type ParseResult } from '@/lib/articleImport';
 
-// alodev doesn't have a custom Dialog/Toast system — use native browser
+// alodev doesn't have a custom Dialog/Toast system - use native browser
 // primitives.  Admin-only UI, single-user (founder), safe to use confirm().
 const confirmDialog = async (msg: string, _opts?: { danger?: boolean }) =>
   typeof window !== 'undefined' ? window.confirm(msg) : false;
@@ -12,7 +12,7 @@ const showToast = (msg: string, _type: 'success' | 'error' | 'info' = 'success')
   // in-DOM banner.  Console.log keeps a debugging trail.
   console.log(`[paste-import] ${msg}`);
   if (typeof window !== 'undefined') {
-    // No persistent banner — defer to onImport callback for visible feedback.
+    // No persistent banner - defer to onImport callback for visible feedback.
   }
 };
 
@@ -200,7 +200,7 @@ export default function PasteImport({ onImport, hasExistingContent = false }: Pr
                     <Row label="Content type" value={a.content_type} />
                     <Row label="Focus KW" value={a.focus_keyword} />
                     <Row label="Tags" value={a.tags.join(', ')} />
-                    <Row label="Author" value={`${a.author.name} — ${a.author.job_title}`} />
+                    <Row label="Author" value={`${a.author.name} - ${a.author.job_title}`} />
                     <Row label="Featured" value={a.featured_image?.url} mono truncate />
                   </div>
 
