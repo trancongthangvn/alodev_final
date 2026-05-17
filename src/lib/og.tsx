@@ -90,7 +90,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
                   style={{
                     width: 18,
                     height: 18,
-                    background: row === 1 && col === 1 ? '#f4811a' : '#3a3a44',
+                    background: row === 1 && col === 1 ? '#3b82f6' : '#3a3a44',
                     borderRadius: 3,
                   }}
                 />
@@ -116,7 +116,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
               marginTop: 6,
               width: 56,
               height: 3,
-              background: '#f4811a',
+              background: '#3b82f6',
               borderRadius: 2,
             }}
           />
@@ -129,7 +129,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
               fontSize: 22,
               fontWeight: 600,
               letterSpacing: '0.18em',
-              color: '#f4811a',
+              color: '#3b82f6',
               textTransform: 'uppercase',
             }}
           >
@@ -175,7 +175,7 @@ export async function renderOg({ eyebrow, title, tagline, badge }: OgCardProps) 
             style={{
               fontSize: 24,
               fontWeight: 600,
-              color: '#f4811a',
+              color: '#3b82f6',
               letterSpacing: '0.04em',
             }}
           >
@@ -235,7 +235,7 @@ export async function renderOgHome(theme: 'light' | 'dark' = 'light') {
   const ink = isDark ? '#fbfcff' : '#0a1226'
   const inkDim = isDark ? 'rgba(251, 252, 255, 0.55)' : 'rgba(10, 18, 38, 0.55)'
   const inkXDim = isDark ? 'rgba(251, 252, 255, 0.22)' : 'rgba(10, 18, 38, 0.22)'
-  const accent = isDark ? '#f4811a' : '#d96b09'
+  const accent = isDark ? '#3b82f6' : '#d96b09'
   const dotColor = isDark ? 'rgba(244,129,26,0.07)' : 'rgba(217,107,9,0.06)'
 
   return new ImageResponse(
