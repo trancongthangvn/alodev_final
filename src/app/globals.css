@@ -2589,15 +2589,34 @@ html.lenis-smooth { scroll-behavior: auto; }
   to   { opacity: 1; transform: scale(1) translateY(0);       filter: blur(0); }
 }
 
+/* ── Above-the-fold safety: any section pre-entered (above viewport on load)
+   gets data-stagger items shown immediately (no fade-in). Prevents
+   flash-of-invisible-content when animation chain breaks. ── */
+.section-pre-entered [data-stagger] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
 /* ── 1c. Stagger reveal - fires when JS adds .section-entered ── */
 .section-entered [data-stagger="up"] {
   animation: stagger-up 0.56s cubic-bezier(0.16, 1, 0.3, 1) both;
+  /* Fallback guarantee opacity:1 sau animation, không phụ thuộc keyframes to state */
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 .section-entered [data-stagger="row"] {
   animation: stagger-row 0.44s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 .section-entered [data-stagger="stat"] {
   animation: stagger-stat 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
 /* ── 2. Word-split heading reveal (Apple/Linear grade) ──
