@@ -2,10 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { projects } from '@/data/projects'
 import JsonLd from '@/components/JsonLd'
+import HeroCube from '@/components/HeroCube'
 import QuoteCTA from '@/components/QuoteCTA'
 import Icon from '@/components/Icon'
 import ScrollEffects from '@/components/ScrollEffects'
 import HideGlobalFooter from '@/components/HideGlobalFooter'
+import Marquee from '@/components/Marquee'
+import DeviceShowcase from '@/components/DeviceShowcase'
 // CustomCursor disabled May 2026 - spring physics intentionally laggy
 // "mềm như nước" feel made cursor read as delayed. Real pro studios
 // (Linear, Vercel, Stripe, Apple, Pentagram) all use native cursor.
@@ -101,7 +104,11 @@ export default function Home() {
           </div>
 
           {/* Middle: cube - small, breathing room */}
-{/* Bottom: TOC nav + contact + CTA */}
+          <div className="mag-rail-cube">
+            <HeroCube />
+          </div>
+
+          {/* Bottom: TOC nav + contact + CTA */}
           <div className="mag-rail-bottom">
             {/* Tagline */}
             <p className="text-sm font-bold leading-snug tracking-tight text-gray-900 dark:text-white">
@@ -200,6 +207,25 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+          {/* DEVICE SHOWCASE - 3 viewport mockups bring product feel */}
+          <DeviceShowcase />
+
+          {/* SERVICE TICKER - editorial marquee strip */}
+          <div className="mag-ticker" aria-hidden="true">
+            <Marquee speed={42} className="py-3">
+              {[
+                'WEBSITE', 'ỨNG DỤNG DI ĐỘNG', 'HỆ THỐNG QUẢN TRỊ',
+                'TỰ ĐỘNG HOÁ', 'UI/UX DESIGN', 'FOUNDER-LED',
+                'QUYỀN SỞ HỮU MÃ NGUỒN', 'HỖ TRỢ KỸ THUẬT 12 THÁNG',
+              ].map((item) => (
+                <span key={item} className="mag-ticker-item">
+                  {item}
+                  <span className="mag-ticker-sep" aria-hidden="true">·</span>
+                </span>
+              ))}
+            </Marquee>
+          </div>
 
           {/* SERVICES - 2x2 card grid (was vertical list — varied to break "01+head" template) */}
           <section className="mag-section mag-bg-paper" id="dich-vu" data-section-name="Dịch vụ">
