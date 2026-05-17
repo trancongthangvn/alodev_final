@@ -53,13 +53,13 @@ const commitments = [
   'Source code, database, domain đứng tên khách hàng',
   'Bảo hành 6–12 tháng',
   'Demo định kỳ hàng tuần theo milestone',
-  'Trễ hạn → giảm 5% / tuần',
+  'Hợp đồng ràng buộc deadline: phạt 5% giá trị hợp đồng/tuần chậm tiến độ',
   'Không vendor lock-in, không phí license ẩn',
 ]
 
 const faq = [
   { q: 'Chi phí thiết kế website doanh nghiệp khoảng bao nhiêu?', a: 'Website giới thiệu từ 8tr, e-commerce từ 25tr, app mobile từ 60tr, hệ thống quản trị báo theo scope. Cấu hình tại /bao-gia.' },
-  { q: 'Source code và data có thuộc về tôi không?', a: 'Có. Source code, database, domain, hosting đứng tên bạn. Không vendor lock-in, không phí license.' },
+  { q: 'Mã nguồn và dữ liệu thuộc sở hữu của ai sau bàn giao?', a: 'Khách hàng. Toàn bộ mã nguồn, database, domain và hosting bàn giao dưới tên doanh nghiệp khách hàng. Không vendor lock-in, không phí license phát sinh.' },
   { q: 'Thời gian triển khai một dự án mất bao lâu?', a: 'Website 3–5 tuần. E-commerce 6–10 tuần. App mobile 10–16 tuần. Hệ thống quản trị 8–20 tuần. Demo hàng tuần.' },
   { q: 'Sau bàn giao có hỗ trợ tiếp không?', a: 'Bảo hành 6–12 tháng tuỳ hợp đồng. Phát triển thêm tính theo gói retainer hoặc giờ.' },
 ]
@@ -177,16 +177,16 @@ export default function Home() {
               <p className="mag-section-index">01</p>
               <h1 className="mag-section-head">Phần mềm do <br />người làm ra.</h1>
               <p className="mt-4 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
-                Studio Hà Nội - website, app mobile và hệ thống quản trị cho SME 5–50 người.
+                Studio kỹ thuật Hà Nội — triển khai website, ứng dụng di động và hệ thống quản trị cho doanh nghiệp quy mô 5–50 nhân sự.
               </p>
 
               {/* Differentiators - 4 icon tiles (no descriptions — visual-led) */}
               <div className="mag-commit-grid">
                 {[
-                  { icon: 'handshake'    as const, label: 'Founder-led' },
-                  { icon: 'package'      as const, label: 'Source code\nthuộc về bạn' },
-                  { icon: 'gauge'        as const, label: 'Demo hàng tuần' },
-                  { icon: 'shield-check' as const, label: 'Bảo hành 6–12 tháng' },
+                  { icon: 'handshake'    as const, label: 'Đội ngũ\nkỹ thuật trực tiếp' },
+                  { icon: 'package'      as const, label: 'Sở hữu\ntoàn bộ mã nguồn' },
+                  { icon: 'gauge'        as const, label: 'Báo cáo\ntheo milestone' },
+                  { icon: 'shield-check' as const, label: 'Bảo hành\n6–12 tháng' },
                 ].map((d) => (
                   <div key={d.label} className="mag-commit-tile" data-stagger="up">
                     <span className="mag-commit-tile-icon">
@@ -276,7 +276,7 @@ export default function Home() {
 
               {/* Lead with the strongest line — drop big head, let the quote breathe */}
               <blockquote className="mag-about-led-quote">
-                11 sản phẩm đang chạy trên domain riêng <em>—</em> không phải demo.
+                11 sản phẩm production đang vận hành trên domain riêng <em>—</em> không phải bản demo.
               </blockquote>
               <p className="mag-about-led-attr">Hà Nội · 03/2025 · SME 5–50 người</p>
 
@@ -316,7 +316,7 @@ export default function Home() {
               Editorial rhythm break between two information-heavy sections. */}
           <aside className="mag-pullquote-band" aria-hidden="false">
             <p className="mag-pullquote-text">
-              Demo hàng tuần. Trễ <em>→ giảm 5%/tuần.</em> Source code <em>thuộc về bạn.</em>
+              Báo cáo tiến độ theo milestone. <em>Cam kết SLA: phạt 5%/tuần</em> chậm deadline. Bàn giao mã nguồn <em>dưới tên doanh nghiệp.</em>
             </p>
             <p className="mag-pullquote-attr">Cam kết hợp đồng · alodev.vn</p>
           </aside>
@@ -393,8 +393,8 @@ export default function Home() {
                 Có dự án<br className="hidden sm:block" /> cần triển khai?
               </h2>
               <p className="mt-3 text-sm text-gray-600 dark:text-ink-400 max-w-sm leading-relaxed">
-                Mô tả ngắn + ngân sách dự kiến → phản hồi trong <span className="text-gray-900 dark:text-white font-medium">24h</span>.
-                Không mất phí tư vấn.
+                Mô tả yêu cầu + ngân sách dự kiến → đội ngũ Alodev phản hồi trong <span className="text-gray-900 dark:text-white font-medium">24h</span>.
+                Tư vấn miễn phí, không cam kết ràng buộc.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5">
                 <div className="magnetic">

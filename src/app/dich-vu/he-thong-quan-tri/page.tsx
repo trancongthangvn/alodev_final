@@ -25,7 +25,7 @@ export const metadata = {
   openGraph: {
     url: '/dich-vu/he-thong-quan-tri',
     title: 'Lập trình hệ thống quản trị CRM / ERP - Alodev',
-    description: 'CRM, ERP, HR, SaaS multi-tenant. Viết riêng theo nghiệp vụ thực tế. Từ 25 triệu, source code thuộc về bạn.',
+    description: 'CRM, ERP, HR, SaaS multi-tenant. Phát triển riêng theo nghiệp vụ thực tế. Từ 25 triệu, sở hữu toàn bộ mã nguồn.',
   },
 }
 
@@ -47,7 +47,7 @@ const features = [
 ]
 
 const faq = [
-  { q: 'Lập trình CRM / ERP riêng có đắt hơn dùng phần mềm có sẵn (Misa, KiotViet) không?', a: 'Đắt hơn. Misa/KiotViet rẻ vì share chi phí phát triển. Code riêng 25-100tr - nghiệp vụ đúng 100%, không phí license, source code của bạn. Hợp khi nghiệp vụ đặc thù hoặc bán làm SaaS.' },
+  { q: 'Lập trình CRM / ERP riêng có đắt hơn dùng phần mềm có sẵn (Misa, KiotViet) không?', a: 'Đắt hơn. Misa/KiotViet rẻ vì share chi phí phát triển. Hệ thống viết riêng 25-100tr — nghiệp vụ tuỳ biến 100%, không phí license, sở hữu mã nguồn. Phù hợp khi nghiệp vụ đặc thù hoặc xây SaaS riêng.' },
   { q: 'Có thể migrate từ Excel / phần mềm cũ sang hệ thống mới không?', a: 'Có. Đây là dịch vụ "Tích hợp / migration hệ thống cũ" trong báo giá (15 triệu). Alodev đọc dữ liệu Excel/MySQL/MongoDB cũ, transform đúng schema mới, import sạch không trùng lặp, có log đầy đủ. Test trên 10% data trước, OK mới migrate full.' },
   { q: 'Hệ thống có chạy trên mobile được không?', a: 'Có. Dashboard responsive - chạy được trên tablet (iPad / Android tablet) cho manager đi gặp khách. Nếu cần app mobile thật (push notification, offline mode), Alodev làm app riêng kết nối qua API - combo CRM + Mobile App tiết kiệm thời gian briefing 2 lần.' },
   { q: 'Tích hợp được với Google Workspace / Microsoft 365 không?', a: 'Có. SSO qua Google Workspace / Microsoft 365 - nhân viên login Gmail/Outlook công ty là vào được, không cần password riêng. Tích hợp Google Calendar (đặt lịch hiện trên cal), Google Sheet (export báo cáo), Microsoft Teams (notify), v.v.' },

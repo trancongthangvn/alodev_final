@@ -111,8 +111,8 @@ const packages = [
 const guarantees = [
   { icon: 'file-text' as IconName, label: 'Hợp đồng rõ ràng', desc: 'Milestone + điều khoản bằng văn bản' },
   { icon: 'receipt' as IconName, label: 'Hoá đơn VAT', desc: 'Xuất VAT đầy đủ' },
-  { icon: 'code' as IconName, label: 'Source code của bạn', desc: 'Bàn giao toàn bộ, không khoá' },
-  { icon: 'shield' as IconName, label: 'Bảo hành 6–12 tháng', desc: 'Sửa bug miễn phí sau bàn giao' },
+  { icon: 'code' as IconName, label: 'Sở hữu mã nguồn', desc: 'Bàn giao toàn bộ, không vendor lock-in' },
+  { icon: 'shield' as IconName, label: 'Bảo hành 6–12 tháng', desc: 'Hỗ trợ kỹ thuật sau bàn giao' },
   { icon: 'calendar' as IconName, label: 'Demo hàng tuần', desc: 'Theo dõi tiến độ theo milestone' },
 ]
 
@@ -289,7 +289,7 @@ export default function DichVuPage() {
             {[
               { v: '24h', l: 'Phản hồi' },
               { v: '11+', l: 'Dự án live' },
-              { v: '100%', l: 'Code của bạn' },
+              { v: '100%', l: 'Mã nguồn' },
             ].map((s) => (
               <div key={s.l}>
                 <div className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{s.v}</div>

@@ -71,7 +71,7 @@ const phases: Phase[] = [
     icon: 'package',
     title: 'Báo giá chi tiết & ký hợp đồng',
     intro:
-      'Báo giá theo từng hạng mục - không có "tuỳ phát sinh", không phí ẩn. Hợp đồng ràng buộc deadline, scope, sở hữu source code, điều khoản trễ giảm 5%/tuần.',
+      'Báo giá theo từng hạng mục — không phát sinh, không phí ẩn. Hợp đồng ràng buộc deadline, scope, quyền sở hữu mã nguồn và điều khoản phạt chậm tiến độ 5%/tuần.',
     yourSide: [
       'Confirm scope & milestones',
       'Ký hợp đồng + thanh toán đợt 1 (30%)',
@@ -258,8 +258,8 @@ const faq = [
     a: 'Được. Linear board được setup mode UX-friendly cho non-tech (chỉ nhìn % done + milestones, không nhìn vào ticket detail). Demo cuối tuần qua Zalo/Meet bằng tiếng Việt thuần, không jargon. Bạn chỉ cần focus vào "đúng yêu cầu chưa" thay vì code.',
   },
   {
-    q: 'Hợp đồng quy định "trễ giảm 5%/tuần" áp dụng thế nào?',
-    a: 'Tính từ deadline cuối ghi trong hợp đồng. Mỗi tuần trễ → giảm 5% giá trị hợp đồng (capped 30%). Áp dụng ngay cả khi chỉ trễ 1 ngày sang tuần kế. Loại trừ: bug do bên bạn (server đổi, API bên 3 đổi spec, requirement thay đổi).',
+    q: 'Điều khoản phạt chậm tiến độ 5%/tuần được áp dụng như thế nào?',
+    a: 'Tính từ deadline cuối ghi trong hợp đồng. Mỗi tuần chậm tiến độ → giảm 5% giá trị hợp đồng (capped 30%). Áp dụng kể cả khi chỉ chậm 1 ngày sang tuần kế. Loại trừ trường hợp do phía khách hàng (server, API bên thứ 3, hoặc yêu cầu thay đổi scope).',
   },
   {
     q: 'Bảo hành 6–12 tháng cụ thể là gì?',
@@ -267,7 +267,7 @@ const faq = [
   },
   {
     q: 'Tôi có thể đổi đội bảo trì sau bảo hành không?',
-    a: 'Có và Alodev khuyến khích. Source code, repo, hosting, domain, DB tất cả đứng tên bạn từ ngày bàn giao. Tài liệu kỹ thuật + runbook bàn giao đủ để team mới tiếp nhận trong 1 tuần. Không vendor lock-in về kỹ thuật, không phí thoát.',
+    a: 'Có. Alodev khuyến khích phương án này. Mã nguồn, repository, hosting, domain, database bàn giao dưới tên doanh nghiệp khách hàng từ ngày handover. Tài liệu kỹ thuật + runbook đủ để đội ngũ kỹ thuật mới tiếp nhận trong vòng 1 tuần. Không vendor lock-in, không phí thoát.',
   },
 ]
 
@@ -306,11 +306,11 @@ export default function QuyTrinhPage() {
           <div className="mt-7 flex flex-wrap gap-3 text-sm">
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-ink-900 text-gray-700 dark:text-ink-300 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              Trễ deadline → giảm 5%/tuần
+              Phạt chậm tiến độ 5%/tuần
             </span>
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-ink-900 text-gray-700 dark:text-ink-300 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              Source code thuộc về bạn
+              Bàn giao toàn bộ mã nguồn
             </span>
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-ink-900 text-gray-700 dark:text-ink-300 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />

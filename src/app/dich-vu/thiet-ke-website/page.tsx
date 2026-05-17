@@ -24,7 +24,7 @@ export const metadata = {
   openGraph: {
     url: '/dich-vu/thiet-ke-website',
     title: 'Thiết kế website chuyên nghiệp - Alodev',
-    description: 'Thiết kế website doanh nghiệp, landing page, e-commerce. Báo giá rõ ràng từ 8 triệu, bàn giao đúng hạn, source code thuộc về bạn.',
+    description: 'Thiết kế website doanh nghiệp, landing page, e-commerce. Báo giá minh bạch từ 8 triệu, bàn giao đúng hạn, sở hữu toàn bộ mã nguồn.',
   },
 }
 
@@ -41,7 +41,7 @@ const features = [
   { icon: 'search', title: 'Chuẩn SEO từ ngày deploy', desc: 'Schema.org đầy đủ, sitemap auto, OG, canonical, breadcrumb. Không phải "fix sau".' },
   { icon: 'phone', title: 'Responsive mọi kích thước', desc: 'Mobile-first design - 70% traffic VN từ điện thoại.' },
   { icon: 'shield-check', title: 'Bảo mật từ ngày deploy', desc: 'HTTPS, HSTS, CSP, security headers, DDoS protection qua Cloudflare.' },
-  { icon: 'package', title: 'Source code thuộc về bạn', desc: 'Repo Git, database, domain, hosting - đứng tên bạn. Không vendor lock-in.' },
+  { icon: 'package', title: 'Quyền sở hữu mã nguồn', desc: 'Repository Git, database, domain, hosting bàn giao dưới tên doanh nghiệp khách hàng. Không vendor lock-in.' },
   { icon: 'wrench', title: 'Bảo hành 6–12 tháng', desc: 'Bug do code Alodev → fix trong hạn bảo hành.' },
 ]
 
@@ -93,7 +93,7 @@ export default function ThietKeWebsitePage() {
             <p className="mag-body-lead mt-4 max-w-3xl leading-relaxed">
               Alodev thiết kế website doanh nghiệp, landing page bán hàng, website thương mại điện tử và blog tin tức.
               Code riêng bằng <b className="text-ink-700 dark:text-ink-200">Next.js</b> (không template Wordpress lắp ghép),
-              tốc độ tải dưới 1 giây, SEO chuẩn từ ngày deploy đầu tiên, source code thuộc sở hữu của bạn.
+              tốc độ tải dưới 1 giây, SEO chuẩn từ ngày deploy đầu tiên, mã nguồn thuộc sở hữu doanh nghiệp khách hàng.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <QuoteCTA size="lg">Yêu cầu báo giá website</QuoteCTA>

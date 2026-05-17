@@ -203,7 +203,7 @@ function RailInfoBlock() {
       <div className="grid grid-cols-3 gap-1.5 pt-3 border-t border-slate-200 dark:border-ink-800">
         <RailStat num="11+"  label="dự án" />
         <RailStat num="24h"  label="phản hồi" />
-        <RailStat num="100%" label="code của bạn" />
+        <RailStat num="100%" label="mã nguồn" />
       </div>
 
       {/* Now - what's shipping this week */}

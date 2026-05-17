@@ -39,7 +39,7 @@ export const metadata = {
 const principles: Array<{ icon: IconName; title: string; desc: string }> = [
   { icon: 'target',  title: 'Honest by default',   desc: 'Không phóng đại số liệu, không testimonials hư cấu. Báo giá minh bạch theo hạng mục, deadline ràng buộc, danh tính người trực tiếp viết code công khai.' },
   { icon: 'wrench',  title: 'Build to last',        desc: 'Code phải đọc được sau 3 năm. Stack lựa chọn theo nghiệp vụ thực tế, không chạy theo trend ngắn hạn.' },
-  { icon: 'package', title: 'You own everything',   desc: 'Source code, database, domain và hosting đứng tên bạn. Không vendor lock-in, không phí license, không khoá kỹ thuật.' },
+  { icon: 'package', title: 'Quyền sở hữu thuộc khách hàng',   desc: 'Mã nguồn, database, domain và hosting bàn giao dưới tên doanh nghiệp khách hàng. Không vendor lock-in, không phí license, không khoá kỹ thuật.' },
   { icon: 'rocket',  title: 'Ship, then iterate',   desc: 'Bàn giao MVP đúng hạn rồi cải tiến trên user thật. Không trì hoãn 6 tháng vì &ldquo;perfect product&rdquo; - phản hồi của user thật giá trị hơn polish chưa được kiểm chứng.' },
 ]
 
@@ -121,9 +121,9 @@ const stackGroups: Array<{ label: string; items: string[] }> = [
 const commitments: Array<{ icon: IconName; title: string; desc: string }> = [
   { icon: 'gauge',        title: 'PageSpeed 90+ (P95)',      desc: 'Lighthouse Mobile ≥ 90 ở ngày bàn giao. Report đính kèm biên bản nghiệm thu.' },
   { icon: 'shield-check', title: 'Uptime target 99.9%',            desc: 'Cloud + monitoring + auto-rollback. Uptime URL công khai để bạn tự kiểm tra.' },
-  { icon: 'clock',        title: 'Trễ deadline → giảm 5%/tuần', desc: 'Ngày bàn giao ghi rõ trong hợp đồng. Trễ do Alodev → tự động giảm 5% giá trị/tuần.' },
+  { icon: 'clock',        title: 'Phạt chậm tiến độ 5%/tuần', desc: 'Deadline bàn giao ghi rõ trong hợp đồng. Chậm tiến độ do Alodev → tự động giảm 5% giá trị hợp đồng/tuần.' },
   { icon: 'life-buoy',    title: 'Bảo hành 6–12 tháng',      desc: 'Mọi bug do Alodev gây ra → khắc phục miễn phí trong thời gian bảo hành. Không thủ tục phức tạp.' },
-  { icon: 'package',      title: 'Source code 100% thuộc khách', desc: 'Repo Git, database, domain và hosting đứng tên bạn. Bàn giao tài liệu kỹ thuật đầy đủ - đội của bạn có thể tiếp nhận bảo trì liền mạch.' },
+  { icon: 'package',      title: 'Mã nguồn 100% thuộc khách hàng', desc: 'Repository Git, database, domain và hosting bàn giao dưới tên doanh nghiệp. Bàn giao kèm tài liệu kỹ thuật đầy đủ — đội ngũ kỹ thuật tiếp nhận có thể bảo trì liền mạch.' },
   { icon: 'message-circle', title: 'Phản hồi < 24h',         desc: 'Mọi câu hỏi / báo giá / bug report - phản hồi trong 24h giờ làm việc. Founder trực tiếp, không qua sales.' },
   { icon: 'handshake',    title: 'Không lock-in, không phí ẩn', desc: 'Báo giá chi tiết theo hạng mục. Không phí license, không charge "renewal" bắt buộc.' },
 ]
@@ -207,7 +207,7 @@ export default function VeChungToiPage() {
             <p className="mag-section-index">01 · Thông tin chung</p>
             <h2 className="mag-section-head !mt-3">Hồ sơ doanh nghiệp.</h2>
             <p className="mt-4 text-gray-600 dark:text-ink-400 leading-relaxed">
-              Một bảng tham chiếu nhanh cho team mua sắm / pháp chế của bạn - ai, ở đâu, liên hệ thế nào.
+              Thông tin pháp lý + tham chiếu nhanh cho bộ phận mua sắm / pháp chế của doanh nghiệp khách hàng.
             </p>
           </div>
           <div className="reveal grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-200 dark:bg-ink-800 rounded-2xl border border-gray-200 dark:border-ink-800 overflow-hidden">
@@ -325,7 +325,7 @@ export default function VeChungToiPage() {
             <p className="mag-section-index">05 · Stack công nghệ</p>
             <h2 className="mag-section-head !mt-3">Công cụ đang dùng.</h2>
             <p className="mt-4 text-gray-600 dark:text-ink-400 leading-relaxed">
-              Stack chọn theo nghiệp vụ thực tế của bạn, không chạy theo trend. Mỗi quyết định kỹ thuật đều có lý do giải thích được trong tài liệu bàn giao.
+              Stack lựa chọn theo nghiệp vụ thực tế của từng dự án, không chạy theo trend. Mỗi quyết định kỹ thuật đều có lý do giải thích được trong tài liệu bàn giao.
             </p>
           </div>
           <div className="reveal-stagger mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">

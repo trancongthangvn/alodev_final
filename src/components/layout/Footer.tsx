@@ -17,7 +17,7 @@ export default function Footer() {
             </Link>
             <p className="mt-3 text-sm text-slate-400 max-w-md leading-relaxed">
               Founder-led studio chuyên <b className="text-white">thiết kế website</b>, <b className="text-white">lập trình app mobile</b> và xây dựng hệ thống quản trị cho doanh nghiệp Việt Nam.
-              11+ sản phẩm đang vận hành, source code thuộc sở hữu của bạn.
+              11+ sản phẩm production đang vận hành. Mã nguồn bàn giao dưới tên doanh nghiệp khách hàng.
             </p>
             <div className="mt-4 text-xs text-slate-500 flex items-center gap-2">
               <Icon name="map-pin" className="w-3.5 h-3.5" />

@@ -266,7 +266,7 @@ export default function DuAnPage() {
       <section id="cta" className="mag-section mag-bg-tint py-10 lg:py-24">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="mag-section-head">Bạn cũng muốn xuất hiện ở đây?</h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-ink-400">Gửi yêu cầu - Alodev biến ý tưởng của bạn thành sản phẩm thật.</p>
+          <p className="mt-4 text-lg text-gray-600 dark:text-ink-400">Gửi yêu cầu — Alodev hiện thực hoá ý tưởng doanh nghiệp thành sản phẩm production.</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <QuoteCTA size="md">Yêu cầu báo giá</QuoteCTA>
             <Link href="/dich-vu" className="rounded-xl bg-white border border-ink-100 px-6 py-3 text-ink-900 font-semibold hover:bg-cream-50 dark:bg-ink-900 dark:border-ink-800 dark:text-white dark:hover:bg-ink-800 transition">Xem bảng giá</Link>

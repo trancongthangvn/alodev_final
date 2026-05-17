@@ -49,7 +49,7 @@ const features = [
 const faq = [
   { q: 'Lập trình app mobile mất bao lâu?', a: 'App MVP (5-7 màn hình + login + 1 flow chính): 6-8 tuần. App production đầy đủ (auth, payment, push, chat): 10-12 tuần. App phức tạp (IoT, AR, ML): 4-6 tháng. Cam kết deadline ghi rõ trong hợp đồng.' },
   { q: 'Native (Swift/Kotlin) hay React Native/Flutter - chọn cái nào?', a: 'Native hợp khi: hiệu năng cao (game/AR/video), tích hợp sâu OS (CallKit/HealthKit/BLE). Cross-platform (RN/Flutter) hợp khi: ngân sách hạn chế, ship cả iOS+Android, business logic chính. 80% case dùng cross-platform.' },
-  { q: 'Chi phí Apple Developer + Google Play như thế nào?', a: 'Apple Developer 99 USD/năm, Google Play 25 USD/lần. Đăng ký bằng tài khoản công ty của bạn để bạn sở hữu app. Alodev hướng dẫn miễn phí.' },
+  { q: 'Chi phí Apple Developer + Google Play như thế nào?', a: 'Apple Developer 99 USD/năm, Google Play 25 USD/lần. Đăng ký bằng tài khoản công ty của doanh nghiệp khách hàng để đảm bảo quyền sở hữu ứng dụng. Alodev hướng dẫn miễn phí.' },
   { q: 'App đã có nhưng bị lỗi / cần nâng cấp - Alodev có nhận không?', a: 'Có. Alodev nhận audit miễn phí app cũ, đề xuất kế hoạch fix bug / refactor / nâng cấp. Có thể giữ nguyên user data + backend hiện tại nếu bạn muốn.' },
   { q: 'App có thể tích hợp thanh toán VNPay/MoMo không?', a: 'Có. Alodev tích hợp được tất cả cổng thanh toán phổ biến VN: VNPay, MoMo, Zalopay, ATM card, ví điện tử. Quốc tế: Stripe, PayPal. Apple Pay / Google Pay nếu cần.' },
 ]

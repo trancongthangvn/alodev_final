@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     template: "%s - Alodev",
   },
   // 154 chars - fits Google SERP cap (~160), keeps three primary services + USP.
-  description: "Founder-led studio thiết kế website, lập trình app mobile, xây dựng hệ thống CRM/ERP cho doanh nghiệp Việt. 11+ sản phẩm đang vận hành - source code thuộc về bạn.",
+  description: "Founder-led studio thiết kế website, lập trình app mobile, xây dựng hệ thống CRM/ERP cho doanh nghiệp Việt. 11+ sản phẩm production đang vận hành. Mã nguồn bàn giao dưới tên doanh nghiệp khách hàng.",
   keywords: [
     "thiết kế website", "lập trình website", "thiết kế web doanh nghiệp",
     "lập trình app mobile", "lập trình app ios android", "thiết kế app",
