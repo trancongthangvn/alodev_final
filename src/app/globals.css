@@ -3808,3 +3808,187 @@ html.lenis-smooth { scroll-behavior: auto; }
 }
 
 /* FAQ first-open variant — no special class needed; we use the open attr in TSX. */
+
+/* ============================================================
+   MAG — VISUAL-LED REDUCTIONS (May 2026)
+   Founder feedback: "đa số dùng biểu tượng và minh hoạ, không cần
+   dùng chữ nhiều. Hồ sơ năng lực build trang riêng."
+   ============================================================ */
+
+/* ── Commitment icon tiles (section 01) — replace bullet list ── */
+.mag-commit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+@media (min-width: 600px) {
+  .mag-commit-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.mag-commit-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem 0.875rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+}
+.mag-commit-tile-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--paper, #fdfaf5);
+  color: var(--brand-strong, #b85a14);
+  border: 1px solid var(--border);
+}
+[data-theme='dark'] .mag-commit-tile-icon {
+  background: rgba(244, 129, 26, 0.08);
+  color: var(--brand-soft, #f4811a);
+  border-color: rgba(244, 129, 26, 0.18);
+}
+.mag-commit-tile-label {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+
+/* ── Service card big icon (section 03) ── */
+.mag-service-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--paper, #fdfaf5);
+  color: var(--brand-strong, #b85a14);
+  border: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+  transition: background 180ms ease, color 180ms ease, transform 220ms ease;
+}
+[data-theme='dark'] .mag-service-card-icon {
+  background: rgba(244, 129, 26, 0.08);
+  color: var(--brand-soft, #f4811a);
+  border-color: rgba(244, 129, 26, 0.18);
+}
+.mag-service-card:hover .mag-service-card-icon {
+  background: var(--brand-strong, #b85a14);
+  color: #fff;
+  transform: translateY(-1px);
+}
+[data-theme='dark'] .mag-service-card:hover .mag-service-card-icon {
+  background: var(--brand-soft, #f4811a);
+  color: #111;
+}
+
+/* ── Timeline step icon (section 05) — replace dot with icon ── */
+.mag-timeline-step--with-icon {
+  padding-top: 32px;
+}
+.mag-timeline-step--with-icon::before {
+  display: none;
+}
+.mag-timeline-step-icon {
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--paper, #fdfaf5);
+  border: 1px solid var(--border);
+  color: var(--brand-strong, #b85a14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  box-shadow: 0 0 0 4px var(--paper, #fdfaf5);
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+[data-theme='dark'] .mag-timeline-step-icon {
+  background: var(--ink-bg, #0c0f15);
+  color: var(--brand-soft, #f4811a);
+  box-shadow: 0 0 0 4px var(--ink-bg, #0c0f15);
+}
+.mag-timeline-step:hover .mag-timeline-step-icon {
+  background: var(--brand-strong, #b85a14);
+  color: #fff;
+  border-color: var(--brand-strong, #b85a14);
+}
+[data-theme='dark'] .mag-timeline-step:hover .mag-timeline-step-icon {
+  background: var(--brand-soft, #f4811a);
+  color: #111;
+  border-color: var(--brand-soft, #f4811a);
+}
+@media (max-width: 599px) {
+  .mag-timeline-step--with-icon {
+    padding-top: 0;
+    padding-left: 36px;
+  }
+  .mag-timeline-step--with-icon .mag-timeline-step-icon {
+    top: 0;
+    left: 0;
+  }
+}
+
+/* ── Compact stat strip (section 04 — replaces long text + commitments list) ── */
+.mag-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+@media (min-width: 600px) {
+  .mag-trust-strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.mag-trust-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 0.875rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.mag-trust-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--brand-strong, #b85a14);
+  opacity: 0.85;
+}
+[data-theme='dark'] .mag-trust-icon {
+  color: var(--brand-soft, #f4811a);
+}
+.mag-trust-num {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+.mag-trust-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

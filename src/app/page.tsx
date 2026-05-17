@@ -4,6 +4,7 @@ import { projects } from '@/data/projects'
 import JsonLd from '@/components/JsonLd'
 import HeroCube from '@/components/HeroCube'
 import QuoteCTA from '@/components/QuoteCTA'
+import Icon from '@/components/Icon'
 import ScrollEffects from '@/components/ScrollEffects'
 import HideGlobalFooter from '@/components/HideGlobalFooter'
 // CustomCursor disabled May 2026 - spring physics intentionally laggy
@@ -189,22 +190,19 @@ export default function Home() {
                 Studio Hà Nội - website, app mobile và hệ thống quản trị cho SME 5–50 người.
               </p>
 
-              {/* Differentiators - compact, scannable */}
-              <div className="mt-6 space-y-2">
+              {/* Differentiators - 4 icon tiles (no descriptions — visual-led) */}
+              <div className="mag-commit-grid">
                 {[
-                  { title: 'Founder-led',          desc: 'Không qua sales/PM' },
-                  { title: 'Source code của bạn', desc: 'Không vendor lock-in' },
-                  { title: 'Demo hàng tuần',       desc: 'Trễ → giảm 5%/tuần' },
-                  { title: 'Bảo hành 6–12 tháng', desc: 'Sửa bug miễn phí' },
+                  { icon: 'handshake'    as const, label: 'Founder-led' },
+                  { icon: 'package'      as const, label: 'Source code\nthuộc về bạn' },
+                  { icon: 'gauge'        as const, label: 'Demo hàng tuần' },
+                  { icon: 'shield-check' as const, label: 'Bảo hành 6–12 tháng' },
                 ].map((d) => (
-                  <div key={d.title} className="flex items-start gap-3" data-stagger="up">
-                    <span className="mt-1 w-4 h-4 shrink-0 rounded-full border border-brand-400/50 dark:border-brand-400/40 flex items-center justify-center">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400" />
+                  <div key={d.label} className="mag-commit-tile" data-stagger="up">
+                    <span className="mag-commit-tile-icon">
+                      <Icon name={d.icon} className="w-4 h-4" strokeWidth={1.75} />
                     </span>
-                    <div>
-                      <span className="text-xs font-semibold text-gray-900 dark:text-white">{d.title}</span>
-                      <span className="text-xs text-gray-500 dark:text-ink-500"> - {d.desc}</span>
-                    </div>
+                    <span className="mag-commit-tile-label" style={{ whiteSpace: 'pre-line' }}>{d.label}</span>
                   </div>
                 ))}
               </div>
@@ -327,8 +325,16 @@ export default function Home() {
               <h2 className="mag-section-head">Việc Alodev nhận làm.</h2>
 
               <div className="mag-services-grid">
-                {capabilities.map((c, i) => (
+                {[
+                  { label: 'Website',           note: 'Doanh nghiệp, e-commerce', anchor: '/dich-vu#website',    icon: 'globe' as const },
+                  { label: 'App mobile',        note: 'iOS · Android',              anchor: '/dich-vu#mobile',     icon: 'phone' as const },
+                  { label: 'Hệ thống quản trị', note: 'CRM · ERP · Dashboard',      anchor: '/dich-vu#system',     icon: 'cpu' as const },
+                  { label: 'Tự động hoá · AI',  note: 'Chatbot · Workflow',         anchor: '/dich-vu#automation', icon: 'bot' as const },
+                ].map((c, i) => (
                   <Link key={c.label} href={c.anchor} className="mag-service-card group" data-stagger="up">
+                    <span className="mag-service-card-icon">
+                      <Icon name={c.icon} className="w-5 h-5" strokeWidth={1.75} />
+                    </span>
                     <span className="mag-service-card-num">{String(i + 1).padStart(2, '0')}</span>
                     <span className="mag-service-card-name">{c.label}</span>
                     <span className="mag-service-card-note">{c.note}</span>
@@ -360,31 +366,33 @@ export default function Home() {
               </blockquote>
               <p className="mag-about-led-attr">Hà Nội · 03/2025 · SME 5–50 người</p>
 
-              <p className="mt-6 text-sm leading-relaxed text-gray-600 dark:text-ink-400 max-w-lg">
-                Studio Hà Nội nhận thiết kế website, app mobile và hệ thống quản trị nội bộ cho doanh nghiệp đang scale từ 5–10 lên 30–50 người.
-              </p>
-
-              {/* Cam kết - B2B trust signals */}
-              <div className="mt-6 pt-5 border-t border-slate-200 dark:border-ink-800">
-                <p className="text-[10px] font-mono text-gray-400 dark:text-ink-600 tracking-widest mb-3">CAM KẾT</p>
-                <ul className="space-y-2">
-                  {commitments.map((c) => (
-                    <li key={c} className="flex items-start gap-2.5 text-sm text-gray-700 dark:text-ink-300" data-stagger="up">
-                      <span className="mt-1.5 inline-block w-1 h-1 rounded-full bg-brand-600 dark:bg-brand-400 shrink-0" />
-                      <span>{c}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* 4 trust tiles — visual instead of CAM KẾT bullet list */}
+              <div className="mag-trust-strip">
+                <div className="mag-trust-tile" data-stagger="up">
+                  <span className="mag-trust-icon"><Icon name="folder" className="w-5 h-5" strokeWidth={1.75} /></span>
+                  <span className="mag-trust-num">11+</span>
+                  <span className="mag-trust-label">Dự án</span>
+                </div>
+                <div className="mag-trust-tile" data-stagger="up">
+                  <span className="mag-trust-icon"><Icon name="target" className="w-5 h-5" strokeWidth={1.75} /></span>
+                  <span className="mag-trust-num">6+</span>
+                  <span className="mag-trust-label">Ngành dọc</span>
+                </div>
+                <div className="mag-trust-tile" data-stagger="up">
+                  <span className="mag-trust-icon"><Icon name="package" className="w-5 h-5" strokeWidth={1.75} /></span>
+                  <span className="mag-trust-num">100%</span>
+                  <span className="mag-trust-label">Source code</span>
+                </div>
+                <div className="mag-trust-tile" data-stagger="up">
+                  <span className="mag-trust-icon"><Icon name="clock" className="w-5 h-5" strokeWidth={1.75} /></span>
+                  <span className="mag-trust-num">24h</span>
+                  <span className="mag-trust-label">Phản hồi</span>
+                </div>
               </div>
 
-              <div className="mt-6 flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-ink-800">
-                <div className="w-7 h-7 rounded-full bg-brand-100 dark:bg-brand-500/20 flex items-center justify-center text-brand-700 dark:text-brand-400 font-bold text-[10px] shrink-0">TCT</div>
-                <div>
-                  <div className="font-semibold text-xs text-gray-900 dark:text-white">Trần Công Thắng</div>
-                  <div className="text-[10px] text-gray-400 dark:text-ink-600">Founder · alodev studio</div>
-                </div>
-                <Link href="/ve-chung-toi" className="ml-auto text-[10px] font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 whitespace-nowrap">
-                  Về chúng tôi →
+              <div className="mt-5">
+                <Link href="/ve-chung-toi" className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">
+                  Hồ sơ năng lực · founder · cam kết hợp đồng →
                 </Link>
               </div>
             </div>
@@ -411,13 +419,19 @@ export default function Home() {
 
               <div className="mag-timeline">
                 <div className="mag-timeline-track">
-                  {process.map((p, i) => (
-                    <div key={p.step} className="mag-timeline-step group" data-stagger="up">
-                      <span className="mag-timeline-time">{p.time}</span>
-                      <span className="mag-timeline-name">{String(i + 1).padStart(2, '0')} · {p.step}</span>
-                      <p className="mag-timeline-desc">{p.desc}</p>
-                    </div>
-                  ))}
+                  {process.map((p, i) => {
+                    const icons = ['message-circle', 'brush', 'code', 'package'] as const
+                    return (
+                      <div key={p.step} className="mag-timeline-step mag-timeline-step--with-icon group" data-stagger="up">
+                        <span className="mag-timeline-step-icon" aria-hidden="true">
+                          <Icon name={icons[i]} className="w-3 h-3" strokeWidth={2} />
+                        </span>
+                        <span className="mag-timeline-time">{p.time}</span>
+                        <span className="mag-timeline-name">{String(i + 1).padStart(2, '0')} · {p.step}</span>
+                        <p className="mag-timeline-desc">{p.desc}</p>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -440,7 +454,7 @@ export default function Home() {
               <h2 className="mag-section-head">Câu hỏi thường gặp.</h2>
               <div className="mt-5 divide-y divide-slate-200 dark:divide-ink-800">
                 {faq.map((item, i) => (
-                  <details key={i} className="mag-faq group" data-stagger="up" {...(i === 0 ? { open: true } : {})}>
+                  <details key={i} className="mag-faq group" data-stagger="up">
                     <summary className="mag-faq-q">
                       <span className="text-[10px] font-mono text-gray-300 dark:text-ink-700 w-5 shrink-0">
                         {String(i + 1).padStart(2, '0')}
